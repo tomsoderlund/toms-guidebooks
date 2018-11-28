@@ -1,0 +1,1005 @@
+## Upgrade/install Node from Homebrew
+
+	brew search node
+	brew install node@6
+	# multiple versions
+	brew unlink node
+	brew link node@6
+
+
+## Upgrade/install Node from website
+
+http://nodejs.org/download/
+
+
+## Upgrade Node with NPM
+
+### Update NPM
+
+	npm update npm -g
+
+### Install 'n' helper
+
+	sudo npm cache clean -f
+	sudo npm install -g n
+	sudo n stable
+	sudo n 0.8.21 # specific version
+
+### See versions
+	npm view <package> versions
+	0.8.3<package>@<version>
+
+	npm view bcrypt versions
+	npm install bcrypt@0.8.3
+
+
+## Node on Heroku
+
+https://devcenter.heroku.com/articles/getting-started-with-nodejs
+
+### Make a Procfile
+	echo "web: node app.js" > Procfile
+
+
+### Push to Heroku
+
+	git init
+	git add .
+	git commit -m 'Version 1.0.0'
+	git commit -m 'Empty commit' --allow-empty
+	git push heroku master
+	git push heroku MYBRANCH:master
+
+### Set up Heroku app
+
+heroku login
+heroku create myappname
+heroku config:set NODE_ENV=production #optional
+heroku addons:add papertrail
+
+heroku addons:create scheduler:standard
+heroku addons:add mongolab
+heroku addons:create heroku-postgresql:hobby-dev
+
+heroku access:add info@weld.io # collaborator first, then owner
+heroku apps:transfer info@weld.io # owner
+
+git push heroku master
+
+heroku rename NEWNAME #also renames Heroku-Git remote
+
+	# Add new target, done by heroku create normally:
+	git remote add heroku git@heroku.com:MY-HEROKU-APP.git
+
+### Multiple apps
+
+	heroku logs -a my-app
+
+	heroku create myappname --remote beta
+	git push beta master
+
+### Heroku NPM issues - clear cache
+
+	heroku config:set NODE_MODULES_CACHE=false
+
+## Scheduler
+
+heroku run node app/scheduler/postToSlack.js
+Scheduler: "node app/scheduler/postToSlack.js"
+
+## NPM
+
+package.json
+
+npm install -g [package-name]
+-g = global
+
+npm view <package> versions // 
+npm install <package>@<version> // npm install bcrypt@0.8.0
+
+npm install --save compass # update package.json
+npm install --save-dev grunt-bumpx
+--save = update package.json
+
+npm update -g yo
+
+npm update --save mongoose
+
+### NPM from Git
+
+	"mongoose-crudify": "git+https://github.com/ryo718/mongoose-crudify.git#0.2.0",
+
+
+### Create NPM packages
+
+Tokens: https://www.npmjs.com/settings/YOUR-USER-NAME/tokens
+
+1d4b95ad-0f30-405f-91f8-86da8b96d80b
+old ad58bd63-4f39-4dbb-b737-31093c86f649
+
+https://docs.npmjs.com/getting-started/publishing-npm-packages
+
+
+# 1. Check if existing: go to https://npmjs.com/package/<package>
+
+	npm init  # OR npm init --scope=weld-io
+
+# Author: Tom Söderlund <tom@YOUR-USER-NAME.com> (http://www.YOUR-USER-NAME.com)
+
+	npm login # OR npm adduser # OR create new on https://www.npmjs.com
+	npm whoami # check user
+	npm config ls # to ensure that the credentials are stored on your client.
+
+# excluding files in .gitignore or .npmignore
+
+	npm publish
+
+Update:
+
+	npm version [patch, minor, or major]
+	npm publish
+
+Rename package:
+
+	npm deprecate old-project-name@"<= put-latest-version-here" "WARNING: This project has been renamed to new-project-name. Install using new-project-name instead."
+	npm deprecate @weld-io/weld-static-assets@"<= 1.3.0" "WARNING: This project has been renamed to @weld-io/static-assets. Install using @weld-io/static-assets instead."
+
+	GitHub: no problem
+	Codeship: change git:// link
+
+## Yarn
+
+https://yarnpkg.com/en/docs/usage
+
+Installing all the dependencies of project
+
+	yarn / yarn install
+
+Starting a new project
+
+	yarn init
+
+Adding a dependency
+
+	yarn add [package] // [package]@[version/tag]
+
+Adding a dependency to different categories of dependencies (devDependencies, peerDependencies, and optionalDependencies)
+
+	yarn add [package] --dev / --peer / --optional
+
+Upgrading a dependency
+
+	yarn upgrade [package] // [package]@[version/tag]
+
+Removing a dependency
+
+	yarn remove [package]
+	yarn remove [package] && yarn add [package] --dev
+
+
+## Bower
+
+npm install -g bower
+
+bower install # install from list
+bower install --save [plugin]
+bower uninstall socket.io-client
+
+## Grunt
+
+## Yeoman
+
+### Yeoman Angular
+
+https://github.com/yeoman/generator-angular
+
+sudo npm update -g yo & sudo npm install -g generator-angular-fullstack
+
+generator-angular
+generator-angular-fullstack
+
+yo angular-fullstack [appname]
+npm install & bower install
+
+### Yeoman Polymer
+
+Use just bower instead!
+
+	bower install --save Polymer/polymer#^1.0.0
+
+Install element:
+
+	bower install --save PolymerElements/paper-fab#^1.0.0
+
+Yeoman way:
+
+	sudo npm install -g generator-polymer
+	mkdir -p my-project && cd $_
+
+	yo polymer (aka polymer:app)
+	yo polymer:element
+	yo polymer:seed
+	yo polymer:gh
+
+### Yeoman Express
+
+sudo npm install -g yo # Make sure you have yo installed
+sudo npm install generator-express # Install the generator locally
+yo express # then run Yeoman and select Basic
+
+
+## Express
+
+// Without Express - just Node.js
+const PORT = process.env.PORT || 3003
+const http = require('http')
+http.createServer(requestHandler).listen(PORT)
+
+// With Express
+const express = require('express')
+const app = express()
+app.get('*', requestHandler)
+app.listen(PORT, () => console.log(`weld-renderer-svg running on http://localhost:${PORT}/`))
+
+// Next.js: without Express - just Node.js
+const { createServer } = require('http')
+app.prepare().then(() => {
+  createServer(handler).listen(3000)
+})
+
+// Next.js: with Express
+const express = require('express')
+const app = express()
+app.prepare().then(() => {
+  express().use(handler).listen(3000)
+})
+
+### Routes
+
+https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
+
+var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+
+req.path = req.originalUrl // '/highscore/monthly/2017-01-01/2018-01-01'
+req.route.path // '/highscore/:grouping/:startDate/:endDate'
+
+req.params (url/:key)
+req.query (url?key=value)
+req.body (JSON body)
+
+const { path, route, params, query, body } = req
+
+
+// 200 OK
+
+	res.json(myObj)
+
+// 301 or 302
+
+	res.set('location', newUrl);
+	res.status(302).send()
+
+// Content-Type
+
+	// text/html, text/javascript, text/csv, application/json, image/svg+xml, image/jpeg
+	res.setHeader('content-type', 'text/javascript')
+  res.setHeader('Cache-Control', 'public, max-age=31557600') // One year
+
+  res.write
+  res.end
+
+  res.send = Express write+end
+
+console.log('Request:', _.pick(req, ['params', 'query', 'body']));
+
+res.statusCode
+NEW: res.status(404).send('Page not found');
+NEW: res.status(404).json(myObj);
+OLD: res.sendStatus(404, 'Page not found');
+
+request.get(url, { json: true }, function (err, response, body) {
+	response.statusCode
+});
+
+request.post(url, { form: body }, function (err, result, body) {
+});
+
+request({ method: 'PUT', url: url, json: obj }, function (err, res, body) {
+});
+
+### EJS
+
+https://www.npmjs.org/package/ejs
+
+<%= variable %> // variable is evaluated and printed out (escaped)
+<%- variable %> // variable is evaluated and printed out (HTML, not escaped)
+<% variable %>  // variable is evaluated but not printed out
+
+
+<% if (true) { %>
+	<h1>foo</h1>
+<% } else { %>  
+	<h1>bar</h1>
+<% } %>
+
+<table>
+<% for (var i=0; i < data.length; i++) { %>
+	<tr>
+		<td><%= data[i].id %></td>
+		<td><%= data[i].name %></td>
+	</tr>
+<% } %>
+</table>
+
+	// To string. Months are zero-based
+	app.locals.formatDate = function (dateObj) {
+		return (dateObj.getFullYear() + "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) + "-" + ('0' + dateObj.getDate()).slice(-2) );
+	};
+
+### Base64
+
+// Encode:
+	var b = new Buffer('JavaScript');
+	var s = b.toString('base64'); // "SmF2YVNjcmlwdA=="
+
+// Decode:
+	var b = new Buffer('SmF2YVNjcmlwdA==', 'base64')
+	var s = b.toString(); // "JavaScript"
+
+
+## Node Command Line Application
+
+http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
+
+process.env.NODE_ENV
+
+#!/usr/bin/env node
+'use strict';
+console.log('adsfs', process.argv.length);
+
+// process.argv = ['node', 'yourscript.js', ...]
+// First custom argument is 2
+const NR_OF_ARGUMENTS_REQUIRED = 2;
+if ((process.argv.length - 2) < NR_OF_ARGUMENTS_REQUIRED) {
+	console.log('Usage: node app.js [filename] [JSON key]');
+	console.log('  E.g: node app.js data/test.json projects.562e3d6dfd53820c00e98bd7');
+}
+else {
+	//.. do run
+}
+
+// process.argv -> name/value collection
+const processCommandLineArguments = function () {
+	const ARGUMENTS = [
+		{ key: 'inputFile', default: 'companies.csv', required: true },
+		{ key: 'workTitle', default: 'digital marketing' },
+		{ key: 'location', default: 'Sweden' },
+	];
+	const argvCollection = {};
+	for (var i = 2; i < Math.max(process.argv.length, ARGUMENTS.length+2); i++) {
+		argvCollection[ARGUMENTS[i-2].key] = process.argv[i] || ARGUMENTS[i-2].default;
+	};
+	return argvCollection;
+};
+
+// process.argv -> name/value collection (OLD)
+var processCommandLine = function (defaultOptions) {
+	var options = _.merge({}, defaultOptions);
+	for (var i = 2; i < process.argv.length; i++) {
+		var arg = process.argv[i];
+		if (arg.indexOf('=') !== -1) {
+			var param = arg.split('=');
+			options[param[0]] = param[1];
+		}
+	};
+	return options;
+};
+
+// process.argv -> two arrays of files/options
+var processCommandLineArguments = function () {
+	var result = { files: [], options: [] };
+	for (var i = 1; i < process.argv.length; i++) {
+		if (process.argv[i][0] === '-') {
+			result.options.push(process.argv[i].substr(1));
+		}
+		else {
+			result.files.push(process.argv[i]);
+		}
+	}
+	return result;
+};
+
+const openFile = function (filename, cb) {
+	const fs = require('fs');
+	fs.readFile(filename, 'utf8', function (err, data) {
+		if (err) {
+			throw err;
+		}
+		else if (cb) {
+			console.log('OK: ' + filename);
+			cb(data);
+		}
+	});
+};
+
+var fs = require('fs');
+fs.writeFile('/tmp/test', 'Hey there!', function(err) {
+	if(err) {
+		return console.log(err);
+	}
+
+	console.log('The file was saved!');
+}); 
+
+
+## Mongoose
+
+	// Remove Mongoose warnings:
+	mongoose.Promise = Promise;
+	mongoose.connect(config.db, { useMongoClient: true });
+
+### Model
+
+	const mongoose = require('mongoose');
+	const Schema = mongoose.Schema;
+
+	// a Task consists of one or more SubSchemas
+	const SubSchema = new Schema({
+		name: { type: String, required: true },
+		properties: {},
+		elementSelector: String, // JQuery-style selector e.g. '#button-save'
+		popoverClasses: String, // 'left', 'right', etc
+	});
+
+	const ThingSchema = new Schema({
+		FORBIDDEN: id /_id,
+		slug: String,
+		name: { type: String, unique: true, required: true, sparse: true }, // sparse: The index skips over any document that is missing the indexed field
+		dateCreated: { type: Date, default: Date.now },
+		position: Number,
+		referenceModel: { type: Schema.Types.ObjectId, ref: 'OtherModelName' },
+		price: {
+			monthly: Number,
+			vatIncluded: Boolean,
+		},
+		oneSubSchema: SubSchema,
+		manySubSchemas: [SubSchema],
+		topicArray: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
+		anything: {},
+	});
+
+	mongoose.model('Thing', ThingSchema);
+
+#### Schema Types
+
+String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Array
+
+http://mongoosejs.com/docs/schematypes.html
+
+#### Statics, Methods
+
+	// Statics: On the Collection/Class
+	TaskSchema.statics.getOrderedList = function (group, callback) {
+		var Task = mongoose.model('Task');
+		Task.find({ group: group }, null, { sort: { position: 1, name: 1 } }, callback);
+	};
+
+	// Methods: On the Object/Instance
+	TaskSchema.methods.slug = function (task) {
+		return this.name.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase();
+	};
+
+#### Virtual properties
+
+Only synchronous - otherwise use Model.methods
+
+	// Get
+	ArticleSchema.virtual('date').get(function () {
+		return this._id.getTimestamp();
+	});
+
+	// Set
+	ArticleSchema.virtual('date').set(function (newDate) {
+		this.otherDate = newDate;
+	});
+
+#### toJSON and toObject
+
+Override JSON output:
+
+	// For JSON
+	const MySchema = new Schema({
+		...
+	},
+	{
+		toObject: {
+			virtuals: true,
+			transform: function (doc, ret) {
+				delete ret._id;
+			},
+		},
+		toJSON: {
+			virtuals: true,
+			transform: function (doc, ret) {
+				delete ret._id;
+			},
+		}
+	});
+
+Alternative way:
+
+	UserSchema.methods.toJSON = function() {
+		let obj = this.toObject();
+		// do whatever
+		return obj;
+	}
+
+NOTE: toObject affects save too
+
+What does this do?
+
+	AccountSchema.set('toJSON', { getters: true, virtuals: true });
+
+#### Middleware: pre/post hooks
+
+doc.init
+doc.validate
+doc.save
+doc.remove
+
+	// also: 'save'
+	MySchema.pre('validate', function (next) {
+		if ('invalid' == this.name) {
+			return next(new Error('#sadpanda'));
+		}
+		next();
+	});
+
+Collection.count
+Collection.find
+Collection.findOne
+Collection.findOneAndRemove
+Collection.findOneAndUpdate
+Collection.insertMany
+Collection.update
+
+	PlanSchema.pre('find', function (next) {
+		console.log('PlanSchema.pre.find', ...arguments);
+		next();
+	});
+
+	PlanSchema.post('find', function (results, next) {
+		console.log('PlanSchema.post.find', ...arguments);
+		next();
+	});
+
+#### Validations
+
+	required: [true, 'Why no bacon?'],
+	min: [6, 'Too few eggs'],
+	max: 12,
+	enum: ['Coffee', 'Tea'],
+	required: function() { return this.bacon > 3; }
+	validate: {
+		validator: function (v) {
+			return /\d{3}-\d{3}-\d{4}/.test(v);
+		},
+		message: '{VALUE} is not a valid phone number!'
+	},
+
+### Searching
+
+#### Lean and Exec
+
+MyModel
+	.find({ published: true })
+	.sort({ date: -1 })
+	.limit(20)
+	//.lean()
+	.exec(function (err, results) {
+	});
+
+#### findById
+
+User.findById(req.params.id).lean().exec(function (err, user) {});
+
+#### findOne
+
+Restaurant.findOne( {'_id' : restaurantId }, function (err, restaurant) {	
+});
+
+#### Wildcard search
+
+query['locationDetails.original'] = new RegExp(req.query.city, 'ig');
+
+Starts with:
+
+	User.find({ username: new RegExp('^' + userName) });
+
+Case insensitive:
+
+	User.find( { name: { $regex: new RegExp(nameString, 'i') } } );
+
+#### Nested
+
+const query = {
+	'positions.company': req.crudify.company._id
+}
+
+query['locationDetails.original'] = new RegExp(req.query.city, 'ig');
+
+#### Numeric values
+
+	{ quantity: { $not: { $gt: 5 } } } // qty is "not >5" (i.e. 5 or below)
+	{ quantity: { $ne: 20 } } // qty is "not 20" (includes undefined)
+	{ quantity: { $gte: 5, $lte: 15 } } // qty is >5 and <15
+
+#### Value exists
+
+	{ locationDetails: { $exists: false }, location: { $exists: true, $ne: '' } };
+	{ quantity: { $exists: true, $nin: [5, 15] } } // qty exists but isn't 5 or 15
+	{ names: null } // find where 'names' is null or undefined
+
+#### Field types
+
+	{ names: { $type: 4 } } // find where 'names' is an array: https://docs.mongodb.org/manual/reference/operator/query/type/#op._S_type
+	{ names: { $type: 10 } } // find where 'names' is null
+
+#### And/Or
+
+	{ quantity: 5, price: 1.99 } // implicit $and statement
+	{ $and: [ { quantity: { $ne: 5 } }, { quantity: { $exists: true } } // qty is not 5, but exists
+	{ $or: [ { quantity: { $ne: 5 } }, { quantity: { $exists: true } } // qty is not 5 or exists
+
+	{
+		type: 'food',
+		$or: [
+			{ quantity: { $gt: 100 } },
+			{ price: { $lt: 9.95 } }
+		]
+	}
+
+#### Date search
+
+	if (req.query.after) filter.dateCreated = { $gte: new Date(req.query.after) };
+	if (req.query.days) filter.dateCreated = { $gte: new Date((new Date()).getTime() + req.query.days*-24*60*60*1000) };
+
+	const query = {
+		dateCreated: {
+			$gte: new Date(year,  month,  1),
+			$lt:  new Date(year2, month2, 1)
+		}
+	};
+
+#### Search in arrays
+
+	// As favouriteFoods is a simple array of strings, you can just query that field directly:
+	PersonModel.find({ favouriteFoods: "sushi" }, ...);
+
+	{ price: { $in: [5, 15] } } // price is either 5 or 15
+	{ price: { $nin: [5, 15] } } // price is neither 5 nor 15
+
+Find ObjectID
+
+	Lesson.find({ topics: mongoose.Types.ObjectId(topic._id) })
+
+$elemMatch:
+
+	db.users.find({ awards: { $elemMatch: { award:'National Medal', year:1975 } } })
+	db.articles.find({ translations: { $elemMatch: { languageCode: 'sv', slug: 'swells-grundare-sarah' } } })
+
+	Article.findOne().elemMatch('translations', { languageCode: req.params.languageCode, slug: req.params.slug }).exec()
+
+### Populate: linked/referenced
+
+populate(fieldName)
+
+	req.crudify[modelName].populate(propertyName, '-_id -__v', (err, result) => {
+		next();
+	});
+
+	BugUpdate.find(query).sort(sorting).limit(200).populate('bug').exec(function (err, bugUpdates) {
+	})
+
+### Create new
+
+	MyModel.create(dataObj, callback);
+
+	let notification = new Notification(data);
+	notification.save(cb);
+
+### Update/Upsert
+
+account.markModified('subscriptions');
+
+db.products.update( { item: "book", quantity: { $gt: 5 } }, { $set: { x: 6 }, $inc: { y: 5} } )
+db.projects.update( { _id: ObjectId("52e57805d87d0e2618000003") }, { $set: { name: 'Hola Bandoola' } } )
+db.projects.update( { slug: "myapp" }, { $set: { screens: [ {name: 'Nr1', data: {}}, {name: 'Nr2', data: {}} ] } } )
+db.projects.update( { slug: "test-project" }, { $set: {'screens.0': 'testVal'} }, { upsert: true } )
+db.projects.update( { slug: "test-project" }, { $set: {screens.0.elements.elem1: 'testVal'} }, { upsert: true } )
+db.users.find( { email: "tom@YOUR-USER-NAME.com" } )
+db.users.update( { email: "tom+expired@weld.io" }, { $set: {'subscriptions.0.expires': ISODate("2014-01-01")} }, { upsert: true } )
+db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'dateLastLogin': ISODate("2014-11-20")} }, { upsert: true } )
+db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'role': 'admin' } } )
+db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'tags': ['beta2.0'] } } )
+
+db.posts.insert({ title: "Hello World", text: "yoda yoda" });
+db.projects.save() // update or insert
+
+db.projects.remove({}) // NOTE: Removes all!
+
+#### findOrCreate vs. Upsert vs. findOneAndUpdate
+
+Upsert: because you probably always want to update with latest properties
+
+	UserModel.update({ user: req.body.user }, { $set: userNewObj }, { upsert: true }, function (err, rowsUpdated) {});
+
+https://github.com/drudge/mongoose-findorcreate
+
+	const findOrCreate = require('mongoose-findorcreate');
+	PersonSchema.plugin(findOrCreate);
+
+	Person.findOrCreate({ name: { $regex: new RegExp(newPerson.name, 'i') } }, newPerson, function (err, result, wasCreated) {
+		req.crudify = { err, result, person: result };
+		next();
+	});
+
+	Person.findOrCreate({
+			name: { $regex: new RegExp(newPerson.name, 'i') }
+		},
+		newPerson,
+		function (err, result, wasCreated) {
+			console.log(`wasCreated:`, { wasCreated, err, result })
+			req.crudify = { err, result, person: result };
+			next();
+	});
+
+// findOrCreate, then update old record
+	Bug.findOrCreate({ githubIssueId: data.issue.id }, bugObj, function (err, bug, wasCreated) {
+		if (wasCreated) {
+			// New bug
+			cb(err, data, bug);
+		}
+		else {
+			// Update existing bug
+			_.merge(bug, bugObj);
+			bug.save(function (err, bug2) {
+				cb(err, data, bug2);
+			});
+		}
+	})
+
+// Find+Update or Create:
+
+	User.findOne({ twitterHandle: twitterUser.screen_name }, (err, foundUser) => {
+		if (foundUser) {
+			// Update existing
+			foundUser.imageUrl = foundUser.imageUrl || userData.imageUrl;
+			foundUser.save(cb);
+		}
+		else {
+			// Create new
+			User.create(userData, cb);
+		}
+	});
+
+#### Upsert/Update
+
+http://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-mongoose
+
+	var contact = new Contact({ phone: request.phone, status: request.status });
+
+// Convert the Model instance to a simple object using Model's 'toObject' function to prevent weirdness like infinite looping
+
+	var upsertData = contact.toObject();
+
+// Delete the _id property, otherwise Mongo will return a "Mod on _id not allowed" error
+
+	delete upsertData._id;
+
+// Do the upsert, which works like this: If no Contact document exists with _id = contact.id, then create a new doc using upsertData. Otherwise, update the existing doc with upsertData
+
+	Company.update({ _id: position.company._id }, position.company, { upsert: true }, cb);
+
+
+#### mapReduce
+
+	const mapReduceOperation = {
+		//query: { createdByUser: _.get(req, 'user.d.uid') },
+		sorting: { dateCreated: 1 },
+		map: function () {
+			//consolelog('MAP', this, arguments);
+			emit(this.name, 1)
+		},
+		reduce: function (k, vals) {
+			//consolelog('REDUCE', this, arguments);
+			return vals.length
+		},
+		// finalize: function
+		out: { replace: 'createdCollectionNameForResults' },
+		verbose: true,
+	};
+	DataSource.mapReduce(mapReduceOperation, function (err, model, stats) {
+		console.log('map reduce:', {err, model, stats})
+		model.find().exec(function (err, result) { //.where('value').gt(10)
+			console.log({ err, result });
+			req.crudify = req.crudify || { err, result };
+			next();
+		});
+	})
+
+
+### MongoDB
+
+http://docs.mongodb.org/v2.2/reference/mongo-shell/
+
+mongod # server
+mongo # interactive client
+
+show dbs // list all databases
+db // show db
+use weld-dev // set db
+db.dropDatabase()
+
+show collections // 'tables'
+
+### Indexes
+
+db.users.getIndexes()
+db.users.dropIndex("name_1")
+db.users.dropIndexes()
+
+### Collections
+
+db.collection.count()
+db.collection.drop()
+
+## MongoLab
+
+{
+	"name": {
+		"$regex": "Ecwid.*",
+		"$options": "si"
+	}
+}
+
+### Backups: mongodump / mongorestore
+
+mongorestore --db weld-live-20160113 heroku_app21501008/
+
+#### Henrics: Restore one document/project
+
+1. Download the backup from MongoLab.
+2. Restore it locally into a new database:
+	mongorestore -h 127.0.0.1:27017 -d <some-new-DB> <path-of-backup>
+3. Extract the one document:
+	mongodump -h 127.0.0.1 -d <some-new-DB> -c projects -q '{"_id":ObjectId("<project-id>")}'
+4. Restore to MongoLab:
+	mongorestore --host ds045481-a0.mongolab.com --port 45481 --db heroku_app21501008 -u <username> -p <password> <some-new-DB>
+
+
+## PostgreSQL - postgres sql
+
+See SQL notes
+
+
+## Firebase
+
+https://www.firebase.com/docs/web/api/
+
+firebaseRef.set(newObject, callback) // callback(err) - write/replace
+firebaseRef.update(partialObject, callback) // merge/update existing
+newRef = firebaseRef.push(newChild, callback) // use newRef.key() to get new key
+firebaseRef.remove(callbackAfterDeleted) // same as: set(null)
+firebaseRef.key()
+
+firebaseRef.authWithCustomToken
+firebaseRef.child
+firebaseRef.delete
+firebaseRef.off
+firebaseRef.on
+firebaseRef.once
+
+firebaseRef.once('value', function (snapshot) {
+	// snapshot.exportVal() has '.priority', snapshot.val() does not
+	var newProject = _.cloneDeep(snapshot.exportVal());
+}, function (err) {
+	// code to handle read error
+});
+
+
+var ref = new Firebase('https://<your instance>.firebaseio.com/messages');
+
+var queryRef = ref.orderBy('created').startAt(Firebase.ServerValue.TIMESTAMP);
+
+queryRef.on('child_added', function(snap) {
+	console.log('queryRef.child_added', snap.val());
+});
+
+
+### AngularFire
+
+https://www.firebase.com/docs/web/libraries/angular/api.html
+
+$firebaseObject
+	$id
+	$priority
+	$value
+	$remove()
+	$save()
+	$loaded()
+	$ref()
+	$bindTo(scope, varName)
+	$watch(callback, context)
+	$destroy()
+
+$firebaseArray
+	$add(newData)
+	$remove(recordOrIndex_NOTkey)
+	$save(recordOrIndex_NOTkey)
+	$getRecord(key)
+	$keyAt(recordOrIndex_NOTkey)
+	$indexFor(key)
+	$loaded()
+	$ref()
+	$watch(cb[, context])
+	$destroy()
+
+
+# Desktop App
+
+http://electron.atom.io/docs/tutorial/quick-start/
+
+npm install --save-dev electron
+
+
+## PassportJS / Authentication
+
+**See LoveBot**
+
+Twitter: need Callback URL in settings but it’s overridden in code.
+
+NPMs: cookie-session, passport, passport-twitter etc
+
+Init:
+	// express-session is only in RAM, can’t do server restarts
+	server.use(cookieSession({
+		name: 'myappname',
+		keys: ['secret'],
+		maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+	}));
+	server.use(passport.initialize());
+	server.use(passport.session());
+
+Routes:
+	server.get('/login/twitter', passport.authenticate('twitter'));
+	server.get('/login/twitter/return', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/?loginFailed=true' }));
+
+Access user:
+	req.session, req.sessionID
+	twittername = _.get(req, 'session.passport.user.username')
+
+
+## SSL / HTTPS / Let’s Encrypt
+
+More info: https://medium.com/@franxyzxyz/setting-up-free-https-with-heroku-ssl-and-lets-encrypt-80cf6eac108e
+
+Steps:
+
+brew install certbot
+
+sudo certbot certonly --manual
+	NOTE: use full domain incl "www."
+
+Set up challenge/response on server
+	server.get('/.well-known/acme-challenge/*', (req, res) => res.send('LONGWEIRDSTRING'));
+
+Files end up in in /etc/letsencrypt/live/MYDOMAIN/
+	`privkey.pem`  : the private key for your certificate.
+	`fullchain.pem`: the certificate file used in most server software.
+	`chain.pem`    : used for OCSP stapling in Nginx >=1.3.7.
+	`cert.pem`     : will break many server configurations, and should not be used without reading further documentation (see link below).
+
+sudo heroku certs:add /etc/letsencrypt/live/MYDOMAIN/fullchain.pem /etc/letsencrypt/live/MYDOMAIN/privkey.pem
+	Need Hobby or Professional dynos
+
