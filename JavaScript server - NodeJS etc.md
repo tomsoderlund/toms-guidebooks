@@ -258,7 +258,7 @@ app.prepare().then(() => {
 
 https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
-var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
 req.path = req.originalUrl // '/highscore/monthly/2017-01-01/2018-01-01'
 req.route.path // '/highscore/:grouping/:startDate/:endDate'
@@ -276,7 +276,7 @@ const { path, route, params, query, body } = req
 
 // 301 or 302
 
-	res.set('location', newUrl);
+	res.set('location', newUrl)
 	res.status(302).send()
 
 // Content-Type
@@ -290,22 +290,22 @@ const { path, route, params, query, body } = req
 
   res.send = Express write+end
 
-console.log('Request:', _.pick(req, ['params', 'query', 'body']));
+console.log('Request:', _.pick(req, ['params', 'query', 'body']))
 
 res.statusCode
-NEW: res.status(404).send('Page not found');
-NEW: res.status(404).json(myObj);
-OLD: res.sendStatus(404, 'Page not found');
+NEW: res.status(404).send('Page not found')
+NEW: res.status(404).json(myObj)
+OLD: res.sendStatus(404, 'Page not found')
 
 request.get(url, { json: true }, function (err, response, body) {
 	response.statusCode
-});
+})
 
 request.post(url, { form: body }, function (err, result, body) {
-});
+})
 
 request({ method: 'PUT', url: url, json: obj }, function (err, res, body) {
-});
+})
 
 ### EJS
 
@@ -333,13 +333,13 @@ https://www.npmjs.org/package/ejs
 
 	// To string. Months are zero-based
 	app.locals.formatDate = function (dateObj) {
-		return (dateObj.getFullYear() + "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) + "-" + ('0' + dateObj.getDate()).slice(-2) );
-	};
+		return (dateObj.getFullYear() + "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) + "-" + ('0' + dateObj.getDate()).slice(-2) )
+	}
 
 ### Base64
 
 // Encode:
-	var b = new Buffer('JavaScript');
+	var b = new Buffer('JavaScript')
 	var s = b.toString('base64'); // "SmF2YVNjcmlwdA=="
 
 // Decode:
@@ -354,15 +354,15 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 process.env.NODE_ENV
 
 #!/usr/bin/env node
-'use strict';
-console.log('adsfs', process.argv.length);
+'use strict'
+console.log('adsfs', process.argv.length)
 
 // process.argv = ['node', 'yourscript.js', ...]
 // First custom argument is 2
-const NR_OF_ARGUMENTS_REQUIRED = 2;
+const NR_OF_ARGUMENTS_REQUIRED = 2
 if ((process.argv.length - 2) < NR_OF_ARGUMENTS_REQUIRED) {
-	console.log('Usage: node app.js [filename] [JSON key]');
-	console.log('  E.g: node app.js data/test.json projects.562e3d6dfd53820c00e98bd7');
+	console.log('Usage: node app.js [filename] [JSON key]')
+	console.log('  E.g: node app.js data/test.json projects.562e3d6dfd53820c00e98bd7')
 }
 else {
 	//.. do run
@@ -374,74 +374,74 @@ const processCommandLineArguments = function () {
 		{ key: 'inputFile', default: 'companies.csv', required: true },
 		{ key: 'workTitle', default: 'digital marketing' },
 		{ key: 'location', default: 'Sweden' },
-	];
-	const argvCollection = {};
+	]
+	const argvCollection = {}
 	for (var i = 2; i < Math.max(process.argv.length, ARGUMENTS.length+2); i++) {
-		argvCollection[ARGUMENTS[i-2].key] = process.argv[i] || ARGUMENTS[i-2].default;
-	};
-	return argvCollection;
-};
+		argvCollection[ARGUMENTS[i-2].key] = process.argv[i] || ARGUMENTS[i-2].default
+	}
+	return argvCollection
+}
 
 // process.argv -> name/value collection (OLD)
 var processCommandLine = function (defaultOptions) {
-	var options = _.merge({}, defaultOptions);
+	var options = _.merge({}, defaultOptions)
 	for (var i = 2; i < process.argv.length; i++) {
-		var arg = process.argv[i];
+		var arg = process.argv[i]
 		if (arg.indexOf('=') !== -1) {
-			var param = arg.split('=');
-			options[param[0]] = param[1];
+			var param = arg.split('=')
+			options[param[0]] = param[1]
 		}
-	};
-	return options;
-};
+	}
+	return options
+}
 
 // process.argv -> two arrays of files/options
 var processCommandLineArguments = function () {
-	var result = { files: [], options: [] };
+	var result = { files: [], options: [] }
 	for (var i = 1; i < process.argv.length; i++) {
 		if (process.argv[i][0] === '-') {
-			result.options.push(process.argv[i].substr(1));
+			result.options.push(process.argv[i].substr(1))
 		}
 		else {
-			result.files.push(process.argv[i]);
+			result.files.push(process.argv[i])
 		}
 	}
-	return result;
-};
+	return result
+}
 
 const openFile = function (filename, cb) {
-	const fs = require('fs');
+	const fs = require('fs')
 	fs.readFile(filename, 'utf8', function (err, data) {
 		if (err) {
-			throw err;
+			throw err
 		}
 		else if (cb) {
-			console.log('OK: ' + filename);
-			cb(data);
+			console.log('OK: ' + filename)
+			cb(data)
 		}
-	});
-};
+	})
+}
 
-var fs = require('fs');
+var fs = require('fs')
 fs.writeFile('/tmp/test', 'Hey there!', function(err) {
 	if(err) {
-		return console.log(err);
+		return console.log(err)
 	}
 
-	console.log('The file was saved!');
+	console.log('The file was saved!')
 }); 
 
 
 ## Mongoose
 
 	// Remove Mongoose warnings:
-	mongoose.Promise = Promise;
-	mongoose.connect(config.db, { useMongoClient: true });
+	mongoose.Promise = Promise
+	mongoose.connect(config.db, { useMongoClient: true })
 
 ### Model
 
-	const mongoose = require('mongoose');
-	const Schema = mongoose.Schema;
+	const mongoose = require('mongoose')
+	const Schema = mongoose.Schema
 
 	// a Task consists of one or more SubSchemas
 	const SubSchema = new Schema({
@@ -449,7 +449,7 @@ fs.writeFile('/tmp/test', 'Hey there!', function(err) {
 		properties: {},
 		elementSelector: String, // JQuery-style selector e.g. '#button-save'
 		popoverClasses: String, // 'left', 'right', etc
-	});
+	})
 
 	const ThingSchema = new Schema({
 		FORBIDDEN: id /_id,
@@ -466,9 +466,9 @@ fs.writeFile('/tmp/test', 'Hey there!', function(err) {
 		manySubSchemas: [SubSchema],
 		topicArray: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
 		anything: {},
-	});
+	})
 
-	mongoose.model('Thing', ThingSchema);
+	mongoose.model('Thing', ThingSchema)
 
 #### Schema Types
 
@@ -480,14 +480,14 @@ http://mongoosejs.com/docs/schematypes.html
 
 	// Statics: On the Collection/Class
 	TaskSchema.statics.getOrderedList = function (group, callback) {
-		var Task = mongoose.model('Task');
-		Task.find({ group: group }, null, { sort: { position: 1, name: 1 } }, callback);
-	};
+		var Task = mongoose.model('Task')
+		Task.find({ group: group }, null, { sort: { position: 1, name: 1 } }, callback)
+	}
 
 	// Methods: On the Object/Instance
 	TaskSchema.methods.slug = function (task) {
-		return this.name.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase();
-	};
+		return this.name.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase()
+	}
 
 #### Virtual properties
 
@@ -495,13 +495,13 @@ Only synchronous - otherwise use Model.methods
 
 	// Get
 	ArticleSchema.virtual('date').get(function () {
-		return this._id.getTimestamp();
-	});
+		return this._id.getTimestamp()
+	})
 
 	// Set
 	ArticleSchema.virtual('date').set(function (newDate) {
-		this.otherDate = newDate;
-	});
+		this.otherDate = newDate
+	})
 
 #### toJSON and toObject
 
@@ -515,30 +515,30 @@ Override JSON output:
 		toObject: {
 			virtuals: true,
 			transform: function (doc, ret) {
-				delete ret._id;
+				delete ret._id
 			},
 		},
 		toJSON: {
 			virtuals: true,
 			transform: function (doc, ret) {
-				delete ret._id;
+				delete ret._id
 			},
 		}
-	});
+	})
 
 Alternative way:
 
 	UserSchema.methods.toJSON = function() {
-		let obj = this.toObject();
+		let obj = this.toObject()
 		// do whatever
-		return obj;
+		return obj
 	}
 
 NOTE: toObject affects save too
 
 What does this do?
 
-	AccountSchema.set('toJSON', { getters: true, virtuals: true });
+	AccountSchema.set('toJSON', { getters: true, virtuals: true })
 
 #### Middleware: pre/post hooks
 
@@ -550,10 +550,10 @@ doc.remove
 	// also: 'save'
 	MySchema.pre('validate', function (next) {
 		if ('invalid' == this.name) {
-			return next(new Error('#sadpanda'));
+			return next(new Error('#sadpanda'))
 		}
-		next();
-	});
+		next()
+	})
 
 Collection.count
 Collection.find
@@ -564,14 +564,14 @@ Collection.insertMany
 Collection.update
 
 	PlanSchema.pre('find', function (next) {
-		console.log('PlanSchema.pre.find', ...arguments);
-		next();
-	});
+		console.log('PlanSchema.pre.find', ...arguments)
+		next()
+	})
 
 	PlanSchema.post('find', function (results, next) {
-		console.log('PlanSchema.post.find', ...arguments);
-		next();
-	});
+		console.log('PlanSchema.post.find', ...arguments)
+		next()
+	})
 
 #### Validations
 
@@ -582,7 +582,7 @@ Collection.update
 	required: function() { return this.bacon > 3; }
 	validate: {
 		validator: function (v) {
-			return /\d{3}-\d{3}-\d{4}/.test(v);
+			return /\d{3}-\d{3}-\d{4}/.test(v)
 		},
 		message: '{VALUE} is not a valid phone number!'
 	},
@@ -597,28 +597,28 @@ MyModel
 	.limit(20)
 	//.lean()
 	.exec(function (err, results) {
-	});
+	})
 
 #### findById
 
-User.findById(req.params.id).lean().exec(function (err, user) {});
+User.findById(req.params.id).lean().exec(function (err, user) {})
 
 #### findOne
 
 Restaurant.findOne( {'_id' : restaurantId }, function (err, restaurant) {	
-});
+})
 
 #### Wildcard search
 
-query['locationDetails.original'] = new RegExp(req.query.city, 'ig');
+query['locationDetails.original'] = new RegExp(req.query.city, 'ig')
 
 Starts with:
 
-	User.find({ username: new RegExp('^' + userName) });
+	User.find({ username: new RegExp('^' + userName) })
 
 Case insensitive:
 
-	User.find( { name: { $regex: new RegExp(nameString, 'i') } } );
+	User.find( { name: { $regex: new RegExp(nameString, 'i') } } )
 
 #### Nested
 
@@ -626,7 +626,7 @@ const query = {
 	'positions.company': req.crudify.company._id
 }
 
-query['locationDetails.original'] = new RegExp(req.query.city, 'ig');
+query['locationDetails.original'] = new RegExp(req.query.city, 'ig')
 
 #### Numeric values
 
@@ -636,7 +636,7 @@ query['locationDetails.original'] = new RegExp(req.query.city, 'ig');
 
 #### Value exists
 
-	{ locationDetails: { $exists: false }, location: { $exists: true, $ne: '' } };
+	{ locationDetails: { $exists: false }, location: { $exists: true, $ne: '' } }
 	{ quantity: { $exists: true, $nin: [5, 15] } } // qty exists but isn't 5 or 15
 	{ names: null } // find where 'names' is null or undefined
 
@@ -661,20 +661,20 @@ query['locationDetails.original'] = new RegExp(req.query.city, 'ig');
 
 #### Date search
 
-	if (req.query.after) filter.dateCreated = { $gte: new Date(req.query.after) };
-	if (req.query.days) filter.dateCreated = { $gte: new Date((new Date()).getTime() + req.query.days*-24*60*60*1000) };
+	if (req.query.after) filter.dateCreated = { $gte: new Date(req.query.after) }
+	if (req.query.days) filter.dateCreated = { $gte: new Date((new Date()).getTime() + req.query.days*-24*60*60*1000) }
 
 	const query = {
 		dateCreated: {
 			$gte: new Date(year,  month,  1),
 			$lt:  new Date(year2, month2, 1)
 		}
-	};
+	}
 
 #### Search in arrays
 
 	// As favouriteFoods is a simple array of strings, you can just query that field directly:
-	PersonModel.find({ favouriteFoods: "sushi" }, ...);
+	PersonModel.find({ favouriteFoods: "sushi" }, ...)
 
 	{ price: { $in: [5, 15] } } // price is either 5 or 15
 	{ price: { $nin: [5, 15] } } // price is neither 5 nor 15
@@ -695,22 +695,22 @@ $elemMatch:
 populate(fieldName)
 
 	req.crudify[modelName].populate(propertyName, '-_id -__v', (err, result) => {
-		next();
-	});
+		next()
+	})
 
 	BugUpdate.find(query).sort(sorting).limit(200).populate('bug').exec(function (err, bugUpdates) {
 	})
 
 ### Create new
 
-	MyModel.create(dataObj, callback);
+	MyModel.create(dataObj, callback)
 
-	let notification = new Notification(data);
-	notification.save(cb);
+	let notification = new Notification(data)
+	notification.save(cb)
 
 ### Update/Upsert
 
-account.markModified('subscriptions');
+account.markModified('subscriptions')
 
 db.products.update( { item: "book", quantity: { $gt: 5 } }, { $set: { x: 6 }, $inc: { y: 5} } )
 db.projects.update( { _id: ObjectId("52e57805d87d0e2618000003") }, { $set: { name: 'Hola Bandoola' } } )
@@ -723,7 +723,7 @@ db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'dateLastLogin': 
 db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'role': 'admin' } } )
 db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'tags': ['beta2.0'] } } )
 
-db.posts.insert({ title: "Hello World", text: "yoda yoda" });
+db.posts.insert({ title: "Hello World", text: "yoda yoda" })
 db.projects.save() // update or insert
 
 db.projects.remove({}) // NOTE: Removes all!
@@ -732,17 +732,17 @@ db.projects.remove({}) // NOTE: Removes all!
 
 Upsert: because you probably always want to update with latest properties
 
-	UserModel.update({ user: req.body.user }, { $set: userNewObj }, { upsert: true }, function (err, rowsUpdated) {});
+	UserModel.update({ user: req.body.user }, { $set: userNewObj }, { upsert: true }, function (err, rowsUpdated) {})
 
 https://github.com/drudge/mongoose-findorcreate
 
-	const findOrCreate = require('mongoose-findorcreate');
-	PersonSchema.plugin(findOrCreate);
+	const findOrCreate = require('mongoose-findorcreate')
+	PersonSchema.plugin(findOrCreate)
 
 	Person.findOrCreate({ name: { $regex: new RegExp(newPerson.name, 'i') } }, newPerson, function (err, result, wasCreated) {
-		req.crudify = { err, result, person: result };
-		next();
-	});
+		req.crudify = { err, result, person: result }
+		next()
+	})
 
 	Person.findOrCreate({
 			name: { $regex: new RegExp(newPerson.name, 'i') }
@@ -750,22 +750,22 @@ https://github.com/drudge/mongoose-findorcreate
 		newPerson,
 		function (err, result, wasCreated) {
 			console.log(`wasCreated:`, { wasCreated, err, result })
-			req.crudify = { err, result, person: result };
-			next();
-	});
+			req.crudify = { err, result, person: result }
+			next()
+	})
 
 // findOrCreate, then update old record
 	Bug.findOrCreate({ githubIssueId: data.issue.id }, bugObj, function (err, bug, wasCreated) {
 		if (wasCreated) {
 			// New bug
-			cb(err, data, bug);
+			cb(err, data, bug)
 		}
 		else {
 			// Update existing bug
-			_.merge(bug, bugObj);
+			_.merge(bug, bugObj)
 			bug.save(function (err, bug2) {
-				cb(err, data, bug2);
-			});
+				cb(err, data, bug2)
+			})
 		}
 	})
 
@@ -774,32 +774,32 @@ https://github.com/drudge/mongoose-findorcreate
 	User.findOne({ twitterHandle: twitterUser.screen_name }, (err, foundUser) => {
 		if (foundUser) {
 			// Update existing
-			foundUser.imageUrl = foundUser.imageUrl || userData.imageUrl;
-			foundUser.save(cb);
+			foundUser.imageUrl = foundUser.imageUrl || userData.imageUrl
+			foundUser.save(cb)
 		}
 		else {
 			// Create new
-			User.create(userData, cb);
+			User.create(userData, cb)
 		}
-	});
+	})
 
 #### Upsert/Update
 
 http://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-mongoose
 
-	var contact = new Contact({ phone: request.phone, status: request.status });
+	var contact = new Contact({ phone: request.phone, status: request.status })
 
 // Convert the Model instance to a simple object using Model's 'toObject' function to prevent weirdness like infinite looping
 
-	var upsertData = contact.toObject();
+	var upsertData = contact.toObject()
 
 // Delete the _id property, otherwise Mongo will return a "Mod on _id not allowed" error
 
-	delete upsertData._id;
+	delete upsertData._id
 
 // Do the upsert, which works like this: If no Contact document exists with _id = contact.id, then create a new doc using upsertData. Otherwise, update the existing doc with upsertData
 
-	Company.update({ _id: position.company._id }, position.company, { upsert: true }, cb);
+	Company.update({ _id: position.company._id }, position.company, { upsert: true }, cb)
 
 
 #### mapReduce
@@ -808,24 +808,24 @@ http://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-
 		//query: { createdByUser: _.get(req, 'user.d.uid') },
 		sorting: { dateCreated: 1 },
 		map: function () {
-			//consolelog('MAP', this, arguments);
+			//consolelog('MAP', this, arguments)
 			emit(this.name, 1)
 		},
 		reduce: function (k, vals) {
-			//consolelog('REDUCE', this, arguments);
+			//consolelog('REDUCE', this, arguments)
 			return vals.length
 		},
 		// finalize: function
 		out: { replace: 'createdCollectionNameForResults' },
 		verbose: true,
-	};
+	}
 	DataSource.mapReduce(mapReduceOperation, function (err, model, stats) {
 		console.log('map reduce:', {err, model, stats})
 		model.find().exec(function (err, result) { //.where('value').gt(10)
-			console.log({ err, result });
-			req.crudify = req.crudify || { err, result };
-			next();
-		});
+			console.log({ err, result })
+			req.crudify = req.crudify || { err, result }
+			next()
+		})
 	})
 
 
@@ -880,41 +880,42 @@ mongorestore --db weld-live-20160113 heroku_app21501008/
 
 ## PostgreSQL - postgres sql
 
-See SQL notes
+See SQL.md
 
 
 ## Firebase
 
 https://www.firebase.com/docs/web/api/
 
-firebaseRef.set(newObject, callback) // callback(err) - write/replace
-firebaseRef.update(partialObject, callback) // merge/update existing
-newRef = firebaseRef.push(newChild, callback) // use newRef.key() to get new key
-firebaseRef.remove(callbackAfterDeleted) // same as: set(null)
-firebaseRef.key()
+	const firebaseRef = new Firebase('https://<your instance>.firebaseio.com/branch/sub-branch')
 
-firebaseRef.authWithCustomToken
-firebaseRef.child
-firebaseRef.delete
-firebaseRef.off
-firebaseRef.on
-firebaseRef.once
+* firebaseRef.set(newObject, callback) // callback(err) - write/replace
+* firebaseRef.update(partialObject, callback) // merge/update existing
+* newChildRef = firebaseRef.push(newChild, callback) // use newChildRef.key()/.key to get new key
+* firebaseRef.remove(callbackAfterDeleted) // same as: set(null)
+* firebaseRef.key() -> .key
+* firebaseRef.authWithCustomToken
+* firebaseRef.child
+* firebaseRef.delete
+* firebaseRef.off
+* firebaseRef.on
+* firebaseRef.once
 
-firebaseRef.once('value', function (snapshot) {
-	// snapshot.exportVal() has '.priority', snapshot.val() does not
-	var newProject = _.cloneDeep(snapshot.exportVal());
-}, function (err) {
-	// code to handle read error
-});
+Events: on/once
 
+	firebaseRef.once('value', function (snapshot) {
+		// snapshot.exportVal() has '.priority', snapshot.val() does not
+		var newProject = _.cloneDeep(snapshot.exportVal())
+	}, function (err) {
+		// code to handle read error
+	})
 
-var ref = new Firebase('https://<your instance>.firebaseio.com/messages');
+queryRef
 
-var queryRef = ref.orderBy('created').startAt(Firebase.ServerValue.TIMESTAMP);
-
-queryRef.on('child_added', function(snap) {
-	console.log('queryRef.child_added', snap.val());
-});
+	var queryRef = ref.orderBy('created').startAt(Firebase.ServerValue.TIMESTAMP)
+	queryRef.on('child_added', function(snap) {
+		console.log('queryRef.child_added', snap.val())
+	})
 
 
 ### AngularFire
@@ -967,13 +968,13 @@ Init:
 		name: 'myappname',
 		keys: ['secret'],
 		maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
-	}));
-	server.use(passport.initialize());
-	server.use(passport.session());
+	}))
+	server.use(passport.initialize())
+	server.use(passport.session())
 
 Routes:
-	server.get('/login/twitter', passport.authenticate('twitter'));
-	server.get('/login/twitter/return', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/?loginFailed=true' }));
+	server.get('/login/twitter', passport.authenticate('twitter'))
+	server.get('/login/twitter/return', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/?loginFailed=true' }))
 
 Access user:
 	req.session, req.sessionID
@@ -992,7 +993,7 @@ sudo certbot certonly --manual
 	NOTE: use full domain incl "www."
 
 Set up challenge/response on server
-	server.get('/.well-known/acme-challenge/*', (req, res) => res.send('LONGWEIRDSTRING'));
+	server.get('/.well-known/acme-challenge/*', (req, res) => res.send('LONGWEIRDSTRING'))
 
 Files end up in in /etc/letsencrypt/live/MYDOMAIN/
 	`privkey.pem`  : the private key for your certificate.

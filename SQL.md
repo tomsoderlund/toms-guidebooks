@@ -1,9 +1,11 @@
 ## PostgreSQL
 
 To have launchd start postgresql now and restart at login:
+
 	brew services start postgresql
 
 Or, if you don't want/need a background service you can just run:
+
 	pg_ctl -D /usr/local/var/postgres start
 
 port 5432
@@ -14,7 +16,7 @@ port 5432
 
 	\q to quit/exit
 
-\du
+	\du
 
 
 ## URL
@@ -43,36 +45,56 @@ GRANT ALL PRIVILEGES ON DATABASE my_database TO YOUR-USER-NAME;
 
 ### Data types
 
-serial: same as 'int' (use for relations) except that PostgreSQL will automatically generate and populate values.
-
-char(n): padded
-varchar(n)
-text
-
-smallint: 2-byte signed integer that has a range from -32,768 to 32,767.
-int: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
-
-float(n): floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
-real or float8: double-precision (8-byte) floating-point number.
-numeric or numeric(p,s): real number with p digits with s number after the decimal point. The numeric(p,s) is the exact number.
-
-timestamptz: (DEFAULT now()) timezone-aware timestamp data type. It is the abbreviation for timestamp with time zone. PostgreSQL’s extension
-timestamp: stores both date and time values.
-date: stores the date values only.
-time: stores the time of day values.
-interval: stores periods of time.
-
-bytea: blob binary
-
-json, jsonb
+- `serial`: same as 'int' (use for relations) except that PostgreSQL will automatically generate and populate values.
+- Text:
+	- `char(n)`: padded
+	- `varchar(n)`
+	- `text`
+- Numbers:
+	- `smallint`: 2-byte signed integer that has a range from -32,768 to 32,767.
+	- `int`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
+	- `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
+	- `real` or float8: double-precision (8-byte) floating-point number.
+	- `numeric` or numeric(p,s): real number with p digits with s number after the decimal point. The numeric(p,s) is the exact number.
+- Time & Date:
+	- `timestamptz`: (DEFAULT now()) timezone-aware timestamp data type. It is the abbreviation for timestamp with time zone. PostgreSQL’s extension
+	- `timestamp`: stores both date and time values.
+	- `date`: stores the date values only.
+	- `time`: stores the time of day values.
+	- `interval`: stores periods of time.
+- Binary & JSON:
+	- `bytea`: blob binary
+	- `json`, jsonb
 
 
 ### Queries
 
 client.query(sqlString, valuesArray)
-  .then()
+	.then()
 
 https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
+
+### From JavaScript to SQL
+
+Insert:
+
+	const createSqlInsert = (tableName, object) => {
+	  const fieldNames = Object.keys(object).join(', ')
+	  const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
+	  const sql = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
+	  const values = Object.values(object)
+	  return { sql, values }
+	}
+
+Update:
+
+	const createSqlUpdate = (tableName, query, newValues) => {
+	  const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
+	  const queryFieldName = Object.keys(query)[0]
+	  const sql = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
+	  const values = [Object.values(query)[0], ...Object.values(newValues)]
+	  return { sql, values }
+	}
 
 ### SQL syntax
 
@@ -87,8 +109,8 @@ update domains set content_last_update = null, content_previous_update = null wh
 #### Joins
 
 SELECT city, temp_lo, temp_hi, prcp, date, location
-  FROM weather, cities
-  WHERE city = name;
+	FROM weather, cities
+	WHERE city = name;
 
 SELECT * FROM weather INNER JOIN cities ON (weather.city = cities.name);
 
@@ -106,6 +128,11 @@ ADD COLUMN page character varying(253);
 
 ALTER TABLE domains
 DROP COLUMN "change_fraction";
+
+ALTER TABLE domain_updates
+ADD COLUMN "sai_text" real,
+ADD COLUMN "sai_visual" real;
+
 
 
 

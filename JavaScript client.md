@@ -611,6 +611,7 @@ var a = fruits.indexOf("Apple")
 
 var fruits = ["Banana", "Orange", "Apple", "Mango"]
 fruits.sort()
+.sort((a, b) => a - b)
 array.sort(function (a, b) { return a > b })
 array.sort(function (a,b) { return parseFloat(a.price) - parseFloat(b.price) })
 
@@ -1226,8 +1227,8 @@ let promise = new Promise(function(resolve, reject) {
 	!err ? resolve(value) : reject(err)
 })
 
-const returnPromise = async () => new Promise(function(resolve, reject) {
-	resolve('start of new Promise');
+const promiseFunction = () => new Promise(function(resolve, reject) {
+	resolve('a value')
 })
 
 // Pattern 1: catch
