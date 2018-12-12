@@ -56,8 +56,9 @@ body {
 	border-radius: 0.1em;
 }
 
-## margin:auto
+## Nice & Simple CSS objects
 
+/* Nice & simple: Main - margin:auto */
 main {
   margin: 0.5em auto;
   width: 80%;
@@ -70,8 +71,6 @@ main {
     max-width: none;
   }
 }
-
-## Nice & Simple CSS objects
 
 /* Nice & simple: Links */
 a {

@@ -4,8 +4,14 @@
 
 https://console.aws.amazon.com/iam/
 
+Users -> Access Keys (multiple)
+
+Simulate: Users -> Permissions -> arrow on policy
+
 GetFriday
 s3_website
+
+ACL = Access Control List
 
 1. Attach a User Policy: https://console.aws.amazon.com/iam/home
 

@@ -64,6 +64,8 @@ heroku addons:create heroku-postgresql:hobby-dev
 heroku access:add info@weld.io # collaborator first, then owner
 heroku apps:transfer info@weld.io # owner
 
+heroku features:enable preboot # double servers
+
 git push heroku master
 
 heroku rename NEWNAME #also renames Heroku-Git remote

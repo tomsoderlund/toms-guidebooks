@@ -351,9 +351,8 @@ MIN_VALUE + Math.random() * (MAX_VALUE - MIN_VALUE) // min to max
 Math.floor(Math.random() * MAX_VALUE) // integer 0-MAX_VALUE
 (Date.now() + '-' + Math.floor(Math.random() * 1000)) // Serial e.g. '1464642047155-207'
 
-var getRandomFromArray = function (array) {
-	return array[Math.floor(Math.random() * array.length)]
-}
+const getRandomNumber = (max = 20) => Math.floor(Math.random() * max)
+const getRandomFromArray = array => array[getRandomNumber(array.length)]
 
 Math.round()
 Math.min, Math.max
@@ -1268,30 +1267,30 @@ let [items, contactlist, itemgroup] = await Promise.all([
 		})
 		.catch(cb)
 
-  fetch(`${config.appUrl}api/domains`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ domains: this.state.domains.split('\n') })
-  })
-    .then(async res => {
-      if (res.ok) {
-        return res.json()
-      }
-      else {
-        const json = await res.json()
-        throw new Error(json.message)
-      }
-    })
-    .then(json => {
-      this.setState({ statusMessage: `${json.rowCount} domains created` })
-      this.setState({ domains: '' })
-    })
-    .catch(err => {
-      this.setState({ errorMessage: err.message })
-    })
+	fetch(`${config.appUrl}api/domains`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ domains: this.state.domains.split('\n') })
+	})
+		.then(async res => {
+			if (res.ok) {
+				return res.json()
+			}
+			else {
+				const json = await res.json()
+				throw new Error(json.message)
+			}
+		})
+		.then(json => {
+			this.setState({ statusMessage: `${json.rowCount} domains created` })
+			this.setState({ domains: '' })
+		})
+		.catch(err => {
+			this.setState({ errorMessage: err.message })
+		})
 
 
 ### Lodash in ES6 ("lodash6")
@@ -2168,6 +2167,12 @@ Comparison:
 	// All props
 	<Button {...props} />
 
+#### styled-components
+
+	const Slider = styled.input`
+		background: none;
+		flex: 2;`
+
 #### styled-jsx
 
 https://github.com/zeit/styled-jsx
@@ -2218,32 +2223,44 @@ const DateValues = ({metric, dateValues, handleAdd, handleRemove}) => {
 
 export default DateValues
 
+#### Fragments
+
+	<React.Fragment>
+	</React.Fragment>
+
+or
+
+	<></>
+
 #### Lifecycle methods
 
-* render
-* !constructor(props) (ES6) // same as getInitialState (React.createClass)
-* !componentWillReceiveProps(props) // When URL changes, client-side
-* getInitialProps (only for Next.js pages)
-* getDefaultProps // only supported for classes created using React.createClass. Use a static property to define defaultProps instead.
-* componentWillMount
-* componentDidMount()
-* componentWillUnmount
-* shouldComponentUpdate
-* componentWillUpdate
-* componentDidUpdate
+* Rendering:
+	* `render`
+* Initialize:
+	* `constructor(props)` (ES6) // same as getInitialState (React.createClass)
+	* `componentWillReceiveProps(props)` // When URL changes, client-side
+	* `getInitialProps` (only for Next.js pages)
+	* `getDefaultProps` // only supported for classes created using React.createClass. Use a static property to define defaultProps instead.
+* Mounting:
+	* `componentWillMount`
+	* `componentDidMount` // client-side only
+	* `componentWillUnmount`
+* Updating:
+	* `shouldComponentUpdate`
+	* `componentWillUpdate`
+	* `componentDidUpdate`
 
-### Data
+### Data: props and state
 
-* this.props is immutable data - use a lot.
-* this.state is mutable data - keep it minimal.
+* `this.props` is immutable data - use a lot.
+	* `this.props.children`: child elements.
+* `this.state` is mutable data - keep it minimal.
 
-* this.props.children: child elements.
+this.setState({ loading: false })
 
 <ListComponent items={this.state.list} remove={this.handleRemoveItem.bind(this)} />
 
 <div dangerouslySetInnerHTML={{ __html: article.content }} />
-
-this.setState({ loading: false })
 
 https://medium.freecodecamp.com/where-do-i-belong-a-guide-to-saving-react-component-data-in-state-store-static-and-this-c49b335e2a00
 
@@ -2255,7 +2272,7 @@ Firebase + React: re-base
 
 Optional event/props:
 
-	{onAdd ? <button className="icon add" onClick={onAdd.bind(undefined, person)}>+</button> : null}
+	{onAdd ? <button className='icon add' onClick={onAdd.bind(undefined, person)}>+</button> : null}
 
 
 ### Gatsby.js

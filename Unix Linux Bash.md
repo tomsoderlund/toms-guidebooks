@@ -1,5 +1,4 @@
-UNIX SHORT GUIDEBOOK MANUAL
-
+# UNIX Short Guidebook/Manual
 
 BASH SCRIPTS
 
@@ -230,14 +229,22 @@ tar xvfpz file_name.tar.gz
 
 Autostart: /etc/init.d
 
-ENCRYPTION
 
-https://gist.github.com/colinstein/de1755d2d7fbe27a0f1e
+## Encryption
 
-https://gist.github.com/colinstein/de1755d2d7fbe27a0f1e
+	# generate a 2048-bit RSA key and store it in key.txt
+	openssl genrsa -out key.txt 2048
+
+	# encrypt "hello world" using the RSA key in key.txt
+	echo "hello world" | openssl rsautl -inkey key.txt -encrypt > encryptedFile.bin
+
+	# decrypt the message and output to stdout
+	openssl rsautl -inkey key.txt -decrypt < encryptedFile.bin
+
+Longer guide: https://gist.github.com/colinstein/de1755d2d7fbe27a0f1e
 
 
-DNS domain
+## DNS domain
 
 Flush dns:
 dscacheutil -flushcache
@@ -251,94 +258,94 @@ nslookup weld.io
 nslookup weld.io SERVER-IP
 
 
-TEXT FILE MANIPULATION
+# Text File Manipulation
 
-grep
-awk
+	grep
+	awk
 
-# Only show lines 4 chars
-awk '{ if (length($0) > 4) print }' yourfile > your_output_file.txt
+	# Only show lines 4 chars
+	awk '{ if (length($0) > 4) print }' yourfile > your_output_file.txt
 
 
-# BATCH FILES
+# Batch Files
 
 ## Parameters
 
-echo It is a $1 day
+	echo It is a $1 day
 
-STR="Hello World!"
-echo $STR
+	STR="Hello World!"
+	echo $STR
 
-#!/usr/bin/env bash
+	#!/usr/bin/env bash
 
-if [ "$1" = "foo" ]; then
-	echo FOO
-elif [ "$1" = "bar" ]; then
-	echo BAR
-else
-	echo none
-fi
+	if [ "$1" = "foo" ]; then
+		echo FOO
+	elif [ "$1" = "bar" ]; then
+		echo BAR
+	else
+		echo none
+	fi
 
-if [ "$1" = "Either" ] || [ "$1" = "Or" ]; then
-fi
+	if [ "$1" = "Either" ] || [ "$1" = "Or" ]; then
+	fi
 
-if [[ -z "$1" ]]; then
-	echo "empty"
-else
-	echo "full"
-fi
+	if [[ -z "$1" ]]; then
+		echo "empty"
+	else
+		echo "full"
+	fi
 
-large_string=abc
-substring=ab
-if ! [ "${large_string/$substring}" = "$large_string" ]; then
-	echo "${substring} was found in ${large_string}"
-else
-	echo "${substring} is not in ${large_string}"
-fi
+	large_string=abc
+	substring=ab
+	if ! [ "${large_string/$substring}" = "$large_string" ]; then
+		echo "${substring} was found in ${large_string}"
+	else
+		echo "${substring} is not in ${large_string}"
+	fi
 
 
 ## Loops
 
-for i in $( ls ); do
-	echo item: $i
-done
+	for i in $( ls ); do
+		echo item: $i
+	done
 
-sleep 1 # wait 1 second
+	sleep 1 # wait 1 second
 
 ## Functions
 
-function myFunction {
-    echo $1 
-}  
-myFunction Hello
+	function myFunction {
+	    echo $1 
+	}  
+	myFunction Hello
 
-function myFunctionOneLine { echo $1 }
-myFunctionOneLine Hello
+	function myFunctionOneLine { echo $1 }
+	myFunctionOneLine Hello
 
 
-MAC OS X .COMMAND FILES
+# MAC OS X .COMMAND FILES
 
-#!/usr/bin/env bash
+	#!/usr/bin/env bash
 
-# Move Terminal Window to top-right
-osascript -e 'tell application "Terminal"' \
-		  -e 'set bounds of front window to {480,1,1280,400}' \
-		  -e 'end tell'
+	# Move Terminal Window to top-right
+	osascript -e 'tell application "Terminal"' \
+			  -e 'set bounds of front window to {480,1,1280,400}' \
+			  -e 'end tell'
 
-# Move Terminal Window to bottom-left
-osascript -e 'tell application "Terminal"' \
-		  -e 'set bounds of front window to {1,400,600,700}' \
-		  -e 'end tell'
-		
-# Change Terminal theme
-osascript -e 'tell application "Terminal" to set current settings of front window to settings set "Ocean"'
+	# Move Terminal Window to bottom-left
+	osascript -e 'tell application "Terminal"' \
+			  -e 'set bounds of front window to {1,400,600,700}' \
+			  -e 'end tell'
+			
+	# Change Terminal theme
+	osascript -e 'tell application "Terminal" to set current settings of front window to settings set "Ocean"'
 
-osascript -e "ignoring application responses"
-osascript -e "end ignoring"
+	osascript -e "ignoring application responses"
+	osascript -e "end ignoring"
 
-osascript -e "tell application \"$appname\" to quit with saving"
-osascript -e "tell application \"System Events\" to return every application process whose (name $is_contains \"$arg\" or short name $is_contains \"$arg\" or title $is_contains \"$arg\" or displayed name $is_contains \"$arg\")"`
-osascript -e "tell application \"System Events\" to return every application process whose name $is_contains \"$arg\""`
+	osascript -e "tell application \"$appname\" to quit with saving"
+	osascript -e "tell application \"System Events\" to return every application process whose (name $is_contains \"$arg\" or short name $is_contains \"$arg\" or title $is_contains \"$arg\" or displayed name $is_contains \"$arg\")"`
+	osascript -e "tell application \"System Events\" to return every application process whose name $is_contains \"$arg\""`
 
 
 
@@ -352,7 +359,7 @@ cd "subfolder"
 source ~/.rvm/environments/ruby-1.9.2-p290
 source ~/.rvm/environments/ruby-1.8.7-p352
 
-# EXAMPLE
+# Example
 
 	#!/usr/bin/env bash
 

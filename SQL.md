@@ -134,9 +134,9 @@ Note: `LEFT` refers to the left table in `ON` statement:
 	ADD COLUMN "sai_text" real,
 	ADD COLUMN "sai_visual" real;
 
-	ALTER TABLE "public"."domains"
-	ADD COLUMN "visual_content_last_update" json,
-	ADD COLUMN "visual_content_previous_update" json;
+	ALTER TABLE "domains"
+	ADD COLUMN "visual_content_last_update" text,
+	ADD COLUMN "visual_content_previous_update" text;
 
 
 # SQLite
