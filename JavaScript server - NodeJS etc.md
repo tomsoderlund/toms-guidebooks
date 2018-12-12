@@ -116,8 +116,6 @@ npm update --save mongoose
 
 Tokens: https://www.npmjs.com/settings/YOUR-USER-NAME/tokens
 
-1d4b95ad-0f30-405f-91f8-86da8b96d80b
-old ad58bd63-4f39-4dbb-b737-31093c86f649
 
 https://docs.npmjs.com/getting-started/publishing-npm-packages
 
@@ -146,8 +144,8 @@ Rename package:
 	npm deprecate old-project-name@"<= put-latest-version-here" "WARNING: This project has been renamed to new-project-name. Install using new-project-name instead."
 	npm deprecate @weld-io/weld-static-assets@"<= 1.3.0" "WARNING: This project has been renamed to @weld-io/static-assets. Install using @weld-io/static-assets instead."
 
-	GitHub: no problem
-	Codeship: change git:// link
+GitHub: no problem
+Codeship: change git:// link
 
 ## Yarn
 
