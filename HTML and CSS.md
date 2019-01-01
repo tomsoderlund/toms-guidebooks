@@ -98,9 +98,10 @@ label input {
 }
 
 
-/* Nice & simple: Button - http://codepen.io/YOUR-USER-NAME/pen/qqyzqp */
+/* Nice & simple: Button - http://codepen.io/tomsoderlund/pen/qqyzqp */
 button,
 .button {
+  position: relative;
   background-color: dodgerblue;
   color: white;
   border-radius: 0.2em;
@@ -109,6 +110,7 @@ button,
   box-sizing: border-box;
   display: inline-block;
   cursor: pointer;
+  user-select: none;
   font-family: inherit;
   font-size: inherit;
   line-height: normal;
@@ -117,22 +119,20 @@ button,
   outline: none;
   padding: 0.6em;
   margin: 0.2em;
-  transition: all 0.2s;
-  min-width: 15em;
+  transition: all 0.1s;
+  /* min-width: 15em; */
 }
 button:hover:not(:disabled),
 .button:hover:not(:disabled),
 button:focus:not(:disabled),
 .button:focus:not(:disabled) {
   opacity: 0.8;
-  margin-top: 0.1em;
-  margin-bottom: 0.3em;
+  top: -0.1em;
   box-shadow: 0 0.2em 0.1em rgba(0, 0, 0, 0.2);
 }
 button:hover:active,
 .button:hover:active {
-  margin-top: 0.3em;
-  margin-bottom: 0.1em;
+  top: 0.1em;
   box-shadow: 0 0.02em 0.125em rgba(0, 0, 0, 0.4);
   transition: all 0.05s;
 }
@@ -145,7 +145,8 @@ a.button {
   text-decoration: none;
 }
 
-/* Nice & simple: Input and Dropdown Menu - http://codepen.io/YOUR-USER-NAME/pen/GNBbWz */
+
+/* Nice & simple: Input and Dropdown Menu - http://codepen.io/tomsoderlund/pen/GNBbWz */
 input,
 textarea,
 select {
@@ -161,7 +162,7 @@ select {
 	font-size: inherit;
 	padding: 0.6em;
 	margin: 0.2em;
-	min-width: 15em;
+	/* min-width: 15em; */
 }
 input::placeholder,
 textarea::placeholder {
@@ -216,7 +217,7 @@ select:disabled {
 }
 
 
-/* Nice & simple: Table - https://codepen.io/YOUR-USER-NAME/pen/mmZrRR */
+/* Nice & simple: Table - https://codepen.io/tomsoderlund/pen/mmZrRR */
 table {
   border-collapse: collapse;
 }
