@@ -141,8 +141,8 @@ Update:
 
 Rename package:
 
-	npm deprecate old-project-name@"<= put-latest-version-here" "WARNING: This project has been renamed to new-project-name. Install using new-project-name instead."
-	npm deprecate @weld-io/weld-static-assets@"<= 1.3.0" "WARNING: This project has been renamed to @weld-io/static-assets. Install using @weld-io/static-assets instead."
+	npm deprecate old-project-name@"<= last-version-with-old-name" "WARNING: This project has been renamed, now install new-project-name instead."
+	npm deprecate @weld-io/weld-crossplatform-libs@"<= 2.9.9" "WARNING: This project has been renamed, now install @weld-io/crossplatform-libs instead."
 
 GitHub: no problem
 Codeship: change git:// link

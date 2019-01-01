@@ -212,6 +212,10 @@ curl -i -H "Accept: application/json" -X POST -d "firstName=james" http://localh
 curl -i -H "Accept: application/json" -X PUT -d "data=test" http://localhost:9000/api/projects/52e96b4732d10c8b91000003
 curl -i -H "Accept: application/json" -X DELETE http://localhost:9000/persons/person/1  
 
+Multiple headers: multiple -H ""
+
+curl -H "accept-version: 2.0.0" http://localhost:9000/api/embed
+
 curl -X POST https://domain-production-eu-weld.herokuapp.com/api -H "Content-Type: application/json" -d \
 '{
    "domain": {

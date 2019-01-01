@@ -32,6 +32,9 @@ Heroku Admin:
 
 ## Create database
 
+Tip: table names as _singular_ (Company, Person) – https://stackoverflow.com/a/5841297/449227  
+e.g. `WHERE person.company_id = company.id`
+
 	CREATE DATABASE my_database;
 	GRANT ALL PRIVILEGES ON DATABASE my_database TO YOUR-USER-NAME;
 	\connect my_database
@@ -40,10 +43,11 @@ Heroku Admin:
 	\list: lists all the databases in Postgres
 	\connect: connect to a specific database
 	\dt: list the tables in the currently connected database
+	\du: list users
 
 ## Data types
 
-- `serial`: same as 'int' (use for relations) except that PostgreSQL will automatically generate and populate values.
+- `serial`: same as `int` (use for relations) except that PostgreSQL will automatically generate and populate values.
 - Text:
 	- `char(n)`: padded
 	- `varchar(n)`
@@ -53,9 +57,9 @@ Heroku Admin:
 	- `int`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
 	- `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
 	- `real` or float8: double-precision (8-byte) floating-point number.
-	- `numeric` or numeric(p,s): real number with p digits with s number after the decimal point. The numeric(p,s) is the exact number.
+	- `numeric` or `numeric(p,s)`: real number with p digits with s number after the decimal point. The `numeric(p,s)` is the exact number.
 - Time & Date:
-	- `timestamptz`: (DEFAULT now()) timezone-aware timestamp data type. It is the abbreviation for timestamp with time zone. PostgreSQL’s extension
+	- `timestamptz`: (`DEFAULT now()`) timezone-aware timestamp data type. It is the abbreviation for timestamp with time zone. PostgreSQL’s extension
 	- `timestamp`: stores both date and time values.
 	- `date`: stores the date values only.
 	- `time`: stores the time of day values.
@@ -77,21 +81,21 @@ https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node
 Insert:
 
 	const sqlInsert = (tableName, object) => {
-	  const fieldNames = Object.keys(object).join(', ')
-	  const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
-	  const sql = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
-	  const values = Object.values(object)
-	  return { sql, values }
+		const fieldNames = Object.keys(object).join(', ')
+		const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
+		const sql = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
+		const values = Object.values(object)
+		return { sql, values }
 	}
 
 Update:
 
 	const sqlUpdate = (tableName, query, newValues) => {
-	  const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
-	  const queryFieldName = Object.keys(query)[0]
-	  const sql = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
-	  const values = [Object.values(query)[0], ...Object.values(newValues)]
-	  return { sql, values }
+		const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
+		const queryFieldName = Object.keys(query)[0]
+		const sql = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
+		const values = [Object.values(query)[0], ...Object.values(newValues)]
+		return { sql, values }
 	}
 
 ### SQL syntax
@@ -118,6 +122,24 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 	SELECT * FROM weather LEFT OUTER JOIN cities ON (weather.city = cities.name);
 	SELECT domains.id, name, avg(sai) AS avg_sai FROM domains LEFT OUTER JOIN domain_updates ON (domains.id = domain_updates.domain_id) GROUP BY domains.id;
+
+## Create table
+
+	CREATE TABLE person (
+		id serial,
+		name varchar(128),
+		date_created timestamptz DEFAULT now(),
+		PRIMARY KEY (id),
+		UNIQUE (name)
+	);
+
+### Create a many-to-many relationship table
+
+	CREATE TABLE company_person (
+	  company_id int NOT NULL,
+	  person_id int NOT NULL
+	);
+	CREATE UNIQUE INDEX company_person_idx ON company_person(company_id,person_id);
 
 ## Modify table: add columns, remove columns
 

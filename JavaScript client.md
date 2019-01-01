@@ -1159,6 +1159,8 @@ let [one, two] = [1, 2]
 let {three, four} = {three: 3, four: 4}
 const { education: { degree:asNamedDegree } } = user
 console.log(asNamedDegree) //prints: Masters
+// Remove a property:
+const { children, ...propsWithoutChildren } = props
 
 // Arrow functions => (NOTE: doesn't have `this` or `arguments`, but bind() works for parameters)
 const doubleIt = a => a * 2 // similar to: var doubleIt = function (a) { return a * 2 }
@@ -1487,9 +1489,9 @@ _.mixin({ 'myOwnFunction': myOwnFunction })
 // Then use myOwnFunction:
 _(myArray).map('services').flatten().uniq().myOwnFunction()
 
-// allLength: on Array or Object
-module.exports.allLength = objectOrArray => objectOrArray.constructor === Array ? objectOrArray.length : 1
-// applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
+// objectLength: return length on Array or Object
+module.exports.objectLength = objectOrArray => objectOrArray.constructor === Array ? objectOrArray.length : 1
+// Apply function to either object or array of objects: applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
 module.exports.applyToAll = (func, objectOrArray) => objectOrArray.constructor === Array ? objectOrArray.map(func) : func(objectOrArray)
 _.mixin({ 'applyToAll': module.exports.applyToAll })
 // applyToAllAsync(func(obj, cb), callback(err, results), obj1) or applyToAll(func(obj, cb), callback(err, results), [obj1, obj2, ...])
@@ -2169,9 +2171,13 @@ Comparison:
 
 #### styled-components
 
-	const Slider = styled.input`
-		background: none;
-		flex: 2;`
+	import styled from 'styled-components'
+
+	const componentName = styled.div`
+		font-family: ${props => props.fontName};
+		color: ${weldTheme.blue};
+		background-color:  'palevioletred';
+	`
 
 #### styled-jsx
 
