@@ -1489,13 +1489,29 @@ _.mixin({ 'myOwnFunction': myOwnFunction })
 // Then use myOwnFunction:
 _(myArray).map('services').flatten().uniq().myOwnFunction()
 
+// wrapAsArray: always return Array
+module.exports.wrapAsArray = objectOrArray => objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
 // objectLength: return length on Array or Object
 module.exports.objectLength = objectOrArray => objectOrArray.constructor === Array ? objectOrArray.length : 1
-// Apply function to either object or array of objects: applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
+// applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
 module.exports.applyToAll = (func, objectOrArray) => objectOrArray.constructor === Array ? objectOrArray.map(func) : func(objectOrArray)
-_.mixin({ 'applyToAll': module.exports.applyToAll })
-// applyToAllAsync(func(obj, cb), callback(err, results), obj1) or applyToAll(func(obj, cb), callback(err, results), [obj1, obj2, ...])
-module.exports.applyToAllAsync = (func, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), func, callback)
+// applyToAllAsync(promiseFunction, obj1) or applyToAllAsync(promiseFunction, [obj1, obj2, ...])
+module.exports.applyToAllAsync = async (promiseFunction, objectOrArray) => new Promise(async (resolve, reject) => {
+  const objects = objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
+  let errors, values
+  for (let i = 0; i < objects.length; i++) {
+    try {
+      values = values || []
+      values.push(await promiseFunction(objects[i]))
+    } catch (err) {
+      errors = errors || []
+      errors.push(err)
+    }
+  }
+  resolve({ errors, values })
+})
+// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
+module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
 
 // includesSome(url, ['localhost', 'staging'])
 module.exports.includesSome = (parentObj, childObjects) => _.filter(childObjects, childObj => _.includes(parentObj, childObj))
