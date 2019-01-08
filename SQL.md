@@ -28,7 +28,9 @@ port 5432 is default
 
 Heroku Admin:
 
-	heroku pg:psql postgresql-graceful-74509 --app my-app
+	heroku pg:psql postgresql-graceful-74509
+
+Better to use Postico (MacOS) or similar instead.
 
 ## Create database
 
@@ -117,12 +119,22 @@ Update:
 	SELECT * FROM table WHERE id = 123;
 	SELECT * FROM table WHERE columnName ILIKE 'A%';
 
+	SELECT * FROM company WHERE name ILIKE '%weld%';
+
+	SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+
+### Sorting
+
+	ORDER BY field_name ASC/DESC NULLS FIRST/LAST
+
 ### Joins in Select
 
 * `INNER JOIN` (default/just `JOIN`): only show records common to both tables.
 * `OUTER JOIN`: all the content of the both tables are merged together either they are matched or not.
 * `LEFT JOIN` = `LEFT OUTER JOIN`: select records from the first (left-most) table with matching right table records.
 * `RIGHT JOIN` = `RIGHT OUTER JOIN`: select records from the second (right-most) table with matching left table records.
+
+Examples:
 
 	SELECT city, temp_lo, temp_hi, prcp, date, location
 		FROM weather, cities

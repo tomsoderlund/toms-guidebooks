@@ -217,6 +217,12 @@ select:disabled {
 }
 
 
+/* Nice & simple: List
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
 /* Nice & simple: Table - https://codepen.io/tomsoderlund/pen/mmZrRR */
 table {
   border-collapse: collapse;

@@ -344,19 +344,19 @@ catch (e) {
 
 ## Numbers & Math
 
-Math.abs(x)
-
 Math.random() // 0.0 to 1.0
-MIN_VALUE + Math.random() * (MAX_VALUE - MIN_VALUE) // min to max
-Math.floor(Math.random() * MAX_VALUE) // integer 0-MAX_VALUE
-(Date.now() + '-' + Math.floor(Math.random() * 1000)) // Serial e.g. '1464642047155-207'
 
-const getRandomNumber = (max = 20) => Math.floor(Math.random() * max)
+const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
+const getRandomNumber = max => Math.floor(Math.random() * max)
 const getRandomFromArray = array => array[getRandomNumber(array.length)]
 
-Math.round()
+// Serial e.g. '1464642047155-207'
+(Date.now() + '-' + Math.floor(Math.random() * 1000))
+
+Math.abs(x)
 Math.min, Math.max
 
+Math.round()
 // 2 decimals
 Math.round(num * 100) / 100
 
@@ -491,13 +491,14 @@ newStr = str.replace('Google', 'Weld')  // first only
 newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
 newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
 
-var getStringBetweenTags = function (source, tag1, tag2) {
-	var newText = source.substring(source.indexOf(tag1) + tag1.length, source.length)
+const getStringBetweenTags = (source, tag1, tag2) => {
+  if (source === undefined || tag1 === undefined || tag2 === undefined) return
+	let newText = source.substring(source.indexOf(tag1) + tag1.length, source.length)
 	newText = newText.substring(0, newText.indexOf(tag2))
 	return newText
 }
 
-var applyMethodToStringBetweenTags = function (source, tag1, tag2, method) {
+const applyMethodToStringBetweenTags = (source, tag1, tag2, method) => {
 	var position1 = 0, position2
 	var newText = source
 	do {
@@ -613,6 +614,7 @@ fruits.sort()
 .sort((a, b) => a - b)
 array.sort(function (a, b) { return a > b })
 array.sort(function (a,b) { return parseFloat(a.price) - parseFloat(b.price) })
+array.reverse()
 
 // Clone array
 newArray = oldArray.slice()
@@ -741,6 +743,8 @@ moment(dateObj)
 moment().toDate() // JS date obj
 moment().valueOf() // millisecs
 moment().unix() // seconds
+
+moment(value).fromNow() // “3 hours ago”
 
 const duration = momDate.diff(momDateNow)
 
@@ -1018,7 +1022,7 @@ function httpGetAsync(url, callback) {
 ## Client vs. Server
 
 // Run only in browser
-if (typeof window !== 'undefined') {
+if (typeof(window) !== 'undefined') {
 	// Do in-browser stuff
 }
 
@@ -2265,7 +2269,7 @@ or
 	* `getDefaultProps` // only supported for classes created using React.createClass. Use a static property to define defaultProps instead.
 * Mounting:
 	* `componentWillMount`
-	* `componentDidMount` // client-side only
+	* `componentDidMount` // client-side only, great for state loading
 	* `componentWillUnmount`
 * Updating:
 	* `shouldComponentUpdate`

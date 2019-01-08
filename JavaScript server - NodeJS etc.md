@@ -33,13 +33,9 @@ http://nodejs.org/download/
 	npm install bcrypt@0.8.3
 
 
-## Node on Heroku
+## Heroku (Node.js on Heroku)
 
 https://devcenter.heroku.com/articles/getting-started-with-nodejs
-
-### Make a Procfile
-	echo "web: node app.js" > Procfile
-
 
 ### Push to Heroku
 
@@ -84,10 +80,34 @@ heroku rename NEWNAME #also renames Heroku-Git remote
 
 	heroku config:set NODE_MODULES_CACHE=false
 
-## Scheduler
+### Scheduler
 
 heroku run node app/scheduler/postToSlack.js
 Scheduler: "node app/scheduler/postToSlack.js"
+
+
+## Zeit Now
+
+https://zeit.co/now
+
+	now switch  # Switch teams
+
+Deploy
+
+	now
+
+List deployments
+
+	now ls
+
+Delete deployment
+
+	now rm https://zeit-es38wlezy.now.sh/
+
+Domain:
+
+	now alias https://scraping-service-lb71ypc0g.now.sh scraping-service
+
 
 ## NPM
 
@@ -231,27 +251,43 @@ yo express # then run Yeoman and select Basic
 ## Express
 
 // Without Express - just Node.js
+const { createServer } = require('http')
 const PORT = process.env.PORT || 3003
-const http = require('http')
-http.createServer(requestHandler).listen(PORT)
+const requestHandler = (req, res) => { res.end('Hello world') }
+createServer(requestHandler).listen(PORT, () => console.log(`Node.js server running on http://localhost:${PORT}/`))
 
 // With Express
 const express = require('express')
-const app = express()
-app.get('*', requestHandler)
-app.listen(PORT, () => console.log(`weld-renderer-svg running on http://localhost:${PORT}/`))
+const server = express()
+server.get('*', requestHandler)
+server.listen(PORT, () => console.log(`Express server running on http://localhost:${PORT}/`))
+
+### Parsing parameters without Express
+
+	// Returns array like '/:0/:1/:2/:etc'
+	const parseRequestParams = url => (url.split('?')[0] || '/').substr(1).split('/')
+
+	// Returns a req.query-type object
+	const parseRequestQuery = url => (url.split('?')[1] || '')
+		.split('&')
+		.reduce((result, propValue) => {
+			const key = propValue.split('=')[0]
+			if (key) result[key] = propValue.split('=')[1]
+			return result
+		}, {})
+
+### Next.js with/without Express
 
 // Next.js: without Express - just Node.js
 const { createServer } = require('http')
 app.prepare().then(() => {
-  createServer(handler).listen(3000)
+	createServer(handler).listen(3000)
 })
 
 // Next.js: with Express
 const express = require('express')
-const app = express()
 app.prepare().then(() => {
-  express().use(handler).listen(3000)
+	express().use(handler).listen(3000)
 })
 
 ### Routes
@@ -269,11 +305,6 @@ req.body (JSON body)
 
 const { path, route, params, query, body } = req
 
-
-// 200 OK
-
-	res.json(myObj)
-
 // 301 or 302
 
 	res.set('location', newUrl)
@@ -283,12 +314,15 @@ const { path, route, params, query, body } = req
 
 	// text/html, text/javascript, text/csv, application/json, image/svg+xml, image/jpeg
 	res.setHeader('content-type', 'text/javascript')
-  res.setHeader('Cache-Control', 'public, max-age=31557600') // One year
+	res.setHeader('Cache-Control', 'public, max-age=31557600') // One year
 
-  res.write
-  res.end
+	res.write
+	res.end
 
-  res.send = Express write+end
+Express only:
+
+	res.send = Express write() + end()
+	res.json(myObj)
 
 console.log('Request:', _.pick(req, ['params', 'query', 'body']))
 
@@ -346,6 +380,79 @@ https://www.npmjs.org/package/ejs
 	var b = new Buffer('SmF2YVNjcmlwdA==', 'base64')
 	var s = b.toString(); // "JavaScript"
 
+
+## Testing
+
+### Jasmine
+
+https://jasmine.github.io/2.0/introduction.html
+
+	yarn add jasmine --dev
+
+Config: `spec/support/jasmine.json`:
+
+	mkdir spec && mkdir spec/support
+	touch spec/support/jasmine.json
+
+	{
+		"spec_dir": "",
+		"spec_files": [
+			"lib/**/*.test.js",
+			"lib/**/*[sS]pec.js",
+			"server/**/*.test.js",
+			"server/**/*[sS]pec.js"
+		],
+		"helpers": [
+		]
+	}
+
+Tests:
+
+* `toBe`
+* `toEqual`
+* `toBeGreaterThan`
+* `toBeLessThan`
+* `toBeCloseTo`
+* `toBeFalsy`
+* `toBeTruthy`
+* `toContain`
+* `toBeDefined`
+* `toBeUndefined`
+* `toBeNull`
+* `toMatch`
+* `toHaveBeenCalled`
+* `toHaveBeenCalledWith`
+* `toThrow`
+* `toThrowError`
+
+## Linting
+
+### Standard JS
+
+	yarn add standard --dev
+
+package.json:
+
+	"scripts": {
+		"test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+		"lint": "standard",
+		"fix": "standard --fix",
+		"unit": "jasmine"
+	},
+	"standard": {
+		"ignore": [
+			".next"
+		],
+		"globals": [
+			"beforeAll",
+			"beforeEach",
+			"describe",
+			"expect",
+			"it",
+			"jasmine",
+			"spyOn"
+		]
+	},
 
 ## Node Command Line Application
 
