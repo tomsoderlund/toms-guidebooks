@@ -361,7 +361,7 @@ Math.round()
 Math.round(num * 100) / 100
 
 // Limit value between max and min
-limitValue = Math.min(Math.max(value, min), max)
+limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
 
 parseInt(StringorNum) // to int
 parseFloat(StringorNum) // to float
@@ -492,7 +492,7 @@ newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
 newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
 
 const getStringBetweenTags = (source, tag1, tag2) => {
-  if (source === undefined || tag1 === undefined || tag2 === undefined) return
+	if (source === undefined || tag1 === undefined || tag2 === undefined) return
 	let newText = source.substring(source.indexOf(tag1) + tag1.length, source.length)
 	newText = newText.substring(0, newText.indexOf(tag2))
 	return newText
@@ -910,101 +910,104 @@ localStorage['colorSetting'] = '#a4509b'
 localStorage.setItem('colorSetting', '#a4509b')
 
 
-## Pure Javascript (No Framework)
+## Pure Javascript (no framework)
 
- <input onclick="basicList.modifyAndEnableButton()"></input>
+	document.getElementById('myButton') // Note: can't be chained
+	document.getElementsByClassName('myClass') // returns array
+	document.getElementsByTagName('div') // returns array
+	document.querySelectorAll('#mylink img') // all
+	document.querySelector('#mylink img') // only FIRST
+	document.getElementById('myButton').children[0]
+	document.getElementById('myButton').parentNode
+	// Chained:
+	document.getElementById('mylink').getElementsByTagName('img')[0]
 
-document.getElementById('myButton') // Note: can't be chained
-document.getElementsByClassName('myClass') // returns array
-document.getElementsByTagName('div') // returns array
-document.querySelectorAll('#mylink img') // all
-document.querySelector('#mylink img') // only FIRST
-document.getElementById('myButton').children[0]
-document.getElementById('myButton').parentNode
-// Chained:
-document.getElementById('mylink').getElementsByTagName('img')[0]
+	element.id = 'elem1'
+	element.value = '100'
+	element.innerHTML = ''
+	element.className = 'newClass'
+	element.style.backgroundColor = 'rgb(169, 169, 169)'
+	element.getAttribute('style')
+	element.setAttribute('disabled', true)
+	element.removeAttribute('disabled')
+	element.offsetLeft // also offsetTop - both relative to parent
+	element.offsetWidth // offsetHeight
+	element.dispatchEvent(new Event('change'))
 
-element.id = 'elem1'
-element.value = '100'
-element.innerHTML = ''
-element.className = 'newClass'
-element.style.backgroundColor = 'rgb(169, 169, 169)'
-element.getAttribute('style')
-element.setAttribute('disabled', true)
-element.removeAttribute('disabled')
-element.offsetLeft // also offsetTop - both relative to parent
-element.offsetWidth // offsetHeight
-element.dispatchEvent(new Event('change'))
-
-var setElementDisabled = function (elementId, setDisabled) {
-	setDisabled
-		? document.getElementById(elementId).setAttribute('disabled', true)
-		: document.getElementById(elementId).removeAttribute('disabled')
-}
-
-var appendHtml = function (element, htmlString) {
-	var div = document.createElement('div')
-	div.innerHTML = htmlString
-	while (div.children.length > 0) {
-		element.appendChild(div.children[0])
+	var setElementDisabled = function (elementId, setDisabled) {
+		setDisabled
+			? document.getElementById(elementId).setAttribute('disabled', true)
+			: document.getElementById(elementId).removeAttribute('disabled')
 	}
-}
-var html = '<h1 id="title">Some Title</h1><span style="display:inline-block width=100px">Some arbitrary text</span>'
-appendHtml(document.body, html) // "body" has two more children - h1 and span.
+
+	var appendHtml = function (element, htmlString) {
+		var div = document.createElement('div')
+		div.innerHTML = htmlString
+		while (div.children.length > 0) {
+			element.appendChild(div.children[0])
+		}
+	}
+	var html = '<h1 id="title">Some Title</h1><span style="display:inline-block width=100px">Some arbitrary text</span>'
+	appendHtml(document.body, html) // "body" has two more children - h1 and span.
 
 
 ### Events
 
-<button onclick="myFunction()">Click me</button>
+	<button onclick="myFunction()">Click me</button>
 
-element.dispatchEvent(new Event('change'))
-element.addEventListener('change', myFunction)
-element.removeEventListener('change', myFunction) // no myFunction = remove all
+	window.myFunction = function () {
+		alert('Hello World')
+	}
 
-document.getElementById('myButton').addEventListener('click', function (event) {
-	console.log('Click!', event)
-})
+	document.getElementById('myButton').addEventListener('click', function (event) {
+		console.log('Click!', event)
+	})
 
-<button onclick="myFunction()">Click me</button>
-window.myFunction = function () {
-	alert('Hello World')
-}
+	element.dispatchEvent(new Event('change'))
+	element.addEventListener('change', myFunction)
+	element.removeEventListener('change', myFunction) // no myFunction = remove all
 
-document.getElementById('output').innerHTML = 'Hello World'
+#### preventDefault vs. stopPropagation
 
-event.preventDefault() // prevents the default action the browser makes on that event.
-event.stopPropagation() // stops the event from bubbling up the event chain.
+	event.preventDefault() // prevents the default action the browser makes on that event.
+	event.stopPropagation() // stops the event from bubbling up the event chain.
+
+#### Mouse events
 
 Use mouseenter/mouseleave instead of mouseover/mouseexit (mouseover = trigger on childs)
 
-touchstart/touchmove/touchend
+#### Touch events: touchstart/touchmove/touchend
 
-// Get X/Y position from mouse or touch
-var getXY = function (event) {
-	return {
-		x: event.type.indexOf('touch') !== -1 ? event.targetTouches[0].clientX : event.clientX,
-		y: event.type.indexOf('touch') !== -1 ? event.targetTouches[0].clientY : event.clientY,
+	// Get X/Y position from mouse or touch
+	const { clientX, clientY } = event.targetTouches ? event.targetTouches[0] : event
+
+Tip: event handlers on `document` for move/end:
+
+	window.document.addEventListener('mousemove', listeners.move)
+	window.document.addEventListener('mouseup', listeners.end)
+
+#### Create custom event
+
+	var event = new Event('click')
+	var event = new CustomEvent('build', { detail: { … } })
+	elem.addEventListener('build', function (evt) {})
+	elem.dispatchEvent(event) // send event
+
+#### Document load event
+
+	try {
+		window.attachEvent('onload', whenDocumentHasLoaded)
 	}
-}
+	catch (err) {
+		console.error('Error:', err)
+	}
 
-document.getElementById('myButton').addEventListener('click', myFunction)
+### Client vs. Server
 
-var event = new Event('click')
-var event = new CustomEvent('build', { detail: { … } })
-elem.addEventListener('build', function (evt) {})
-elem.dispatchEvent(event) // send event
-
-function whenDocumentHasLoaded() {
-	var timerId = setInterval(function () {
-		if (document.readyState !== 'complete') return
-		clearInterval(timerId)		 
-		// whenDocumentIsReady:
-		if (isMobile.any()) {
-			document.getElementById("how-to-navigate").textContent = 'Slide left for more, pinch out for overview'
-		}
-	}, 100)
-}
-
+	// Run only in browser
+	if (typeof(window) !== 'undefined') {
+		// Do in-browser stuff
+	}
 
 ### HTTP Get
 
@@ -1018,77 +1021,56 @@ function httpGetAsync(url, callback) {
 	xmlHttp.send(null)
 }
 
+#### Fetch
 
-## Client vs. Server
+	fetch(`${API_URL}/api/usernames/${user.username}`)
+		.then(res => res.json())
+		.then(dbUser => {
+			cb(null, _.pick(dbUser, ['_id', 'twitterHandle']))
+		})
+		.catch(cb)
 
-// Run only in browser
-if (typeof(window) !== 'undefined') {
-	// Do in-browser stuff
-}
+	fetch(`${config.appUrl}api/domains`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ domains: this.state.domains.split('\n') })
+	})
+		.then(async res => {
+			if (res.ok) {
+				return res.json()
+			}
+			else {
+				const json = await res.json()
+				throw new Error(json.message)
+			}
+		})
+		.then(json => {
+			this.setState({ statusMessage: `${json.rowCount} domains created` })
+			this.setState({ domains: '' })
+		})
+		.catch(err => {
+			this.setState({ errorMessage: err.message })
+		})
 
+### DOM / IFrame
 
-try {
-	window.attachEvent("onload", whenDocumentHasLoaded)
-}
-catch (err) {
-	console.error('Error:', err)
-}
+	var newIframe = document.createElement('iframe')
+	newIframe.src = 'about:blank' 
+	document.body.appendChild(newIframe)
 
-
-## DOM / IFrame
-
-
-var newIframe = document.createElement('iframe')
-newIframe.src = 'about:blank' 
-document.body.appendChild(newIframe)
-
-element.appendChild(document.createElement('p'))
-
-### HTTP
-
-var xmlHttp = new XMLHttpRequest()
-xmlHttp.onreadystatechange = function () {
-	// Good results: xmlHttp.readyState == 4 && xmlHttp.status == 200
-	console.log('HTTP', xmlHttp.readyState, xmlHttp.status)
-	//console.log(xmlHttp.responseText)
-}
-xmlHttp.open('GET', theUrl, true) // true = asynchronous 
-xmlHttp.send(null)
-
-// Synchronous
-var xmlHttp = new XMLHttpRequest()
-xmlHttp.open('GET', theUrl, false) // false = synchronous
-xmlHttp.send(null)
-console.log('HTTP', xmlHttp.readyState, xmlHttp.status)
-return xmlHttp.responseText
-
-
-// Assert that image has loaded (iframe version)
-var elementSelector = '.weld-element#image-868 > .apply-styles'
-
-var element = document.querySelector('#weld-embed iframe').contentWindow.document.querySelector(elementSelector)
-var imageUrl = element.style['background-image'].split('url(')[1].split(')')[0].replace(/\"/g, '').replace(/\'/g, '')
-// Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user’s experience. For more help http://xhr.spec.whatwg.org
-var xmlHttp = new XMLHttpRequest()
-xmlHttp.open('GET', imageUrl, false) // false for synchronous request
-xmlHttp.send(null)
-console.log('HTTP', xmlHttp.readyState, xmlHttp.status)
-var result = (xmlHttp.status === 200)
-return result
-
-
-
-
-
+	element.appendChild(document.createElement('p'))
 
 ### Windows & Frames
 
 Open window:
-window.open(URL, name, specs, replaceUrlInHistory)
-window.open(pageURL, 'ts_window', 'width=300,height=600,scrollbars=no,titlebar=no,location=no,menubar=no,toolbar=no,status=no,resizable=no', false)
 
-window.close()
+	window.open(URL, name, specs, replaceUrlInHistory)
+	window.open(pageURL, 'ts_window', 'width=300,height=600,scrollbars=no,titlebar=no,location=no,menubar=no,toolbar=no,status=no,resizable=no', false)
 
+	window.close()
 
 ### Forms
 
@@ -1143,16 +1125,13 @@ timedCount()
 
 ## ECMAScript ES5/ES6
 
-
 ### ES5
 
 https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore/
 
-
 ### ES6
 
 https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d89a0f
-
 
 // let and const instead of var (block scoped within {})
 let x = 1
@@ -1262,42 +1241,6 @@ let [items, contactlist, itemgroup] = await Promise.all([
 	fetch('http://localhost:3000/contactlist/get'),
 	fetch('http://localhost:3000/itemgroup/get')
 ])
-
-
-// Fetch
-
-	fetch(`${API_URL}/api/usernames/${user.username}`)
-		.then(res => res.json())
-		.then(dbUser => {
-			cb(null, _.pick(dbUser, ['_id', 'twitterHandle']))
-		})
-		.catch(cb)
-
-	fetch(`${config.appUrl}api/domains`, {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ domains: this.state.domains.split('\n') })
-	})
-		.then(async res => {
-			if (res.ok) {
-				return res.json()
-			}
-			else {
-				const json = await res.json()
-				throw new Error(json.message)
-			}
-		})
-		.then(json => {
-			this.setState({ statusMessage: `${json.rowCount} domains created` })
-			this.setState({ domains: '' })
-		})
-		.catch(err => {
-			this.setState({ errorMessage: err.message })
-		})
-
 
 ### Lodash in ES6 ("lodash6")
 
@@ -1501,18 +1444,18 @@ module.exports.objectLength = objectOrArray => objectOrArray.constructor === Arr
 module.exports.applyToAll = (func, objectOrArray) => objectOrArray.constructor === Array ? objectOrArray.map(func) : func(objectOrArray)
 // applyToAllAsync(promiseFunction, obj1) or applyToAllAsync(promiseFunction, [obj1, obj2, ...])
 module.exports.applyToAllAsync = async (promiseFunction, objectOrArray) => new Promise(async (resolve, reject) => {
-  const objects = objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
-  let errors, values
-  for (let i = 0; i < objects.length; i++) {
-    try {
-      values = values || []
-      values.push(await promiseFunction(objects[i]))
-    } catch (err) {
-      errors = errors || []
-      errors.push(err)
-    }
-  }
-  resolve({ errors, values })
+	const objects = objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
+	let errors, values
+	for (let i = 0; i < objects.length; i++) {
+		try {
+			values = values || []
+			values.push(await promiseFunction(objects[i]))
+		} catch (err) {
+			errors = errors || []
+			errors.push(err)
+		}
+	}
+	resolve({ errors, values })
 })
 // applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
 module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
