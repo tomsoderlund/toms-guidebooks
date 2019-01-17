@@ -60,16 +60,16 @@ body {
 
 /* Nice & simple: Main - margin:auto */
 main {
-  margin: 0.5em auto;
-  width: 80%;
-  max-width: 600px;
+	margin: 0.5em auto;
+	width: 80%;
+	max-width: 600px;
 }
 
 @media only screen and (max-width: 480px) {
-  main {
-    width: 95%;
-    max-width: none;
-  }
+	main {
+		width: 95%;
+		max-width: none;
+	}
 }
 
 /* Nice & simple: Links */
@@ -101,48 +101,48 @@ label input {
 /* Nice & simple: Button - http://codepen.io/tomsoderlund/pen/qqyzqp */
 button,
 .button {
-  position: relative;
-  background-color: dodgerblue;
-  color: white;
-  border-radius: 0.2em;
-  border: none;
-  box-shadow: 0 0.125em 0.125em rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  display: inline-block;
-  cursor: pointer;
-  user-select: none;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: normal;
-  font-weight: bold;
-  text-align: center;
-  outline: none;
-  padding: 0.6em;
-  margin: 0.2em;
-  transition: all 0.1s;
-  /* min-width: 15em; */
+	position: relative;
+	background-color: dodgerblue;
+	color: white;
+	border-radius: 0.2em;
+	border: none;
+	box-shadow: 0 0.125em 0.125em rgba(0, 0, 0, 0.3);
+	box-sizing: border-box;
+	display: inline-block;
+	cursor: pointer;
+	user-select: none;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: normal;
+	font-weight: bold;
+	text-align: center;
+	outline: none;
+	padding: 0.6em;
+	margin: 0.2em;
+	transition: all 0.1s;
+	/* min-width: 15em; */
 }
 button:hover:not(:disabled),
 .button:hover:not(:disabled),
 button:focus:not(:disabled),
 .button:focus:not(:disabled) {
-  opacity: 0.8;
-  top: -0.1em;
-  box-shadow: 0 0.2em 0.1em rgba(0, 0, 0, 0.2);
+	opacity: 0.8;
+	top: -0.1em;
+	box-shadow: 0 0.2em 0.1em rgba(0, 0, 0, 0.2);
 }
 button:hover:active,
 .button:hover:active {
-  top: 0.1em;
-  box-shadow: 0 0.02em 0.125em rgba(0, 0, 0, 0.4);
-  transition: all 0.05s;
+	top: 0.1em;
+	box-shadow: 0 0.02em 0.125em rgba(0, 0, 0, 0.4);
+	transition: all 0.05s;
 }
 button:disabled,
 .button:disabled {
-  cursor: initial;
-  background-color: silver;
+	cursor: initial;
+	background-color: silver;
 }
 a.button {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 
@@ -166,7 +166,7 @@ select {
 }
 input::placeholder,
 textarea::placeholder {
-  color: lightgray;
+	color: lightgray;
 }
 input:hover:not(:disabled):not(:focus),
 .input-like:hover:not(:disabled):not(:focus),
@@ -179,11 +179,11 @@ input:focus,
 textarea:focus,
 select:focus {
 	border-color: darkgray;
-  background-color: lightyellow;
+	background-color: lightyellow;
 }
 input:read-only,
 textarea:read-only {
-  color: darkgray;
+	color: darkgray;
 }
 input:disabled,
 .input-like:disabled,
@@ -196,7 +196,7 @@ select:disabled {
 /* Nice & simple: Tag */
 .tag {
 	display: inline-block;
-  cursor: pointer;
+	cursor: pointer;
 	padding: 0.6em 1em;
 	background-color: deepskyblue;
 	color: white;
@@ -213,33 +213,33 @@ select:disabled {
 	opacity: 0.8;
 }
 .tag.new {
-  background-color: limegreen;
+	background-color: limegreen;
 }
 
 
 /* Nice & simple: List
 ol {
-  list-style-type: decimal;
-  list-style-position: inside;
+	list-style-type: decimal;
+	list-style-position: inside;
 }
 
 /* Nice & simple: Table - https://codepen.io/tomsoderlund/pen/mmZrRR */
 table {
-  border-collapse: collapse;
+	border-collapse: collapse;
 }
 
 td, th {
-  border: 1px solid #ddd;
-  padding: 0.5em;
-  vertical-align: top;
+	border: 1px solid #ddd;
+	padding: 0.5em;
+	vertical-align: top;
 }
 
 thead tr {
-  background-color: #ccc;
+	background-color: #ccc;
 }
 
 tr:nth-child(2n+0) {
-  background-color: #eee;
+	background-color: #eee;
 }
 
 
@@ -259,7 +259,7 @@ $color_radio_background: white;
 $color_radio_active: dodgerblue;
 
 .radio-wrapper {
-  margin: 0.2em;
+	margin: 0.2em;
 }
 
 // Slider
@@ -269,64 +269,64 @@ input[type="range"] {
 }
 
 input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  + .radio-label {
-	&:before {
-	  content: '';
-	  background: $color_radio_background;
-	  border-radius: 100%;
-	  border: 2px solid darken($color_radio_background, 25%);
-	  display: inline-block;
-	  width: 1.4em;
-	  height: 1.4em;
-	  position: relative;
-	  top: -0.2em;
-	  margin-right: 1em; 
-	  vertical-align: top;
-	  cursor: pointer;
-	  text-align: center;
-	  transition: all 250ms ease;
-	}
-  }
-  &:checked {
+	position: absolute;
+	opacity: 0;
 	+ .radio-label {
-	  &:before {
+	&:before {
+		content: '';
+		background: $color_radio_background;
+		border-radius: 100%;
+		border: 2px solid darken($color_radio_background, 25%);
+		display: inline-block;
+		width: 1.4em;
+		height: 1.4em;
+		position: relative;
+		top: -0.2em;
+		margin-right: 1em; 
+		vertical-align: top;
+		cursor: pointer;
+		text-align: center;
+		transition: all 250ms ease;
+	}
+	}
+	&:checked {
+	+ .radio-label {
+		&:before {
 		background-color: $color_radio_active;
 		box-shadow: inset 0 0 0 4px $color_radio_background;
-	  }
+		}
 	}
-  }
-  &:focus {
+	}
+	&:focus {
 	+ .radio-label {
-	  &:before {
+		&:before {
 		outline: none;
 		border-color: $color_radio_active;
-	  }
+		}
 	}
-  }
-  &:disabled {
+	}
+	&:disabled {
 	+ .radio-label {
-	  &:before {
+		&:before {
 		box-shadow: inset 0 0 0 4px $color_radio_background;
 		border-color: darken($color_radio_background, 25%);
 		background: darken($color_radio_background, 25%);
-	  }
+		}
 	}
-  }
-  + .radio-label {
+	}
+	+ .radio-label {
 	&:empty {
-	  &:before {
+		&:before {
 		margin-right: 0;
-	  }
+		}
 	}
-  }
+	}
 }
 
-  <div class="radio-wrapper">
+	<div class="radio-wrapper">
 	<input id="radio-1" name="radio" type="radio" checked>
 	<label for="radio-1" class="radio-label">Checked</label>
-  </div>
+	</div>
 
 
 ## HTML5 Semantic Tags
@@ -418,28 +418,28 @@ Hidden: <input type="hidden" name="hiddenVar" value="value">
 ## TABLES
 
 <table>
-  <thead>
-    <tr>
-      <th>Month</th>
-      <th>Savings</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>January</td>
-      <td>$100</td>
-    </tr>
-    <tr>
-      <td>February</td>
-      <td>$80</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td>Sum</td>
-      <td>$180</td>
-    </tr>
-  </tfoot>
+	<thead>
+		<tr>
+			<th>Month</th>
+			<th>Savings</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>January</td>
+			<td>$100</td>
+		</tr>
+		<tr>
+			<td>February</td>
+			<td>$80</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td>Sum</td>
+			<td>$180</td>
+		</tr>
+	</tfoot>
 </table>
 
 ## Meta Tags
@@ -496,7 +496,7 @@ margin: top right bottom left (TRBL - TuRBuLence, or clockwise from top)
 // hls, hsl, hsv
 
 /* Hue 0-360¹, Saturation 0-100%, Lightness 0-100%, Alpha 0-1.
-   ¹Red=0, Green=120, Blue=240. */
+	 ¹Red=0, Green=120, Blue=240. */
 hsl(360, 100%, 50%);
 hsla(360, 100%, 50%, 0.4);
 hsla(0,0,0, 0.4);
@@ -660,32 +660,6 @@ h1 span {
 }
 
 
-## Transitions
-
-.box {
-	border-style: solid;
-	border-width: 1px;
-	display: block;
-	width: 100px;
-	height: 100px;
-	background-color: #0000FF;
-	/* transition: <property> <duration> <timing-function> <delay>; */
-	transition: width 2s, height 2s, background-color 2s, transform 2s;
-}
-.box:hover {
-	background-color: #FFCCCC;
-	width: 200px;
-	height: 200px;
-	transform: rotate(180deg);
-}
-
-div {
-	transition-property: opacity, left, top, height; /* all */
-	transition-duration: 3s, 5s;
-	transition-delay: 1s
-	transition-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
-}
-
 ## Transform
 
 	transform: translate(x,y);
@@ -711,69 +685,94 @@ div {
 	transform: perspective(n); // doesn’t affect the element itself, but affects the transforms of descendent elements' 3D transforms, allowing them all to have a consistent depth perspective.
 
 
-## Animations (keyframes)
+## Animation: Transitions (`transition`)
 
-.pulsate {
-	/*         name              dur delay repetitions*/
-	animation: animation-pulsate 10s 5s infinite;
-}
-
-@keyframes animation-pulsate {
-	from {
-		background-color: rgba(255,255,255, 0);
+	.box {
+		border-style: solid;
+		border-width: 1px;
+		display: block;
+		width: 100px;
+		height: 100px;
+		background-color: #0000FF;
+		/* transition: <property> <duration> <timing-function> <delay>; */
+		transition: width 2s, height 2s, background-color 2s, transform 2s;
 	}
-	to {
-		background-color: rgba(255,255,255, 0);
+	.box:hover {
+		background-color: #FFCCCC;
+		width: 200px;
+		height: 200px;
+		transform: rotate(180deg);
 	}
-}
 
-@keyframes animation-pulsate {
-	0% {
-		background-color: rgba(255,255,255, 0);
+	div {
+		transition-property: opacity, left, top, height; /* all */
+		transition-duration: 3s, 5s;
+		transition-delay: 1s
+		transition-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
 	}
-	50% {
-		background-color: rgba(255,255,255, 1);
+
+## Animation: Keyframes (`animation`)
+
+	.pulsate {
+		/*         name              dur delay repetitions*/
+		animation: animation-pulsate 10s 5s infinite;
 	}
-	100% {
-		background-color: rgba(255,255,255, 0);
+
+	@keyframes animation-pulsate {
+		from {
+			background-color: rgba(255,255,255, 0);
+		}
+		to {
+			background-color: rgba(255,255,255, 0);
+		}
 	}
-}
 
-#box {
-	animation-name: resize;
-	animation-duration: 1s;
-	animation-iteration-count: 4;
-	animation-direction: alternate;
-	animation-timing-function: ease-in-out;
-}
-
-div {
-	animation-name: example;
-	animation-duration: 5s;
-	animation-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
-	animation-delay: 2s;
-	animation-iteration-count: infinite;
-	animation-direction: normal|reverse|alternate|alternate-reverse
-	/* Extra */
-	animation-play-state: running|paused
-	animation-fill-mode: Specifies a style for the element when the animation is not playing
-}
-
-div {
-	animation: example 5s linear 2s infinite alternate;
-}
-
-
-/* --------- Responsive layout for phones --------- */
-
-@media only screen and (max-width: 480px) {
-}
-
-@media (max-width: 904px) and (min-width: 544px) {
-	#rectangle-84 .apply-styles {
-		background-color: #47E2A1;
+	@keyframes animation-pulsate {
+		0% {
+			background-color: rgba(255,255,255, 0);
+		}
+		50% {
+			background-color: rgba(255,255,255, 1);
+		}
+		100% {
+			background-color: rgba(255,255,255, 0);
+		}
 	}
-}
+
+	#box {
+		animation-name: resize;
+		animation-duration: 1s;
+		animation-iteration-count: 4;
+		animation-direction: alternate;
+		animation-timing-function: ease-in-out;
+	}
+
+	div {
+		animation-name: example;
+		animation-duration: 5s;
+		animation-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
+		animation-delay: 2s;
+		animation-iteration-count: infinite;
+		animation-direction: normal|reverse|alternate|alternate-reverse
+		/* Extra */
+		animation-play-state: running|paused
+		animation-fill-mode: Specifies a style for the element when the animation is not playing
+	}
+
+	div {
+		animation: example 5s linear 2s infinite alternate;
+	}
+
+## Responsive
+
+	@media only screen and (max-width: 480px) {
+	}
+
+	@media (max-width: 904px) and (min-width: 544px) {
+		#rectangle-84 .apply-styles {
+			background-color: #47E2A1;
+		}
+	}
 
 ## Pseudo classes
 

@@ -1,237 +1,293 @@
 # UNIX Short Guidebook/Manual
 
-BASH SCRIPTS
-
 "Shebang":
 
-#!/bin/sh
+	#!/bin/sh
 
-chmod u+x myscript.sh
+Change:
 
-# Comments
+	chmod u+x myscript.sh
 
-Linux
 
-ls
-cd
-pwd
-mkdir
+## Folders
 
-ls -R
+	ls
+	cd
+	pwd
+	mkdir
 
-mkdir {development,remote,deploy}
+	ls -R
 
-# Find application
-which node
+	mkdir {development,remote,deploy}
 
-# List files with relative path
-find *
-find . -name *.js -print
 
-# Find text inside files
-egrep -lir --include=*.{php,html,js} "(searchtext1|searchtext2)" .   # change -lir to -ir to show more...
-egrep -lir --include=Gruntfile.js "(livereload)" .
+## File lists
 
-# Pretty file tree
-find ./ | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'  # add '-type d' for directories only
+### List files with relative path
 
-# Count lines of code (LOCs)
-find . -name '*.js' | xargs wc -l
+List `folder/subfolder/file.ext`:
 
-# diff/compare text files
-diff leftfile rightfile
+	find *
 
-# Split text file
-split -l 10 domains.csv output-
+List `./folder/subfolder/file.ext`:
 
-cp
-mv
-rm:	rm -r myfolder
+	find . -name *.js -print
 
-for i in *; do echo ${i}; done
-for i in *.URL; do echo ${i}; cat "${i}"; done
-// Rename multiple, extension:
-for i in *.JPG; do mv ${i} ${i/.JPG}.jpg; done
-for i in *@2x.png; do mv ${i} ${i/@2x.png}-hd.png; done
-Rename multiple, prefix:
-for i in Old*.jpg; do echo mv ${i} New${i#Old}; done
-for i in *copy.bmp; do echo mv \"${i}\" \"${i}2\"; done
+### Find text inside files
 
-# promo_square
-input=./weld_promo_square/*.png
-output=output/promo_square
-format="png -quality 95"
-sizes=("358x358" "1000x800" "414x468" "558x558" "558x756")
-mkdir $output
-for filename in "$input"; do
-	echo "$filename"
-	for i in "${sizes[@]}"; do
-		mogrify -format $format -thumbnail $i^ -extent $i -gravity center -format "$i.png" -path "./$output" "$filename"
-	done
-done
+	egrep -lir --include=*.{php,html,js} "(searchtext1|searchtext2)" .   # change -lir to -ir to show more...
+	egrep -lir --include=Gruntfile.js "(livereload)" .
 
-filename/foldername="$(echo $1 | sed "s/.*\///")"
+### Pretty file tree
 
-ln: links, e.g.
-ln -s sourcePath targetPath
--s = symbolic, 1 source 2 target
+	find ./ | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'  # add '-type d' for directories only
 
-chmod o=rw (a:all, u:user, g:group, o:other = rwx)
-chmod u+rwx
-chmod u+x myscript.sh
-chown -R www drupal-6.15/
-chgrp -R www drupal-6.15/
+### Count lines of code (LOCs)
 
-ls
-find: find files: find /usr/bin -name r*
-find . -type d -name .svn -exec rm -rf {} \;
-find [dirname] -type f -name \*.js
+	find . -name '*.js' | xargs wc -l
 
-which sass # find command "sass"
-grep -r "blabla" *
-grep "missionmaptext=" *.ini
 
-Search/replace:
+## Finding files
 
-# http://stackoverflow.com/questions/525592/find-and-replace-inside-a-text-file-from-a-bash-command
-sed -i -e 's/'STRING1'/'STRING2'/g' MyFile.txt
-sed -i -e 's/'"$var1"'/'"$var2"'/g' MyFile.txt
+	ls
+	find: find files: find /usr/bin -name r*
+	find . -type d -name .svn -exec rm -rf {} \;
+	find [dirname] -type f -name \*.js
 
-sed s/search/replace/g old.txt > new.txt
-(space = \ , backslash = \b)
+	grep -r "blabla" *
+	grep "missionmaptext=" *.ini
+
+### Find applications
+
+	which node
+	which sass # find command "sass"
+
+## Text files
+
+	cat
+	more, less
+	tail, head: tail -n 50 log/production.log
+
+### Text File Manipulation
+
+	grep
+	awk
+
+	# Only show lines 4 chars
+	awk '{ if (length($0) > 4) print }' yourfile > your_output_file.txt
+
+### Search/replace:
+
+http://stackoverflow.com/questions/525592/find-and-replace-inside-a-text-file-from-a-bash-command
+
+	sed -i -e 's/'STRING1'/'STRING2'/g' MyFile.txt
+	sed -i -e 's/'"$var1"'/'"$var2"'/g' MyFile.txt
+
+	sed s/search/replace/g old.txt > new.txt
+
+(space = `\ `, backslash = `\b`)
+
 http://www.grymoire.com/Unix/Sed.html
 
-# Search/replace newline
-tr , '\n' < felicias.json > felicias2.json
-grep "slug" felicias2.json
-tr , '\n' < file
-tr "\n" "your chars" < your file
+### Search/replace newline
 
-cat
-more, less
-tail, head: tail -n 50 log/production.log
+	tr , '\n' < felicias.json > felicias2.json
+	grep "slug" felicias2.json
+	tr , '\n' < file
+	tr "\n" "your chars" < your file
 
-VI EDITOR (http://www.cs.fsu.edu/general/vimanual.html)
+### Split text file
 
-edit/insert: i
-undo: u
-search: / (search again: n)
-quit: :q! (no save), ZZ (save)
-delete: x or dd
+	split -l 10 domains.csv output-
+
+### diff/compare text files
+
+	diff leftfile rightfile
 
 
+## The VI editor
 
-su: switch user, su tom
-sudo
-sudo visudo
+http://www.cs.fsu.edu/general/vimanual.html
 
-nohup: start and continue after hangup
+- edit/insert: i
+- undo: u
+- search: / (search again: n)
+- quit: :q! (no save), ZZ (save)
+- delete: x or dd
 
-# Show processes:
 
-ps x | grep node
-ps -ef
-ps aux # with CPU/memory usage
-top
+## File manipulation
 
-Port usage - checks port 80:
-lsof -i :80 
+	cp
+	mv
+	rm:	rm -r myfolder
 
-check memory: free
-check disk: df -h ./
+	filename/foldername="$(echo $1 | sed "s/.*\///")"
 
-# Network usage (http://www.macworld.com/article/1143351/netprocesses.html):
-lsof -P -i -n | cut -f 1 -d " " | uniq
+## For loops
 
-check version: lsb_release -a
-Ubuntu 8.04.1 hardy
+	for i in *; do echo ${i}; done
+	for i in *.URL; do echo ${i}; cat "${i}"; done
 
-variables:
-export NEW_RELIC_HOME=lib/config
-export PATH=$PATH:/path/to/my/stuff
-echo $PATH
+	# Rename multiple, extension:
+	for i in *.JPG; do mv ${i} ${i/.JPG}.jpg; done
+	for i in *@2x.png; do mv ${i} ${i/@2x.png}-hd.png; done
 
-// .bash_profile is executed for logins, while .bashrc is executed for all new shells
-$HOME/.bashrc
-cat $HOME/.bash_profile
-source ~/.bashrc # reload, also . ~/.bashrc
+	# Rename multiple, prefix:
+	for i in Old*.jpg; do echo mv ${i} New${i#Old}; done
+	for i in *copy.bmp; do echo mv \"${i}\" \"${i}2\"; done
 
-# Run with variable set:
-DEBUG=weld:socket.io grunt serve
+### Bash script: promo_square
+
+	input=./weld_promo_square/*.png
+	output=output/promo_square
+	format="png -quality 95"
+	sizes=("358x358" "1000x800" "414x468" "558x558" "558x756")
+	mkdir $output
+	for filename in "$input"; do
+		echo "$filename"
+		for i in "${sizes[@]}"; do
+			mogrify -format $format -thumbnail $i^ -extent $i -gravity center -format "$i.png" -path "./$output" "$filename"
+		done
+	done
+
+### Links
+
+	ln: links, e.g.
+	ln -s sourcePath targetPath
+	-s = symbolic, 1 source 2 target
+
+### Change owner
+
+	chmod o=rw (a:all, u:user, g:group, o:other = rwx)
+	chmod u+rwx
+	chmod u+x myscript.sh
+	chown -R www drupal-6.15/
+	chgrp -R www drupal-6.15/
+
+
+## Superuser
+
+	su: switch user, su tom
+	sudo
+	sudo visudo
+
+	nohup: start and continue after hangup
+
+
+
+### Show processes:
+
+	ps x | grep node
+	ps -ef
+	ps aux # with CPU/memory usage
+	top
+
+	Port usage - checks port 80:
+	lsof -i :80 
+
+	check memory: free
+	check disk: df -h ./
+
+### Network usage (http://www.macworld.com/article/1143351/netprocesses.html):
+
+	lsof -P -i -n | cut -f 1 -d " " | uniq
+
+Check version:
+
+	lsb_release -a  # "Ubuntu 8.04.1 hardy"
+
+Variables:
+
+	export NEW_RELIC_HOME=lib/config
+	export PATH=$PATH:/path/to/my/stuff
+	echo $PATH
+
+	// .bash_profile is executed for logins, while .bashrc is executed for all new shells
+	$HOME/.bashrc
+	cat $HOME/.bash_profile
+	source ~/.bashrc # reload, also . ~/.bashrc
+
+### Run with variable set:
+
+	DEBUG=weld:socket.io grunt serve
 
 
 ## Kill processes
 
-pkill -9 "process name"
+	pkill -9 "process name"
 
-sudo killall Python
+	sudo killall Python
+	sudo killall -s SIGINT "process name"
 
-sudo killall -s SIGINT "process name"
+### history
 
-
-# history
-
-history
-type rvm | head -1
+	history
+	type rvm | head -1
 
 
-CRON
+## Cron
 
 http://www.scrounge.org/linux/cron.html
 
 
-SSH/SCP
+## SSH/SCP
 
-/usr/bin/ssh tom@differentgame.cust.ipeer.se
-/usr/bin/scp -r * tom@differentgame.cust.ipeer.se:/home/tom/www/adifferentgame/public/downloads/
-
+	/usr/bin/ssh tom@domainname.com
+	/usr/bin/scp -r * tom@domainname.com:/home/tom/www/adifferentgame/public/downloads/
 
 Copy home:
-/usr/bin/scp tom@differentgame.cust.ipeer.se:/home/tom/www/ghostwire-interaction/backup/ghostwire_interaction_production_20100601.sql.gz .
+
+	/usr/bin/scp tom@domainname.com:/home/tom/www/ghostwire-interaction/backup/ghostwire_interaction_production_20100601.sql.gz .
 
 
-USERS
+## Users
 
-useradd -d /home/tom -m tom
-passwd username
+	useradd -d /home/tom -m tom
+	passwd username
 
-PREFERENCES
+### User preferences
 
-~/.bash_profile
+	~/.bash_profile
 
-# Download files:
 
-curl
-wget "http://rubyforge.org/frs/download.php/38646/rubygems-1.2.0.tgz"
-apt-get libmysql-ruby ruby1.8-dev libmysql-ruby1.8
-curl https://github.com/X1011/git-directory-deploy/raw/master/deploy.sh -o deploy.sh
+## Download files:
+
+	curl
+	wget "http://rubyforge.org/frs/download.php/38646/rubygems-1.2.0.tgz"
+	apt-get libmysql-ruby ruby1.8-dev libmysql-ruby1.8
+	curl https://github.com/X1011/git-directory-deploy/raw/master/deploy.sh -o deploy.sh
 
 ## REST with Curl
-curl -i -H "Accept: application/json" -X GET http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-curl -i -H "Accept: application/json" -X POST -d "firstName=james" http://localhost:9000/persons/person
-curl -i -H "Accept: application/json" -X PUT -d "data=test" http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-curl -i -H "Accept: application/json" -X DELETE http://localhost:9000/persons/person/1  
 
-Multiple headers: multiple -H ""
+	curl -i -H "Accept: application/json" -X GET http://localhost:9000/api/projects/52e96b4732d10c8b91000003
+	curl -i -H "Accept: application/json" -X POST -d "firstName=james" http://localhost:9000/persons/person
+	curl -i -H "Accept: application/json" -X PUT -d "data=test" http://localhost:9000/api/projects/52e96b4732d10c8b91000003
+	curl -i -H "Accept: application/json" -X DELETE http://localhost:9000/persons/person/1  
 
-curl -H "accept-version: 2.0.0" http://localhost:9000/api/embed
+Multiple headers: multiple `-H ""`
 
-curl -X POST https://domain-production-eu-weld.herokuapp.com/api -H "Content-Type: application/json" -d \
-'{
-   "domain": {
-       "hostname": "w-collection.se",
-       "projectId": "-LOT0ZHo5jxO8tHveExw",
-       "owner": "5893172c7ca8f70011be4222"
-   }
-}'
+	curl -H "accept-version: 2.0.0" http://localhost:9000/api/embed
 
-       "domaintype": "FREE",
+Line breaks:
 
-TAR: extract
-tar xvfpz file_name.tar.gz
+	curl -X POST https://domain-production-eu-weld.herokuapp.com/api -H "Content-Type: application/json" -d \
+	'{
+		 "domain": {
+				 "hostname": "w-collection.se",
+				 "projectId": "-LOT0ZHo5jxO8tHveExw",
+				 "owner": "5893172c7ca8f70011be4222"
+		 }
+	}'
+
+## TAR: extract files
+
+	tar xvfpz file_name.tar.gz
 
 
-Autostart: /etc/init.d
+## Autostart
+
+	/etc/init.d
 
 
 ## Encryption
@@ -251,29 +307,21 @@ Longer guide: https://gist.github.com/colinstein/de1755d2d7fbe27a0f1e
 ## DNS domain
 
 Flush dns:
-dscacheutil -flushcache
+
+	dscacheutil -flushcache
 
 Debug DNS:
 
-host savann.tomorroworld.com
-dig weld.io
-dig @SERVER-IP weld.io
-nslookup weld.io
-nslookup weld.io SERVER-IP
+	host savann.tomorroworld.com
+	dig weld.io
+	dig @SERVER-IP weld.io
+	nslookup weld.io
+	nslookup weld.io SERVER-IP
 
 
-# Text File Manipulation
+### Batch Files
 
-	grep
-	awk
-
-	# Only show lines 4 chars
-	awk '{ if (length($0) > 4) print }' yourfile > your_output_file.txt
-
-
-# Batch Files
-
-## Parameters
+### Parameters
 
 	echo It is a $1 day
 
@@ -281,6 +329,8 @@ nslookup weld.io SERVER-IP
 	echo $STR
 
 	#!/usr/bin/env bash
+
+### If/Else
 
 	if [ "$1" = "foo" ]; then
 		echo FOO
@@ -307,8 +357,7 @@ nslookup weld.io SERVER-IP
 		echo "${substring} is not in ${large_string}"
 	fi
 
-
-## Loops
+### Loops
 
 	for i in $( ls ); do
 		echo item: $i
@@ -316,10 +365,10 @@ nslookup weld.io SERVER-IP
 
 	sleep 1 # wait 1 second
 
-## Functions
+### Functions
 
 	function myFunction {
-	    echo $1 
+			echo $1 
 	}  
 	myFunction Hello
 
@@ -327,19 +376,19 @@ nslookup weld.io SERVER-IP
 	myFunctionOneLine Hello
 
 
-# MAC OS X .COMMAND FILES
+### MacOS .command files
 
 	#!/usr/bin/env bash
 
 	# Move Terminal Window to top-right
 	osascript -e 'tell application "Terminal"' \
-			  -e 'set bounds of front window to {480,1,1280,400}' \
-			  -e 'end tell'
+				-e 'set bounds of front window to {480,1,1280,400}' \
+				-e 'end tell'
 
 	# Move Terminal Window to bottom-left
 	osascript -e 'tell application "Terminal"' \
-			  -e 'set bounds of front window to {1,400,600,700}' \
-			  -e 'end tell'
+				-e 'set bounds of front window to {1,400,600,700}' \
+				-e 'end tell'
 			
 	# Change Terminal theme
 	osascript -e 'tell application "Terminal" to set current settings of front window to settings set "Ocean"'
@@ -351,19 +400,19 @@ nslookup weld.io SERVER-IP
 	osascript -e "tell application \"System Events\" to return every application process whose (name $is_contains \"$arg\" or short name $is_contains \"$arg\" or title $is_contains \"$arg\" or displayed name $is_contains \"$arg\")"`
 	osascript -e "tell application \"System Events\" to return every application process whose name $is_contains \"$arg\""`
 
+### Go to starting folder
 
+	currentdir="`dirname \"$0\"`"
+	cd "$currentdir" || exit 1
 
-# Go to starting folder
-currentdir="`dirname \"$0\"`"
-cd "$currentdir" || exit 1
+	cd "subfolder"
 
-cd "subfolder"
+### Set RVM version
 
-# Set RVM version
-source ~/.rvm/environments/ruby-1.9.2-p290
-source ~/.rvm/environments/ruby-1.8.7-p352
+	source ~/.rvm/environments/ruby-1.9.2-p290
+	source ~/.rvm/environments/ruby-1.8.7-p352
 
-# Example
+## Bash script example
 
 	#!/usr/bin/env bash
 
@@ -405,146 +454,154 @@ source ~/.rvm/environments/ruby-1.8.7-p352
 		rm $REPORTPATH/temp*.txt
 	fi
 
+## MacPorts
 
-MACPORTS
+`-d` = debug
 
--d = debug
+	port installed
+	port list boost*
+	sudo port selfupdate
+	sudo port install [name]
+	sudo port uninstall installed # remove all
 
-port installed
-port list boost*
-sudo port selfupdate
-sudo port install [name]
-sudo port uninstall installed # remove all
+### Get old version of software
 
-# Special: get old version of software
-cd
-mkdir macports-temp
-cd macports-temp
-svn co  -r 93341 'http://svn.macports.org/repository/macports/trunk/dports/devel/boost/'
-cd boost
-sudo port install
-sudo port install mongodb
-sudo port activate boost @1.49.0_0
+	cd
+	mkdir macports-temp
+	cd macports-temp
+	svn co  -r 93341 'http://svn.macports.org/repository/macports/trunk/dports/devel/boost/'
+	cd boost
+	sudo port install
+	sudo port install mongodb
+	sudo port activate boost @1.49.0_0
 
-IMAGEMAGICK
+## ImageMagick
 
-// Convert + rename + folder
-mogrify -format png -thumbnail $i^ -extent $i -gravity center -format "$i.png" -path "./$folder" "$1"
-// Resize: ignore aspect ratio
-convert -resize 320x50\! dummy_static.png banner_320x50.png
-// Convert multiple files
-mogrify -format png -path ./PNG *.bmp
-// BMP -> JPG
-mogrify -format jpg -quality 80 -path ./temp *.bmp
-// Resize to smaller
-mogrify -format jpg -resize 1024x -quality 90 -path ./small *.jpg
-mogrify -resize 25% -format jpg -quality 80 -path ./medium *.jpg
-mogrify -resize 10% -format jpg -quality 80 -path ./small *.jpg
-// Resize + Change format multiple images
-mogrify -resize 200% -path ./2X/ *.png // Create 2X images for iOS
-mogrify -resize 800x -quality 80 -path ./Small/ Mamma.jpg
-mogrify -resize 40% -quality 80 *.jpg
-convert -resize 500x -quality 80 "Picture 2.png" Zyked_Teams.jpg
-// Convert + Rename with numbering
-convert -quality 80 *.png majesty2_%02d.jpg
-// Crop + Rename with numbering
-convert -crop 260x397+9+55 *.bmp temp/cropimage_%02d.png
-// Crop Screenshot DS
-convert -crop 256x384+45+47 "Build - Buildings.png" "Cropped/Build - Buildings.png"
-convert -crop 256x384+45+47 *.png Cropped/*.png
-for i in *.png; do convert -crop 256x384+45+47 \"${i}\" \"Cropped/${i}\"; done
+	# Convert + rename + folder
+	mogrify -format png -thumbnail $i^ -extent $i -gravity center -format "$i.png" -path "./$folder" "$1"
 
-// Merge images
+	# Resize: ignore aspect ratio
+	convert -resize 320x50\! dummy_static.png banner_320x50.png
+
+	# Convert multiple files
+	mogrify -format png -path ./PNG *.bmp
+
+	# BMP -> JPG
+	mogrify -format jpg -quality 80 -path ./temp *.bmp
+
+	# Resize to smaller
+	mogrify -format jpg -resize 1024x -quality 90 -path ./small *.jpg
+	mogrify -resize 25% -format jpg -quality 80 -path ./medium *.jpg
+	mogrify -resize 10% -format jpg -quality 80 -path ./small *.jpg
+
+	# Resize + Change format multiple images
+	mogrify -resize 200% -path ./2X/ *.png // Create 2X images for iOS
+	mogrify -resize 800x -quality 80 -path ./Small/ Mamma.jpg
+	mogrify -resize 40% -quality 80 *.jpg
+	convert -resize 500x -quality 80 "Picture 2.png" Zyked_Teams.jpg
+
+	# Convert + Rename with numbering
+	convert -quality 80 *.png majesty2_%02d.jpg
+
+	# Crop + Rename with numbering
+	convert -crop 260x397+9+55 *.bmp temp/cropimage_%02d.png
+
+	# Crop Screenshot DS
+	convert -crop 256x384+45+47 "Build - Buildings.png" "Cropped/Build - Buildings.png"
+	convert -crop 256x384+45+47 *.png Cropped/*.png
+	for i in *.png; do convert -crop 256x384+45+47 \"${i}\" \"Cropped/${i}\"; done
+
+### Merge images
+
 http://www.imagemagick.org/Usage/compose/
 
-convert -resize 220x qr01-25/001_x01aru.png foreground.png
-composite -gravity center -geometry +0-30 foreground.png background.png Output/sticker_01.png
+	convert -resize 220x qr01-25/001_x01aru.png foreground.png
+	composite -gravity center -geometry +0-30 foreground.png background.png Output/sticker_01.png
 
-convert -resize 220x qr01-25/001_x01aru.png qr_scaled.png; composite -gravity center -geometry +0-30 qr_scaled.png sticker_template_aru.png Output/sticker_01.png
-convert -resize 220x 001_x01.png qr_scaled.png; composite -gravity center -geometry +0-45 qr_scaled.png sticker_template.png Output/sticker_01.png
+	convert -resize 220x qr01-25/001_x01aru.png qr_scaled.png; composite -gravity center -geometry +0-30 qr_scaled.png sticker_template_aru.png Output/sticker_01.png
+	convert -resize 220x 001_x01.png qr_scaled.png; composite -gravity center -geometry +0-45 qr_scaled.png sticker_template.png Output/sticker_01.png
 
-// Collage
-montage '*.png' -geometry +3+3 Zyked-iPhone-Collage.jpg
-montage -label '%t' -resize 300x300 '*.jpg' -geometry +3+3 -tile 3x _Index.jpg
-montage -label '%t\n%wx%h' -resize 250x250 '*.jpg' -geometry +3+3 -tile 3x -frame 5 _Index.jpg
-// Make long list of images (PPT for instance)
-montage -geometry 500x '*.png' -tile 1x -border 2 slides.jpg
+### Collage
 
-// Animating
-convert -delay 25 -loop 0 +dither Output/frame*.png Output/screenshot_animation.gif
+	montage '*.png' -geometry +3+3 Zyked-iPhone-Collage.jpg
+	montage -label '%t' -resize 300x300 '*.jpg' -geometry +3+3 -tile 3x _Index.jpg
+	montage -label '%t\n%wx%h' -resize 250x250 '*.jpg' -geometry +3+3 -tile 3x -frame 5 _Index.jpg
 
+Make long list of images (PPT for instance):
 
-TIME / DATE
+	montage -geometry 500x '*.png' -tile 1x -border 2 slides.jpg
 
-date
+### Animating
 
+	convert -delay 25 -loop 0 +dither Output/frame*.png Output/screenshot_animation.gif
 
 
-SOUNDS / VOICE
+## Time & Date
 
-osascript -e 'beep'
-tput bel && sleep 0.33s && tput bel
-
-say OK
-say -v Samantha The upgrade is now complete
-say -v Alva Hej på dig
-say -v \?
-
-ar_SA: Maged
-cs_CZ: Zuzana
-da_DK: Sara
-de_DE: Anna
-el_GR: Melina
-en-scotland: Fiona
-en_AU: Karen
-en_GB: Daniel
-en_IE: Moira
-en_IN: Veena
-en_US: Alex
-en_US: Fred
-en_US: Samantha
-en_US: Victoria
-en_ZA: Tessa
-es_AR: Diego
-es_ES: Jorge
-es_ES: Monica
-es_MX: Juan
-es_MX: Paulina
-fi_FI: Satu
-fr_CA: Amelie
-fr_FR: Thomas
-he_IL: Carmit
-hi_IN: Lekha
-hu_HU: Mariska
-id_ID: Damayanti
-it_IT: Alice
-it_IT: Luca
-ja_JP: Kyoko
-ko_KR: Yuna
-nb_NO: Nora
-nl_BE: Ellen
-nl_NL: Xander
-pl_PL: Zosia
-pt_BR: Luciana
-pt_PT: Joana
-ro_RO: Ioana
-ru_RU: Milena
-ru_RU: Yuri
-sk_SK: Laura
-sv_SE: Alva
-th_TH: Kanya
-tr_TR: Yelda
-zh_CN: Ting-Ting
-zh_HK: Sin-ji
-zh_TW: Mei-Jia
+	date
 
 
-WEB SERVER IN PYTHON
+## Sounds & Voice
 
-python -m SimpleHTTPServer
+	osascript -e 'beep'
+	tput bel && sleep 0.33s && tput bel
+
+Say - MacOS:
+
+	say OK
+	say -v Samantha The upgrade is now complete
+	say -v Alva Hej på dig
+	say -v \?
+
+- ar_SA: Maged
+- cs_CZ: Zuzana
+- da_DK: Sara
+- de_DE: Anna
+- el_GR: Melina
+- en-scotland: Fiona
+- en_AU: Karen
+- en_GB: Daniel
+- en_IE: Moira
+- en_IN: Veena
+- en_US: Alex
+- en_US: Fred
+- en_US: Samantha
+- en_US: Victoria
+- en_ZA: Tessa
+- es_AR: Diego
+- es_ES: Jorge
+- es_ES: Monica
+- es_MX: Juan
+- es_MX: Paulina
+- fi_FI: Satu
+- fr_CA: Amelie
+- fr_FR: Thomas
+- he_IL: Carmit
+- hi_IN: Lekha
+- hu_HU: Mariska
+- id_ID: Damayanti
+- it_IT: Alice
+- it_IT: Luca
+- ja_JP: Kyoko
+- ko_KR: Yuna
+- nb_NO: Nora
+- nl_BE: Ellen
+- nl_NL: Xander
+- pl_PL: Zosia
+- pt_BR: Luciana
+- pt_PT: Joana
+- ro_RO: Ioana
+- ru_RU: Milena
+- ru_RU: Yuri
+- sk_SK: Laura
+- sv_SE: Alva
+- th_TH: Kanya
+- tr_TR: Yelda
+- zh_CN: Ting-Ting
+- zh_HK: Sin-ji
+- zh_TW: Mei-Jia
 
 
-REFERENCE
+## Web server
 
-File System and Folders:
-http://www.pathname.com/fhs/pub/fhs-2.3.html
+	python -m SimpleHTTPServer

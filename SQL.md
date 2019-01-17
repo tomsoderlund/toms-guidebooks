@@ -157,7 +157,7 @@ Multiple values:
 
 ## Update
 
-	UPDATE domains SET content_last_update = null, content_previous_update = null WHERE id=1;
+	UPDATE domains SET content_last_update = '2019-01-01 12:00', content_previous_update = null WHERE id=1;
 
 ## Delete
 

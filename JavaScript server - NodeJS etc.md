@@ -454,6 +454,30 @@ package.json:
 		]
 	},
 
+## Documentation - JSDoc
+
+http://usejsdoc.org
+
+	/** This is a description of the foo function. */
+	function foo() {
+	}
+
+	/**
+	 * Represents a book.
+	 * @constructor
+	 * @param {string} title - The title of the book.
+	 * @param {string} author - The author of the book.
+	 */
+	function Book(title, author) {
+	}
+
+Module:
+
+	/**
+	 * Shirt module.
+	 * @module my/shirt
+	 */
+
 ## Node Command Line Application
 
 http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/

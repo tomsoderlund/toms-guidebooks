@@ -771,6 +771,8 @@ setTimeout(
 
 // Repeat
 setInterval(doEverySecond, 1000)
+// Stop timer
+clearInterval(timerId)
 
 var timerId = setInterval(
 	function () { 
@@ -783,12 +785,6 @@ var timerId = setInterval(
 var doWithTimeoutIfNeeded = function (func, expression) {
 	expression ? setTimeout(func) : func()
 }
-
-
-var timerId = setInterval(update, 1000)
-
-// Stop timer
-clearInterval(timerId)
 
 
 ## Drawing
@@ -1407,6 +1403,7 @@ _.reduce([1, 2], function (result, item) {
 }, startValue)
 
 const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
+const objectToCSS = obj => Object.keys(obj).reduce((result, key) => result + `${key}: ${obj[key]}; `, '')
 //const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
 
 countObj = _.reduce(domains, function (previous, domain) {
@@ -2004,9 +2001,7 @@ http://www.cheatography.com/jonathanberi/cheat-sheets/polymer-js/
 
 https://github.com/facebookincubator/create-react-app
 
-	npm install -g create-react-app
-
-	create-react-app my-app
+	npx create-react-app my-app  # or yarn create react-app my-app
 	cd my-app/
 	npm start
 
@@ -2136,11 +2131,66 @@ Comparison:
 
 	import styled from 'styled-components'
 
-	const componentName = styled.div`
-		font-family: ${props => props.fontName};
+	const MyComponent = styled.div`
+		font-family: ${props => props.theme.fontName};
 		color: ${weldTheme.blue};
-		background-color:  'palevioletred';
+		background-color:  'tomato';
 	`
+
+Inheritance:
+
+	const OtherComponent = styled(MyComponent)`
+		color: orange;
+	`
+
+or Theming:
+
+	<MyComponent theme={{ color: 'orange' }}>
+
+	const MyComponent = styled.div`
+		color: ${props => props.theme.color || 'gray'};
+	`
+
+Attributes:
+
+	const DivWithAttributes = styled.div.attrs({
+		className: 'bootstrap-button',
+		padding: props => props.size || '1em'
+	})`
+		color: palevioletred;
+		padding: ${props => props.padding};
+	`
+
+Change element type:
+
+	const PrimaryLink = PrimaryButton.withComponent('a')
+	// or:
+	<PrimaryButton as='a'/>
+
+Refer to ${ChildComponent}:
+
+	const PrimaryButton = styled.button`
+		width: 48px;
+
+		${Icon}:hover & {
+			fill: rebeccapurple;
+		}
+	`;
+
+#### create-react-app on GitHub Pages
+
+package.json:
+
+	"homepage": "http://tomsoderlund.github.io/css-motion-toy",
+	"scripts": {
+	  "predeploy": "yarn build",
+	  "deploy": "gh-pages -d build"
+	},
+
+Then:
+
+	yarn add gh-pages --dev
+	yarn deploy
 
 #### styled-jsx
 
