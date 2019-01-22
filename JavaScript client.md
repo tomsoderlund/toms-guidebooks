@@ -344,79 +344,115 @@ catch (e) {
 
 ## Numbers & Math
 
-Math.random() // 0.0 to 1.0
+	Math.random() // 0.0 to 1.0
 
-const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
-const getRandomNumber = max => Math.floor(Math.random() * max)
-const getRandomFromArray = array => array[getRandomNumber(array.length)]
+	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
+	const getRandomNumber = max => Math.floor(Math.random() * max)
+	const getRandomFromArray = array => array[getRandomNumber(array.length)]
 
-// Serial e.g. '1464642047155-207'
-(Date.now() + '-' + Math.floor(Math.random() * 1000))
+	// Serial e.g. '1464642047155-207'
+	(Date.now() + '-' + Math.floor(Math.random() * 1000))
 
-Math.abs(x)
-Math.min, Math.max
+	Math.abs(x)
+	Math.min, Math.max
 
-Math.round()
-// 2 decimals
-Math.round(num * 100) / 100
+	Math.round()
+	// 2 decimals
+	Math.round(num * 100) / 100
 
-// Limit value between max and min
-limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
+	// Limit value between max and min
+	limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
 
-parseInt(StringorNum) // to int
-parseFloat(StringorNum) // to float
+	parseInt(StringorNum) // to int
+	parseFloat(StringorNum) // to float
 
-Math.sqrt(9)
-
-Math.PI
-Math.sin(radians) // 'x': 0=0, 0.5π=1, π=0,  1.5π=-1, 2π=0
-Math.cos(radians) // 'y': 0=1, 0.5π=0, π=-1, 1.5π=0,  2π=1
-
-deg/360 = rad/2π -> rad = deg/180 * Math.PI
-
-const xySpeed = (speed, rotationDegrees) => ({
-	x: Math.sin(rotationDegrees/180 * Math.PI) * speed,
-	y: -Math.cos(rotationDegrees/180 * Math.PI) * speed,
-})
-
-function padDigits (number, digits) {
-	return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number
-}
-
-WELD.interpolate = function (fraction, min, max) {
-	var result = min + (fraction * (max - min))
-	// If min and max are integers, return integer
-	if (min % 1 === 0 && max % 1 === 0)
-		result = Math.round(result)
-	return result
-}
-
-// X/Y distances
-
-var calcDistance = function (pos1, pos2) {
-	var x = pos1[0] - pos2[0]
-	var y = pos1[1] - pos2[1]
-	return Math.sqrt(x*x + y*y)
-}
-
-var calcDeltaMovement = function (pos1, pos2) {
-	var x = pos1[0] - pos2[0]
-	var y = pos1[1] - pos2[1]
-	var m = [x > 0 ? 1 : 0, y > 0 ? 1 : 0]
-	return m
-}
-
-// Graph circle
-
-var findNewPoint = function (x, y, angle, distance) {
-	var result = {
-		x: Math.round(Math.cos(angle * Math.PI / 180) * distance + x),
-		y: Math.round(Math.sin(angle * Math.PI / 180) * distance + y)
+	function padDigits (number, digits) {
+		return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number
 	}
-	return result
-}
 
+	const interpolate = function (fraction, min, max) {
+		var result = min + (fraction * (max - min))
+		// If min and max are integers, return integer
+		if (min % 1 === 0 && max % 1 === 0)
+			result = Math.round(result)
+		return result
+	}
 
+Power/root
+
+	Math.pow(3, 2)
+	Math.sqrt(9)
+
+### Trigonometry and coordinates
+
+	Math.PI
+	Math.sin(radians) // 'x': 0=0, 0.5π=1, π=0,  1.5π=-1, 2π=0
+	Math.cos(radians) // 'y': 0=1, 0.5π=0, π=-1, 1.5π=0,  2π=1
+
+	deg/360 = rad/2π -> rad = deg/180 * Math.PI
+
+X/Y distances:
+
+	var calcDistance = function (pos1, pos2) {
+		var x = pos1[0] - pos2[0]
+		var y = pos1[1] - pos2[1]
+		return Math.sqrt(x*x + y*y)
+	}
+
+Get angle:
+
+	const getAngle = function (x, y) {
+		const angle = Math.atan2(y, x) // radians
+		const degrees = 180 * angle / Math.PI // degrees
+		return (360 + Math.round(degrees)) % 360 // round number, avoid decimal fragments
+	}
+
+Vector to X/Y:
+
+	const xySpeed = (speed, rotationDegrees) => ({
+		x: Math.sin(rotationDegrees/180 * Math.PI) * speed,
+		y: -Math.cos(rotationDegrees/180 * Math.PI) * speed,
+	})
+
+Graph circle:
+
+	var findNewPoint = function (x, y, angle, distance) {
+		var result = {
+			x: Math.round(Math.cos(angle * Math.PI / 180) * distance + x),
+			y: Math.round(Math.sin(angle * Math.PI / 180) * distance + y)
+		}
+		return result
+	}
+
+Bounce and gravity:
+
+	const applyRuleBounce = ({ position, speed, acceleration }) => {
+		if (position[Y] > 200) {
+			speed[Y] = -speed[Y] * 0.9
+			speed[ROTATION] = -speed[ROTATION] * 0.9
+			position[ROTATION] = position[ROTATION] * 0.9
+			position[Y] = 200
+		}
+	}
+
+	const applyRuleBlackHole = ({ gravity = 0.01, holePosition = [150, 150], position, speed, acceleration }) => {
+		for (let dim = X; dim <= Z; dim++) {
+			acceleration[dim] = (holePosition[dim] - position[dim]) * gravity
+		}
+	}
+
+What is this?
+
+	Math.sign(-3) // -1
+
+	var calcDeltaMovement = function (pos1, pos2) {
+		var x = pos1[0] - pos2[0]
+		var y = pos1[1] - pos2[1]
+		return [
+			x > 0 ? 1 : 0,
+			y > 0 ? 1 : 0
+		]
+	}
 
 
 ## Strings/Text
@@ -427,10 +463,16 @@ string.length
 
 console.log('String: “%s”, Integer: %d, Float: %f, Boolean: %s', myString, myInteger, myFloat, myBoolean)
 
-string.charAt(index) === string[index]
+### String search/comparison
+
 string.indexOf(searchstring, start)
 string.lastIndexOf(searchstring, start)
 string.search() // for regular expressions
+
+s.startsWith('hello')
+s.endsWith('hello')
+
+const stringContains = (bigString, searchString) => bigString.toLowerCase().includes(searchString.toLowerCase())
 
 string.substr(start, length)
 string.substr(nrOfInitialCharsToRemove) = string.substring(nrOfInitialCharsToRemove) = string.slice(nrOfInitialCharsToRemove)
@@ -446,15 +488,7 @@ const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, ''
 // hex
 module.exports.isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
 
-s.endsWith('css2')
-
-// Polyfill for future ECMAScript
-if (!String.prototype.startsWith) {
-	String.prototype.startsWith = function (searchString, position) {
-		position = position || 0
-		return this.lastIndexOf(searchString, position) === position
-	}
-}
+string.charAt(index)
 
 // Left/Right
 'ABCDE'.slice(3) // = 'DE'
@@ -640,6 +674,10 @@ Array.prototype.remove = function (from, to) {
 	this.length = from < 0 ? this.length + from : from
 	return this.push.apply(this, rest)
 }
+
+// Divide into pages. Note: pageNr = 1, 2, 3...
+const paginateArray = (array, pageSize = 100, pageNr = 1) => array.slice((pageNr - 1) * pageSize, pageNr * pageSize)
+const paginateObject = (object, pageSize, pageNr) => paginateArray(Object.keys(object), pageSize, pageNr).reduce((result, projectKey) => { result[projectKey] = object[projectKey]; return result }, {})
 
 // Split full name into first/lastname
 var allNames = fullname.split(' ')
@@ -2018,7 +2056,6 @@ https://github.com/facebookincubator/create-react-app
 
 https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
 
-
 ### Next.js:
 
 	yarn add react react-dom next
@@ -2070,21 +2107,26 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 		document.getElementById('container')
 	)
 
-
 React.createClass is deprecated
 
 ### Import components
 
-import { Link } from 'react-router'
-import AppHeader from '../../components/AppHeader/AppHeader'
+	import { Link } from 'react-router'
+	import AppHeader from '../../components/AppHeader/AppHeader'
 
 ### Routing/multiple pages/views
 
-react-router:
+react-router-dom:
+
 * https://reacttraining.com/react-router/web/guides/quick-start
 * https://github.com/ReactTraining/react-router
 
-npm install react-router-dom --save
+Code:
+
+	import { withRouter } from 'react-router-dom'
+
+	console.log(this.props.location.pathname)
+	this.props.history.push(`/path`)
 
 ### Components with JSX
 
@@ -2183,8 +2225,8 @@ package.json:
 
 	"homepage": "http://tomsoderlund.github.io/css-motion-toy",
 	"scripts": {
-	  "predeploy": "yarn build",
-	  "deploy": "gh-pages -d build"
+		"predeploy": "yarn build",
+		"deploy": "gh-pages -d build"
 	},
 
 Then:
@@ -2222,25 +2264,25 @@ https://github.com/zeit/styled-jsx
 
 // Alt 2:
 
-const DateValues = ({metric, dateValues, handleAdd, handleRemove}) => {
+	const DateValues = ({metric, dateValues, handleAdd, handleRemove}) => {
 
-	console.log('dateValues', dateValues)
+		console.log('dateValues', dateValues)
 
-	const dateValueList = _.map(
-		dateValues,
-		(dateValue, key) => <DateValue key={key} dateValue={dateValue} handleRemove={handleRemove}/>
-	)
+		const dateValueList = _.map(
+			dateValues,
+			(dateValue, key) => <DateValue key={key} dateValue={dateValue} handleRemove={handleRemove}/>
+		)
 
-	return 	(
-		<div>
-			<button className="add" onClick={handleAdd}>+ Add value</button>
-			{dateValueList}
-		</div>
-	)
+		return 	(
+			<div>
+				<button className="add" onClick={handleAdd}>+ Add value</button>
+				{dateValueList}
+			</div>
+		)
 
-}
+	}
 
-export default DateValues
+	export default DateValues
 
 #### Fragments
 
@@ -2271,17 +2313,21 @@ or
 
 ### Data: props and state
 
+https://medium.freecodecamp.com/where-do-i-belong-a-guide-to-saving-react-component-data-in-state-store-static-and-this-c49b335e2a00
+
 * `this.props` is immutable data - use a lot.
 	* `this.props.children`: child elements.
 * `this.state` is mutable data - keep it minimal.
 
-this.setState({ loading: false })
+setState:
 
-<ListComponent items={this.state.list} remove={this.handleRemoveItem.bind(this)} />
+	this.setState({ loading: false })
 
-<div dangerouslySetInnerHTML={{ __html: article.content }} />
+	<ListComponent items={this.state.list} remove={this.handleRemoveItem.bind(this)} />
 
-https://medium.freecodecamp.com/where-do-i-belong-a-guide-to-saving-react-component-data-in-state-store-static-and-this-c49b335e2a00
+HTML:
+
+	<div dangerouslySetInnerHTML={{ __html: article.content }} />
 
 Firebase + React: re-base
 
@@ -2296,12 +2342,12 @@ Optional event/props:
 
 ### Gatsby.js
 
-yarn global add gatsby-cli   # npm install --global gatsby-cli
+	yarn global add gatsby-cli   # npm install --global gatsby-cli
 
-gatsby new MYSITE https://github.com/gatsbyjs/gatsby-starter-default#v2
+	gatsby new MYSITE https://github.com/gatsbyjs/gatsby-starter-default#v2
 
-gatsby develop
-gatsby build && gatsby serve
+	gatsby develop
+	gatsby build && gatsby serve
 
 
 ## Redux
@@ -2344,11 +2390,11 @@ https://jaysoo.ca/2016/02/28/organizing-redux-application/
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
-HTTP
+### HTTP
 
-var jqxhr = $.get('example.php', function () {
-	alert('Success!')
-})
+	var jqxhr = $.get('example.php', function () {
+		alert('Success!')
+	})
 
 ### Selectors
 
@@ -2357,7 +2403,7 @@ except that the latter only travels a single level down the DOM tree.
 
 Classes:
 
-$("p").removeClass("myClass noClass").addClass("yourClass")
+	$("p").removeClass("myClass noClass").addClass("yourClass")
 
 ### Custom Jquery Plugins
 
@@ -2365,102 +2411,100 @@ http://stefangabos.ro/jquery/jquery-plugin-boilerplate-oop/
 
 ### Events
 
-$('#slider').on('click mousedown touchstart', clearInterval.bind(this, timerId))
-$("button").click(function (event) {
-	alert(event.target.id)
-})
-$(document).ready(function () { alert('Document Ready') }) // When DOM is loaded
-$(window).load(function () { alert('Load') }) // When all images etc has been loaded
-
-$(document).ready(function () {
-	$("a").click(function (event){
-		alert("Thanks for visiting!")
+	$('#slider').on('click mousedown touchstart', clearInterval.bind(this, timerId))
+	$("button").click(function (event) {
+		alert(event.target.id)
 	})
-})
+	$(document).ready(function () { alert('Document Ready') }) // When DOM is loaded
+	$(window).load(function () { alert('Load') }) // When all images etc has been loaded
 
-$(".icon_gift").hover(
-	function (eventObject) {
-		popover = $(this).find(".gift_popover")
-		popover.show()
-	},
-	function (eventObject) {
-		popover = $(this).find(".gift_popover")
-		popover.hide()
-	}
-)
+	$(document).ready(function () {
+		$("a").click(function (event){
+			alert("Thanks for visiting!")
+		})
+	})
+
+	$(".icon_gift").hover(
+		function (eventObject) {
+			popover = $(this).find(".gift_popover")
+			popover.show()
+		},
+		function (eventObject) {
+			popover = $(this).find(".gift_popover")
+			popover.hide()
+		}
+	)
 
 ### DOM
 
-var newElement = $('<p>Test</p>').appendTo('.parentClass')
-var parentElement = $('.parentClass').append('<p>Test</p>')
+	var newElement = $('<p>Test</p>').appendTo('.parentClass')
+	var parentElement = $('.parentClass').append('<p>Test</p>')
 
-$('#parentElement').empty()
+	$('#parentElement').empty()
 
 ### Position X/Y
 
-var getElementPosition = function (selector) {
-	var elementPos = $(selector).position()
-	return [elementPos.left, elementPos.top]
-}
+	var getElementPosition = function (selector) {
+		var elementPos = $(selector).position()
+		return [elementPos.left, elementPos.top]
+	}
 
-var setElementPosition = function (selector, pos) {
-	$(selector).css({ left: pos[0] + 'px', top: pos[1] + 'px' })
-}
+	var setElementPosition = function (selector, pos) {
+		$(selector).css({ left: pos[0] + 'px', top: pos[1] + 'px' })
+	}
 
 ### Forms
 
-$('#firstname').focus()
+	$('#firstname').focus()
 
-textboxValue = $('#mytextbox').val()
+	textboxValue = $('#mytextbox').val()
 
-if ($(this).attr('id') == "radiobutton_female") {
-	$("#radiobutton_female").removeClass("radiobutton").addClass("radiobutton_selected")
-}
+	if ($(this).attr('id') == "radiobutton_female") {
+		$("#radiobutton_female").removeClass("radiobutton").addClass("radiobutton_selected")
+	}
 
-$('form.edit_task').submit(checkForm)
+	$('form.edit_task').submit(checkForm)
 
+	$("#task_notes").html("")
+	.text()
+	$('#task_notes').attr('value') == 'Notes'
+	$('#task_notes').attr('value', '')
+	$("#gender").val("female")
 
-$("#task_notes").html("")
-.text()
-$('#task_notes').attr('value') == 'Notes'
-$('#task_notes').attr('value', '')
-$("#gender").val("female")
-
-$( "p:last" ).offset({ top: 10, left: 30 })
-$( "p:last" ).position({ top: 10, left: 30 })
+	$( "p:last" ).offset({ top: 10, left: 30 })
+	$( "p:last" ).position({ top: 10, left: 30 })
 
 ### CSS
 
-$('#album1').css('left', this.x + 'px')
+	$('#album1').css('left', this.x + 'px')
 
 ### Animations
 
-$(elementId).animate({
-		top: '+=50',
-		//width: ['toggle', 'swing']
-	},
-	1000,
-	animateBack(elementId)
-)
+	$(elementId).animate({
+			top: '+=50',
+			//width: ['toggle', 'swing']
+		},
+		1000,
+		animateBack(elementId)
+	)
 
-
-var animatePulse = function (elem, duration, easing, props_to, props_from, until) {
-	elem.animate(props_to, duration, easing,
-		function () {
-			if (until() === false) {
-				animatePulse(elem, duration, easing, props_from, props_to, until)
+	var animatePulse = function (elem, duration, easing, props_to, props_from, until) {
+		elem.animate(props_to, duration, easing,
+			function () {
+				if (until() === false) {
+					animatePulse(elem, duration, easing, props_from, props_to, until)
+				}
 			}
+		)
+	}
+
+	var pulseCounter = 0
+	animatePulse($('#user-register'), 500, 'linear', {opacity: 0.5}, {opacity: 1},
+		function () {
+			pulseCounter++	 
+			return (pulseCounter >= 10)
 		}
 	)
-}
-
-var pulseCounter = 0
-animatePulse($('#user-register'), 500, 'linear', {opacity: 0.5}, {opacity: 1},
-	function () {
-		pulseCounter++	 
-		return (pulseCounter >= 10)
-	}
-)
 
 ### Drag & Drop
 
@@ -2700,47 +2744,47 @@ Config: .prettierrc
 
 ## Reserved Words
 
-break
-case
-catch
-class
-continue
-debugger
-default
-delete
-do
-else
-enum
-export
-extends
-false
-finally
-for
-function
-if
-implements
-import
-in
-instanceof
-interface
-let
-new
-null
-package
-private
-protected
-public
-return
-static
-super
-switch
-this
-throw
-true
-try
-typeof
-var
-void
-while
-with
-yield
+	break
+	case
+	catch
+	class
+	continue
+	debugger
+	default
+	delete
+	do
+	else
+	enum
+	export
+	extends
+	false
+	finally
+	for
+	function
+	if
+	implements
+	import
+	in
+	instanceof
+	interface
+	let
+	new
+	null
+	package
+	private
+	protected
+	public
+	return
+	static
+	super
+	switch
+	this
+	throw
+	true
+	try
+	typeof
+	var
+	void
+	while
+	with
+	yield
