@@ -35,6 +35,9 @@ List `./folder/subfolder/file.ext`:
 
 ### Find text inside files
 
+	grep -r --exclude-dir=node_modules "blabla" *
+	grep "missionmaptext=" *.ini
+
 	egrep -lir --include=*.{php,html,js} "(searchtext1|searchtext2)" .   # change -lir to -ir to show more...
 	egrep -lir --include=Gruntfile.js "(livereload)" .
 
@@ -53,9 +56,6 @@ List `./folder/subfolder/file.ext`:
 	find: find files: find /usr/bin -name r*
 	find . -type d -name .svn -exec rm -rf {} \;
 	find [dirname] -type f -name \*.js
-
-	grep -r "blabla" *
-	grep "missionmaptext=" *.ini
 
 ### Find applications
 

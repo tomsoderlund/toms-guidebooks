@@ -123,6 +123,7 @@ Get FirstName:
 Get LastName:
 =RIGHT(A2, LEN(A2) - FIND(" ", A2))
 
+=HYPERLINK("http://", "link name")
 
 ÅÄÖ characters
 =SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE('Prospectify CSV'!AA2,"ä","a"),"å","a"),"ö","o"),"é","e")

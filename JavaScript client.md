@@ -6,18 +6,17 @@ React:
 
 ## Javascript include
 
-<script type="text/javascript" src="ajax.js" async defer></script>
+	<script type="text/javascript" src="ajax.js" async defer></script>
 
-async: load when it can -> for stand-alone scripts
-defer: as on order on page -> when there are dependencies
+	async: load when it can -> for stand-alone scripts
+	defer: as on order on page -> when there are dependencies
 
-<script type="text/javascript">
-	// code here
-</script>
+	<script type="text/javascript">
+		// code here
+	</script>
 
-###
+### Great libraries
 
-Great libraries:
 https://github.com/sorrycc/awesome-javascript
 
 
@@ -32,55 +31,59 @@ webpack
 UMD: https://github.com/umdjs/umd
 e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
-## CommonJS template
+## Module template
 
-//
-// Name:    helper.js
-// Purpose: Library for helper functions
-// Creator: Tom Söderlund
-//
+/**
+ * moduleName module
+ * @description This is...
+ * @module moduleName
+ * @author Tom Söderlund
+ */
 
 'use strict'
 
 // Private functions
 
-const myFunction = function (obj) {
-	return JSON.stringify(obj, null, 4)
+// ES6: export const functionName = function (obj) {
+const functionName = function (obj) {
+  return JSON.stringify(obj, null, 4)
 }
 
 // Public API
 
+// ES6: export default {
 module.exports = {
 
-	myFunction: myFunction,
+  functionName,
 
 }
 
-module.exports.myFunction = myFunction
+module.exports.functionName = functionName
 
+### Require/Import
 
-var utilities = require('./utilities')
+	var utilities = require('./utilities')
 
 
 ## Structure
 
-//
-// Name:    MYLIBRARY.js
-// Purpose: Crossplatform library for helper functions
-// Creator: Tom Söderlund
-//
+	//
+	// Name:    MYLIBRARY.js
+	// Purpose: Crossplatform library for helper functions
+	// Creator: Tom Söderlund
+	//
 
-'use strict'
+	'use strict'
 
-// Only instantiate MYLIBRARY once
-var MYLIBRARY = MYLIBRARY || {}
+	// Only instantiate MYLIBRARY once
+	var MYLIBRARY = MYLIBRARY || {}
 
-(function (MYLIBRARY) {
+	(function (MYLIBRARY) {
 
-	MYLIBRARY.myFunction = function () {
-	}
+		MYLIBRARY.myFunction = function () {
+		}
 
-}(MYLIBRARY))
+	}(MYLIBRARY))
 
 
 ## Immediately-invoked function expression (IIFE)
@@ -347,8 +350,8 @@ catch (e) {
 	Math.random() // 0.0 to 1.0
 
 	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
-	const getRandomNumber = max => Math.floor(Math.random() * max)
-	const getRandomFromArray = array => array[getRandomNumber(array.length)]
+	const getRandomFromArray = array => array[getRandomNumber(0, array.length - 1)]
+	const getSerialFromArray = (array, index) => array[index % array.length]
 
 	// Serial e.g. '1464642047155-207'
 	(Date.now() + '-' + Math.floor(Math.random() * 1000))
@@ -359,6 +362,7 @@ catch (e) {
 	Math.round()
 	// 2 decimals
 	Math.round(num * 100) / 100
+	const round = (value, decimals = 2) => parseFloat(value.toFixed(decimals))
 
 	// Limit value between max and min
 	limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
@@ -459,141 +463,140 @@ What is this?
 
 http://www.w3schools.com/jsref/jsref_obj_string.asp
 
-string.length
+	string.length
 
-console.log('String: “%s”, Integer: %d, Float: %f, Boolean: %s', myString, myInteger, myFloat, myBoolean)
+	console.log('String: “%s”, Integer: %d, Float: %f, Boolean: %s', myString, myInteger, myFloat, myBoolean)
 
 ### String search/comparison
 
-string.indexOf(searchstring, start)
-string.lastIndexOf(searchstring, start)
-string.search() // for regular expressions
+	string.indexOf(searchstring, start)
+	string.lastIndexOf(searchstring, start)
+	string.search() // for regular expressions
 
-s.startsWith('hello')
-s.endsWith('hello')
+	s.startsWith('hello')
+	s.endsWith('hello')
 
-const stringContains = (bigString, searchString) => bigString.toLowerCase().includes(searchString.toLowerCase())
+	const stringContains = (bigString, searchString) => bigString.toLowerCase().includes(searchString.toLowerCase())
 
-string.substr(start, length)
-string.substr(nrOfInitialCharsToRemove) = string.substring(nrOfInitialCharsToRemove) = string.slice(nrOfInitialCharsToRemove)
-string.substring(start, end) = string.slice(start, end)
-string.slice(nrOfInitialCharsToRemove, - nrOfEndingCharsToRemove)
+	string.substr(start, length)
+	string.substr(nrOfInitialCharsToRemove) = string.substring(nrOfInitialCharsToRemove) = string.slice(nrOfInitialCharsToRemove)
+	string.substring(start, end) = string.slice(start, end)
+	string.slice(nrOfInitialCharsToRemove, - nrOfEndingCharsToRemove)
 
-// See also _.capitalize
-const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
+	// See also _.capitalize
+	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
 
-// Strip HTML
-const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
+	// Strip HTML
+	const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
 
-// hex
-module.exports.isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
+	// hex
+	module.exports.isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
 
-string.charAt(index)
+	string.charAt(index)
 
-// Left/Right
-'ABCDE'.slice(3) // = 'DE'
-'ABCDE'.slice(0,3) // = 'ABC'
-var firstChars = bigString.substr(0, bigString.length - n)
-var lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
+	// Left/Right
+	'ABCDE'.slice(3) // = 'DE'
+	'ABCDE'.slice(0,3) // = 'ABC'
+	var firstChars = bigString.substr(0, bigString.length - n)
+	var lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
 
-doesStringContainX = (bigString.indexOf(x) !== -1)
-doesStringBeginWithX = (bigString.substring(0, x.length) === x)
-doesStringEndWithX = bigString.endsWith(x)
-upUntilString = bigString.substring(0, bigString.indexOf('_')) // up until '_'
-upUntilStringOrAll = (bigString.indexOf('_') !== -1) ? bigString.substring(0,bigString.indexOf('_')) : bigString
-upUntilLastString = bigString.substring(0, bigString.lastIndexOf('/'))
-fromStringToEnd1 = bigString.substring(bigString.indexOf('_')+1, bigString.length) // Note: first index of, can use lastIndexOf too
-fromStringToEnd1OrNone = (bigString.indexOf('_') !== -1) ? bigString.substring(bigString.indexOf('_')+1, bigString.length) : ''
-fromStringToEnd2 = bigString.split('_').pop() // only works if only one '_'
-fileExtension = filename.substring(filename.lastIndexOf('_')+1, filename.length)
+	doesStringContainX = (bigString.indexOf(x) !== -1)
+	doesStringBeginWithX = (bigString.substring(0, x.length) === x)
+	doesStringEndWithX = bigString.endsWith(x)
+	upUntilString = bigString.substring(0, bigString.indexOf('_')) // up until '_'
+	upUntilStringOrAll = (bigString.indexOf('_') !== -1) ? bigString.substring(0,bigString.indexOf('_')) : bigString
+	upUntilLastString = bigString.substring(0, bigString.lastIndexOf('/'))
+	fromStringToEnd1 = bigString.substring(bigString.indexOf('_')+1, bigString.length) // Note: first index of, can use lastIndexOf too
+	fromStringToEnd1OrNone = (bigString.indexOf('_') !== -1) ? bigString.substring(bigString.indexOf('_')+1, bigString.length) : ''
+	fromStringToEnd2 = bigString.split('_').pop() // only works if only one '_'
+	fileExtension = filename.substring(filename.lastIndexOf('_')+1, filename.length)
 
-// Name splitting
-var nameSpacePosition = user.name.indexOf(' ')
-if (nameSpacePosition === -1) nameSpacePosition = user.name.length
-var firstName = user.name.substring(0, nameSpacePosition) // up until ' '
-var lastName = user.name.substring(nameSpacePosition + 1, user.name.length) // from ' '
+	// Name splitting
+	var nameSpacePosition = user.name.indexOf(' ')
+	if (nameSpacePosition === -1) nameSpacePosition = user.name.length
+	var firstName = user.name.substring(0, nameSpacePosition) // up until ' '
+	var lastName = user.name.substring(nameSpacePosition + 1, user.name.length) // from ' '
 
-string.split(separator, limit) -> array
-array.join(', ') -> string
+	string.split(separator, limit) -> array
+	array.join(', ') -> string
 
-var recipientArray = recipients.split(',')
-for (var i in recipientArray) {
-	console.log(i + ": " + recipientArray[i])
-}
-
-newStr = str.replace('Google', 'Weld')  // first only
-newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
-newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
-
-const getStringBetweenTags = (source, tag1, tag2) => {
-	if (source === undefined || tag1 === undefined || tag2 === undefined) return
-	let newText = source.substring(source.indexOf(tag1) + tag1.length, source.length)
-	newText = newText.substring(0, newText.indexOf(tag2))
-	return newText
-}
-
-const applyMethodToStringBetweenTags = (source, tag1, tag2, method) => {
-	var position1 = 0, position2
-	var newText = source
-	do {
-		position1 = newText.indexOf(tag1, position1)
-		position2 = newText.indexOf(tag2, position1 + tag1.length)
-		// If found matching text
-		if (position1 !== -1 && position2 > position1) {
-			// Cut it out
-			var cutOutStr = newText.substring(position1 + tag1.length, position2)
-			cutOutStr = method(cutOutStr)
-			// Paste it back in
-			newText = newText.substring(0, position1 + tag1.length) + cutOutStr + newText.substring(position2, newText.length)
-			position1 = position2 + 1
-		}
+	var recipientArray = recipients.split(',')
+	for (var i in recipientArray) {
+		console.log(i + ": " + recipientArray[i])
 	}
-	while (position1 !== -1)
-	return newText
-}
 
-string.trim()
-string.toLowerCase()
-string.toUpperCase()
-parseInt(StringorNum)
-parseFloat(String)
-valueOf()
+	newStr = str.replace('Google', 'Weld')  // first only
+	newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
+	newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
 
-const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+	const getStringBetweenTags = (source, tag1, tag2) => {
+		if (source === undefined || tag1 === undefined || tag2 === undefined) return
+		let newText = source.substring(source.indexOf(tag1) + tag1.length, source.length)
+		newText = newText.substring(0, newText.indexOf(tag2))
+		return newText
+	}
 
-String.prototype.toDash = function () {
-	return this.replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
-}
+	const applyMethodToStringBetweenTags = (source, tag1, tag2, method) => {
+		var position1 = 0, position2
+		var newText = source
+		do {
+			position1 = newText.indexOf(tag1, position1)
+			position2 = newText.indexOf(tag2, position1 + tag1.length)
+			// If found matching text
+			if (position1 !== -1 && position2 > position1) {
+				// Cut it out
+				var cutOutStr = newText.substring(position1 + tag1.length, position2)
+				cutOutStr = method(cutOutStr)
+				// Paste it back in
+				newText = newText.substring(0, position1 + tag1.length) + cutOutStr + newText.substring(position2, newText.length)
+				position1 = position2 + 1
+			}
+		}
+		while (position1 !== -1)
+		return newText
+	}
 
-String.prototype.toCamelCase = function () {
-	return this.replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
-}
+	string.trim()
+	string.toLowerCase()
+	string.toUpperCase()
+	parseInt(StringorNum)
+	parseFloat(String)
+	valueOf()
 
-String.prototype.toSlug = function () {
-	return this.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase()
-}
+	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+
+	String.prototype.toDash = function () {
+		return this.replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
+	}
+
+	String.prototype.toCamelCase = function () {
+		return this.replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
+	}
+
+	String.prototype.toSlug = function () {
+		return this.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase()
+	}
 
 
 ### Regular Expressions in JavaScript / regex
 
-const regExp = /\w+\s?\*(\w+\s?\w+)/g
-const regExp = new RegExp('\w+', 'g')
-const regExpAsString = '\\w+\\s?\\*(\\w+\\s?\\w+)'
+	const regExp = /\w+\s?\*(\w+\s?\w+)/g
+	const regExp = new RegExp('\w+', 'g')
+	const regExpAsString = '\\w+\\s?\\*(\\w+\\s?\\w+)'
 
-//test: tests for a match in a string, returns true/false
+	// test: tests for a match in a string, returns true/false
 	const isValid = regExp.test(str)
 
-//search: returns the position of the match or -1
+	// search: returns the position of the match or -1
 	const index = str.search(regExp)
 
-//replace: replace a string
+	// replace: replace a string
 	const result = str.replace(regExp, newStr)
 
-//match: executes a search for a match in a string, returns an array of information or null on a mismatch
+	// match: executes a search for a match in a string, returns an array of information or null on a mismatch
 	const regexpMatchArray = myString.match(/\d+(\.\d{1,15})?/g)
 
-//exec(str): executes a search for a match in a string, it returns an array of information
-
+	// exec(str): executes a search for a match in a string, it returns an array of information
 
 	const regex = /\w+/gm
 	const str = `Hello`
@@ -786,6 +789,7 @@ moment(value).fromNow() // “3 hours ago”
 
 const duration = momDate.diff(momDateNow)
 
+moment().subtract(7, 'days')
 moment().startOf('isoweek').add(2, 'weeks')
 
 moment(dateObj).format('YYYY-MM-DD')
@@ -1318,7 +1322,8 @@ const pipeline = [
 ]
 pipeline.reduce((xs, f) => f(xs), [1, 2, 3])
 
-const pickMatch = (options, key) => options[key] || options['default']
+// pickMatch({ default: 1, week: 7, year: 365 }, periodName)
+const pickMatch = (options, key) => options[key] !== undefined ? options[key] : options.default
 
 // map(object) from Lodash
 const objectMap = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
@@ -2039,7 +2044,7 @@ http://www.cheatography.com/jonathanberi/cheat-sheets/polymer-js/
 
 https://github.com/facebookincubator/create-react-app
 
-	npx create-react-app my-app  # or yarn create react-app my-app
+	yarn create react-app my-app  # or npx create-react-app my-app
 	cd my-app/
 	npm start
 
@@ -2218,6 +2223,11 @@ Refer to ${ChildComponent}:
 			fill: rebeccapurple;
 		}
 	`;
+
+
+#### create-react-app on Heroku
+
+	heroku create APP_NAME --buildpack mars/create-react-app
 
 #### create-react-app on GitHub Pages
 

@@ -302,6 +302,7 @@ req.route.path // '/highscore/:grouping/:startDate/:endDate'
 req.params (url/:key)
 req.query (url?key=value)
 req.body (JSON body)
+req.headers
 
 const { path, route, params, query, body } = req
 
@@ -430,6 +431,7 @@ Tests:
 ### Standard JS
 
 	yarn add standard --dev
+	yarn add pre-commit --dev  # If you want Git commit check
 
 package.json:
 
@@ -439,6 +441,9 @@ package.json:
 		"fix": "standard --fix",
 		"unit": "jasmine"
 	},
+	"pre-commit": [
+		"lint"
+	],
 	"standard": {
 		"ignore": [
 			".next"
