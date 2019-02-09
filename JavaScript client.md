@@ -33,32 +33,32 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 ## Module template
 
-/**
- * moduleName module
- * @description This is...
- * @module moduleName
- * @author Tom Söderlund
- */
+	/**
+	 * moduleName module
+	 * @description This is...
+	 * @module moduleName
+	 * @author Tom Söderlund
+	 */
 
-'use strict'
+	'use strict'
 
-// Private functions
+	// Private functions
 
-// ES6: export const functionName = function (obj) {
-const functionName = function (obj) {
-  return JSON.stringify(obj, null, 4)
-}
+	// ES6: export const functionName = function (obj) {
+	const functionName = function (obj) {
+		return JSON.stringify(obj, null, 4)
+	}
 
-// Public API
+	// Public API
 
-// ES6: export default {
-module.exports = {
+	// ES6: export default {
+	module.exports = {
 
-  functionName,
+		functionName,
 
-}
+	}
 
-module.exports.functionName = functionName
+	module.exports.functionName = functionName
 
 ### Require/Import
 
