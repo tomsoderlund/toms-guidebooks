@@ -26,6 +26,7 @@ http://nodejs.org/download/
 	sudo n 0.8.21 # specific version
 
 ### See versions
+
 	npm view <package> versions
 	0.8.3<package>@<version>
 
@@ -393,8 +394,8 @@ https://www.npmjs.org/package/ejs
 
 Client (header):
 
-  const jwt = await getUserJWT()
-  Object.assign(defaultHeaders, { Authorization: `Bearer ${jwt}` })
+	const jwt = await getUserJWT()
+	Object.assign(defaultHeaders, { Authorization: `Bearer ${jwt}` })
 
 Server - generate token:
 
@@ -405,8 +406,8 @@ Server - verify access:
 	const jwt = require('express-jwt')
 
 	module.exports.jwtAuthentication = jwt({
-	  secret: process.env.MY_SECRET,
-	  credentialsRequired: false // false = will let users through if auth fails
+		secret: process.env.MY_SECRET,
+		credentialsRequired: false // false = will let users through if auth fails
 	})
 
 
