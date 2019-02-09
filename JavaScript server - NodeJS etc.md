@@ -382,6 +382,34 @@ https://www.npmjs.org/package/ejs
 	var s = b.toString(); // "JavaScript"
 
 
+## .env files - dotenv
+
+	yarn add dotenv
+
+	require('dotenv').config()
+
+
+## JWT - JSON Web Token
+
+Client (header):
+
+  const jwt = await getUserJWT()
+  Object.assign(defaultHeaders, { Authorization: `Bearer ${jwt}` })
+
+Server - generate token:
+
+	return (new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payload)
+
+Server - verify access:
+
+	const jwt = require('express-jwt')
+
+	module.exports.jwtAuthentication = jwt({
+	  secret: process.env.MY_SECRET,
+	  credentialsRequired: false // false = will let users through if auth fails
+	})
+
+
 ## Testing
 
 ### Jasmine
@@ -458,6 +486,10 @@ package.json:
 			"spyOn"
 		]
 	},
+
+Ignore line:
+
+	myCode() // eslint-disable-line no-useless-escape
 
 ## Documentation - JSDoc
 
