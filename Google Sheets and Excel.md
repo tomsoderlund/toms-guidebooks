@@ -147,7 +147,7 @@ Get email domain suffix:
 =RIGHT(E2; LEN(E2)-FIND("."; E2))
 
 Format name + website--> email
-=SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(LOWER(D2 &"." & E2),"ö","o"),"ä","a"),"å","a"),"é","e"),"ü","u")," ",".") & "@" & REGEXEXTRACT(D2, "https?://w*\.*([^/]+)")
+=SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(LOWER(C2 &"." & D2),"ö","o"),"ä","a"),"å","a"),"é","e"),"è","e"),"ü","u"),"ø","o"),"í","i")," ",".") & "@" & REGEXEXTRACT(D2, "https?://w*\.*([^/]+)")
 =SUBSTITUTE(LOWER(C1);" ";".") & "@" & REGEXEXTRACT(A1, "https?://w*\.*([^/]+)")
 (separate names)
 =LOWER(E2 &"."& F2) & "@" & REGEXEXTRACT(D2, "https?://w*\.*([^/]+)")

@@ -31,7 +31,8 @@ webpack
 UMD: https://github.com/umdjs/umd
 e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
-## Module template
+
+## Module structure
 
 	/**
 	 * moduleName module
@@ -65,7 +66,7 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 	var utilities = require('./utilities')
 
 
-## Structure
+### Safe library
 
 	//
 	// Name:    MYLIBRARY.js
@@ -85,77 +86,85 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 	}(MYLIBRARY))
 
+### Immediately-invoked function expression (IIFE)
 
-## Immediately-invoked function expression (IIFE)
+	(function() {
+	  /* code here */
+	})()
+
 
 ## Debugging
 
-open -a Google\ Chrome --args --disable-web-security
+	open -a Google\ Chrome --args --disable-web-security
 
+### try/catch, throw, finally
 
-try/catch, throw, finally
-
-try {
-	adddlert("Welcome guest!")
-}
-catch (err) {
-	console.error(err)
-}
-finally {
-	// Block of code to be executed regardless of the try / catch result
-}
-
-console.warn
-
-throw new Error('Something went wrong')
-
-console.log(event.fromElement.tagName) // works only in Firefox?
-process.stdout.write('no line')
-
-console.time('myFunction')
-console.timeEnd('myFunction')
-myFunction: 3465.123ms
-
-console.profile('myFunction')
-console.profileEnd('myFunction')
-
-// Get all properties for an object (console.dir):
-const specify = obj => _.isObject(obj) ? _.mapValues(obj, val => typeof(val)) : typeof(obj)
-const specify = function (obj) {
-	return _.isObject(obj) ? _.mapValues(obj, val => typeof(val)) : typeof(obj)
-}
-
-// Specify v3: Get all properties for an object (console.dir):
-const specify = function (obj) {
-	const getValueDescription = function (val) {
-		const objectType = Object.prototype.toString.call(val).replace('[object ', '').replace(']', '')
-		switch (objectType) {
-			case 'Object': return '{' + Object.keys(val).slice(0, 7).join() + '}'
-			case 'String': return val.slice(0, 50)
-			case 'Array': return 'Array[' + val.length + ']'
-			case 'Function':
-			case 'Null':
-				return objectType.toLowerCase()
-			default: return objectType + (':' + val).slice(0, 50)
-		}
+	try {
+		adddlert("Welcome guest!")
 	}
-	return typeof(obj) === 'object' ? Object.values(obj).map(val => getValueDescription(val)) : getValueDescription(obj)
-}
+	catch (err) {
+		console.error(err)
+	}
+	finally {
+		// Block of code to be executed regardless of the try / catch result
+	}
 
-// Return name of "class" (actually, JavaScript object prototype of which object is a copy)
-function getClassName(obj) {
-	// get classname abstracted from constructor property
-	var c = obj.constructor.toString()
-	var start = c.indexOf('function ') + 9
-	var stop = c.indexOf('(')
-	c = c.substring(start, stop)
-	return c
-}
+### Console
+
+	console.warn
+
+	throw new Error('Something went wrong')
+
+	console.log(event.fromElement.tagName) // works only in Firefox?
+	process.stdout.write('no line')
+
+	console.time('myFunction')
+	console.timeEnd('myFunction')
+	myFunction: 3465.123ms
+
+	console.profile('myFunction')
+	console.profileEnd('myFunction')
+
+	// Get all properties for an object (console.dir):
+	const specify = obj => _.isObject(obj) ? _.mapValues(obj, val => typeof(val)) : typeof(obj)
+	const specify = function (obj) {
+		return _.isObject(obj) ? _.mapValues(obj, val => typeof(val)) : typeof(obj)
+	}
+
+	// Specify v3: Get all properties for an object (console.dir):
+	const specify = function (obj) {
+		const getValueDescription = function (val) {
+			const objectType = Object.prototype.toString.call(val).replace('[object ', '').replace(']', '')
+			switch (objectType) {
+				case 'Object': return '{' + Object.keys(val).slice(0, 7).join() + '}'
+				case 'String': return val.slice(0, 50)
+				case 'Array': return 'Array[' + val.length + ']'
+				case 'Function':
+				case 'Null':
+					return objectType.toLowerCase()
+				default: return objectType + (':' + val).slice(0, 50)
+			}
+		}
+		return typeof(obj) === 'object' ? Object.values(obj).map(val => getValueDescription(val)) : getValueDescription(obj)
+	}
+
+	// Return name of "class" (actually, JavaScript object prototype of which object is a copy)
+	function getClassName(obj) {
+		// get classname abstracted from constructor property
+		var c = obj.constructor.toString()
+		var start = c.indexOf('function ') + 9
+		var stop = c.indexOf('(')
+		c = c.substring(start, stop)
+		return c
+	}
+
+	// Use _ instead of . and $ instead of # to allow for easier JavaScript parsing
+	const getElementReference = $element => ($element[0].name) + ($element.attr('class') ? '_'+$element.attr('class').replace(/ /g, '_') : '') + ($element.attr('id') ? '$'+$element.attr('id') : '')
 
 
-// Use _ instead of . and $ instead of # to allow for easier JavaScript parsing
-const getElementReference = $element => ($element[0].name) + ($element.attr('class') ? '_'+$element.attr('class').replace(/ /g, '_') : '') + ($element.attr('id') ? '$'+$element.attr('id') : '')
+## Conditional (ternary) operator
 
+	x = a > b ? a : b
 
 
 ## Functions
@@ -256,6 +265,7 @@ isNaN(123)
 typeof(myObj)
 
 // Advanced: Object, Array, String, Number, Boolean, Function
+Array.isArray(objectOrArray)
 objectOrArray.constructor === Array
 
 // Advanced, slower: '[object X]' where X can be Object, Array, String, Number, Boolean, Function
@@ -476,6 +486,8 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	s.startsWith('hello')
 	s.endsWith('hello')
 
+	const makeStringOfLength = (char, length) => new Array(length + 1).join(char)
+
 	const stringContains = (bigString, searchString) => bigString.toLowerCase().includes(searchString.toLowerCase())
 
 	string.substr(start, length)
@@ -648,9 +660,9 @@ var a = fruits.indexOf("Apple")
 
 var fruits = ["Banana", "Orange", "Apple", "Mango"]
 fruits.sort()
-.sort((a, b) => a - b)
-array.sort(function (a, b) { return a > b })
-array.sort(function (a,b) { return parseFloat(a.price) - parseFloat(b.price) })
+array.sort((a, b) => a - b)
+array.sort((a, b) => a > b)
+array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
 array.reverse()
 
 // Clone array
@@ -664,7 +676,7 @@ array.splice(index, howmany, element1, …, elementX) // adds/removes items to/f
 var combined = list1.concat(list2)
 
 // Remove
-pop() // remove last element
+pop() // get/remove last element
 shift()	// remove first element of an array, and returns that element
 slice(start, end) // returns the selected elements in an array, as a new array object
 array.splice(indexToRemove, 1) // remove 1 element, mutates original array
@@ -791,6 +803,8 @@ const duration = momDate.diff(momDateNow)
 
 moment().subtract(7, 'days')
 moment().startOf('isoweek').add(2, 'weeks')
+
+moment().isoWeekday() // returns 1-7 where 1 is Monday and 7 is Sunday
 
 moment(dateObj).format('YYYY-MM-DD')
 moment(dateObj).format('YYYY-MM-DD HH:mm')
@@ -962,6 +976,7 @@ localStorage.setItem('colorSetting', '#a4509b')
 
 	element.id = 'elem1'
 	element.value = '100'
+	element.innerText = ''
 	element.innerHTML = ''
 	element.className = 'newClass'
 	element.style.backgroundColor = 'rgb(169, 169, 169)'
@@ -1061,14 +1076,10 @@ function httpGetAsync(url, callback) {
 
 #### Fetch
 
-	fetch(`${API_URL}/api/usernames/${user.username}`)
-		.then(res => res.json())
-		.then(dbUser => {
-			cb(null, _.pick(dbUser, ['_id', 'twitterHandle']))
-		})
-		.catch(cb)
+  const user = await fetch(`${API_URL}/api/usernames/${user.username}`)
+  const userJson = await user.json()
 
-	fetch(`${config.appUrl}api/domains`, {
+	await fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -1076,22 +1087,6 @@ function httpGetAsync(url, callback) {
 		},
 		body: JSON.stringify({ domains: this.state.domains.split('\n') })
 	})
-		.then(async res => {
-			if (res.ok) {
-				return res.json()
-			}
-			else {
-				const json = await res.json()
-				throw new Error(json.message)
-			}
-		})
-		.then(json => {
-			this.setState({ statusMessage: `${json.rowCount} domains created` })
-			this.setState({ domains: '' })
-		})
-		.catch(err => {
-			this.setState({ errorMessage: err.message })
-		})
 
 ### DOM / IFrame
 
@@ -1229,7 +1224,7 @@ myFunc(str, ...nums)
 ({crudify}, res, next) => {
 	res.json(crudify.article)
 	next()
-}
+}gs
 for (var [key, value] of phoneBookMap) {}
 
 // for… of (value instead of index)
@@ -1331,12 +1326,23 @@ const objectMap = (object, mapFunction) => Object.keys(object).reduce((result, k
 	return result
 }, {})
 
-const query = (req.url.split('?')[1] || '')
-	.split('&')
-	.reduce((result, propValue) => {
-		result[propValue.split('=')[0]] = propValue.split('=')[1]
-		return result
-	}, {})
+const queryObjectFromString = str => (str.split('?')[1] || '')
+  .split('&')
+  .reduce((result, propValue) => {
+    result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
+    return result
+  }, {})
+
+const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
+// const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
+const objectToCSS = obj => Object.keys(obj).reduce((result, key) => result + `${key}: ${obj[key]}; `, '')
+
+countObj = _.reduce(domains, function (previous, domain) {
+	const keyName = domain.hostname
+	previous[keyName] = previous[keyName] || 0
+	previous[keyName] += 1
+	return previous
+}, {})
 
 
 ## Babel / Browserify
@@ -1444,17 +1450,6 @@ _.map(subscriptions, function (sub) {
 _.reduce([1, 2], function (result, item) {
 	return result + item
 }, startValue)
-
-const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
-const objectToCSS = obj => Object.keys(obj).reduce((result, key) => result + `${key}: ${obj[key]}; `, '')
-//const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
-
-countObj = _.reduce(domains, function (previous, domain) {
-	const keyName = domain.hostname
-	previous[keyName] = previous[keyName] || 0
-	previous[keyName] += 1
-	return previous
-}, {})
 
 _.has($rootScope, 'currentUser.role')
 _.get($rootScope, 'currentUser.role', defaultValue)
@@ -2080,15 +2075,24 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 
 	class MyApp extends React.Component {
 
-		constructor(props) {
+		state = {
+			isLoading: false
+		}
+
+		constructor (props) {
 			super(props)
 			this.state = { prop1: 'this prop' }
 			this.handleClick = this.handleClick.bind(this)
 		}
 
-		handleClick: function (evt, ui, u2) {
+		handleClick (event) {
+			event.stopPropagation()
 			this.setState({ count: ++this.state.count })
-		},
+		}
+
+  	handleClickArrow = event => {
+  		event.stopPropagation()
+		}
 
 		onInputChange(event) {
 			this.setState({ searchText: event.target.value })
@@ -2251,7 +2255,7 @@ https://github.com/zeit/styled-jsx
 	<div>My DIV</div>
 	<style jsx>{`
 		div { background-color: blue }
-	</style>
+	`}</style>
 
 
 	<style jsx>{`
@@ -2313,7 +2317,7 @@ or
 	* `getInitialProps` (only for Next.js pages)
 	* `getDefaultProps` // only supported for classes created using React.createClass. Use a static property to define defaultProps instead.
 * Mounting:
-	* `componentWillMount`
+	* `componentWillMount` // client and server
 	* `componentDidMount` // client-side only, great for state loading
 	* `componentWillUnmount`
 * Updating:

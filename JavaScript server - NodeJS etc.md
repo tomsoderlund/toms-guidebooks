@@ -147,8 +147,8 @@ https://docs.npmjs.com/getting-started/publishing-npm-packages
 
 # Author: Tom Söderlund <tom@YOUR-USER-NAME.com> (http://www.YOUR-USER-NAME.com)
 
-	npm login # OR npm adduser # OR create new on https://www.npmjs.com
 	npm whoami # check user
+	npm login # OR npm adduser # OR create new on https://www.npmjs.com
 	npm config ls # to ensure that the credentials are stored on your client.
 
 # excluding files in .gitignore or .npmignore
