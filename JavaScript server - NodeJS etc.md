@@ -138,7 +138,7 @@ Tokens: https://www.npmjs.com/settings/YOUR-USER-NAME/tokens
 
 https://docs.npmjs.com/getting-started/publishing-npm-packages
 
-1. Check if existing: go to https://npmjs.com/package/<package>
+Check if existing: go to https://npmjs.com/package/<package>
 
 	npm init  # OR npm init --scope=weld-io
 
