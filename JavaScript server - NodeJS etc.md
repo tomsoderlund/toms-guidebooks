@@ -297,6 +297,7 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
+req.url
 req.path = req.originalUrl // '/highscore/monthly/2017-01-01/2018-01-01'
 req.route.path // '/highscore/:grouping/:startDate/:endDate'
 
@@ -310,7 +311,10 @@ const { path, route, params, query, body } = req
 // 301 or 302
 
 	res.set('location', newUrl)
-	res.status(302).send()
+
+	res.statusCode = 404
+	res.statusMessage = 'Not found'
+	res.writeHead(statusCode[, statusMessage][, headers])
 
 // Content-Type
 
@@ -323,6 +327,7 @@ const { path, route, params, query, body } = req
 
 Express only:
 
+	res.status(302).send()
 	res.send = Express write() + end()
 	res.json(myObj)
 
@@ -599,6 +604,16 @@ fs.writeFile('/tmp/test', 'Hey there!', function(err) {
 
 	console.log('The file was saved!')
 }); 
+
+
+## CDN - AWS CloudFront
+
+1. Enable both HTTPS and HTTP, otherwise 301.
+2. Override cache control timing, if you want.
+
+### Headers
+
+- `Cache-Control: public, max-age=120` (seconds)
 
 
 ## Mongoose
