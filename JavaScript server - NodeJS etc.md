@@ -114,44 +114,41 @@ Domain:
 
 package.json
 
-npm install -g [package-name]
--g = global
+	npm install -g [package-name]
+	-g = global
 
-npm view <package> versions // 
-npm install <package>@<version> // npm install bcrypt@0.8.0
+	npm view <package> versions // 
+	npm install <package>@<version> // npm install bcrypt@0.8.0
 
-npm install --save compass # update package.json
-npm install --save-dev grunt-bumpx
---save = update package.json
+	npm install --save compass # update package.json
+	npm install --save-dev grunt-bumpx
+	--save = update package.json
 
-npm update -g yo
+	npm update -g yo
 
-npm update --save mongoose
+	npm update --save mongoose
 
 ### NPM from Git
 
 	"mongoose-crudify": "git+https://github.com/ryo718/mongoose-crudify.git#0.2.0",
 
-
 ### Create NPM packages
 
 Tokens: https://www.npmjs.com/settings/YOUR-USER-NAME/tokens
 
-
 https://docs.npmjs.com/getting-started/publishing-npm-packages
 
-
-# 1. Check if existing: go to https://npmjs.com/package/<package>
+1. Check if existing: go to https://npmjs.com/package/<package>
 
 	npm init  # OR npm init --scope=weld-io
 
-# Author: Tom Söderlund <tom@YOUR-USER-NAME.com> (http://www.YOUR-USER-NAME.com)
+Author: Tom Söderlund <tom@YOUR-USER-NAME.com> (http://www.YOUR-USER-NAME.com)
 
 	npm whoami # check user
 	npm login # OR npm adduser # OR create new on https://www.npmjs.com
 	npm config ls # to ensure that the credentials are stored on your client.
 
-# excluding files in .gitignore or .npmignore
+excluding files in .gitignore or .npmignore
 
 	npm publish
 
@@ -200,11 +197,11 @@ Removing a dependency
 
 ## Bower
 
-npm install -g bower
+	npm install -g bower
 
-bower install # install from list
-bower install --save [plugin]
-bower uninstall socket.io-client
+	bower install # install from list
+	bower install --save [plugin]
+	bower uninstall socket.io-client
 
 ## Grunt
 
@@ -214,13 +211,13 @@ bower uninstall socket.io-client
 
 https://github.com/yeoman/generator-angular
 
-sudo npm update -g yo & sudo npm install -g generator-angular-fullstack
+	sudo npm update -g yo & sudo npm install -g generator-angular-fullstack
 
 generator-angular
 generator-angular-fullstack
 
-yo angular-fullstack [appname]
-npm install & bower install
+	yo angular-fullstack [appname]
+	npm install & bower install
 
 ### Yeoman Polymer
 
@@ -244,24 +241,24 @@ Yeoman way:
 
 ### Yeoman Express
 
-sudo npm install -g yo # Make sure you have yo installed
-sudo npm install generator-express # Install the generator locally
-yo express # then run Yeoman and select Basic
+	sudo npm install -g yo # Make sure you have yo installed
+	sudo npm install generator-express # Install the generator locally
+	yo express # then run Yeoman and select Basic
 
 
 ## Express
 
-// Without Express - just Node.js
-const { createServer } = require('http')
-const PORT = process.env.PORT || 3003
-const requestHandler = (req, res) => { res.end('Hello world') }
-createServer(requestHandler).listen(PORT, () => console.log(`Node.js server running on http://localhost:${PORT}/`))
+	// Without Express - just Node.js
+	const { createServer } = require('http')
+	const PORT = process.env.PORT || 3003
+	const requestHandler = (req, res) => { res.end('Hello world') }
+	createServer(requestHandler).listen(PORT, () => console.log(`Node.js server running on http://localhost:${PORT}/`))
 
-// With Express
-const express = require('express')
-const server = express()
-server.get('*', requestHandler)
-server.listen(PORT, () => console.log(`Express server running on http://localhost:${PORT}/`))
+	// With Express
+	const express = require('express')
+	const server = express()
+	server.get('*', requestHandler)
+	server.listen(PORT, () => console.log(`Express server running on http://localhost:${PORT}/`))
 
 ### Parsing parameters without Express
 
@@ -279,36 +276,36 @@ server.listen(PORT, () => console.log(`Express server running on http://localhos
 
 ### Next.js with/without Express
 
-// Next.js: without Express - just Node.js
-const { createServer } = require('http')
-app.prepare().then(() => {
-	createServer(handler).listen(3000)
-})
+	// Next.js: without Express - just Node.js
+	const { createServer } = require('http')
+	app.prepare().then(() => {
+		createServer(handler).listen(3000)
+	})
 
-// Next.js: with Express
-const express = require('express')
-app.prepare().then(() => {
-	express().use(handler).listen(3000)
-})
+	// Next.js: with Express
+	const express = require('express')
+	app.prepare().then(() => {
+		express().use(handler).listen(3000)
+	})
 
 ### Routes
 
 https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
-var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+	var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
-req.url
-req.path = req.originalUrl // '/highscore/monthly/2017-01-01/2018-01-01'
-req.route.path // '/highscore/:grouping/:startDate/:endDate'
+	req.url
+	req.path = req.originalUrl // '/highscore/monthly/2017-01-01/2018-01-01'
+	req.route.path // '/highscore/:grouping/:startDate/:endDate'
 
-req.params (url/:key)
-req.query (url?key=value)
-req.body (JSON body)
-req.headers
+	req.params (url/:key)
+	req.query (url?key=value)
+	req.body (JSON body)
+	req.headers
 
-const { path, route, params, query, body } = req
+	const { path, route, params, query, body } = req
 
-// 301 or 302
+#### 301 or 302
 
 	res.set('location', newUrl)
 
@@ -316,7 +313,7 @@ const { path, route, params, query, body } = req
 	res.statusMessage = 'Not found'
 	res.writeHead(statusCode[, statusMessage][, headers])
 
-// Content-Type
+#### Content-Type
 
 	// text/html, text/javascript, text/csv, application/json, image/svg+xml, image/jpeg
 	res.setHeader('content-type', 'text/javascript')
@@ -331,46 +328,47 @@ Express only:
 	res.send = Express write() + end()
 	res.json(myObj)
 
-console.log('Request:', _.pick(req, ['params', 'query', 'body']))
+	console.log('Request:', _.pick(req, ['params', 'query', 'body']))
 
-res.statusCode
-NEW: res.status(404).send('Page not found')
-NEW: res.status(404).json(myObj)
-OLD: res.sendStatus(404, 'Page not found')
+	res.statusCode
+	NEW: res.status(404).send('Page not found')
+	NEW: res.status(404).json(myObj)
+	OLD: res.sendStatus(404, 'Page not found')
 
-request.get(url, { json: true }, function (err, response, body) {
-	response.statusCode
-})
+#### Request (fetch)
 
-request.post(url, { form: body }, function (err, result, body) {
-})
+	request.get(url, { json: true }, function (err, response, body) {
+		response.statusCode
+	})
 
-request({ method: 'PUT', url: url, json: obj }, function (err, res, body) {
-})
+	request.post(url, { form: body }, function (err, result, body) {
+	})
+
+	request({ method: 'PUT', url: url, json: obj }, function (err, res, body) {
+	})
 
 ### EJS
 
 https://www.npmjs.org/package/ejs
 
-<%= variable %> // variable is evaluated and printed out (escaped)
-<%- variable %> // variable is evaluated and printed out (HTML, not escaped)
-<% variable %>  // variable is evaluated but not printed out
+	<%= variable %> // variable is evaluated and printed out (escaped)
+	<%- variable %> // variable is evaluated and printed out (HTML, not escaped)
+	<% variable %>  // variable is evaluated but not printed out
 
+	<% if (true) { %>
+		<h1>foo</h1>
+	<% } else { %>  
+		<h1>bar</h1>
+	<% } %>
 
-<% if (true) { %>
-	<h1>foo</h1>
-<% } else { %>  
-	<h1>bar</h1>
-<% } %>
-
-<table>
-<% for (var i=0; i < data.length; i++) { %>
-	<tr>
-		<td><%= data[i].id %></td>
-		<td><%= data[i].name %></td>
-	</tr>
-<% } %>
-</table>
+	<table>
+	<% for (var i=0; i < data.length; i++) { %>
+		<tr>
+			<td><%= data[i].id %></td>
+			<td><%= data[i].name %></td>
+		</tr>
+	<% } %>
+	</table>
 
 	// To string. Months are zero-based
 	app.locals.formatDate = function (dateObj) {
@@ -379,11 +377,11 @@ https://www.npmjs.org/package/ejs
 
 ### Base64
 
-// Encode:
+	// Encode:
 	var b = new Buffer('JavaScript')
 	var s = b.toString('base64'); // "SmF2YVNjcmlwdA=="
 
-// Decode:
+	// Decode:
 	var b = new Buffer('SmF2YVNjcmlwdA==', 'base64')
 	var s = b.toString(); // "JavaScript"
 
