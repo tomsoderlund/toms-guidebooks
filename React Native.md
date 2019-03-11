@@ -18,3 +18,7 @@ Install https://expo.io client on your device.
 
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
+
+## Component libraries
+
+- https://github.com/callstack/react-native-paper
