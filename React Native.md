@@ -8,4 +8,13 @@
 
 ## Expo client
 
-https://expo.io
+Install https://expo.io client on your device.
+
+## How to run
+
+	yarn global add expo-cli  # or: npm install -g expo-cli
+
+	expo init MyReactNativeApp
+
+	cd MyReactNativeApp
+	yarn start  # or: npm start, expo start
