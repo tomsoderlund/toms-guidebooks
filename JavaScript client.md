@@ -2041,7 +2041,13 @@ https://github.com/facebookincubator/create-react-app
 
 	yarn create react-app my-app  # or npx create-react-app my-app
 	cd my-app/
-	npm start
+	yarn start
+
+### Next.js:
+
+	yarn add react react-dom next
+	mkdir pages
+	yarn dev
 
 ### Directory structure
 
@@ -2056,15 +2062,9 @@ https://github.com/facebookincubator/create-react-app
 
 https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
 
-### Next.js:
-
-	yarn add react react-dom next
-	mkdir pages
-	yarn dev
-
 #### Folders
 
-	mkdir components mkdir pages mkdir lib mkdir static
+	mkdir components; mkdir pages; mkdir lib; mkdir static
 
 * `components`: React components
 * `pages`: Page components
@@ -2229,25 +2229,6 @@ Refer to ${ChildComponent}:
 	`;
 
 
-#### create-react-app on Heroku
-
-	heroku create APP_NAME --buildpack mars/create-react-app
-
-#### create-react-app on GitHub Pages
-
-package.json:
-
-	"homepage": "http://tomsoderlund.github.io/css-motion-toy",
-	"scripts": {
-		"predeploy": "yarn build",
-		"deploy": "gh-pages -d build"
-	},
-
-Then:
-
-	yarn add gh-pages --dev
-	yarn deploy
-
 #### styled-jsx
 
 https://github.com/zeit/styled-jsx
@@ -2352,6 +2333,26 @@ Firebase + React: re-base
 Optional event/props:
 
 	{onAdd ? <button className='icon add' onClick={onAdd.bind(undefined, person)}>+</button> : null}
+
+
+#### create-react-app on Heroku
+
+	heroku create APP_NAME --buildpack mars/create-react-app
+
+#### create-react-app on GitHub Pages
+
+package.json:
+
+	"homepage": "http://tomsoderlund.github.io/css-motion-toy",
+	"scripts": {
+		"predeploy": "yarn build",
+		"deploy": "gh-pages -d build"
+	},
+
+Then:
+
+	yarn add gh-pages --dev
+	yarn deploy
 
 
 ### Gatsby.js
