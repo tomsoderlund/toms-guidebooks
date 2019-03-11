@@ -97,6 +97,12 @@ label input {
 	flex: 1;
 }
 
+/* Nice & simple: Label */
+label {
+	float: left;
+	width: 6em;
+	text-align: right;
+}
 
 /* Nice & simple: Button - http://codepen.io/tomsoderlund/pen/qqyzqp */
 button,
