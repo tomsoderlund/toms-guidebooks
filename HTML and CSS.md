@@ -665,6 +665,10 @@ h1 span {
 	padding: 0px 8px 0px 8px;
 }
 
+## Select text
+
+	user-select: none;
+	word-wrap: break-word;
 
 ## Transform
 
