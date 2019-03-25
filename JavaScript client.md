@@ -1,8 +1,8 @@
 ## Search files
 
-React:
--node_modules/,-.next/,-yarn*
+Exclude:
 
+	-node_modules/,-.next/,-yarn*
 
 ## Javascript include
 
@@ -172,29 +172,28 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 Javascript bind, call, & apply
 
-var newFunction = theFunction.bind(valueForThis/undefined, arg1, arg2, …)
-theFunction.call(valueForThis, arg1, arg2, …)
-theFunction.apply(valueForThis, arguments)
+	var newFunction = theFunction.bind(valueForThis/undefined, arg1, arg2, …)
+	theFunction.call(valueForThis, arg1, arg2, …)
+	theFunction.apply(valueForThis, arguments)
 
 * Use `bind` when you want that function to later be called with a certain context, useful in events.
 * Use `call` or `apply` when you want to invoke the function immediately, and modify the context.
 * The difference is that `apply` lets you invoke the function with arguments as an array `call` requires the parameters be listed explicitly.
 
 
-function () {
-	console.log('cb', arguments)
-	cb.apply(undefined, arguments)
-}
-
-const parseArguments = function (args, nrOfArgumentsIncludingOptions) {
-	return {
-		callback: args[args.length-1],
-		options: args.length >= nrOfArgumentsIncludingOptions ? args[args.length-2] : {},
+	function () {
+		console.log('cb', arguments)
+		cb.apply(undefined, arguments)
 	}
-}
 
-Chaining: return this
+	const parseArguments = function (args, nrOfArgumentsIncludingOptions) {
+		return {
+			callback: args[args.length-1],
+			options: args.length >= nrOfArgumentsIncludingOptions ? args[args.length-2] : {},
+		}
+	}
 
+Chaining: return `this`
 
 arguments
 
@@ -228,6 +227,7 @@ Tips: functions are the ONLY scopes in JavaScript. Other `{}` blocks don't matte
 See "variable hoisting". (edited
 
 A JavaScript `function` contains:
+
 1. The code.
 2. A name (not same as variable it’s placed in), e.g. `var f = function myFunction() {}`.
 3. The receiver/context (`this`).
@@ -237,9 +237,9 @@ A JavaScript `function` contains:
 
 ## Classes & Instances
 
-var myObject = { myProperty: 'ok', sayHi: function (){ console.log(this) } }
-var myObj2 = Object.create(myObject)
-// See also: Object.create(proto [, propertiesObject ])
+	var myObject = { myProperty: 'ok', sayHi: function (){ console.log(this) } }
+	var myObj2 = Object.create(myObject)
+	// See also: Object.create(proto [, propertiesObject ])
 
 NOTE: prototype vs. this: http://stackoverflow.com/questions/4691044/should-i-use-prototype-or-not
 prototype keyword: http://stackoverflow.com/questions/12064104/prototype-keyword-in-javascript
@@ -247,113 +247,120 @@ http://stackoverflow.com/questions/1595611/how-to-properly-create-a-custom-objec
 
 http://javascript.crockford.com/prototypal.html
 
-Object.prototype.inherit = function () {
-	function F() {}
-	F.prototype = this
-	return new F()
-}
+	Object.prototype.inherit = function () {
+		function F() {}
+		F.prototype = this
+		return new F()
+	}
 
-newObject = oldObject.inherit()
+	newObject = oldObject.inherit()
 
 
 ### Object Types
 
-(o3 instanceof D) // true
-isNaN(123)
+	(o3 instanceof D) // true
+	isNaN(123)
 
-// Simple, faster: 'object', 'string', 'number', 'boolean'
-typeof(myObj)
+	// Simple, faster: 'object', 'string', 'number', 'boolean'
+	typeof(myObj)
 
-// Advanced: Object, Array, String, Number, Boolean, Function
-Array.isArray(objectOrArray)
-objectOrArray.constructor === Array
+	// Advanced: Object, Array, String, Number, Boolean, Function
+	Array.isArray(objectOrArray)
+	objectOrArray.constructor === Array
 
-// Advanced, slower: '[object X]' where X can be Object, Array, String, Number, Boolean, Function
-Object.prototype.toString.call(myObj) === '[object Array]'
+	// Advanced, slower: '[object X]' where X can be Object, Array, String, Number, Boolean, Function
+	Object.prototype.toString.call(myObj) === '[object Array]'
 
 
 ### Custom classes
 
-/* Custom class: var myMyClass = new MyClass('foo') */
-function MyClass (property) {
-	// Private
-	var privateVariable = property * 2
-	var privateMethod = function () {}
-	// Public
-	this.publicProperty = property * 3
-	this.publicPrivilegedMethodOnInstance = function () {}
-}
-MyClass.prototype.publicMethod = function () {}
-
-var myMyClass = new MyClass('foo')
-
-
-
-WELD.clone = function (obj) {
-	if (null == obj || "object" != typeof obj) return obj
-	var copy = obj.constructor()
-	for (var attr in obj) {
-		if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr]
+	/* Custom class: var myMyClass = new MyClass('foo') */
+	function MyClass (property) {
+		// Private
+		var privateVariable = property * 2
+		var privateMethod = function () {}
+		// Public
+		this.publicProperty = property * 3
+		this.publicPrivilegedMethodOnInstance = function () {}
 	}
-	return copy
-}
+	MyClass.prototype.publicMethod = function () {}
+
+	var myMyClass = new MyClass('foo')
+
+
+
+	WELD.clone = function (obj) {
+		if (null == obj || "object" != typeof obj) return obj
+		var copy = obj.constructor()
+		for (var attr in obj) {
+			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr]
+		}
+		return copy
+	}
 
 
 ## Loops
 
-for (var key in obj) {
-	console.log(key + ": " + obj[key])
-}
+	for (let key in object) {
+		console.log(`${key}: ${object[key]}`)
+	}
 
-// Also works with key: value pairs,
-var positions = ['0%', '50%', '100%']
-for (var key in positions) {
-	console.log(key, positions[key])
-}
+	const keys = ['apple', 'banana', 'citrus']
+	for (let k in keys) {
+	  console.log(`${keys[k]}: ${object[keys[k]]}`)
+	}
+
+	for (let i = 0; i < array.length; i++) {
+		console.log(`${i}: ${array[key]}`)
+	}
+
+	const keys = ['apple', 'banana', 'citrus']
+	for (let k = 0; k < keys.length; k++) {
+	  console.log(`${keys[k]}: ${object[keys[k]]}`)
+	}
+
+	// While
+
+	while (condition) {
+		// code block to be executed
+	}
+
+	do {
+		// code block to be executed
+	}
+	while (condition)
 
 
-for (var i = 0 i < tagArray.length i++) {
-	alert(tagArray[i])
-}
+	// Switch = Select/Case
 
-while (condition) {
-	// code block to be executed
-}
-
-do {
-	// code block to be executed
-}
-while (condition)
-
-
-// Switch = Select/Case
-
-switch (n) {
-	case 1:
-		// execute code block 1
-		break // or return
-	case 2:
-		// execute code block 2
-		break // or return
-	default:
-		// code to be executed if n is different from case 1 and 2
-		break // or return
-}
+	switch (n) {
+		case 1:
+			// execute code block 1
+			break // or return
+		case 2:
+			// execute code block 2
+			break // or return
+		default:
+			// code to be executed if n is different from case 1 and 2
+			break // or return
+	}
 
 
 ## Exceptions
 
-try {
-	myroutine() // may throw three exceptions
-}
-catch (e if e instanceof EvalError) {
-	// statements to handle EvalError exceptions
-}
-catch (e) {
-	// statements to handle any unspecified exceptions
-	logMyErrors(e) // pass exception object to error handler
-}
-
+	try {
+		myroutine() // may throw three exceptions
+	}
+	catch (e if e instanceof EvalError) {
+		// statements to handle EvalError exceptions
+	}
+	catch (e) {
+		// statements to handle any unspecified exceptions
+		logMyErrors(e) // pass exception object to error handler
+	}
+	finally {
+	  // Code to be executed regardless of the try/catch result
+	}
 
 ## Numbers & Math
 
@@ -362,6 +369,26 @@ catch (e) {
 	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
 	const getRandomFromArray = array => array[getRandomNumber(0, array.length - 1)]
 	const getSerialFromArray = (array, index) => array[index % array.length]
+	const otherNumber = (allNumbers, notNumber) => shuffleArray(allNumbers).filter(nr => notNumber !== nr)[0]
+
+	Seeded random: https://github.com/davidbau/seedrandom
+
+	const shuffleArray = array => {
+	  let currentIndex = array.length
+	  let temporaryValue
+	  let randomIndex
+	  // While there remain elements to shuffle...
+	  while (currentIndex !== 0) {
+	    // Pick a remaining element...
+	    randomIndex = Math.floor(randomizer() * currentIndex)
+	    currentIndex -= 1
+	    // And swap it with the current element.
+	    temporaryValue = array[currentIndex]
+	    array[currentIndex] = array[randomIndex]
+	    array[randomIndex] = temporaryValue
+	  }
+	  return array
+	}
 
 	// Serial e.g. '1464642047155-207'
 	(Date.now() + '-' + Math.floor(Math.random() * 1000))
@@ -375,7 +402,7 @@ catch (e) {
 	const round = (value, decimals = 2) => parseFloat(value.toFixed(decimals))
 
 	// Limit value between max and min
-	limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
+	const limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
 
 	parseInt(StringorNum) // to int
 	parseFloat(StringorNum) // to float
@@ -629,218 +656,219 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 ### Encoding
 
-// base64: Encode the String
-var encodedString = btoa(string)
-// base64: Decode the String
-var decodedString = atob(encodedString)
+	// base64: Encode the String
+	var encodedString = btoa(string)
+	// base64: Decode the String
+	var decodedString = atob(encodedString)
 
-// URL encode
-encodeURIComponent('ÅÄÖ&') -> "%C3%85%C3%84%C3%96%26"
-decodeURIComponent('')
+	// URL encode
+	encodeURIComponent('ÅÄÖ&') -> "%C3%85%C3%84%C3%96%26"
+	decodeURIComponent('')
 
-const Entities = require('html-entities').XmlEntities
-const entities = new Entities()
-entities.decode('&quotKeywords by Site&quot')
+	const Entities = require('html-entities').XmlEntities
+	const entities = new Entities()
+	entities.decode('&quotKeywords by Site&quot')
 
 
 ## Arrays and Lists
 
 http://www.w3schools.com/jsref/jsref_obj_array.asp
 
-var myCars = new Array() // regular array (add an optional integer
-myCars[0] = "Saab"			 // argument to control array's size)
-myCars[1] = "Volvo"
-myCars[2] = "BMW"
+	var myCars = new Array() // regular array (add an optional integer
+	myCars[0] = "Saab"			 // argument to control array's size)
+	myCars[1] = "Volvo"
+	myCars[2] = "BMW"
 
-myCars.length
+	myCars.length
 
-var lastElement = myCars[myCars.length - 1]
+	var lastElement = myCars[myCars.length - 1]
 
-var a = fruits.indexOf("Apple")
+	var a = fruits.indexOf("Apple")
 
-var fruits = ["Banana", "Orange", "Apple", "Mango"]
-fruits.sort()
-array.sort((a, b) => a - b)
-array.sort((a, b) => a > b)
-array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
-array.reverse()
+	var fruits = ["Banana", "Orange", "Apple", "Mango"]
+	fruits.sort()
+	array.sort((a, b) => a - b)
+	array.sort((a, b) => a > b)
+	array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+	array.reverse()
 
-// Clone array
-newArray = oldArray.slice()
+	// Clone array
+	newArray = oldArray.slice()
 
-// Add
-newArray = [newItem, ...oldArray, newItem2]
-push() // add to end
-unshift // add to beginning
-array.splice(index, howmany, element1, …, elementX) // adds/removes items to/from an array, and returns the removed item(s), mutates original array
-var combined = list1.concat(list2)
+	newArray = oldArray.slice(startIndex, endIndexPlusOne)
 
-// Remove
-pop() // get/remove last element
-shift()	// remove first element of an array, and returns that element
-slice(start, end) // returns the selected elements in an array, as a new array object
-array.splice(indexToRemove, 1) // remove 1 element, mutates original array
-array.filter((element, index) => index !== indexToRemove) // remove 1 element, non-mutating
-newArray = someArray.filter(user => user.name !== 'John')
+	// Add
+	newArray = [newItem, ...oldArray, newItem2]
+	push() // add to end
+	unshift // add to beginning
+	array.splice(index, howmany, element1, …, elementX) // adds/removes items to/from an array, and returns the removed item(s), mutates original array
+	var combined = list1.concat(list2)
 
-// Array Remove - By John Resig (MIT Licensed)
-Array.prototype.remove = function (from, to) {
-	var rest = this.slice((to || from) + 1 || this.length)
-	this.length = from < 0 ? this.length + from : from
-	return this.push.apply(this, rest)
-}
+	// Remove
+	pop() // get/remove last element
+	shift()	// remove first element of an array, and returns that element
+	slice(start, end) // returns the selected elements in an array, as a new array object
+	array.splice(indexToRemove, 1) // remove 1 element, mutates original array
+	array.filter((element, index) => index !== indexToRemove) // remove 1 element, non-mutating
+	newArray = someArray.filter(user => user.name !== 'John')
 
-// Divide into pages. Note: pageNr = 1, 2, 3...
-const paginateArray = (array, pageSize = 100, pageNr = 1) => array.slice((pageNr - 1) * pageSize, pageNr * pageSize)
-const paginateObject = (object, pageSize, pageNr) => paginateArray(Object.keys(object), pageSize, pageNr).reduce((result, projectKey) => { result[projectKey] = object[projectKey]; return result }, {})
+	// Array Remove - By John Resig (MIT Licensed)
+	Array.prototype.remove = function (from, to) {
+		var rest = this.slice((to || from) + 1 || this.length)
+		this.length = from < 0 ? this.length + from : from
+		return this.push.apply(this, rest)
+	}
 
-// Split full name into first/lastname
-var allNames = fullname.split(' ')
-firstname = allNames[0]
-if (allNames.length > 1) {
-	allNames.splice(0, 1)
-	lastname = allNames.join(' ')
-}
+	// Divide into pages. Note: pageNr = 1, 2, 3...
+	const paginateArray = (array, pageSize = 100, pageNr = 1) => array.slice((pageNr - 1) * pageSize, pageNr * pageSize)
+	const paginateObject = (object, pageSize, pageNr) => paginateArray(Object.keys(object), pageSize, pageNr).reduce((result, projectKey) => { result[projectKey] = object[projectKey]; return result }, {})
+
+	// Split full name into first/lastname
+	var allNames = fullname.split(' ')
+	firstname = allNames[0]
+	if (allNames.length > 1) {
+		allNames.splice(0, 1)
+		lastname = allNames.join(' ')
+	}
 
 
 ## Collections/hashes/objects
 
-Object.keys(myObject).length // ECMAScript 5 required
+	Object.keys(myObject).length // ECMAScript 5 required
 
-Object.size = function (obj) {
-	var size = 0, key
-	for (key in obj) {
-		if (obj.hasOwnProperty(key)) size++
+	Object.size = function (obj) {
+		var size = 0, key
+		for (key in obj) {
+			if (obj.hasOwnProperty(key)) size++
+		}
+		return size
 	}
-	return size
-}
 
-jQuery.extend(true, {}, elementData)
+### JSON
 
-str = JSON.stringify(obj, null, 2) // value, replacerArrayOrFunction, spacer
-str = JSON.stringify(obj)
-obj = JSON.parse(str)
+	str = JSON.stringify(obj, null, 2) // value, replacerArrayOrFunction, spacer
+	str = JSON.stringify(obj)
+	obj = JSON.parse(str)
 
 
 ## Dates & Time
 
-var todaysDate = new Date()
-var d = new Date(2014, 0, 1) // months are zero-based
+	var todaysDate = new Date()
+	var d = new Date(2014, 0, 1) // months are zero-based
 
-// From value
-new Date(1469433907836)
-new Date('2011-04-11')
-new Date('2011-04-11T11:51:00')
+	// From value
+	new Date(1469433907836)
+	new Date('2011-04-11')
+	new Date('2011-04-11T11:51:00')
 
-getFullYear() // Get the four digit year (yyyy)
-getMonth() // Get the month (0-11)
-getDate() // Get the day as a number (1-31)
-getDay() // Get the weekday as a number (0-6)
-getHours() // Get the hour (0-23)
-getMinutes() // Get the minutes (0-59)
-getSeconds() // Get the seconds (0-59)
-getMilliseconds() // Get the milliseconds (0-999)
-getTime() // Get the time (milliseconds since January 1, 1970)
+	getFullYear() // Get the four digit year (yyyy)
+	getMonth() // Get the month (0-11)
+	getDate() // Get the day as a number (1-31)
+	getDay() // Get the weekday as a number (0-6)
+	getHours() // Get the hour (0-23)
+	getMinutes() // Get the minutes (0-59)
+	getSeconds() // Get the seconds (0-59)
+	getMilliseconds() // Get the milliseconds (0-999)
+	getTime() // Get the time (milliseconds since January 1, 1970)
 
-				1512051487896
-Date.now() // = 1499635830061
-new Date().getTime() => 1390569315900
+	Date.now() // = new Date().getTime()
 
-thisYear = (new Date()).getYear() + 1900
+	thisYear = (new Date()).getYear() + 1900
 
-const formatDate = dateObj => `${dateObj.getFullYear()}-${('0' + (dateObj.getMonth()+1)).slice(-2)}-${('0' + dateObj.getDate()).slice(-2)}`
+	const formatDate = dateObj => `${dateObj.getFullYear()}-${('0' + (dateObj.getMonth()+1)).slice(-2)}-${('0' + dateObj.getDate()).slice(-2)}`
+	const formatTime = dateObj => `${dateObj.getHours()}:${dateObj.getMinutes()}`
 
-const formatDate = function (dateObj) {
-	return (dateObj.getFullYear() 
-		+ "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) 
-		+ "-" + ('0' + dateObj.getDate()).slice(-2)
-	)
-}
+	const formatDate = function (dateObj) {
+		return (dateObj.getFullYear() 
+			+ "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) 
+			+ "-" + ('0' + dateObj.getDate()).slice(-2)
+		)
+	}
 
-const formatDateAndTime = function (dateObj) {
-	return (dateObj.getFullYear() 
-		+ "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) 
-		+ "-" + ('0' + dateObj.getDate()).slice(-2)
-		+ " " + dateObj.getHours()
-		+ ":" + dateObj.getMinutes()
-		+ ":" + dateObj.getSeconds()
-	)
-}
+	const formatDateAndTime = function (dateObj) {
+		return (dateObj.getFullYear() 
+			+ "-" + ('0' + (dateObj.getMonth()+1)).slice(-2) 
+			+ "-" + ('0' + dateObj.getDate()).slice(-2)
+			+ " " + dateObj.getHours()
+			+ ":" + dateObj.getMinutes()
+			+ ":" + dateObj.getSeconds()
+		)
+	}
 
-// Compare dates
-var diffInMillisecs = new Date() - oldDate
+	// Compare dates
+	var diffInMillisecs = new Date() - oldDate
 
-// Add to date
-futureDate = new Date(startDate.getTime() + days*24*60*60*1000)
-oneYearFromNow = new Date((new Date()).getTime() + 365*24*60*60*1000)
+	// Add to date
+	futureDate = new Date(startDate.getTime() + days*24*60*60*1000)
+	oneYearFromNow = new Date((new Date()).getTime() + 365*24*60*60*1000)
 
-// Calculate difference between dates
-var daysBetweenDates = function (date1, date2) {
-	var diff = new Date(date2.getTime() - date1.getTime())
-	// return (diff.getUTCFullYear() - 1970) // Gives difference as year
-	// return (diff.getUTCMonth()) // Gives month count of difference
-	return (diff.getUTCDate() - 1) // Gives day count of difference
-}
+	// Calculate difference between dates
+	var daysBetweenDates = function (date1, date2) {
+		var diff = new Date(date2.getTime() - date1.getTime())
+		// return (diff.getUTCFullYear() - 1970) // Gives difference as year
+		// return (diff.getUTCMonth()) // Gives month count of difference
+		return (diff.getUTCDate() - 1) // Gives day count of difference
+	}
 
-// Timestamp in milliseconds
-new Date().getTime() => 1390569315900
-var dateFromMillisecs = new Date(milliseconds)
+	// Timestamp in milliseconds
+	new Date().getTime() => 1390569315900
+	var dateFromMillisecs = new Date(milliseconds)
 
-// UTC Timestamp
-Math.round(new Date().getTime() / 1000)
+	// UTC Timestamp
+	Math.round(new Date().getTime() / 1000)
 
 
 ### Moment.js
 
-moment(dateObj)
-moment().toDate() // JS date obj
-moment().valueOf() // millisecs
-moment().unix() // seconds
+	moment(dateObj)
+	moment().toDate() // JS date obj
+	moment().valueOf() // millisecs
+	moment().unix() // seconds
 
-moment(value).fromNow() // “3 hours ago”
+	moment(value).fromNow() // “3 hours ago”
 
-const duration = momDate.diff(momDateNow)
+	const duration = momDate.diff(momDateNow)
 
-moment().subtract(7, 'days')
-moment().startOf('isoweek').add(2, 'weeks')
+	moment().subtract(7, 'days')
+	moment().startOf('isoweek').add(2, 'weeks')
 
-moment().isoWeekday() // returns 1-7 where 1 is Monday and 7 is Sunday
+	moment().isoWeekday() // returns 1-7 where 1 is Monday and 7 is Sunday
 
-moment(dateObj).format('YYYY-MM-DD')
-moment(dateObj).format('YYYY-MM-DD HH:mm')
-moment(dateObj).format('dddd, MMMM Do YYYY HH:mm')
+	moment(dateObj).format('YYYY-MM-DD')
+	moment(dateObj).format('YYYY-MM-DD HH:mm')
+	moment(dateObj).format('dddd, MMMM Do YYYY HH:mm')
 
 
 ## Timers
 
 Wait, Sleep etc
 
-// do once
-setTimeout(doInOneSecond, 1000)
+	// do once
+	setTimeout(doInOneSecond, 1000)
 
-setTimeout(
-	function () {
-		console.log('setTimeout')
-	},
-	1000
-)
+	setTimeout(
+		function () {
+			console.log('setTimeout')
+		},
+		1000
+	)
 
-// Repeat
-setInterval(doEverySecond, 1000)
-// Stop timer
-clearInterval(timerId)
+	// Repeat
+	setInterval(doEverySecond, 1000)
+	// Stop timer
+	clearInterval(timerId)
 
-var timerId = setInterval(
-	function () { 
-		console.log('setInterval')
-	},
-	1000
-)
+	var timerId = setInterval(
+		function () { 
+			console.log('setInterval')
+		},
+		1000
+	)
 
 
-var doWithTimeoutIfNeeded = function (func, expression) {
-	expression ? setTimeout(func) : func()
-}
+	var doWithTimeoutIfNeeded = function (func, expression) {
+		expression ? setTimeout(func) : func()
+	}
 
 
 ## Drawing
@@ -951,15 +979,15 @@ https://gionkunz.github.io/chartist-js/
 
 ## Sound
 
-<audio id="sound_pop" src="/assets/pop.mp3" preload="auto"></audio>
+	<audio id="sound_pop" src="/assets/pop.mp3" preload="auto"></audio>
 
-document.getElementById('sound_pop').play()
+	document.getElementById('sound_pop').play()
 
 ## Local Storage
 
-localStorage.colorSetting = '#a4509b'
-localStorage['colorSetting'] = '#a4509b'
-localStorage.setItem('colorSetting', '#a4509b')
+	localStorage.colorSetting = '#a4509b'
+	localStorage['colorSetting'] = '#a4509b'
+	localStorage.setItem('colorSetting', '#a4509b')
 
 
 ## Pure Javascript (no framework)
@@ -1064,17 +1092,19 @@ Tip: event handlers on `document` for move/end:
 
 ### HTTP Get
 
-function httpGetAsync(url, callback) {
-	var xmlHttp = new XMLHttpRequest()
-	xmlHttp.onreadystatechange = function() { 
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-			callback(xmlHttp.responseText)
+	function httpGetAsync(url, callback) {
+		var xmlHttp = new XMLHttpRequest()
+		xmlHttp.onreadystatechange = function() { 
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+				callback(xmlHttp.responseText)
+		}
+		xmlHttp.open('GET', url, true)
+		xmlHttp.send(null)
 	}
-	xmlHttp.open('GET', url, true)
-	xmlHttp.send(null)
-}
 
 #### Fetch
+
+	const domain = await fetch(`${config.appUrl}api/domains/${query.domainName}${queryObjectToString(query)}`).then(res => res.json())
 
   const user = await fetch(`${API_URL}/api/usernames/${user.username}`)
   const userJson = await user.json()
@@ -1107,8 +1137,8 @@ Open window:
 
 ### Forms
 
-document.getElementById("xx").focus()
-document.getElementById("xx").disabled = true
+	document.getElementById("xx").focus()
+	document.getElementById("xx").disabled = true
 
 	var email = document.getElementById('email').value
 	if (email.length < 6 || email.split('@').length !== 2 || email.split('@')[1].indexOf('.') === -1) {
@@ -1122,37 +1152,37 @@ https://github.com/YOUR-USER-NAME/minimalistic-web-workers
 
 https://www.w3schools.com/html/html5_webworkers.asp
 
-// Main code
-if (typeof(Worker) !== 'undefined') {
-	// Yes! Web worker supported
-	var myworker = new Worker('demo_workers.js')
-	myworker.addEventListener('message', function (event) {
-		console.log('Worker said: ', event.data)
+	// Main code
+	if (typeof(Worker) !== 'undefined') {
+		// Yes! Web worker supported
+		var myworker = new Worker('demo_workers.js')
+		myworker.addEventListener('message', function (event) {
+			console.log('Worker said: ', event.data)
+		}, false)
+		// Send data to our worker
+		myworker.postMessage('Hello World')
+	}
+	else {
+		// Sorry! No Web Worker support..
+	}
+
+	myworker.terminate()
+
+	// demo_workers.js
+	var i = 0
+
+	var timedCount = function () {
+		i = i + 1
+		postMessage(i)
+		setTimeout(timedCount, 500)
+	}
+
+	self.addEventListener('message', function (event) {
+		console.log('Main app said: ', event.data)
+		self.postMessage(event.data)
 	}, false)
-	// Send data to our worker
-	myworker.postMessage('Hello World')
-}
-else {
-	// Sorry! No Web Worker support..
-}
 
-myworker.terminate()
-
-// demo_workers.js
-var i = 0
-
-var timedCount = function () {
-	i = i + 1
-	postMessage(i)
-	setTimeout(timedCount, 500)
-}
-
-self.addEventListener('message', function (event) {
-	console.log('Main app said: ', event.data)
-	self.postMessage(event.data)
-}, false)
-
-timedCount()
+	timedCount()
 
 
 
@@ -1166,183 +1196,183 @@ https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore/
 
 https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d89a0f
 
-// let and const instead of var (block scoped within {})
-let x = 1
-const Y = 1
+	// let and const instead of var (block scoped within {})
+	let x = 1
+	const Y = 1
 
-// let with multi-assign - destructured assignment
-let [one, two] = [1, 2]
-let {three, four} = {three: 3, four: 4}
-const { education: { degree:asNamedDegree } } = user
-console.log(asNamedDegree) //prints: Masters
-// Remove a property:
-const { children, ...propsWithoutChildren } = props
+	// let with multi-assign - destructured assignment
+	let [one, two] = [1, 2]
+	let {three, four} = {three: 3, four: 4}
+	const { education: { degree:asNamedDegree } } = user
+	console.log(asNamedDegree) //prints: Masters
+	// Remove a property:
+	const { children, ...propsWithoutChildren } = props
 
-// Arrow functions => (NOTE: doesn't have `this` or `arguments`, but bind() works for parameters)
-const doubleIt = a => a * 2 // similar to: var doubleIt = function (a) { return a * 2 }
-const addTwo = (a, b) => { return a + b } // similar to: var addTwo = function (a, b) { return a + b }
-p => ({ foo: 'bar' })
+	// Arrow functions => (NOTE: doesn't have `this` or `arguments`, but bind() works for parameters)
+	const doubleIt = a => a * 2 // similar to: var doubleIt = function (a) { return a * 2 }
+	const addTwo = (a, b) => { return a + b } // similar to: var addTwo = function (a, b) { return a + b }
+	p => ({ foo: 'bar' })
 
-// Chained arrow functions
-const middleware = store => next => action => {  
-	next(action)
-}
-
-// Classes: class, constructor, extends, super, get
-class Prefixer extends otherClass {
-	constructor(prefix) {
-		super()
-		this.prefix = prefix
+	// Chained arrow functions
+	const middleware = store => next => action => {  
+		next(action)
 	}
-	prefixArray(arr) {
-		return arr.map(x => this.prefix + x)
+
+	// Classes: class, constructor, extends, super, get
+	class Prefixer extends otherClass {
+		constructor(prefix) {
+			super()
+			this.prefix = prefix
+		}
+		prefixArray(arr) {
+			return arr.map(x => this.prefix + x)
+		}
 	}
-}
 
-// Function shorthand
-myObject: {
-	url: '/api/kittens/:id',
-	reducer (state, action) {}, // Instead of: reducer: function () {}
-}
-// Short function definitions (only inside classes)
-then() {
-	this.setState({ loading: false })
-}
+	// Function shorthand
+	myObject: {
+		url: '/api/kittens/:id',
+		reducer (state, action) {}, // Instead of: reducer: function () {}
+	}
+	// Short function definitions (only inside classes)
+	then() {
+		this.setState({ loading: false })
+	}
 
-// Default arguments
-function sayMsg(msg='Default message') {}
+	// Default arguments
+	function sayMsg(msg='Default message') {}
 
-// Rest arguments & Spread operator
-function myFunc(str, ...restArguments) {}
+	// Rest arguments & Spread operator
+	function myFunc(str, ...restArguments) {}
 
-let nums = [5, 4]
-myFunc(str, ...nums)
-{ ...state, visibilityFilter: action.filter } // merge <-- right-to-left
+	let nums = [5, 4]
+	myFunc(str, ...nums)
+	{ ...state, visibilityFilter: action.filter } // merge <-- right-to-left
 
-// Destructuring parameters
-([a,b]) => a + b
-({crudify}, res, next) => {
-	res.json(crudify.article)
-	next()
-}gs
-for (var [key, value] of phoneBookMap) {}
+	// Destructuring parameters
+	([a,b]) => a + b
+	({crudify}, res, next) => {
+		res.json(crudify.article)
+		next()
+	}gs
+	for (var [key, value] of phoneBookMap) {}
 
-// for… of (value instead of index)
-for (let arrayValue of arr) {}
+	// for… of (value instead of index)
+	for (let arrayValue of arr) {}
 
-// String templating with ``
-let person = {name: 'John Smith'}
-let tpl = `My name is ${person.name}.` // note the `` characters
+	// String templating with ``
+	let person = {name: 'John Smith'}
+	let tpl = `My name is ${person.name}.` // note the `` characters
 
-// Generators
+	// Generators
 
-// Maps & Sets
+	// Maps & Sets
 
-// Promises
+	// Promises
 
-let promise = new Promise(function(resolve, reject) {
-	!err ? resolve(value) : reject(err)
-})
+	let promise = new Promise(function(resolve, reject) {
+		!err ? resolve(value) : reject(err)
+	})
 
-const promiseFunction = () => new Promise(function(resolve, reject) {
-	resolve('a value')
-})
+	const promiseFunction = () => new Promise(function(resolve, reject) {
+		resolve('a value')
+	})
 
-// Pattern 1: catch
-p.then(onFulfilled)
-	.catch(onRejected)
-// Pattern 2: two arguments
-p.then(onFulfilled[, onRejected])
+	// Pattern 1: catch
+	p.then(onFulfilled)
+		.catch(onRejected)
+	// Pattern 2: two arguments
+	p.then(onFulfilled[, onRejected])
 
-p.then(result => result.json())
-	.then(onFulfilled) // will get JSON
+	p.then(result => result.json())
+		.then(onFulfilled) // will get JSON
 
-Promise.all(promiseArray)
-	.then(...)
-Promise.race(promiseArray)
-	.then(...)
+	Promise.all(promiseArray)
+		.then(...)
+	Promise.race(promiseArray)
+		.then(...)
 
-Promise.resolve(value)
-Promise.reject(err)
+	Promise.resolve(value)
+	Promise.reject(err)
 
-async/await
-The await keyword can only be used inside functions defined with 'async'.
-(_Can_ use .then() but shouldn’t)
+	async/await
+	The await keyword can only be used inside functions defined with 'async'.
+	(_Can_ use .then() but shouldn’t)
 
-let [items, contactlist, itemgroup] = await Promise.all([
-	fetch('http://localhost:3000/items/get'),
-	fetch('http://localhost:3000/contactlist/get'),
-	fetch('http://localhost:3000/itemgroup/get')
-])
+	let [items, contactlist, itemgroup] = await Promise.all([
+		fetch('http://localhost:3000/items/get'),
+		fetch('http://localhost:3000/contactlist/get'),
+		fetch('http://localhost:3000/itemgroup/get')
+	])
 
 ### Lodash in ES6 ("lodash6")
 
 https://www.sitepoint.com/lodash-features-replace-es6/
 
-[1, 2, 3].forEach((n, index) => console.log(n))
-[1, 2, 3].map((n, index) => n * 3)
-[1, 2, 3].reduce((result, n) => result + n, 0)
-[1, 2, 3].filter((n, index) => n < 2)
+	[1, 2, 3].forEach((n, index) => console.log(n))
+	[1, 2, 3].map((n, index) => n * 3)
+	[1, 2, 3].reduce((result, n) => result + n, 0)
+	[1, 2, 3].filter((n, index) => n < 2)
 
-Object.keys(obj)
-Object.values(obj)
+	Object.keys(obj)
+	Object.values(obj)
 
-// head/tail
-const [head, ...tail] = [1, 2, 3]
-const [last, ...initial] = [1, 2, 3].reverse()
-const [firstLetter, ...restOfLetters] = 'ABCDE'
+	// head/tail
+	const [head, ...tail] = [1, 2, 3]
+	const [last, ...initial] = [1, 2, 3].reverse()
+	const [firstLetter, ...restOfLetters] = 'ABCDE'
 
-// assign/merge
-Object.assign(target, ...sources) // returns target
-copy = Object.assign({}, o1) // shallow clone of o1
-Object.assign({}, o1, o2) // safe inheritance
-const merged = {...obj1, ...obj2}
+	// assign/merge
+	Object.assign(target, ...sources) // returns target
+	copy = Object.assign({}, o1) // shallow clone of o1
+	Object.assign({}, o1, o2) // safe inheritance
+	const merged = {...obj1, ...obj2}
 
-// pick
-const { a, c } = { a: 1, b: 2, c: 3 }
-const keyToRemove = 'mykey'
-const { [keyToRemove]: 0, ...newState } = state
+	// pick
+	const { a, c } = { a: 1, b: 2, c: 3 }
+	const keyToRemove = 'mykey'
+	const { [keyToRemove]: 0, ...newState } = state
 
-get/set: no matching ES6
+	get/set: no matching ES6
 
-// Function composition
-const add = a => b => a + b
-const add235 = add(235)
-add235(1) // =236
+	// Function composition
+	const add = a => b => a + b
+	const add235 = add(235)
+	add235(1) // =236
 
-// Pipeline
-const pipeline = [
-	array => { array.pop() return array },
-	array => array.reverse(),
-]
-pipeline.reduce((xs, f) => f(xs), [1, 2, 3])
+	// Pipeline
+	const pipeline = [
+		array => { array.pop() return array },
+		array => array.reverse(),
+	]
+	pipeline.reduce((xs, f) => f(xs), [1, 2, 3])
 
-// pickMatch({ default: 1, week: 7, year: 365 }, periodName)
-const pickMatch = (options, key) => options[key] !== undefined ? options[key] : options.default
+	// pickMatch({ default: 1, week: 7, year: 365 }, periodName)
+	const pickMatch = (options, key) => options[key] !== undefined ? options[key] : options.default
 
-// map(object) from Lodash
-const objectMap = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
-	result[key] = mapFunction(object[key], key)
-	return result
-}, {})
+	// map(object) from Lodash
+	const objectMap = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
+		result[key] = mapFunction(object[key], key)
+		return result
+	}, {})
 
-const queryObjectFromString = str => (str.split('?')[1] || '')
-  .split('&')
-  .reduce((result, propValue) => {
-    result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
-    return result
-  }, {})
+	const queryObjectFromString = str => (str.split('?')[1] || '')
+	  .split('&')
+	  .reduce((result, propValue) => {
+	    result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
+	    return result
+	  }, {})
 
-const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
-// const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
-const objectToCSS = obj => Object.keys(obj).reduce((result, key) => result + `${key}: ${obj[key]}; `, '')
+	const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
+	// const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
+	const objectToCSS = obj => Object.keys(obj).reduce((result, key) => result + `${key}: ${obj[key]}; `, '')
 
-countObj = _.reduce(domains, function (previous, domain) {
-	const keyName = domain.hostname
-	previous[keyName] = previous[keyName] || 0
-	previous[keyName] += 1
-	return previous
-}, {})
+	countObj = _.reduce(domains, function (previous, domain) {
+		const keyName = domain.hostname
+		previous[keyName] = previous[keyName] || 0
+		previous[keyName] += 1
+		return previous
+	}, {})
 
 
 ## Babel / Browserify
@@ -1391,522 +1421,523 @@ index.js
 https://lodash.com
 
 Related:
+
 * https://thestorefront.github.io/DataCollection.js/
 
 ### _() and _.chain()
 
-_(myObject).[...].value()
-var youngest = _
-	.chain(users)
-	.sortBy('age')
-	.map(function(o) {
-		return o.user + ' is ' + o.age
-	})
-	.head()
-	.value()
+	_(myObject).[...].value()
+	var youngest = _
+		.chain(users)
+		.sortBy('age')
+		.map(function(o) {
+			return o.user + ' is ' + o.age
+		})
+		.head()
+		.value()
 
-var result = _(myObject).omit(_.isUndefined).omit(_.isNull).value()
+	var result = _(myObject).omit(_.isUndefined).omit(_.isNull).value()
 
 ### Popular
 
-_.compact // remove all falsy values
-_.omit(collection, _.isUndefined) // remove undefined values
-_.uniq([2, 1, 2]) // → [2, 1]
-_.map(users, 'name.firstName') // → ['barney', 'fred'], formerly 'pluck'
-_.map(users, function (user) { return user.name })
-_.mapKeys(
-	this.props.element.styles,
-	(value, key) => !_.includes(invalidArray, key)
-)
-// _.mapValues = _.map for collections
-_.mapValues({ one: 1, two: 2, three: 3 }, function (v) {
-	return v * 3
-})
-// pickBy/pick is like filter, but for collections
-_.pickBy(users, function (user, key) {
-	return user.name !== undefined
-})
-_.pick(collection, ['email', 'name']) // → { email: , name: }
-_.omit/omitBy = opposite of pick
-_.sortBy(users, ['user', 'age'])
-_.orderBy(json, 'key', 'desc') // sortBy
-_.orderBy(users, ['user', 'age'], ['asc', 'desc'])
-_.reject() // inverted filter
-// filter: for collections, use pick
-_.filter(users, { 'age': 36, 'active': true })
-_.filter(users, 'active', false)
-_.filter([4, 5, 6], function (n) {
-	return n % 2 == 0
-}) // → [4, 6]
-_.find // first element only
-_.findKey, _.findIndex
-_.slice(array, [start=0], [end=array.length])
-
-_.map(subscriptions, function (sub) {
-	if (sub.checked) {
-		return sub.id
-	}
-})
-_.reduce([1, 2], function (result, item) {
-	return result + item
-}, startValue)
-
-_.has($rootScope, 'currentUser.role')
-_.get($rootScope, 'currentUser.role', defaultValue)
-_.set(user, 'accessTokens.instagram', accessToken)
-_.set(user, ['accessTokens.instagram'], accessToken)
-_.includes([1, 2, 3], 1) // true, same as _.contains(videoURL, '?')
-_.includes('1,2,3', '1') // true
-_.every(['1', '2'], _.partial(_.has, myCollection)) // 'has' for multiple keys
-_.some
-_.isEmpty(changedUserProperties) // not _.empty
-
-_.assign(object, [sources]) (_.extend) = // shallow
-_.merge(object, [sources]) // deep - NOTE: for objects only, for arrays use concat()
-_.clone(object) // shallow
-_.cloneDeep(object) // deep
-
-// Extending Lodash:
-_.mixin({ 'myOwnFunction': myOwnFunction })
-// Then use myOwnFunction:
-_(myArray).map('services').flatten().uniq().myOwnFunction()
-
-// wrapAsArray: always return Array
-module.exports.wrapAsArray = objectOrArray => objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
-// objectLength: return length on Array or Object
-module.exports.objectLength = objectOrArray => objectOrArray.constructor === Array ? objectOrArray.length : 1
-// applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
-module.exports.applyToAll = (func, objectOrArray) => objectOrArray.constructor === Array ? objectOrArray.map(func) : func(objectOrArray)
-// applyToAllAsync(promiseFunction, obj1) or applyToAllAsync(promiseFunction, [obj1, obj2, ...])
-module.exports.applyToAllAsync = async (promiseFunction, objectOrArray) => new Promise(async (resolve, reject) => {
-	const objects = objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
-	let errors, values
-	for (let i = 0; i < objects.length; i++) {
-		try {
-			values = values || []
-			values.push(await promiseFunction(objects[i]))
-		} catch (err) {
-			errors = errors || []
-			errors.push(err)
-		}
-	}
-	resolve({ errors, values })
-})
-// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
-module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
-
-// includesSome(url, ['localhost', 'staging'])
-module.exports.includesSome = (parentObj, childObjects) => _.filter(childObjects, childObj => _.includes(parentObj, childObj))
-_.mixin({ 'includesSome': module.exports.includesSome })
-
-var doWhen = function (func, expressionFunc, failFunc, iterations) {
-	iterations = iterations || 0
-	failFunc = failFunc || function () { console.error('doWhen timed out') }
-	iterations >= 100
-		? failFunc()
-		: expressionFunc()
-			? func()
-			: setTimeout(doWhen.bind(undefined, func, expressionFunc, failFunc, iterations + 1), 10)
-}
-
-// [{ reference: foo, .. }, { reference: bar, .. }] -> { foo: .., bar: .. }
-const arrayToCollection = (array, keyField='reference') => _.reduce(array, (collection, obj) => { collection[obj[keyField]] = obj return collection }, {})
-_.mixin({ 'arrayToCollection': arrayToCollection })
-
-// [{ _id: foo, .. }, { _id: bar, .. }] -> { foo: .., bar: .. }
-module.exports.arrayToCollection = function (array, keyField) {
-	keyField = keyField || '_id'
-	return _.reduce(array, function (collection, obj) {
-		collection[obj[keyField]] = obj
-		return collection
-	}, {})
-}
-_.mixin({ 'arrayToCollection': arrayToCollection })
-
-// { foo: .., bar: .. } -> [{ _id: foo, .. }, { _id: bar, .. }]
-module.exports.collectionToArray = function (collection, keyField) {
-	keyField = keyField || '_id'
-	return _.map(collection, function (obj, key) {
-		obj[keyField] = key
-		return obj
+	_.compact // remove all falsy values
+	_.omit(collection, _.isUndefined) // remove undefined values
+	_.uniq([2, 1, 2]) // → [2, 1]
+	_.map(users, 'name.firstName') // → ['barney', 'fred'], formerly 'pluck'
+	_.map(users, function (user) { return user.name })
+	_.mapKeys(
+		this.props.element.styles,
+		(value, key) => !_.includes(invalidArray, key)
+	)
+	// _.mapValues = _.map for collections
+	_.mapValues({ one: 1, two: 2, three: 3 }, function (v) {
+		return v * 3
 	})
-}
-_.mixin({ 'collectionToArray': collectionToArray })
+	// pickBy/pick is like filter, but for collections
+	_.pickBy(users, function (user, key) {
+		return user.name !== undefined
+	})
+	_.pick(collection, ['email', 'name']) // → { email: , name: }
+	_.omit/omitBy = opposite of pick
+	_.sortBy(users, ['user', 'age'])
+	_.orderBy(json, 'key', 'desc') // sortBy
+	_.orderBy(users, ['user', 'age'], ['asc', 'desc'])
+	_.reject() // inverted filter
+	// filter: for collections, use pick
+	_.filter(users, { 'age': 36, 'active': true })
+	_.filter(users, 'active', false)
+	_.filter([4, 5, 6], function (n) {
+		return n % 2 == 0
+	}) // → [4, 6]
+	_.find // first element only
+	_.findKey, _.findIndex
+	_.slice(array, [start=0], [end=array.length])
+
+	_.map(subscriptions, function (sub) {
+		if (sub.checked) {
+			return sub.id
+		}
+	})
+	_.reduce([1, 2], function (result, item) {
+		return result + item
+	}, startValue)
+
+	_.has($rootScope, 'currentUser.role')
+	_.get($rootScope, 'currentUser.role', defaultValue)
+	_.set(user, 'accessTokens.instagram', accessToken)
+	_.set(user, ['accessTokens.instagram'], accessToken)
+	_.includes([1, 2, 3], 1) // true, same as _.contains(videoURL, '?')
+	_.includes('1,2,3', '1') // true
+	_.every(['1', '2'], _.partial(_.has, myCollection)) // 'has' for multiple keys
+	_.some
+	_.isEmpty(changedUserProperties) // not _.empty
+
+	_.assign(object, [sources]) (_.extend) = // shallow
+	_.merge(object, [sources]) // deep - NOTE: for objects only, for arrays use concat()
+	_.clone(object) // shallow
+	_.cloneDeep(object) // deep
+
+	// Extending Lodash:
+	_.mixin({ 'myOwnFunction': myOwnFunction })
+	// Then use myOwnFunction:
+	_(myArray).map('services').flatten().uniq().myOwnFunction()
+
+	// wrapAsArray: always return Array
+	module.exports.wrapAsArray = objectOrArray => objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
+	// objectLength: return length on Array or Object
+	module.exports.objectLength = objectOrArray => objectOrArray.constructor === Array ? objectOrArray.length : 1
+	// applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
+	module.exports.applyToAll = (func, objectOrArray) => objectOrArray.constructor === Array ? objectOrArray.map(func) : func(objectOrArray)
+	// applyToAllAsync(promiseFunction, obj1) or applyToAllAsync(promiseFunction, [obj1, obj2, ...])
+	module.exports.applyToAllAsync = async (promiseFunction, objectOrArray) => new Promise(async (resolve, reject) => {
+		const objects = objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
+		let errors, values
+		for (let i = 0; i < objects.length; i++) {
+			try {
+				values = values || []
+				values.push(await promiseFunction(objects[i]))
+			} catch (err) {
+				errors = errors || []
+				errors.push(err)
+			}
+		}
+		resolve({ errors, values })
+	})
+	// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
+	module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
+
+	// includesSome(url, ['localhost', 'staging'])
+	module.exports.includesSome = (parentObj, childObjects) => _.filter(childObjects, childObj => _.includes(parentObj, childObj))
+	_.mixin({ 'includesSome': module.exports.includesSome })
+
+	var doWhen = function (func, expressionFunc, failFunc, iterations) {
+		iterations = iterations || 0
+		failFunc = failFunc || function () { console.error('doWhen timed out') }
+		iterations >= 100
+			? failFunc()
+			: expressionFunc()
+				? func()
+				: setTimeout(doWhen.bind(undefined, func, expressionFunc, failFunc, iterations + 1), 10)
+	}
+
+	// [{ reference: foo, .. }, { reference: bar, .. }] -> { foo: .., bar: .. }
+	const arrayToCollection = (array, keyField='reference') => _.reduce(array, (collection, obj) => { collection[obj[keyField]] = obj return collection }, {})
+	_.mixin({ 'arrayToCollection': arrayToCollection })
+
+	// [{ _id: foo, .. }, { _id: bar, .. }] -> { foo: .., bar: .. }
+	module.exports.arrayToCollection = function (array, keyField) {
+		keyField = keyField || '_id'
+		return _.reduce(array, function (collection, obj) {
+			collection[obj[keyField]] = obj
+			return collection
+		}, {})
+	}
+	_.mixin({ 'arrayToCollection': arrayToCollection })
+
+	// { foo: .., bar: .. } -> [{ _id: foo, .. }, { _id: bar, .. }]
+	module.exports.collectionToArray = function (collection, keyField) {
+		keyField = keyField || '_id'
+		return _.map(collection, function (obj, key) {
+			obj[keyField] = key
+			return obj
+		})
+	}
+	_.mixin({ 'collectionToArray': collectionToArray })
 
 ### All
 
-_()	(Chain/Seq)	
-_.add	(Math)	
-_.after	(Function)	
-_.all -> every	(Collections)	(v3 only)
-_.any -> some	(Collections)	(v3 only)
-_.ary	(Function)	
-_.assign	(Object)	
-_.assignIn	(Object)	(v4 only)
-_.assignInWith	(Object)	(v4 only)
-_.assignWith	(Object)	(v4 only)
-_.at	(Collections/Object)	
-_.attempt	(Utility)	
-_.backflow -> flowRight	(Function)	(v3 only)
-_.before	(Function)	
-_.bind	(Function)	
-_.bindAll	(Function/Util)	
-_.bindKey	(Function)	
-_.callback	(Utility)	(v3 only)
-_.camelCase	(String)	
-_.capitalize	(String)	
-_.castArray	(Lang)	(v4 only)
-_.ceil	(Math)	
-_.chain	(Chain/Seq)	
-_.chunk	(Array)	
-_.clamp	(Number)	(v4 only)
-_.clone	(Lang)	
-_.cloneDeep	(Lang)	
-_.cloneDeepWith	(Lang)	(v4 only)
-_.cloneWith	(Lang)	(v4 only)
-_.collect -> map	(Collections)	(v3 only)
-_.compact	(Array)	
-_.compose -> flowRight	(Function)	(v3 only)
-_.concat	(Array)	(v4 only)
-_.cond	(Utility)	(v4 only)
-_.conforms	(Utility)	(v4 only)
-_.conformsTo	(Lang)	(v4 only)
-_.constant	(Utility)	
-_.contains -> includes	(Collections)	(v3 only)
-_.countBy	(Collections)	
-_.create	(Object)	
-_.curry	(Function)	
-_.curryRight	(Function)	
-_.debounce	(Function)	
-_.deburr	(String)	
-_.defaults	(Object)	
-_.defaultsDeep	(Object)	
-_.defaultTo	(Utility)	(v4 only)
-_.defer	(Function)	
-_.delay	(Function)	
-_.detect -> find	(Collections)	(v3 only)
-_.difference	(Array)	
-_.differenceBy	(Array)	(v4 only)
-_.differenceWith	(Array)	(v4 only)
-_.divide	(Math)	(v4 only)
-_.drop	(Array)	
-_.dropRight	(Array)	
-_.dropRightWhile	(Array)	
-_.dropWhile	(Array)	
-_.each -> forEach	(Collections)	
-_.eachRight -> forEachRight	(Collections)	
-_.endsWith	(String)	
-_.entries -> toPairs	(Object)	(v4 only)
-_.entriesIn -> toPairsIn	(Object)	(v4 only)
-_.eq	(Lang)	(v4 only)
-_.eq -> isEqual	(Lang)	(v3 only)
-_.escape	(String)	
-_.escapeRegExp	(String)	
-_.every	(Collections)	
-_.extend -> assign	(Object)	(v3 only)
-_.extend -> assignIn	(Object)	(v4 only)
-_.extendWith -> assignInWith	(Object)	(v4 only)
-_.fill	(Array)	
-_.filter	(Collections)	
-_.find	(Collections)	
-_.findIndex	(Array)	
-_.findKey	(Object)	
-_.findLast	(Collections)	
-_.findLastIndex	(Array)	
-_.findLastKey	(Object)	
-_.findWhere	(Collections)	(v3 only)
-_.first	(Array)	(v3 only)
-_.first -> head	(Array)	(v4 only)
-_.flatMap	(Collections)	(v4 only)
-_.flatMapDeep	(Collections)	(v4 only)
-_.flatMapDepth	(Collections)	(v4 only)
-_.flatten	(Array)	
-_.flattenDeep	(Array)	
-_.flattenDepth	(Array)	(v4 only)
-_.flip	(Function)	(v4 only)
-_.floor	(Math)	
-_.flow	(Function/Util)	
-_.flowRight	(Function/Util)	
-_.foldl -> reduce	(Collections)	(v3 only)
-_.foldr -> reduceRight	(Collections)	(v3 only)
-_.forEach	(Collections)	
-_.forEachRight	(Collections)	
-_.forIn	(Object)	
-_.forInRight	(Object)	
-_.forOwn	(Object)	
-_.forOwnRight	(Object)	
-_.fromPairs	(Array)	(v4 only)
-_.functions	(Object)	
-_.functionsIn	(Object)	(v4 only)
-_.get	(Object)	
-_.groupBy	(Collections)	
-_.gt	(Lang)	
-_.gte	(Lang)	
-_.has	(Object)	
-_.hasIn	(Object)	(v4 only)
-_.head	(Array)	(v4 only)
-_.head -> first	(Array)	(v3 only)
-_.identity	(Utility)	
-_.include -> includes	(Collections)	(v3 only)
-_.includes	(Collections)	
-_.indexBy	(Collections)	(v3 only)
-_.indexOf	(Array)	
-_.initial	(Array)	
-_.inject -> reduce	(Collections)	(v3 only)
-_.inRange	(Number/Number)	
-_.intersection	(Array)	
-_.intersectionBy	(Array)	(v4 only)
-_.intersectionWith	(Array)	(v4 only)
-_.invert	(Object)	
-_.invertBy	(Object)	(v4 only)
-_.invoke	(Collections/Object)	
-_.invokeMap	(Collections)	(v4 only)
-_.isArguments	(Lang)	
-_.isArray	(Lang)	
-_.isArrayBuffer	(Lang)	(v4 only)
-_.isArrayLike	(Lang)	(v4 only)
-_.isArrayLikeObject	(Lang)	(v4 only)
-_.isBoolean	(Lang)	
-_.isBuffer	(Lang)	(v4 only)
-_.isDate	(Lang)	
-_.isElement	(Lang)	
-_.isEmpty	(Lang)	
-_.isEqual	(Lang)	
-_.isEqualWith	(Lang)	(v4 only)
-_.isError	(Lang)	
-_.isFinite	(Lang)	
-_.isFunction	(Lang)	
-_.isInteger	(Lang)	(v4 only)
-_.isLength	(Lang)	(v4 only)
-_.isMap	(Lang)	(v4 only)
-_.isMatch	(Lang)	
-_.isMatchWith	(Lang)	(v4 only)
-_.isNaN	(Lang)	
-_.isNative	(Lang)	
-_.isNil	(Lang)	(v4 only)
-_.isNull	(Lang)	
-_.isNumber	(Lang)	
-_.isObject	(Lang)	
-_.isObjectLike	(Lang)	(v4 only)
-_.isPlainObject	(Lang)	
-_.isRegExp	(Lang)	
-_.isSafeInteger	(Lang)	(v4 only)
-_.isSet	(Lang)	(v4 only)
-_.isString	(Lang)	
-_.isSymbol	(Lang)	(v4 only)
-_.isTypedArray	(Lang)	
-_.isUndefined	(Lang)	
-_.isWeakMap	(Lang)	(v4 only)
-_.isWeakSet	(Lang)	(v4 only)
-_.iteratee	(Utility)	(v4 only)
-_.iteratee -> callback	(Utility)	(v3 only)
-_.join	(Array)	(v4 only)
-_.kebabCase	(String)	
-_.keyBy	(Collections)	(v4 only)
-_.keys	(Object)	
-_.keysIn	(Object)	
-_.last	(Array)	
-_.lastIndexOf	(Array)	
-_.lowerCase	(String)	(v4 only)
-_.lowerFirst	(String)	(v4 only)
-_.lt	(Lang)	
-_.lte	(Lang)	
-_.map	(Collections)	
-_.mapKeys	(Object)	
-_.mapValues	(Object)	
-_.matches	(Utility)	
-_.matchesProperty	(Utility)	
-_.max	(Math)	
-_.maxBy	(Math)	(v4 only)
-_.mean	(Math)	(v4 only)
-_.meanBy	(Math)	(v4 only)
-_.memoize	(Function)	
-_.merge	(Object)	
-_.mergeWith	(Object)	(v4 only)
-_.method	(Utility)	
-_.methodOf	(Utility)	
-_.methods -> functions	(Object)	(v3 only)
-_.min	(Math)	
-_.minBy	(Math)	(v4 only)
-_.mixin	(Utility)	
-_.modArgs	(Function)	(v3 only)
-_.multiply	(Math)	(v4 only)
-_.negate	(Function)	
-_.noConflict	(Utility)	
-_.noop	(Utility)	
-_.now	(Date/Date)	
-_.nth	(Array)	(v4 only)
-_.nthArg	(Utility)	(v4 only)
-_.object -> zipObject	(Array)	(v3 only)
-_.omit	(Object)	
-_.omitBy	(Object)	(v4 only)
-_.once	(Function)	
-_.orderBy	(Collections)	(v4 only)
-_.over	(Utility)	(v4 only)
-_.overArgs	(Function)	(v4 only)
-_.overEvery	(Utility)	(v4 only)
-_.overSome	(Utility)	(v4 only)
-_.pad	(String)	
-_.padEnd	(String)	(v4 only)
-_.padLeft	(String)	(v3 only)
-_.padRight	(String)	(v3 only)
-_.padStart	(String)	(v4 only)
-_.pairs	(Object)	(v3 only)
-_.parseInt	(String)	
-_.partial	(Function)	
-_.partialRight	(Function)	
-_.partition	(Collections)	
-_.pick	(Object)	
-_.pickBy	(Object)	(v4 only)
-_.pluck	(Collections)	(v3 only)
-_.property	(Utility)	
-_.propertyOf	(Utility)	
-_.prototype.at	(Seq)	(v4 only)
-_.prototype.chain	(Chain/Seq)	
-_.prototype.commit	(Chain/Seq)	
-_.prototype.concat	(Chain)	(v3 only)
-_.prototype.next	(Seq)	(v4 only)
-_.prototype.plant	(Chain/Seq)	
-_.prototype.reverse	(Chain/Seq)	
-_.prototype.run -> value	(Chain)	(v3 only)
-_.prototype.toJSON -> value	(Chain/Seq)	
-_.prototype.toString	(Chain)	(v3 only)
-_.prototype.value	(Chain/Seq)	
-_.prototype.valueOf -> value	(Chain/Seq)	
-_.prototype[Symbol.iterator]	(Seq)	(v4 only)
-_.pull	(Array)	
-_.pullAll	(Array)	(v4 only)
-_.pullAllBy	(Array)	(v4 only)
-_.pullAllWith	(Array)	(v4 only)
-_.pullAt	(Array)	
-_.random	(Number/Number)	
-_.range	(Utility)	
-_.rangeRight	(Utility)	(v4 only)
-_.rearg	(Function)	
-_.reduce	(Collections)	
-_.reduceRight	(Collections)	
-_.reject	(Collections)	
-_.remove	(Array)	
-_.repeat	(String)	
-_.replace	(String)	(v4 only)
-_.rest	(Array/Function)	
-_.restParam	(Function)	(v3 only)
-_.result	(Object)	
-_.reverse	(Array)	(v4 only)
-_.round	(Math)	
-_.runInContext	(Utility)	
-_.sample	(Collections)	
-_.sampleSize	(Collections)	(v4 only)
-_.select -> filter	(Collections)	(v3 only)
-_.set	(Object)	
-_.setWith	(Object)	(v4 only)
-_.shuffle	(Collections)	
-_.size	(Collections)	
-_.slice	(Array)	
-_.snakeCase	(String)	
-_.some	(Collections)	
-_.sortBy	(Collections)	
-_.sortByAll	(Collections)	(v3 only)
-_.sortByOrder	(Collections)	(v3 only)
-_.sortedIndex	(Array)	
-_.sortedIndexBy	(Array)	(v4 only)
-_.sortedIndexOf	(Array)	(v4 only)
-_.sortedLastIndex	(Array)	
-_.sortedLastIndexBy	(Array)	(v4 only)
-_.sortedLastIndexOf	(Array)	(v4 only)
-_.sortedUniq	(Array)	(v4 only)
-_.sortedUniqBy	(Array)	(v4 only)
-_.split	(String)	(v4 only)
-_.spread	(Function)	
-_.startCase	(String)	
-_.startsWith	(String)	
-_.stubArray	(Utility)	(v4 only)
-_.stubFalse	(Utility)	(v4 only)
-_.stubObject	(Utility)	(v4 only)
-_.stubString	(Utility)	(v4 only)
-_.stubTrue	(Utility)	(v4 only)
-_.subtract	(Math)	(v4 only)
-_.sum	(Math)	
-_.sumBy	(Math)	(v4 only)
-_.support	(Properties)	(v3 only)
-_.tail	(Array)	(v4 only)
-_.tail -> rest	(Array)	(v3 only)
-_.take	(Array)	
-_.takeRight	(Array)	
-_.takeRightWhile	(Array)	
-_.takeWhile	(Array)	
-_.tap	(Chain/Seq)	
-_.template	(String)	
-_.templateSettings	(Properties)	
-_.templateSettings.escape	(Properties)	
-_.templateSettings.evaluate	(Properties)	
-_.templateSettings.imports	(Properties)	
-_.templateSettings.imports._	(Properties/Methods)	
-_.templateSettings.interpolate	(Properties)	
-_.templateSettings.variable	(Properties)	
-_.throttle	(Function)	
-_.thru	(Chain/Seq)	
-_.times	(Utility)	
-_.toArray	(Lang)	
-_.toFinite	(Lang)	(v4 only)
-_.toInteger	(Lang)	(v4 only)
-_.toLength	(Lang)	(v4 only)
-_.toLower	(String)	(v4 only)
-_.toNumber	(Lang)	(v4 only)
-_.toPairs	(Object)	(v4 only)
-_.toPairsIn	(Object)	(v4 only)
-_.toPath	(Utility)	(v4 only)
-_.toPlainObject	(Lang)	
-_.toSafeInteger	(Lang)	(v4 only)
-_.toString	(Lang)	(v4 only)
-_.toUpper	(String)	(v4 only)
-_.transform	(Object)	
-_.trim	(String)	
-_.trimEnd	(String)	(v4 only)
-_.trimLeft	(String)	(v3 only)
-_.trimRight	(String)	(v3 only)
-_.trimStart	(String)	(v4 only)
-_.trunc	(String)	(v3 only)
-_.truncate	(String)	(v4 only)
-_.unary	(Function)	(v4 only)
-_.unescape	(String)	
-_.union	(Array)	
-_.unionBy	(Array)	(v4 only)
-_.unionWith	(Array)	(v4 only)
-_.uniq	(Array)	
-_.uniqBy	(Array)	(v4 only)
-_.unique -> uniq	(Array)	(v3 only)
-_.uniqueId	(Utility)	
-_.uniqWith	(Array)	(v4 only)
-_.unset	(Object)	(v4 only)
-_.unzip	(Array)	
-_.unzipWith	(Array)	
-_.update	(Object)	(v4 only)
-_.updateWith	(Object)	(v4 only)
-_.upperCase	(String)	(v4 only)
-_.upperFirst	(String)	(v4 only)
-_.values	(Object)	
-_.valuesIn	(Object)	
-_.VERSION	(Properties)	
-_.where	(Collections)	(v3 only)
-_.without	(Array)	
-_.words	(String)	
-_.wrap	(Function)	
-_.xor	(Array)	
-_.xorBy	(Array)	(v4 only)
-_.xorWith	(Array)	(v4 only)
-_.zip	(Array)	
-_.zipObject	(Array)	
-_.zipObjectDeep	(Array)	(v4 only)
-_.zipWith	(Array)	
+	_()	(Chain/Seq)	
+	_.add	(Math)	
+	_.after	(Function)	
+	_.all -> every	(Collections)	(v3 only)
+	_.any -> some	(Collections)	(v3 only)
+	_.ary	(Function)	
+	_.assign	(Object)	
+	_.assignIn	(Object)	(v4 only)
+	_.assignInWith	(Object)	(v4 only)
+	_.assignWith	(Object)	(v4 only)
+	_.at	(Collections/Object)	
+	_.attempt	(Utility)	
+	_.backflow -> flowRight	(Function)	(v3 only)
+	_.before	(Function)	
+	_.bind	(Function)	
+	_.bindAll	(Function/Util)	
+	_.bindKey	(Function)	
+	_.callback	(Utility)	(v3 only)
+	_.camelCase	(String)	
+	_.capitalize	(String)	
+	_.castArray	(Lang)	(v4 only)
+	_.ceil	(Math)	
+	_.chain	(Chain/Seq)	
+	_.chunk	(Array)	
+	_.clamp	(Number)	(v4 only)
+	_.clone	(Lang)	
+	_.cloneDeep	(Lang)	
+	_.cloneDeepWith	(Lang)	(v4 only)
+	_.cloneWith	(Lang)	(v4 only)
+	_.collect -> map	(Collections)	(v3 only)
+	_.compact	(Array)	
+	_.compose -> flowRight	(Function)	(v3 only)
+	_.concat	(Array)	(v4 only)
+	_.cond	(Utility)	(v4 only)
+	_.conforms	(Utility)	(v4 only)
+	_.conformsTo	(Lang)	(v4 only)
+	_.constant	(Utility)	
+	_.contains -> includes	(Collections)	(v3 only)
+	_.countBy	(Collections)	
+	_.create	(Object)	
+	_.curry	(Function)	
+	_.curryRight	(Function)	
+	_.debounce	(Function)	
+	_.deburr	(String)	
+	_.defaults	(Object)	
+	_.defaultsDeep	(Object)	
+	_.defaultTo	(Utility)	(v4 only)
+	_.defer	(Function)	
+	_.delay	(Function)	
+	_.detect -> find	(Collections)	(v3 only)
+	_.difference	(Array)	
+	_.differenceBy	(Array)	(v4 only)
+	_.differenceWith	(Array)	(v4 only)
+	_.divide	(Math)	(v4 only)
+	_.drop	(Array)	
+	_.dropRight	(Array)	
+	_.dropRightWhile	(Array)	
+	_.dropWhile	(Array)	
+	_.each -> forEach	(Collections)	
+	_.eachRight -> forEachRight	(Collections)	
+	_.endsWith	(String)	
+	_.entries -> toPairs	(Object)	(v4 only)
+	_.entriesIn -> toPairsIn	(Object)	(v4 only)
+	_.eq	(Lang)	(v4 only)
+	_.eq -> isEqual	(Lang)	(v3 only)
+	_.escape	(String)	
+	_.escapeRegExp	(String)	
+	_.every	(Collections)	
+	_.extend -> assign	(Object)	(v3 only)
+	_.extend -> assignIn	(Object)	(v4 only)
+	_.extendWith -> assignInWith	(Object)	(v4 only)
+	_.fill	(Array)	
+	_.filter	(Collections)	
+	_.find	(Collections)	
+	_.findIndex	(Array)	
+	_.findKey	(Object)	
+	_.findLast	(Collections)	
+	_.findLastIndex	(Array)	
+	_.findLastKey	(Object)	
+	_.findWhere	(Collections)	(v3 only)
+	_.first	(Array)	(v3 only)
+	_.first -> head	(Array)	(v4 only)
+	_.flatMap	(Collections)	(v4 only)
+	_.flatMapDeep	(Collections)	(v4 only)
+	_.flatMapDepth	(Collections)	(v4 only)
+	_.flatten	(Array)	
+	_.flattenDeep	(Array)	
+	_.flattenDepth	(Array)	(v4 only)
+	_.flip	(Function)	(v4 only)
+	_.floor	(Math)	
+	_.flow	(Function/Util)	
+	_.flowRight	(Function/Util)	
+	_.foldl -> reduce	(Collections)	(v3 only)
+	_.foldr -> reduceRight	(Collections)	(v3 only)
+	_.forEach	(Collections)	
+	_.forEachRight	(Collections)	
+	_.forIn	(Object)	
+	_.forInRight	(Object)	
+	_.forOwn	(Object)	
+	_.forOwnRight	(Object)	
+	_.fromPairs	(Array)	(v4 only)
+	_.functions	(Object)	
+	_.functionsIn	(Object)	(v4 only)
+	_.get	(Object)	
+	_.groupBy	(Collections)	
+	_.gt	(Lang)	
+	_.gte	(Lang)	
+	_.has	(Object)	
+	_.hasIn	(Object)	(v4 only)
+	_.head	(Array)	(v4 only)
+	_.head -> first	(Array)	(v3 only)
+	_.identity	(Utility)	
+	_.include -> includes	(Collections)	(v3 only)
+	_.includes	(Collections)	
+	_.indexBy	(Collections)	(v3 only)
+	_.indexOf	(Array)	
+	_.initial	(Array)	
+	_.inject -> reduce	(Collections)	(v3 only)
+	_.inRange	(Number/Number)	
+	_.intersection	(Array)	
+	_.intersectionBy	(Array)	(v4 only)
+	_.intersectionWith	(Array)	(v4 only)
+	_.invert	(Object)	
+	_.invertBy	(Object)	(v4 only)
+	_.invoke	(Collections/Object)	
+	_.invokeMap	(Collections)	(v4 only)
+	_.isArguments	(Lang)	
+	_.isArray	(Lang)	
+	_.isArrayBuffer	(Lang)	(v4 only)
+	_.isArrayLike	(Lang)	(v4 only)
+	_.isArrayLikeObject	(Lang)	(v4 only)
+	_.isBoolean	(Lang)	
+	_.isBuffer	(Lang)	(v4 only)
+	_.isDate	(Lang)	
+	_.isElement	(Lang)	
+	_.isEmpty	(Lang)	
+	_.isEqual	(Lang)	
+	_.isEqualWith	(Lang)	(v4 only)
+	_.isError	(Lang)	
+	_.isFinite	(Lang)	
+	_.isFunction	(Lang)	
+	_.isInteger	(Lang)	(v4 only)
+	_.isLength	(Lang)	(v4 only)
+	_.isMap	(Lang)	(v4 only)
+	_.isMatch	(Lang)	
+	_.isMatchWith	(Lang)	(v4 only)
+	_.isNaN	(Lang)	
+	_.isNative	(Lang)	
+	_.isNil	(Lang)	(v4 only)
+	_.isNull	(Lang)	
+	_.isNumber	(Lang)	
+	_.isObject	(Lang)	
+	_.isObjectLike	(Lang)	(v4 only)
+	_.isPlainObject	(Lang)	
+	_.isRegExp	(Lang)	
+	_.isSafeInteger	(Lang)	(v4 only)
+	_.isSet	(Lang)	(v4 only)
+	_.isString	(Lang)	
+	_.isSymbol	(Lang)	(v4 only)
+	_.isTypedArray	(Lang)	
+	_.isUndefined	(Lang)	
+	_.isWeakMap	(Lang)	(v4 only)
+	_.isWeakSet	(Lang)	(v4 only)
+	_.iteratee	(Utility)	(v4 only)
+	_.iteratee -> callback	(Utility)	(v3 only)
+	_.join	(Array)	(v4 only)
+	_.kebabCase	(String)	
+	_.keyBy	(Collections)	(v4 only)
+	_.keys	(Object)	
+	_.keysIn	(Object)	
+	_.last	(Array)	
+	_.lastIndexOf	(Array)	
+	_.lowerCase	(String)	(v4 only)
+	_.lowerFirst	(String)	(v4 only)
+	_.lt	(Lang)	
+	_.lte	(Lang)	
+	_.map	(Collections)	
+	_.mapKeys	(Object)	
+	_.mapValues	(Object)	
+	_.matches	(Utility)	
+	_.matchesProperty	(Utility)	
+	_.max	(Math)	
+	_.maxBy	(Math)	(v4 only)
+	_.mean	(Math)	(v4 only)
+	_.meanBy	(Math)	(v4 only)
+	_.memoize	(Function)	
+	_.merge	(Object)	
+	_.mergeWith	(Object)	(v4 only)
+	_.method	(Utility)	
+	_.methodOf	(Utility)	
+	_.methods -> functions	(Object)	(v3 only)
+	_.min	(Math)	
+	_.minBy	(Math)	(v4 only)
+	_.mixin	(Utility)	
+	_.modArgs	(Function)	(v3 only)
+	_.multiply	(Math)	(v4 only)
+	_.negate	(Function)	
+	_.noConflict	(Utility)	
+	_.noop	(Utility)	
+	_.now	(Date/Date)	
+	_.nth	(Array)	(v4 only)
+	_.nthArg	(Utility)	(v4 only)
+	_.object -> zipObject	(Array)	(v3 only)
+	_.omit	(Object)	
+	_.omitBy	(Object)	(v4 only)
+	_.once	(Function)	
+	_.orderBy	(Collections)	(v4 only)
+	_.over	(Utility)	(v4 only)
+	_.overArgs	(Function)	(v4 only)
+	_.overEvery	(Utility)	(v4 only)
+	_.overSome	(Utility)	(v4 only)
+	_.pad	(String)	
+	_.padEnd	(String)	(v4 only)
+	_.padLeft	(String)	(v3 only)
+	_.padRight	(String)	(v3 only)
+	_.padStart	(String)	(v4 only)
+	_.pairs	(Object)	(v3 only)
+	_.parseInt	(String)	
+	_.partial	(Function)	
+	_.partialRight	(Function)	
+	_.partition	(Collections)	
+	_.pick	(Object)	
+	_.pickBy	(Object)	(v4 only)
+	_.pluck	(Collections)	(v3 only)
+	_.property	(Utility)	
+	_.propertyOf	(Utility)	
+	_.prototype.at	(Seq)	(v4 only)
+	_.prototype.chain	(Chain/Seq)	
+	_.prototype.commit	(Chain/Seq)	
+	_.prototype.concat	(Chain)	(v3 only)
+	_.prototype.next	(Seq)	(v4 only)
+	_.prototype.plant	(Chain/Seq)	
+	_.prototype.reverse	(Chain/Seq)	
+	_.prototype.run -> value	(Chain)	(v3 only)
+	_.prototype.toJSON -> value	(Chain/Seq)	
+	_.prototype.toString	(Chain)	(v3 only)
+	_.prototype.value	(Chain/Seq)	
+	_.prototype.valueOf -> value	(Chain/Seq)	
+	_.prototype[Symbol.iterator]	(Seq)	(v4 only)
+	_.pull	(Array)	
+	_.pullAll	(Array)	(v4 only)
+	_.pullAllBy	(Array)	(v4 only)
+	_.pullAllWith	(Array)	(v4 only)
+	_.pullAt	(Array)	
+	_.random	(Number/Number)	
+	_.range	(Utility)	
+	_.rangeRight	(Utility)	(v4 only)
+	_.rearg	(Function)	
+	_.reduce	(Collections)	
+	_.reduceRight	(Collections)	
+	_.reject	(Collections)	
+	_.remove	(Array)	
+	_.repeat	(String)	
+	_.replace	(String)	(v4 only)
+	_.rest	(Array/Function)	
+	_.restParam	(Function)	(v3 only)
+	_.result	(Object)	
+	_.reverse	(Array)	(v4 only)
+	_.round	(Math)	
+	_.runInContext	(Utility)	
+	_.sample	(Collections)	
+	_.sampleSize	(Collections)	(v4 only)
+	_.select -> filter	(Collections)	(v3 only)
+	_.set	(Object)	
+	_.setWith	(Object)	(v4 only)
+	_.shuffle	(Collections)	
+	_.size	(Collections)	
+	_.slice	(Array)	
+	_.snakeCase	(String)	
+	_.some	(Collections)	
+	_.sortBy	(Collections)	
+	_.sortByAll	(Collections)	(v3 only)
+	_.sortByOrder	(Collections)	(v3 only)
+	_.sortedIndex	(Array)	
+	_.sortedIndexBy	(Array)	(v4 only)
+	_.sortedIndexOf	(Array)	(v4 only)
+	_.sortedLastIndex	(Array)	
+	_.sortedLastIndexBy	(Array)	(v4 only)
+	_.sortedLastIndexOf	(Array)	(v4 only)
+	_.sortedUniq	(Array)	(v4 only)
+	_.sortedUniqBy	(Array)	(v4 only)
+	_.split	(String)	(v4 only)
+	_.spread	(Function)	
+	_.startCase	(String)	
+	_.startsWith	(String)	
+	_.stubArray	(Utility)	(v4 only)
+	_.stubFalse	(Utility)	(v4 only)
+	_.stubObject	(Utility)	(v4 only)
+	_.stubString	(Utility)	(v4 only)
+	_.stubTrue	(Utility)	(v4 only)
+	_.subtract	(Math)	(v4 only)
+	_.sum	(Math)	
+	_.sumBy	(Math)	(v4 only)
+	_.support	(Properties)	(v3 only)
+	_.tail	(Array)	(v4 only)
+	_.tail -> rest	(Array)	(v3 only)
+	_.take	(Array)	
+	_.takeRight	(Array)	
+	_.takeRightWhile	(Array)	
+	_.takeWhile	(Array)	
+	_.tap	(Chain/Seq)	
+	_.template	(String)	
+	_.templateSettings	(Properties)	
+	_.templateSettings.escape	(Properties)	
+	_.templateSettings.evaluate	(Properties)	
+	_.templateSettings.imports	(Properties)	
+	_.templateSettings.imports._	(Properties/Methods)	
+	_.templateSettings.interpolate	(Properties)	
+	_.templateSettings.variable	(Properties)	
+	_.throttle	(Function)	
+	_.thru	(Chain/Seq)	
+	_.times	(Utility)	
+	_.toArray	(Lang)	
+	_.toFinite	(Lang)	(v4 only)
+	_.toInteger	(Lang)	(v4 only)
+	_.toLength	(Lang)	(v4 only)
+	_.toLower	(String)	(v4 only)
+	_.toNumber	(Lang)	(v4 only)
+	_.toPairs	(Object)	(v4 only)
+	_.toPairsIn	(Object)	(v4 only)
+	_.toPath	(Utility)	(v4 only)
+	_.toPlainObject	(Lang)	
+	_.toSafeInteger	(Lang)	(v4 only)
+	_.toString	(Lang)	(v4 only)
+	_.toUpper	(String)	(v4 only)
+	_.transform	(Object)	
+	_.trim	(String)	
+	_.trimEnd	(String)	(v4 only)
+	_.trimLeft	(String)	(v3 only)
+	_.trimRight	(String)	(v3 only)
+	_.trimStart	(String)	(v4 only)
+	_.trunc	(String)	(v3 only)
+	_.truncate	(String)	(v4 only)
+	_.unary	(Function)	(v4 only)
+	_.unescape	(String)	
+	_.union	(Array)	
+	_.unionBy	(Array)	(v4 only)
+	_.unionWith	(Array)	(v4 only)
+	_.uniq	(Array)	
+	_.uniqBy	(Array)	(v4 only)
+	_.unique -> uniq	(Array)	(v3 only)
+	_.uniqueId	(Utility)	
+	_.uniqWith	(Array)	(v4 only)
+	_.unset	(Object)	(v4 only)
+	_.unzip	(Array)	
+	_.unzipWith	(Array)	
+	_.update	(Object)	(v4 only)
+	_.updateWith	(Object)	(v4 only)
+	_.upperCase	(String)	(v4 only)
+	_.upperFirst	(String)	(v4 only)
+	_.values	(Object)	
+	_.valuesIn	(Object)	
+	_.VERSION	(Properties)	
+	_.where	(Collections)	(v3 only)
+	_.without	(Array)	
+	_.words	(String)	
+	_.wrap	(Function)	
+	_.xor	(Array)	
+	_.xorBy	(Array)	(v4 only)
+	_.xorWith	(Array)	(v4 only)
+	_.zip	(Array)	
+	_.zipObject	(Array)	
+	_.zipObjectDeep	(Array)	(v4 only)
+	_.zipWith	(Array)	
 
 
 ## `debounce` vs. `throttle`
 
-// debounce: waits timeInMs for repeated calls, then executes (“train waiting timeInMs for more passengers”)
-var myFunctionDebounced = _.debounce(myFunction, timeInMs, { leading: false, trailing: true, maxWait: X })
-// throttle: ignores repeated calls that happens within timeInMs limit (“train leaves each timeInMs no matter what”)
-var myFunctionThrottled = _.throttle(myFunction, timeInMs, { leading: true, trailing: true })
+	// debounce: waits timeInMs for repeated calls, then executes (“train waiting timeInMs for more passengers”)
+	var myFunctionDebounced = _.debounce(myFunction, timeInMs, { leading: false, trailing: true, maxWait: X })
+	// throttle: ignores repeated calls that happens within timeInMs limit (“train leaves each timeInMs no matter what”)
+	var myFunctionThrottled = _.throttle(myFunction, timeInMs, { leading: true, trailing: true })
 
 
 ## AngularJS
@@ -1922,30 +1953,30 @@ var myFunctionThrottled = _.throttle(myFunction, timeInMs, { leading: true, trai
 	angular.module('MyApp') // getter
 
 
-// index.html
-<html ng-app="MyApp">
-<div ng-controller="MyCtrl">{{ testValue }}</div>
+	// index.html
+	<html ng-app="MyApp">
+	<div ng-controller="MyCtrl">{{ testValue }}</div>
 
-// application.js
-function MyCtrl($scope) {
-	$scope.testValue = 3.14
-}
+	// application.js
+	function MyCtrl($scope) {
+		$scope.testValue = 3.14
+	}
 
-<ul>
-<li ng-repeat="item in items">
-{{item.description}}
-</li>
-</ul>
+	<ul>
+	<li ng-repeat="item in items">
+	{{item.description}}
+	</li>
+	</ul>
 
-<li ng-repeat="thing in awesomeThings">{{ thing }}</li>
+	<li ng-repeat="thing in awesomeThings">{{ thing }}</li>
 
-<a ng-repeat="tool in category.tools" ng-click="selectTool($index)" ng-class="{selected: $index==selectedToolIndex}" class="tool_button" id="tool_{{tool.id}}"><img alt="{{tool.label}}" src="../images/toolicon_rectangle.png"/><span class="tool_button_label">{{tool.label}}</span></a>
+	<a ng-repeat="tool in category.tools" ng-click="selectTool($index)" ng-class="{selected: $index==selectedToolIndex}" class="tool_button" id="tool_{{tool.id}}"><img alt="{{tool.label}}" src="../images/toolicon_rectangle.png"/><span class="tool_button_label">{{tool.label}}</span></a>
 
-<span ng:bind="name"></span> // display the value of ‘name’ inside the span
+	<span ng:bind="name"></span> // display the value of ‘name’ inside the span
 
 ### HTML Templates
 
-<div ng-include src="template.url"></div>
+	<div ng-include src="template.url"></div>
 
 ### Services vs. Factory vs. Provider
 
@@ -1968,13 +1999,13 @@ Why use a Service?
 
 ### $resource
 
-{
-	'query':  { method:'GET', isArray:true },
-	'get':    { method:'GET' },
-	'save':   { method:'POST' },
-	'remove': { method:'DELETE' },
-	'delete': { method:'DELETE' }
-}
+	{
+		'query':  { method:'GET', isArray:true },
+		'get':    { method:'GET' },
+		'save':   { method:'POST' },
+		'remove': { method:'DELETE' },
+		'delete': { method:'DELETE' }
+	}
 
 ### Scopes and Broadcasting
 
@@ -2007,18 +2038,15 @@ Why use a Service?
 
 ### $apply and $watch
 
-$watch: Actively watch a model change.
-$apply: Force $watch:es to react.
-
+- $watch: Actively watch a model change.
+- $apply: Force $watch:es to react.
 
 
 ## Polymer / Web Components
 
 http://www.cheatography.com/jonathanberi/cheat-sheets/polymer-js/
 
-<template repeat="{{s in stories}}">
-</template>
-
+	<template repeat="{{s in stories}}"></template>
 
 	<template>
 		<button on-click="{{onClick}}">Send hurt</button>
@@ -2030,7 +2058,6 @@ http://www.cheatography.com/jonathanberi/cheat-sheets/polymer-js/
 			}
 		})
 	</script>
-
 
 
 ## React
@@ -2328,7 +2355,7 @@ Firebase + React: re-base
 
 ### Events
 
-<button onClick={this.handleClick}>Hello {this.props.name} {this.props.children}</button>
+	<button onClick={this.handleClick}>Hello {this.props.name} {this.props.children}</button>
 
 Optional event/props:
 
@@ -2402,8 +2429,8 @@ https://jaysoo.ca/2016/02/28/organizing-redux-application/
 
 ## JQuery
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
 ### HTTP
 
@@ -2527,18 +2554,20 @@ Note: include both JQuery and JQuery-UI!
 
 Extending JQuery
 
-// Check if the element has a certain CSS property
-$.fn.hasCssProperty = function (wantedParameter) {
-	if (this.cssProperty(wantedParameter))
-		return true
-	else
-		return false
-}
+	// Check if the element has a certain CSS property
+	$.fn.hasCssProperty = function (wantedParameter) {
+		if (this.cssProperty(wantedParameter))
+			return true
+		else
+			return false
+	}
 
 
 ## TinyColor
 
-yarn add tinycolor2
+	yarn add tinycolor2
+
+then:
 
 	tinycolor(colorStr).toHexString()
 
@@ -2552,90 +2581,90 @@ https://github.com/bgrins/TinyColor#methods
 
 https://caolan.github.io/async/docs.html
 
-var function1 = function (callback) {
-	callback(null, 'one', 'two')
-}
-
-var function2 = function (arg1, arg2, callback) {
-	// arg1 now equals 'one' and arg2 now equals 'two'
-	callback(null, 'three')
-}
-
-var function3 = function (arg1, callback) {
-	// arg1 now equals 'three'
-	callback(null, 'done')
-}
-
-var whenWaterfallDone = function (err, result) {
-	// err truthy if err in any function
-	// result now equals 'done'
-	console.log('whenWaterfallDone', err, result)
-}
-
-async.parallel({
-		obj1: function (cb) { cb(err, results) },
-		obj2: function (cb) { cb(err, results) },
-	},
-	// When all done
-	function (err, results) {}
-)
-
-async.series({
-		obj1: function (cb) { cb(err, results) },
-		obj2: function (cb) { cb(err, results) },
-	},
-	// When all done
-	function (err, results) {}
-)
-
-async.waterfall([
-		function1.bind(this, inputData),
-		function2,
-		function3
-	],
-	whenWaterfallDone
-)
-
-// See also map/mapSeries - similar but with results (below)
-// xSeries = 1 at a time!
-async.eachSeries/eachOfSeries[/each/eachOf](
-	items,
-	// For each
-	function (item, cb) { // eachOf: function (item, itemKey, cb)
-		cb()
-	},
-	// When all done
-	function (err) {
+	var function1 = function (callback) {
+		callback(null, 'one', 'two')
 	}
-)
 
-async.mapSeries(
-	itemsCollection,
-	// For each
-	function (item, cb) {
-		cb(err, results)
-	},
-	// When all done
-	function (err, results) {
+	var function2 = function (arg1, arg2, callback) {
+		// arg1 now equals 'one' and arg2 now equals 'two'
+		callback(null, 'three')
 	}
-)
 
-async.reduce(
-	[1,2,3],
-	0,
-	function (result, item, cb) {
-		cb(null, result + item)
-	},
-	function (err, result) {
+	var function3 = function (arg1, callback) {
+		// arg1 now equals 'three'
+		callback(null, 'done')
 	}
-)
 
-// See also doWhilst/doDuring AND until/whilst/during
-async.doUntil(
-	func(cb),
-	testFunction,
-	whenDone
-)
+	var whenWaterfallDone = function (err, result) {
+		// err truthy if err in any function
+		// result now equals 'done'
+		console.log('whenWaterfallDone', err, result)
+	}
+
+	async.parallel({
+			obj1: function (cb) { cb(err, results) },
+			obj2: function (cb) { cb(err, results) },
+		},
+		// When all done
+		function (err, results) {}
+	)
+
+	async.series({
+			obj1: function (cb) { cb(err, results) },
+			obj2: function (cb) { cb(err, results) },
+		},
+		// When all done
+		function (err, results) {}
+	)
+
+	async.waterfall([
+			function1.bind(this, inputData),
+			function2,
+			function3
+		],
+		whenWaterfallDone
+	)
+
+	// See also map/mapSeries - similar but with results (below)
+	// xSeries = 1 at a time!
+	async.eachSeries/eachOfSeries[/each/eachOf](
+		items,
+		// For each
+		function (item, cb) { // eachOf: function (item, itemKey, cb)
+			cb()
+		},
+		// When all done
+		function (err) {
+		}
+	)
+
+	async.mapSeries(
+		itemsCollection,
+		// For each
+		function (item, cb) {
+			cb(err, results)
+		},
+		// When all done
+		function (err, results) {
+		}
+	)
+
+	async.reduce(
+		[1,2,3],
+		0,
+		function (result, item, cb) {
+			cb(null, result + item)
+		},
+		function (err, result) {
+		}
+	)
+
+	// See also doWhilst/doDuring AND until/whilst/during
+	async.doUntil(
+		func(cb),
+		testFunction,
+		whenDone
+	)
 
 Collections
 

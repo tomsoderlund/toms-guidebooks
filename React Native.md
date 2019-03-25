@@ -22,3 +22,64 @@ Install https://expo.io client on your device.
 ## Component libraries
 
 - https://github.com/callstack/react-native-paper
+
+## Components
+
+### Structure
+
+	import React from 'react'
+	import { StyleSheet, Text, View, Button } from 'react-native'
+
+	export default class App extends React.Component {
+	  render () {
+	    return (
+	      <View style={styles.container}>
+	        <Text>Welcome to My App</Text>
+	        <MyCustomComponent />
+	        <Button
+	          onPress={this.handleGenerate.bind(this)}
+	          title='Reshuffle the cards'
+	          color='#841584'
+	          accessibilityLabel='Restart the game'
+	        />
+	      </View>
+	    )
+	  }
+	}
+
+### Styling
+
+	const styles = StyleSheet.create({
+	  container: {
+	    flex: 1,
+	    backgroundColor: '#fff',
+	    alignItems: 'center',
+	    justifyContent: 'center'
+	  }
+	})
+
+### Lifecycle methods
+
+There are 4 types of Lifecycle methods available in React Native:
+
+Mounting methods:
+
+- constructor()
+- componentWillMount()
+- render()
+- componentDidMount()
+
+Updating methods:
+
+- componentWillReceiveProps()
+- shouldComponentUpdate()
+- componentWillUpdate()
+- componentDidUpdate()
+
+Unmounting methods:
+
+- componentWillUnmount()
+
+Error handling methods:
+
+- componentDidCatch()

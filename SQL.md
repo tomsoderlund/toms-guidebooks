@@ -151,7 +151,7 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 ## Create - Insert
 
-	INSERT INTO domains (name) VALUES ('indiska.se');
+	INSERT INTO domains (name) VALUES ('indiska.se') RETURNING id;
 
 Multiple values:
 
@@ -216,8 +216,9 @@ If delete Company, then delete Person too:
 
 Modify existing table:
 
-	ALTER TABLE person
-	ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
+	ALTER TABLE "domain_updates" ADD FOREIGN KEY ("domain_updates_domain_id_fkey") REFERENCES "domains"("id") ON DELETE CASCADE;
+	ALTER TABLE person ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
+
 
 ## Transactions
 
