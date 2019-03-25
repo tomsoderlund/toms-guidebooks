@@ -8,8 +8,8 @@ Exclude:
 
 	<script type="text/javascript" src="ajax.js" async defer></script>
 
-	async: load when it can -> for stand-alone scripts
-	defer: as on order on page -> when there are dependencies
+async: load when it can -> for stand-alone scripts
+defer: as on order on page -> when there are dependencies
 
 	<script type="text/javascript">
 		// code here
@@ -89,7 +89,7 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 ### Immediately-invoked function expression (IIFE)
 
 	(function() {
-	  /* code here */
+		/* code here */
 	})()
 
 
@@ -169,8 +169,20 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 ## Functions
 
+A JavaScript `function` contains:
 
-Javascript bind, call, & apply
+1. The code.
+2. A name (not same as variable it’s placed in), e.g. `var f = function myFunction() {}`.
+3. The receiver/context (`this`).
+4. The `arguments` array.
+5. All local variables defined in the function’s scope (= parent function).
+
+Tips: functions are the ONLY scopes in JavaScript. Other `{}` blocks don't matter.
+See “variable hoisting”.
+
+Chaining: return `this`
+
+### Javascript bind, call, & apply
 
 	var newFunction = theFunction.bind(valueForThis/undefined, arg1, arg2, …)
 	theFunction.call(valueForThis, arg1, arg2, …)
@@ -180,11 +192,14 @@ Javascript bind, call, & apply
 * Use `call` or `apply` when you want to invoke the function immediately, and modify the context.
 * The difference is that `apply` lets you invoke the function with arguments as an array `call` requires the parameters be listed explicitly.
 
+### Arguments
 
 	function () {
 		console.log('cb', arguments)
 		cb.apply(undefined, arguments)
 	}
+
+	var clonedArguments = Array.prototype.slice.call(arguments)
 
 	const parseArguments = function (args, nrOfArgumentsIncludingOptions) {
 		return {
@@ -192,12 +207,6 @@ Javascript bind, call, & apply
 			options: args.length >= nrOfArgumentsIncludingOptions ? args[args.length-2] : {},
 		}
 	}
-
-Chaining: return `this`
-
-arguments
-
-var clonedArguments = Array.prototype.slice.call(arguments)
 
 JavaScript `arguments` works both with without arguments in function signature.
 
@@ -222,17 +231,6 @@ JavaScript `arguments` works both with without arguments in function signature.
 			console.log('  value:', arguments[i])
 		}
 	}
-
-Tips: functions are the ONLY scopes in JavaScript. Other `{}` blocks don't matter.
-See "variable hoisting". (edited
-
-A JavaScript `function` contains:
-
-1. The code.
-2. A name (not same as variable it’s placed in), e.g. `var f = function myFunction() {}`.
-3. The receiver/context (`this`).
-4. The `arguments` array.
-5. All local variables defined in the function’s scope (= parent function).
 
 
 ## Classes & Instances
@@ -288,7 +286,6 @@ http://javascript.crockford.com/prototypal.html
 	var myMyClass = new MyClass('foo')
 
 
-
 	WELD.clone = function (obj) {
 		if (null == obj || "object" != typeof obj) return obj
 		var copy = obj.constructor()
@@ -307,7 +304,7 @@ http://javascript.crockford.com/prototypal.html
 
 	const keys = ['apple', 'banana', 'citrus']
 	for (let k in keys) {
-	  console.log(`${keys[k]}: ${object[keys[k]]}`)
+		console.log(`${keys[k]}: ${object[keys[k]]}`)
 	}
 
 	for (let i = 0; i < array.length; i++) {
@@ -316,7 +313,7 @@ http://javascript.crockford.com/prototypal.html
 
 	const keys = ['apple', 'banana', 'citrus']
 	for (let k = 0; k < keys.length; k++) {
-	  console.log(`${keys[k]}: ${object[keys[k]]}`)
+		console.log(`${keys[k]}: ${object[keys[k]]}`)
 	}
 
 	// While
@@ -359,10 +356,12 @@ http://javascript.crockford.com/prototypal.html
 		logMyErrors(e) // pass exception object to error handler
 	}
 	finally {
-	  // Code to be executed regardless of the try/catch result
+		// Code to be executed regardless of the try/catch result
 	}
 
 ## Numbers & Math
+
+### Random
 
 	Math.random() // 0.0 to 1.0
 
@@ -374,24 +373,26 @@ http://javascript.crockford.com/prototypal.html
 	Seeded random: https://github.com/davidbau/seedrandom
 
 	const shuffleArray = array => {
-	  let currentIndex = array.length
-	  let temporaryValue
-	  let randomIndex
-	  // While there remain elements to shuffle...
-	  while (currentIndex !== 0) {
-	    // Pick a remaining element...
-	    randomIndex = Math.floor(randomizer() * currentIndex)
-	    currentIndex -= 1
-	    // And swap it with the current element.
-	    temporaryValue = array[currentIndex]
-	    array[currentIndex] = array[randomIndex]
-	    array[randomIndex] = temporaryValue
-	  }
-	  return array
+		let currentIndex = array.length
+		let temporaryValue
+		let randomIndex
+		// While there remain elements to shuffle...
+		while (currentIndex !== 0) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(randomizer() * currentIndex)
+			currentIndex -= 1
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex]
+			array[currentIndex] = array[randomIndex]
+			array[randomIndex] = temporaryValue
+		}
+		return array
 	}
 
 	// Serial e.g. '1464642047155-207'
 	(Date.now() + '-' + Math.floor(Math.random() * 1000))
+
+### Rounding
 
 	Math.abs(x)
 	Math.min, Math.max
@@ -419,7 +420,7 @@ http://javascript.crockford.com/prototypal.html
 		return result
 	}
 
-Power/root
+### Power/root
 
 	Math.pow(3, 2)
 	Math.sqrt(9)
@@ -1105,9 +1106,9 @@ Tip: event handlers on `document` for move/end:
 #### Fetch
 
 	const domain = await fetch(`${config.appUrl}api/domains/${query.domainName}${queryObjectToString(query)}`).then(res => res.json())
-
-  const user = await fetch(`${API_URL}/api/usernames/${user.username}`)
-  const userJson = await user.json()
+	
+	const user = await fetch(`${API_URL}/api/usernames/${user.username}`)
+	const userJson = await user.json()
 
 	await fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
@@ -1357,11 +1358,11 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	}, {})
 
 	const queryObjectFromString = str => (str.split('?')[1] || '')
-	  .split('&')
-	  .reduce((result, propValue) => {
-	    result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
-	    return result
-	  }, {})
+		.split('&')
+		.reduce((result, propValue) => {
+			result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
+			return result
+		}, {})
 
 	const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
 	// const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
@@ -2117,8 +2118,8 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 			this.setState({ count: ++this.state.count })
 		}
 
-  	handleClickArrow = event => {
-  		event.stopPropagation()
+		handleClickArrow = event => {
+			event.stopPropagation()
 		}
 
 		onInputChange(event) {
