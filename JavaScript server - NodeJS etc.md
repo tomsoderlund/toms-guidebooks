@@ -458,66 +458,6 @@ Tests:
 * `toThrow`
 * `toThrowError`
 
-## Linting
-
-### Standard JS
-
-	yarn add standard --dev
-	yarn add pre-commit --dev  # If you want Git commit check
-
-package.json:
-
-	"scripts": {
-		"test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
-		"lint": "standard",
-		"fix": "standard --fix",
-		"unit": "jasmine"
-	},
-	"pre-commit": [
-		"lint"
-	],
-	"standard": {
-		"ignore": [
-			".next"
-		],
-		"globals": [
-			"beforeAll",
-			"beforeEach",
-			"describe",
-			"expect",
-			"it",
-			"jasmine",
-			"spyOn"
-		]
-	},
-
-Ignore line:
-
-	myCode() // eslint-disable-line no-useless-escape
-
-## Documentation - JSDoc
-
-http://usejsdoc.org
-
-	/** This is a description of the foo function. */
-	function foo() {
-	}
-
-	/**
-	 * Represents a book.
-	 * @constructor
-	 * @param {string} title - The title of the book.
-	 * @param {string} author - The author of the book.
-	 */
-	function Book(title, author) {
-	}
-
-Module:
-
-	/**
-	 * Shirt module.
-	 * @module my/shirt
-	 */
 
 ## Node Command Line Application
 

@@ -260,10 +260,10 @@ Copy home:
 
 ## REST with Curl
 
-	curl -i -H "Accept: application/json" -X GET http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-	curl -i -H "Accept: application/json" -X POST -d "firstName=james" http://localhost:9000/persons/person
-	curl -i -H "Accept: application/json" -X PUT -d "data=test" http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-	curl -i -H "Accept: application/json" -X DELETE http://localhost:9000/persons/person/1  
+	curl -i -H 'Content-Type: application/json' -X GET http://localhost:9000/api/projects/52e96b4732d10c8b91000003
+	curl -i -H 'Content-Type: application/json' -X POST -d 'firstName=james' http://localhost:9000/persons/person
+	curl -i -H 'Content-Type: application/json' -X PUT -d 'data=test' http://localhost:9000/api/projects/52e96b4732d10c8b91000003
+	curl -i -H 'Content-Type: application/json' -X DELETE http://localhost:9000/persons/person/1  
 
 Multiple headers: multiple `-H ""`
 

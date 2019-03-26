@@ -967,6 +967,7 @@ https://codepen.io/YOUR-USER-NAME/pen/Gdjrdx
 	ctx.shadowOffsetX=20
 	ctx.shadowColor="black"
 
+
 ### SVG
 
 http://svgjs.com
@@ -984,11 +985,17 @@ https://gionkunz.github.io/chartist-js/
 
 	document.getElementById('sound_pop').play()
 
-## Local Storage
+
+## Local Storage, Session Storage, and Cookies
+
+sessionStorage and localStorage
 
 	localStorage.colorSetting = '#a4509b'
 	localStorage['colorSetting'] = '#a4509b'
 	localStorage.setItem('colorSetting', '#a4509b')
+
+> “Stormpath recommends that you store your JWT in cookies for web applications, because of the additional security they provide, and the simplicity of protecting against CSRF with modern web frameworks. HTML5 Web Storage is vulnerable to XSS, has a larger attack surface area, and can impact all application users on a successful attack.”
+– https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
 
 
 ## Pure Javascript (no framework)
@@ -1056,7 +1063,7 @@ https://gionkunz.github.io/chartist-js/
 
 #### Mouse events
 
-Use mouseenter/mouseleave instead of mouseover/mouseexit (mouseover = trigger on childs)
+Use `mouseenter`/`mouseleave` instead of `mouseover`/`mouseexit` (`mouseover` = trigger on childs)
 
 #### Touch events: touchstart/touchmove/touchend
 
@@ -1072,8 +1079,8 @@ Tip: event handlers on `document` for move/end:
 
 	var event = new Event('click')
 	var event = new CustomEvent('build', { detail: { … } })
-	elem.addEventListener('build', function (evt) {})
-	elem.dispatchEvent(event) // send event
+	element.addEventListener('build', function (evt) {})
+	element.dispatchEvent(event) // send event
 
 #### Document load event
 
@@ -2667,111 +2674,64 @@ https://caolan.github.io/async/docs.html
 		whenDone
 	)
 
-Collections
 
-	async.concat()
-	async.concatLimit()
-	async.concatSeries()
-	async.detect()
-	async.detectLimit()
-	async.detectSeries()
-	async.each()
-	async.eachLimit()
-	async.eachOf()
-	async.eachOfLimit()
-	async.eachOfSeries()
-	async.eachSeries()
-	async.every()
-	async.everyLimit()
-	async.everySeries()
-	async.filter()
-	async.filterLimit()
-	async.filterSeries()
-	async.groupBy()
-	async.groupByLimit()
-	async.groupBySeries()
-	async.map()
-	async.mapLimit()
-	async.mapSeries()
-	async.mapValues()
-	async.mapValuesLimit()
-	async.mapValuesSeries()
-	async.reduce()
-	async.reduceRight()
-	async.reject()
-	async.rejectLimit()
-	async.rejectSeries()
-	async.some()
-	async.someLimit()
-	async.someSeries()
-	async.sortBy()
-	async.transform()
+## Linting
 
-Control Flow
+### Standard JS
 
-	async.applyEach()
-	async.applyEachSeries()
-	async.auto()
-	async.autoInject()
-	async.cargo()
-	async.compose()
-	async.doDuring()
-	async.doUntil()
-	async.doWhilst()
-	async.during()
-	async.forever()
-	async.parallel()
-	async.parallelLimit()
-	async.priorityQueue()
-	async.queue()
-	async.race()
-	async.retry()
-	async.retryable()
-	async.seq()
-	async.series()
-	async.times()
-	async.timesLimit()
-	async.timesSeries()
-	async.tryEach()
-	async.until()
-	async.waterfall()
-	async.whilst()
+	yarn add standard --dev
+	yarn add pre-commit --dev  # If you want Git commit check
 
-Utils
+package.json:
 
-	async.apply()
-	async.asyncify()
-	async.constant()
-	async.dir()
-	async.ensureAsync()
-	async.log()
-	async.memoize()
-	async.nextTick()
-	async.reflect()
-	async.reflectAll()
-	async.setImmediate()
-	async.timeout()
-	async.unmemoize()
+	"scripts": {
+		"test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+		"lint": "standard",
+		"fix": "standard --fix",
+		"unit": "jasmine"
+	},
+	"pre-commit": [
+		"lint"
+	],
+	"standard": {
+		"ignore": [
+			".next"
+		],
+		"globals": [
+			"beforeAll",
+			"beforeEach",
+			"describe",
+			"expect",
+			"it",
+			"jasmine",
+			"spyOn"
+		]
+	},
+
+Ignore line:
+
+	myCode() // eslint-disable-line no-useless-escape
 
 
-## ESLint
+### ESLint
 
 	yarn add eslint --dev
 	npm install eslint --save-dev
 
-Config: .eslintrc.js
+Config: `.eslintrc.js`
 
-
-## Prettier
+### Prettier
 
 	yarn add prettier --dev --exact
 	# or globally
 	yarn global add prettier
 
-Config: .prettierrc
+Config: `.prettierrc`
 
 
-## JSDoc
+## Documentation - JSDoc
+
+http://usejsdoc.org
 
 	/** This is a description of the foo function. */
 	function foo() {
@@ -2779,13 +2739,19 @@ Config: .prettierrc
 
 	/**
 	 * Represents a book.
-	 *  @constructor
-	 *  @param {string} title - The title of the book.
-	 *  @returns {Book}
+	 * @constructor
+	 * @param {string} title - The title of the book.
+	 * @param {string} author - The author of the book.
 	 */
-	function Book(title) {
+	function Book(title, author) {
 	}
 
+Module:
+
+	/**
+	 * Shirt module.
+	 * @module my/shirt
+	 */
 
 ## Reserved Words
 
