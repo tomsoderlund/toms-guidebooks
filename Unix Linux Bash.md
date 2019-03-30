@@ -20,6 +20,10 @@ Change:
 
 	mkdir {development,remote,deploy}
 
+### Find and delete empty folders
+
+	find . -type d -empty -print
+	find . -type d -empty -delete
 
 ## File lists
 

@@ -298,6 +298,10 @@ http://javascript.crockford.com/prototypal.html
 
 ## Loops
 
+	for (let i in array) {
+		console.log(`${i}: ${array[key]}`)
+	}
+
 	for (let key in object) {
 		console.log(`${key}: ${object[key]}`)
 	}
@@ -372,23 +376,6 @@ http://javascript.crockford.com/prototypal.html
 
 	Seeded random: https://github.com/davidbau/seedrandom
 
-	const shuffleArray = array => {
-		let currentIndex = array.length
-		let temporaryValue
-		let randomIndex
-		// While there remain elements to shuffle...
-		while (currentIndex !== 0) {
-			// Pick a remaining element...
-			randomIndex = Math.floor(randomizer() * currentIndex)
-			currentIndex -= 1
-			// And swap it with the current element.
-			temporaryValue = array[currentIndex]
-			array[currentIndex] = array[randomIndex]
-			array[randomIndex] = temporaryValue
-		}
-		return array
-	}
-
 	// Serial e.g. '1464642047155-207'
 	(Date.now() + '-' + Math.floor(Math.random() * 1000))
 
@@ -432,6 +419,9 @@ http://javascript.crockford.com/prototypal.html
 	Math.cos(radians) // 'y': 0=1, 0.5π=0, π=-1, 1.5π=0,  2π=1
 
 	deg/360 = rad/2π -> rad = deg/180 * Math.PI
+
+	// ~= 0.866 * a
+	const triangleHeight = a => Math.sqrt(3) / 2 * a
 
 X/Y distances:
 
@@ -684,7 +674,18 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var lastElement = myCars[myCars.length - 1]
 
-	var a = fruits.indexOf("Apple")
+	// Clone array
+	newArray = oldArray.slice()
+
+	// Get part of array
+	newArray = oldArray.slice(startIndex, endIndexPlusOne)
+
+### Searching
+
+	var index = fruits.indexOf('Apple')
+	fruits.includes('Apple')
+
+### Sorting and reversing
 
 	var fruits = ["Banana", "Orange", "Apple", "Mango"]
 	fruits.sort()
@@ -693,19 +694,35 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
 	array.reverse()
 
-	// Clone array
-	newArray = oldArray.slice()
+### Randomize/shuffle array
 
-	newArray = oldArray.slice(startIndex, endIndexPlusOne)
+	const shuffleArray = array => {
+		let currentIndex = array.length
+		let temporaryValue
+		let randomIndex
+		// While there remain elements to shuffle...
+		while (currentIndex !== 0) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(randomizer() * currentIndex)
+			currentIndex -= 1
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex]
+			array[currentIndex] = array[randomIndex]
+			array[randomIndex] = temporaryValue
+		}
+		return array
+	}
 
-	// Add
+### Add
+
 	newArray = [newItem, ...oldArray, newItem2]
 	push() // add to end
 	unshift // add to beginning
 	array.splice(index, howmany, element1, …, elementX) // adds/removes items to/from an array, and returns the removed item(s), mutates original array
 	var combined = list1.concat(list2)
 
-	// Remove
+### Remove
+
 	pop() // get/remove last element
 	shift()	// remove first element of an array, and returns that element
 	slice(start, end) // returns the selected elements in an array, as a new array object
@@ -719,6 +736,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 		this.length = from < 0 ? this.length + from : from
 		return this.push.apply(this, rest)
 	}
+
+### Other
 
 	// Divide into pages. Note: pageNr = 1, 2, 3...
 	const paginateArray = (array, pageSize = 100, pageNr = 1) => array.slice((pageNr - 1) * pageSize, pageNr * pageSize)
