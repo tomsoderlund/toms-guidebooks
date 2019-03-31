@@ -320,6 +320,8 @@ http://javascript.crockford.com/prototypal.html
 		console.log(`${keys[k]}: ${object[keys[k]]}`)
 	}
 
+	array.forEach((i, index) => console.log(`${i}: ${array[key]}`)
+
 	// While
 
 	while (condition) {

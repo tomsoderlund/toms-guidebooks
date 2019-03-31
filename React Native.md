@@ -64,22 +64,107 @@ There are 4 types of Lifecycle methods available in React Native:
 
 Mounting methods:
 
-- constructor()
-- componentWillMount()
-- render()
-- componentDidMount()
+- `constructor`
+- `componentWillMount`
+- `render`
+- `componentDidMount`
 
 Updating methods:
 
-- componentWillReceiveProps()
-- shouldComponentUpdate()
-- componentWillUpdate()
-- componentDidUpdate()
+- `componentWillReceiveProps`
+- `shouldComponentUpdate`
+- `componentWillUpdate`
+- `componentDidUpdate`
 
 Unmounting methods:
 
-- componentWillUnmount()
+- `componentWillUnmount`
 
 Error handling methods:
 
 - componentDidCatch()
+
+## Modules
+
+### Routing/Navigation
+
+https://reactnavigation.org/
+
+#### AppNavigator
+
+	import { createStackNavigator, createAppContainer } from 'react-navigation'
+
+	const AppNavigator = createStackNavigator({
+	  Screen1: {
+	    screen: Screen1Screen
+	  },
+	  Screen2: {
+	    screen: Screen2Screen
+	  }
+	},
+	// Optional settings for all screens:
+	{
+	  headerMode: 'none',
+	  navigationOptions: {
+	    headerVisible: false,
+	  }
+	})
+
+	export default createAppContainer(AppNavigator)
+
+#### Navigate to other screen
+
+	this.props.navigation.replace('Screen2')
+
+#### Screen header config
+
+	static navigationOptions = ({ navigation }) => {
+	  return {
+	    headerTitle: 'Title',
+	    headerRight: (
+	      <Button
+	        title='+1'
+	        color='#fff'
+	      />
+	    ),
+	  }
+	}
+
+### Save state
+
+https://facebook.github.io/react-native/docs/asyncstorage
+
+### Animations
+
+Animated/LayoutAnimation
+
+### Fonts
+
+expo.Font
+
+	import { Font } from 'expo'
+
+	async componentDidMount () {
+	  await Font.loadAsync({
+	    'vollkorn-regular': require('../assets/fonts/Vollkorn-Regular.ttf')
+	  })
+	  this.setState({ fontsLoaded: true })
+	}
+
+  {this.state.fontsLoaded ? <Text style={styles.headline}>My Headline</Text> : null}
+
+	const styles = StyleSheet.create({
+	  headline: {
+	    fontFamily: 'vollkorn-regular'
+	  }
+	})
+
+### Sounds
+
+expo.Audio
+
+	import { Audio } from 'expo'
+
+	const clickSound = new Audio.Sound()
+	await clickSound.loadAsync(require('../assets/sounds/click.mp3'))
+	await clickSound.replayAsync()
