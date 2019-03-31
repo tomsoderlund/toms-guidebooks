@@ -1,16 +1,29 @@
 # React Native
 
-## Getting started
+React Native is an easy way to build native iOS/Android (also Windows, macOS, web) using React.
+
+With https://expo.io the steps are easy:
+
+1. Create a new app (`expo init`)
+2. Run it on device or simulator (`expo start`)
+3. Publish it to Expo.io (`expo publish`)
+4. Bundle it as native iOS/Android app (`expo build`)
+
+
+## Read more
 
 - Official getting started: https://facebook.github.io/react-native/docs/getting-started.html
 - Guide: https://hackernoon.com/learning-react-native-where-to-start-49df64cf14a2
 - Coding guidebook: http://www.reactnativeexpress.com
 
-## Expo client
+
+## Getting started
+
+### Expo client
 
 Install https://expo.io client on your device.
 
-## How to run
+### How to run
 
 	yarn global add expo-cli  # or: npm install -g expo-cli
 
@@ -19,9 +32,6 @@ Install https://expo.io client on your device.
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
 
-## Component libraries
-
-- https://github.com/callstack/react-native-paper
 
 ## Components
 
@@ -82,9 +92,14 @@ Unmounting methods:
 
 Error handling methods:
 
-- componentDidCatch()
+- `componentDidCatch`
+
 
 ## Modules
+
+### Component libraries
+
+- https://github.com/callstack/react-native-paper
 
 ### Routing/Navigation
 
@@ -151,7 +166,7 @@ expo.Font
 	  this.setState({ fontsLoaded: true })
 	}
 
-  {this.state.fontsLoaded ? <Text style={styles.headline}>My Headline</Text> : null}
+	{this.state.fontsLoaded ? <Text style={styles.headline}>My Headline</Text> : null}
 
 	const styles = StyleSheet.create({
 	  headline: {
