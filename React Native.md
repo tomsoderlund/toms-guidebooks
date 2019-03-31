@@ -109,6 +109,11 @@ https://github.com/DaniAkash/react-native-responsive-dimensions
 	height: responsiveHeight(50), // 50% of screen height
 
 
+## Development mode
+
+`__DEV__` variable
+
+
 ## Modules
 
 ### Component libraries
@@ -117,7 +122,7 @@ https://github.com/DaniAkash/react-native-responsive-dimensions
 
 ### Routing/Navigation
 
-https://reactnavigation.org/
+https://reactnavigation.org/docs/en/getting-started.html
 
 #### AppNavigator
 
@@ -143,25 +148,30 @@ https://reactnavigation.org/
 
 #### Navigate to other screen
 
-	this.props.navigation.replace('Screen2')
+	// navigate, push, replace. Also: dismiss, goBack, pop, popToTop, reset, setParams
+	this.props.navigation.navigate('Screen2', { someParam: 'Test' })
 
 #### Screen header config
 
 	static navigationOptions = ({ navigation }) => {
 	  return {
-	    headerTitle: 'Title',
+	    headerTitle: navigation.getParam('someParam', 'Default Title'),
 	    headerRight: (
 	      <Button
 	        title='+1'
 	        color='#fff'
 	      />
-	    ),
+	    )
 	  }
 	}
 
 ### Save state
 
 https://facebook.github.io/react-native/docs/asyncstorage
+
+Save navigation state:
+
+	<AppNavigator persistenceKey={'NavigationPersistenceKey'} />
 
 ### Animations
 
