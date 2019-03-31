@@ -95,6 +95,20 @@ Error handling methods:
 - `componentDidCatch`
 
 
+## Responsive design
+
+https://medium.com/@shanerudolfworktive/7-tips-to-develop-react-native-uis-for-all-screen-sizes-7ec5271be25c
+
+- `aspectRatio` on styles.
+- `flex: X`/`flex: Y` for proportions.
+
+https://github.com/DaniAkash/react-native-responsive-dimensions
+
+	import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions'
+	// in styles:
+	height: responsiveHeight(50), // 50% of screen height
+
+
 ## Modules
 
 ### Component libraries
