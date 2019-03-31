@@ -1,6 +1,6 @@
 # React Native
 
-React Native is an easy way to build native iOS/Android (also Windows, macOS, web) using React.
+React Native is an easy way to build native iOS/Android (also Windows, macOS, web) using JavaScript and React.
 
 With https://expo.io the steps are easy:
 
