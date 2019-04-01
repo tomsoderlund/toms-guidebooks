@@ -7,7 +7,7 @@ With https://expo.io the steps are easy:
 1. Create a new app (`expo init`)
 2. Run it on device or simulator (`expo start`)
 3. Publish it to Expo.io (`expo publish`)
-4. Bundle it as native iOS/Android app (`expo build`)
+4. Bundle it as native iOS/Android app (`expo build:ios`/`expo build:android`)
 
 
 ## Read more
@@ -118,7 +118,8 @@ https://github.com/DaniAkash/react-native-responsive-dimensions
 
 ### Component libraries
 
-- https://github.com/callstack/react-native-paper
+- Material Design: https://github.com/callstack/react-native-paper
+- Button: https://github.com/APSL/react-native-button
 
 ### Routing/Navigation
 
