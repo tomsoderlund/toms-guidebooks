@@ -208,3 +208,12 @@ expo.Audio
 	const clickSound = new Audio.Sound()
 	await clickSound.loadAsync(require('../assets/sounds/click.mp3'))
 	await clickSound.replayAsync()
+
+
+## Deploying an iOS app on App Store
+
+1. Create your app on https://appstoreconnect.apple.com/
+2. Enter the same app bundle ID in `app.json`
+3. Build with `expo build:ios`
+4. Upload IPA file with Application Loader on macOS (might need app-specific password on https://appleid.apple.com/)
+5. App Store Connect takes ~1 hour to process a new build, then you can use Testflight for testing.

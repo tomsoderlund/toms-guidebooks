@@ -117,7 +117,7 @@ package.json
 	npm install -g [package-name]
 	-g = global
 
-	npm view <package> versions // 
+	npm view <package> versions //
 	npm install <package>@<version> // npm install bcrypt@0.8.0
 
 	npm install --save compass # update package.json
@@ -478,6 +478,7 @@ if ((process.argv.length - 2) < NR_OF_ARGUMENTS_REQUIRED) {
 }
 else {
 	//.. do run
+	myFunction(process.argv[2])
 }
 
 // process.argv -> name/value collection
@@ -541,7 +542,7 @@ fs.writeFile('/tmp/test', 'Hey there!', function(err) {
 	}
 
 	console.log('The file was saved!')
-}); 
+});
 
 
 ## CDN - AWS CloudFront
@@ -727,7 +728,7 @@ User.findById(req.params.id).lean().exec(function (err, user) {})
 
 #### findOne
 
-Restaurant.findOne( {'_id' : restaurantId }, function (err, restaurant) {	
+Restaurant.findOne( {'_id' : restaurantId }, function (err, restaurant) {
 })
 
 #### Wildcard search
@@ -1125,4 +1126,3 @@ Files end up in in /etc/letsencrypt/live/MYDOMAIN/
 
 sudo heroku certs:add /etc/letsencrypt/live/MYDOMAIN/fullchain.pem /etc/letsencrypt/live/MYDOMAIN/privkey.pem
 	Need Hobby or Professional dynos
-

@@ -8,6 +8,10 @@ Change:
 
 	chmod u+x myscript.sh
 
+## Multiple files
+
+	touch index.{html,js}
+	mv some/path/{oldname,newname}
 
 ## Folders
 

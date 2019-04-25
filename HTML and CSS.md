@@ -1,6 +1,6 @@
 ## Base HTML
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
@@ -288,7 +288,7 @@ input[type="radio"] {
 		height: 1.4em;
 		position: relative;
 		top: -0.2em;
-		margin-right: 1em; 
+		margin-right: 1em;
 		vertical-align: top;
 		cursor: pointer;
 		text-align: center;
@@ -384,7 +384,7 @@ http://caniuse.com/#feat=html5semantic
 ## FORMS
 
 <form name="MyForm" method="post" action="" onSubmit="updateView(this);">
-<p>Search discussion topics: <input type="text" name="searchtext" value="" class="formfield" size="15"> 
+<p>Search discussion topics: <input type="text" name="searchtext" value="" class="formfield" size="15">
 <input name="searchButton" value="Search" type="button" class="formbutton"></p>
 </form>
 
@@ -470,7 +470,7 @@ Flexbox
 .flex-parent {
 	display: flex;
 	flex-direction: row; /* DIRECTION: "column" -> create rows */
-	justify-content: space-between; /* PRIMARY AXIS: flex-start (default) / flex-end / center / space-between / space-around */	
+	justify-content: space-between; /* PRIMARY AXIS: flex-start (default) / flex-end / center / space-between / space-around */
 	align-items: center; /* SECONDARY AXIS: stretch (default) / flex-start / flex-end / center / baseline */
 	flex-wrap: wrap; /* Wrap to columns, set child width e.g. 33.33% */
 
@@ -488,7 +488,7 @@ Search Results
 Viewport units: vw, vh, vmin, vmax - Web Design Weekly
 
 
-/* 
+/*
 
 Special Effects in CSS
 
@@ -629,18 +629,18 @@ background: linear-gradient(to right, hsl(0,100,50), hsl(45,100,50), hsl(90,100,
 .rounded_box {
 	width: 500px; margin: 0 auto; background: #222; padding: 20px;
 	font-size: 22px; color: #555; text-shadow: 0px 2px 3px #171717;
-	
+
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
-	
+
 	-webkit-box-shadow: 1px 2px 3px #555; /* X Y Blur Color */
 	-moz-box-shadow: 1px 2px 3px #555;
 }
 
 /* One rounded corner */
 .rounded_corner {
-	border-bottom-left-radius: 8px;	
+	border-bottom-left-radius: 8px;
 }
 
 /* Text with gradient/image */
@@ -784,18 +784,24 @@ h1 span {
 		}
 	}
 
+CSS to detect screen orientation:
+
+	@media screen and (orientation:portrait) { … }
+	@media screen and (orientation:landscape) { … }
+
+
 ## Pseudo classes
 
 :active
-:any-link 
-:blank 
+:any-link
+:blank
 :checked
-:current 
+:current
 :default
 :defined
-:dir() 
+:dir()
 :disabled
-:drop 
+:drop
 :empty
 :enabled
 :first
@@ -804,12 +810,12 @@ h1 span {
 :focus
 :focus-visible
 :focus-within
-:fullscreen 
-:future 
-:has() 
+:fullscreen
+:future
+:has()
 :host
 :host()
-:host-context() 
+:host-context()
 :hover
 :in-range
 :indeterminate
@@ -819,21 +825,21 @@ h1 span {
 :last-of-type
 :left
 :link
-:local-link 
-:matches() 
+:local-link
+:matches()
 :not()
 :nth-child()
-:nth-col() 
+:nth-col()
 :nth-last-child()
-:nth-last-col() 
+:nth-last-col()
 :nth-last-of-type()
 :nth-of-type()
 :only-child
 :only-of-type
 :optional
 :out-of-range
-:past 
-:placeholder-shown 
+:past
+:placeholder-shown
 :read-only
 :read-write
 :required
@@ -841,8 +847,8 @@ h1 span {
 :root
 :scope
 :target
-:target-within 
-:user-invalid 
+:target-within
+:user-invalid
 :valid
 :visited
 
@@ -886,7 +892,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /* --------- Other --------- */
 
 
-/* 
+/*
 
 HTML:
 
@@ -924,9 +930,20 @@ http://www.quackit.com/css/css_color_codes.cfm
 
 Favorites:
 
+darkturquoise
+rebeccapurple
+salmon
+
+Green: darkturquoise, greenyellow, lime/limegreen
+Purple: rebeccapurple, slateblue
+Red/Pink: salmon, deeppink
+Blue: dodgerblue, deepskyblue
+Orange: darkorange
+Red: tomato
+Yellow: lemonchiffon, gold
+
 slategray (blueish)
 darkslategray (blueish)
-dodgerblue
 
 white
 whitesmoke
@@ -936,16 +953,6 @@ darkgray
 gray
 dimgray
 black
-
-Blue: dodgerblue, deepskyblue
-Green: greenyellow - lime/limegreen
-Orange: darkorange
-Purple: slateblue
-Red/Pink: deeppink
-Red: tomato
-Yellow: lemonchiffon, or gold
-
-Special:
 
 transparent
 
@@ -1252,3 +1259,8 @@ http://www.fileformat.info/info/unicode/char/2714/index.htm
 510 Not Extended (RFC 2774)
 511 Network Authentication Required (RFC 6585)
 5xx Server Error
+
+## Language
+
+	<html lang="en">
+	<html lang="en-us">
