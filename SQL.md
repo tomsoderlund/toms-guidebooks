@@ -13,6 +13,7 @@ port 5432 is default
 ## PSQL Admin
 
 	psql postgres
+	psql -U myUser
 
 	\q to quit/exit
 
@@ -70,6 +71,11 @@ e.g. `WHERE person.company_id = company.id`
 - Binary & JSON:
 	- `bytea`: blob binary
 	- `json`, jsonb
+
+
+## Export data
+
+	COPY domain_updates TO '/Users/tomsoderlund/Documents/Projects/Weld.io/Development/weld-extensions/site-activity-index/data/domain_updates.csv' DELIMITER ',' CSV HEADER;
 
 
 ### From JavaScript to SQL

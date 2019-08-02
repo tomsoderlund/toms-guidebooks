@@ -21,7 +21,7 @@ Decimal number:
 	([\d.]+)\s+(\S+)
 
 
-### Other
+### HTML
 
 HTML find all CLASS and ID
 
@@ -30,7 +30,11 @@ HTML find all CLASS and ID
 
 	class="c15" -> class="c[\d]+"
 
-CSV
+Domain from URL - https://regex101.com/r/MOIFTy/3
+
+	/^(?:https?:)?(?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/igm
+
+### CSV
 
 	\n".*(\n).*"
 
@@ -38,13 +42,11 @@ Find all letters but also - and _
 
 	[\w-_]+
 
+### Other
+
 Find all in {{double curly brackets}}
 
 	/\{\{(.*?)\}\}/g
-
-Domain from URL - https://regex101.com/r/MOIFTy/3
-
-	/^(?:https?:)?(?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/igm
 
 
 ## Reference

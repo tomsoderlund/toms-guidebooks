@@ -335,7 +335,25 @@ Express only:
 	NEW: res.status(404).json(myObj)
 	OLD: res.sendStatus(404, 'Page not found')
 
-#### Request (fetch)
+#### https.get
+
+	const https = require('https')
+
+	https.get(url, res => {
+	  let data = ''
+	  // A chunk of data has been received.
+	  res.on('data', chunk => {
+	    data += chunk
+	  })
+	  // The whole response has been received. Print out the result.
+	  res.on('end', () => {
+	    console.log(JSON.parse(data).explanation)
+	  })
+	}).on('error', err => {
+	  console.log('Error: ' + err.message)
+	})
+
+#### request
 
 	request.get(url, { json: true }, function (err, response, body) {
 		response.statusCode
@@ -346,6 +364,12 @@ Express only:
 
 	request({ method: 'PUT', url: url, json: obj }, function (err, res, body) {
 	})
+
+#### node-fetch
+
+	const fetch = require('node-fetch')
+	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
+	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
 ### EJS
 
@@ -439,7 +463,7 @@ Config: `spec/support/jasmine.json`:
 		]
 	}
 
-Tests:
+#### Tests
 
 * `toBe`
 * `toEqual`
@@ -458,91 +482,102 @@ Tests:
 * `toThrow`
 * `toThrowError`
 
+#### Mock a function
+
+	it('should sqlFind to sort', async function () {
+		const pool = jasmine.createSpyObj('pool', ['query'])
+		pool.query.and.callFake((pool, tableName, query, options) => ({ rows: pool }))
+		expect(
+			await sqlFind(pool, 'people', { id: 5, sort: 'name' })
+		).toEqual(
+			'SELECT * FROM people WHERE id=5 ORDER BY name NULLS LAST;'
+		)
+	})
 
 ## Node Command Line Application
 
 http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 
-process.env.NODE_ENV
+	process.env.NODE_ENV
 
-#!/usr/bin/env node
-'use strict'
-console.log('adsfs', process.argv.length)
+	#!/usr/bin/env node
+	'use strict'
+	console.log('adsfs', process.argv.length)
 
-// process.argv = ['node', 'yourscript.js', ...]
-// First custom argument is 2
-const NR_OF_ARGUMENTS_REQUIRED = 2
-if ((process.argv.length - 2) < NR_OF_ARGUMENTS_REQUIRED) {
-	console.log('Usage: node app.js [filename] [JSON key]')
-	console.log('  E.g: node app.js data/test.json projects.562e3d6dfd53820c00e98bd7')
-}
-else {
-	//.. do run
-	myFunction(process.argv[2])
-}
-
-// process.argv -> name/value collection
-const processCommandLineArguments = function () {
-	const ARGUMENTS = [
-		{ key: 'inputFile', default: 'companies.csv', required: true },
-		{ key: 'workTitle', default: 'digital marketing' },
-		{ key: 'location', default: 'Sweden' },
-	]
-	const argvCollection = {}
-	for (var i = 2; i < Math.max(process.argv.length, ARGUMENTS.length+2); i++) {
-		argvCollection[ARGUMENTS[i-2].key] = process.argv[i] || ARGUMENTS[i-2].default
+	// process.argv = ['node', 'yourscript.js', ...]
+	// First custom argument is 2
+	const NR_OF_ARGUMENTS_REQUIRED = 2
+	if ((process.argv.length - 2) < NR_OF_ARGUMENTS_REQUIRED) {
+		console.log('Usage: node app.js [filename] [JSON key]')
+		console.log('  E.g: node app.js data/test.json projects.562e3d6dfd53820c00e98bd7')
 	}
-	return argvCollection
-}
-
-// process.argv -> name/value collection (OLD)
-var processCommandLine = function (defaultOptions) {
-	var options = _.merge({}, defaultOptions)
-	for (var i = 2; i < process.argv.length; i++) {
-		var arg = process.argv[i]
-		if (arg.indexOf('=') !== -1) {
-			var param = arg.split('=')
-			options[param[0]] = param[1]
-		}
-	}
-	return options
-}
-
-// process.argv -> two arrays of files/options
-var processCommandLineArguments = function () {
-	var result = { files: [], options: [] }
-	for (var i = 1; i < process.argv.length; i++) {
-		if (process.argv[i][0] === '-') {
-			result.options.push(process.argv[i].substr(1))
-		}
-		else {
-			result.files.push(process.argv[i])
-		}
-	}
-	return result
-}
-
-const openFile = function (filename, cb) {
-	const fs = require('fs')
-	fs.readFile(filename, 'utf8', function (err, data) {
-		if (err) {
-			throw err
-		}
-		else if (cb) {
-			console.log('OK: ' + filename)
-			cb(data)
-		}
-	})
-}
-
-var fs = require('fs')
-fs.writeFile('/tmp/test', 'Hey there!', function(err) {
-	if(err) {
-		return console.log(err)
+	else {
+		//.. do run
+		myFunction(process.argv[2])
 	}
 
-	console.log('The file was saved!')
-});
+	// process.argv -> name/value collection
+	const processCommandLineArguments = function () {
+		const ARGUMENTS = [
+			{ key: 'inputFile', default: 'companies.csv', required: true },
+			{ key: 'workTitle', default: 'digital marketing' },
+			{ key: 'location', default: 'Sweden' },
+		]
+		const argvCollection = {}
+		for (var i = 2; i < Math.max(process.argv.length, ARGUMENTS.length+2); i++) {
+			argvCollection[ARGUMENTS[i-2].key] = process.argv[i] || ARGUMENTS[i-2].default
+		}
+		return argvCollection
+	}
+
+	// process.argv -> name/value collection (OLD)
+	var processCommandLine = function (defaultOptions) {
+		var options = _.merge({}, defaultOptions)
+		for (var i = 2; i < process.argv.length; i++) {
+			var arg = process.argv[i]
+			if (arg.indexOf('=') !== -1) {
+				var param = arg.split('=')
+				options[param[0]] = param[1]
+			}
+		}
+		return options
+	}
+
+	// process.argv -> two arrays of files/options
+	var processCommandLineArguments = function () {
+		var result = { files: [], options: [] }
+		for (var i = 1; i < process.argv.length; i++) {
+			if (process.argv[i][0] === '-') {
+				result.options.push(process.argv[i].substr(1))
+			}
+			else {
+				result.files.push(process.argv[i])
+			}
+		}
+		return result
+	}
+
+	const openFile = function (filename, cb) {
+		const fs = require('fs')
+		fs.readFile(filename, 'utf8', function (err, data) {
+			if (err) {
+				throw err
+			}
+			else if (cb) {
+				console.log('OK: ' + filename)
+				cb(data)
+			}
+		})
+	}
+
+	var fs = require('fs')
+	fs.writeFile('/tmp/test', 'Hey there!', function(err) {
+		if(err) {
+			return console.log(err)
+		}
+
+		console.log('The file was saved!')
+	});
 
 
 ## CDN - AWS CloudFront
@@ -749,7 +784,7 @@ const query = {
 	'positions.company': req.crudify.company._id
 }
 
-query['locationDetails.original'] = new RegExp(req.query.city, 'ig')
+query['locationDetails.original'] = createServernew RegExp(req.query.city, 'ig')
 
 #### Numeric values
 
@@ -956,7 +991,7 @@ http://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-
 
 http://docs.mongodb.org/v2.2/reference/mongo-shell/
 
-mongod # server
+mongod # server: /usr/local/Cellar/mongodb-community@3.6/3.6.12/bin/mongod
 mongo # interactive client
 
 show dbs // list all databases
@@ -1068,6 +1103,35 @@ $firebaseArray
 	$ref()
 	$watch(cb[, context])
 	$destroy()
+
+
+## GraphQL
+
+Types/Scalars:
+
+- Int: Signed 32‐bit integer
+- Float: Signed double-precision floating-point value
+- String: UTF‐8 character sequence
+- Boolean: true or false
+- ID (serialized as String)
+
+Next.js:
+
+- Global: https://github.com/zeit/next.js/tree/master/examples/with-apollo
+- Per page: https://github.com/adamsoffer/next-apollo-example
+
+### Server
+
+	yarn add graphql apollo-server(-express)
+
+server.js:
+
+	const server = require('express')()
+	const { ApolloServer } = require('apollo-server-express')
+	const { typeDefs, resolvers } = require('./graphql/schema')
+
+	const apolloServer = new ApolloServer({ typeDefs, resolvers })
+	apolloServer.applyMiddleware({ app: server })
 
 
 # Desktop App

@@ -67,7 +67,7 @@ Quick:
 	git log # history
 
 	git log | grep [searchstring]
-		
+
 
 	git config --get remote.origin.url
 	git remote show origin
@@ -77,6 +77,11 @@ Quick:
 	git log -g --grep=Feature
 
 ## Troubleshooting
+
+### Test a specific commit
+
+	git checkout [hash]
+	git checkout master
 
 ### Bisect for finding errors/bugs
 
@@ -105,9 +110,9 @@ Unstage file not yet committed::
 
 	git reset --hard # revert uncommitted files
 
-	git branch -D production && git checkout production   # do both
 	git branch -D production # delete local branch
 	git checkout production # get new from server
+	git branch -D production && git checkout production   # do both
 
 delete branch both locally and remotely?:
 
@@ -171,11 +176,6 @@ Merging:
 Switch branch:
 
 	git checkout my-branch
-
-Test a specific commit:
-
-	git checkout [hash]
-	git checkout master
 
 ### Delete branch
 

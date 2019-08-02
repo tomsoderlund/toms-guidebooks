@@ -44,7 +44,7 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	flex-wrap: wrap;
+	/* flex-wrap: wrap; */
 }
 
 .box {
@@ -84,6 +84,7 @@ a:hover {
 	border-bottom: 1px dotted dodgerblue;
 }
 
+/* Nice & simple: Label flex */
 label {
 	max-width: 20em;
 	margin: auto;
@@ -97,7 +98,7 @@ label input {
 	flex: 1;
 }
 
-/* Nice & simple: Label */
+/* Nice & simple: Label float */
 label {
 	float: left;
 	width: 6em;
@@ -128,10 +129,10 @@ button,
 	transition: all 0.1s;
 	/* min-width: 15em; */
 }
-button:hover:not(:disabled),
-.button:hover:not(:disabled),
 button:focus:not(:disabled),
-.button:focus:not(:disabled) {
+.button:focus:not(:disabled),
+button:hover:not(:disabled),
+.button:hover:not(:disabled) {
 	opacity: 0.8;
 	top: -0.1em;
 	box-shadow: 0 0.2em 0.1em rgba(0, 0, 0, 0.2);

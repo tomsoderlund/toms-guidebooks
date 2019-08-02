@@ -27,6 +27,8 @@ Install https://expo.io client on your device.
 
 	yarn global add expo-cli  # or: npm install -g expo-cli
 
+(Upgrade: `yarn global upgrade expo-cli`)
+
 	expo init MyReactNativeApp
 
 	cd MyReactNativeApp
@@ -45,6 +47,9 @@ Install https://expo.io client on your device.
 	    return (
 	      <View style={styles.container}>
 	        <Text>Welcome to My App</Text>
+					<Image
+	          source={require('/react-native/img/favicon.png')}
+	        />
 	        <MyCustomComponent />
 	        <Button
 	          onPress={this.handleGenerate.bind(this)}
@@ -166,6 +171,23 @@ https://reactnavigation.org/docs/en/getting-started.html
 	  }
 	}
 
+#### State management
+
+	this.props.navigation.setParams({ myParam: 123 })
+	this.props.navigation.getParam('myParam', 'Default value')
+	this.props.navigation.state.params.myParam
+
+Set state on another screen:
+
+	import { NavigationActions } from 'react-navigation'
+
+	const setParamsAction = NavigationActions.setParams({
+		key: navigation.getParam('fromKey'),
+		params: { myParam }
+	})
+	navigation.dispatch(setParamsAction)
+
+
 ### Save state
 
 https://facebook.github.io/react-native/docs/asyncstorage
@@ -214,6 +236,10 @@ expo.Audio
 
 1. Create your app on https://appstoreconnect.apple.com/
 2. Enter the same app bundle ID in `app.json`
-3. Build with `expo build:ios`
+3. Build with `expo build:ios` (option: `--clear-provisioning-profile`)
 4. Upload IPA file with Application Loader on macOS (might need app-specific password on https://appleid.apple.com/)
 5. App Store Connect takes ~1 hour to process a new build, then you can use Testflight for testing.
+
+### Apple Certificates
+
+https://developer.apple.com/account/resources/certificates/list

@@ -37,6 +37,8 @@ List `folder/subfolder/file.ext`:
 
 	find *
 
+	find myFolder/*
+
 List `./folder/subfolder/file.ext`:
 
 	find . -name *.js -print
@@ -192,20 +194,28 @@ http://www.cs.fsu.edu/general/vimanual.html
 	top
 
 	Port usage - checks port 80:
-	lsof -i :80 
+	lsof -i :80
 
 	check memory: free
 	check disk: df -h ./
 
-### Network usage (http://www.macworld.com/article/1143351/netprocesses.html):
+### Network usage
+
+http://www.macworld.com/article/1143351/netprocesses.html
 
 	lsof -P -i -n | cut -f 1 -d " " | uniq
 
-Check version:
+### Firewall
+
+	ufw allow [PORT]
+	ufw allow 3000
+
+
+### Check version
 
 	lsb_release -a  # "Ubuntu 8.04.1 hardy"
 
-Variables:
+### Variables
 
 	export NEW_RELIC_HOME=lib/config
 	export PATH=$PATH:/path/to/my/stuff
@@ -228,7 +238,7 @@ Variables:
 	sudo killall Python
 	sudo killall -s SIGINT "process name"
 
-### history
+### History
 
 	history
 	type rvm | head -1
@@ -377,7 +387,7 @@ Debug DNS:
 ### Functions
 
 	function myFunction {
-			echo $1 
+			echo $1
 	}  
 	myFunction Hello
 
@@ -398,7 +408,7 @@ Debug DNS:
 	osascript -e 'tell application "Terminal"' \
 				-e 'set bounds of front window to {1,400,600,700}' \
 				-e 'end tell'
-			
+
 	# Change Terminal theme
 	osascript -e 'tell application "Terminal" to set current settings of front window to settings set "Ocean"'
 

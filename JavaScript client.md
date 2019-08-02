@@ -515,8 +515,10 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	string.substring(start, end) = string.slice(start, end)
 	string.slice(nrOfInitialCharsToRemove, - nrOfEndingCharsToRemove)
 
-	// See also _.capitalize
+	// See also _.capitalize and _.upperFirst
 	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
+
+	const capitalize = str => _.startCase(_.toLower(str))
 
 	// Strip HTML
 	const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
@@ -560,6 +562,16 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	newStr = str.replace('Google', 'Weld')  // first only
 	newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
 	newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
+
+	/** '{variable}' => 'value' */
+	const replaceStrings = (template, stringsObj) => {
+	  let newString = template
+	  const keys = Object.keys(stringsObj)
+	  for (let k in keys) {
+	    newString = newString.replace(new RegExp(`{${keys[k]}}`, 'g'), stringsObj[keys[k]])
+	  }
+	  return newString
+	}
 
 	const getStringBetweenTags = (source, tag1, tag2) => {
 		if (source === undefined || tag1 === undefined || tag2 === undefined) return
@@ -1018,6 +1030,27 @@ sessionStorage and localStorage
 > “Stormpath recommends that you store your JWT in cookies for web applications, because of the additional security they provide, and the simplicity of protecting against CSRF with modern web frameworks. HTML5 Web Storage is vulnerable to XSS, has a larger attack surface area, and can impact all application users on a successful attack.”
 – https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
 
+### Cookies in JS
+
+	const getCookies = () => window.document.cookie.split('; ').reduce((result, str) => {
+	  const keyValue = str.split('=')
+	  result[keyValue[0]] = keyValue[1]
+	  return result
+	}, {})
+
+	const setCookie = (key, value) => {
+	  window.document.cookie = `${key}=${value}`
+	}
+
+### js-cookie
+
+	import Cookies from 'js-cookie'
+
+	Cookies.get(COOKIE_NAME)
+	const inOneWeek = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7))
+	Cookies.set(COOKIE_NAME, user, { expires: inOneWeek })
+	Cookies.remove(COOKIE_NAME)
+
 
 ## Pure Javascript (no framework)
 
@@ -1135,8 +1168,8 @@ Tip: event handlers on `document` for move/end:
 
 	const domain = await fetch(`${config.appUrl}api/domains/${query.domainName}${queryObjectToString(query)}`).then(res => res.json())
 
-	const user = await fetch(`${API_URL}/api/usernames/${user.username}`)
-	const userJson = await user.json()
+	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
+	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
 	await fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
@@ -1380,20 +1413,28 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	const pickMatch = (options, key) => options[key] !== undefined ? options[key] : options.default
 
 	// map(object) from Lodash
-	const objectMap = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
+	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
 		result[key] = mapFunction(object[key], key)
 		return result
 	}, {})
 
-	const queryObjectFromString = str => (str.split('?')[1] || '')
+	const queryObjectFromString = url => (url.split('?')[1] || url || '')
 		.split('&')
 		.reduce((result, propValue) => {
-			result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
+			if (propValue !== '') result[propValue.split('=')[0]] = decodeURIComponent(propValue.split('=')[1])
 			return result
 		}, {})
 
 	const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
-	// const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
+	// Lodash:
+	const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
+
+	const addUrlParameters = (url, newParameters) => url.includes('http')
+	  ? url.includes('?')
+	    ? `${url}&${newParameters}`
+	    : `${url}?${newParameters}`
+	  : url
+
 	const objectToCSS = obj => Object.keys(obj).reduce((result, key) => result + `${key}: ${obj[key]}; `, '')
 
 	countObj = _.reduce(domains, function (previous, domain) {
@@ -2127,6 +2168,24 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 * `lib`: data
 * `static`: e.g. CSS files, images
 
+#### Next.js Page written as functional component with React Hooks
+
+	function MyPage ({ query }) {
+	  const { data, loading, error } = useQuery(personQuery(query.slug))
+	  if (loading) return 'Loading...'
+	  if (error) return `Error! ${error.message}`
+	  if (!data.person) return `Not found`
+	  return <main>
+	    <h1 className='capitalize'>{data.person.name}</h1>
+	  </main>
+	}
+
+	MyPage.getInitialProps = async ({ req, res, pathname, asPath, query }) => {
+	  return { query }
+	}
+
+	export default MyPage
+
 #### Minimal app
 
 	class MyApp extends React.Component {
@@ -2206,6 +2265,36 @@ Push route:
 	console.log(this.props.location.pathname)
 	this.props.history.push(`/path`)
 
+#### Next.js: next-routes (better)
+
+	// routes.js
+	const routes = require('next-routes')
+	const routesImplementation = routes()
+	routesImplementation.add('myIdentifier', '/path/:slug', 'myNextjsPage')
+
+	// Inside a view
+	import { Link } from '../myRoutes'
+	<Link route='/path/slug1'>
+		<a>My link</a>
+	</Link>
+
+	// pushRoute
+	import { Router } from '../myRoutes'
+	// With route URL
+	Router.pushRoute('/blog/hello-world')
+	// With route name and params
+	Router.pushRoute('blog', {slug: 'hello-world'})
+
+#### Next.js: next/link (built in)
+
+	import Link from 'next/link'
+
+	<Link
+		href='/aboutPage' // Internal Next.js URL
+		as='/about' // Pretty URL visible for users
+	>
+		<a>My link</a>
+	</Link>
 
 ### Components with JSX
 
@@ -2247,6 +2336,13 @@ Comparison:
 
 	// All props
 	<Button {...props} />
+
+#### Clone children - add props to children
+
+	const childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, { myProp1, myProp2 }))
+
+	// Only 1 child
+	React.cloneElement(child, { myProp1, myProp2 })
 
 #### styled-components
 

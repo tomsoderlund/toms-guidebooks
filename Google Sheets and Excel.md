@@ -96,10 +96,10 @@ In  general the last item of a column can be found like this:
 
 Second last row:
 =INDIRECT("'Manual input'!D" & ROWS('Manual input'!D:D)-1)
- 
+
 To get the last non-blank value is a bit more convoluted, e.g. like this:
 =INDEX(FILTER(A:A;NOT(ISBLANK(A:A)));ROWS(FILTER(A:A;NOT(ISBLANK(A:A)))))
- 
+
 To get the last row of a submitted data (e.g. in columns A...Z) is a tiny bit easier, because you can use the Timestamp value to sort on, e.g. like this:
 =INDEX(SORT(A2:Z;1;FALSE);1)
 
@@ -132,7 +132,7 @@ Email from "FirstName LastName <email@gmail.com>":
 =REGEXEXTRACT($A2, "\<(.*)\>")
 Domain without RegEx:
 =INDEX(SPLIT($A2,"."),LEN($A2)-len(SUBSTITUTE($A2,".","")))
-Domain:
+Domain with RegEx:
 =REGEXEXTRACT($A2, "@(.*)")
 Domain TLD/suffix:
 =REGEXEXTRACT($A2, "\.(\w*)$")
@@ -160,6 +160,9 @@ Format Firstname + Lastname + company --> email
 
 Gmail string formatting
 =B2 & " " & C2 & " <" & A2 & ">"
+
+Is interesting? Contains any of
+=if(isna(vlookup(G2,Domains!A$1:A$3,1,false)),"YES","-")
 
 Google "I'm Feeling Lucky"
 ="https://www.google.com/search?btnI&q=" & A1
