@@ -52,6 +52,7 @@ https://devcenter.heroku.com/articles/getting-started-with-nodejs
 heroku login
 heroku create myappname
 heroku config:set NODE_ENV=production #optional
+heroku config:get DATABASE_URL
 heroku addons:add papertrail
 
 heroku addons:create scheduler:standard

@@ -532,6 +532,13 @@ div:nth-child(4n+1) {
 
 	font: 30px/300px Helvetica, Arial, sans-serif;
 
+	font-family: sans-serif;
+	font-size: 12px;
+
+	font-weight: bold;
+	font-style: italic;
+	text-decoration: underline;
+
 /* Force box sizing box model. Default is 'content-box'. */
 .new_box_model {
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */

@@ -119,17 +119,24 @@ Update:
 	}
 
 
-### SQL syntax
+# SQL syntax
 
 ## Find - Select
 
 	SELECT * FROM table WHERE id = 123;
-	SELECT * FROM table WHERE columnName ILIKE 'A%';
 
+Wildcard search:
+
+	SELECT * FROM table WHERE columnName ILIKE 'A%';
 	SELECT * FROM company WHERE name ILIKE '%weld%';
+	SELECT * FROM company WHERE website NOT ILIKE 'http%'
 
 	SELECT * FROM person WHERE contact_status_date < '2019-02-09';
 	SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+
+### Multiple values
+
+	SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');
 
 ### Sorting
 
@@ -154,6 +161,15 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 	SELECT * FROM weather LEFT OUTER JOIN cities ON (weather.city = cities.name);
 	SELECT domains.id, name, avg(sai) AS avg_sai FROM domains LEFT OUTER JOIN domain_updates ON (domains.id = domain_updates.domain_id) GROUP BY domains.id;
+
+### Nested SELECT with ()
+
+	SELECT * FROM (
+	  SELECT DISTINCT ON (person.id)
+	  person.*, title,
+	  FROM person
+	) subquery
+	WHERE title='CEO';
 
 ## Create - Insert
 
@@ -204,7 +220,7 @@ Remove:
 
 	DROP TABLE person;
 
-## Cascade delete
+### Cascade delete
 
 If delete Company, then delete Person too:
 

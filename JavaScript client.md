@@ -409,6 +409,21 @@ http://javascript.crockford.com/prototypal.html
 		return result
 	}
 
+### Sum, average, median
+
+From https://www.jstips.co/en/javascript/array-average-and-median/
+
+	const sum = values => values.reduce((previous, current) => current + previous, 0)
+
+	const average = values => sum(values) / values.length
+
+	const median = values => {
+	  values.sort((a, b) => a - b)
+	  const lowMiddle = Math.floor((values.length - 1) / 2)
+	  const highMiddle = Math.ceil((values.length - 1) / 2)
+	  return (values[lowMiddle] + values[highMiddle]) / 2
+	}
+
 ### Power/root
 
 	Math.pow(3, 2)
@@ -1390,6 +1405,12 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.assign({}, o1, o2) // safe inheritance
 	const merged = {...obj1, ...obj2}
 
+	// Optional props
+	const obj = {
+		count: 1,
+		true && {  }
+	}
+
 	// pick
 	const { a, c } = { a: 1, b: 2, c: 3 }
 	const keyToRemove = 'mykey'
@@ -1596,9 +1617,12 @@ Related:
 	// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
 	module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
 
+	// includesSome is NOT pickAny
 	// includesSome(url, ['localhost', 'staging'])
 	module.exports.includesSome = (parentObj, childObjects) => _.filter(childObjects, childObj => _.includes(parentObj, childObj))
 	_.mixin({ 'includesSome': module.exports.includesSome })
+	const includesSome = (parentObj, childObjects) => childObjects.filter(childObj => parentObj.includes(childObj))
+	const startsWithSome = (parentObj, childObjects) => childObjects.filter(childObj => parentObj.startsWith(childObj))
 
 	var doWhen = function (func, expressionFunc, failFunc, iterations) {
 		iterations = iterations || 0
@@ -2343,6 +2367,31 @@ Comparison:
 
 	// Only 1 child
 	React.cloneElement(child, { myProp1, myProp2 })
+
+### React Hooks
+
+https://reactjs.org/docs/hooks-overview.html
+
+- `useState(initialState)`: returns `[state, setState]`.
+- `useEffect(fn, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
+- `useContext`
+- `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
+- `useCallback(fn, [deps])`: returns a memoized version of the callback that only changes if one of the dependencies has changed. Use to prevent this passing a new function each render.
+- `useMemo(() => computeExpensiveValue(a, b), [a, b])`: Returns a memoized value.
+- `useRef(initialValue)`: returns a mutable ref object.
+- `useImperativeHandle(ref, createHandle, [deps])`
+- `useLayoutEffect(fn, [deps])`: identical to useEffect, but it fires synchronously after all DOM mutations.
+- `useDebugValue(value)`: to display a label for custom hooks in React DevTools.
+
+**Note:** never call Hooks inside loops, conditions, or nested functions – https://reactjs.org/docs/hooks-rules.html
+
+#### React Context
+
+https://reactjs.org/docs/context.html
+
+- myContext = React.createContext(defaultValue)
+- React.useContext(myContext) // hook
+- myContext.Provider
 
 #### styled-components
 
