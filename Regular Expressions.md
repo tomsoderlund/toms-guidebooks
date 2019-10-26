@@ -34,6 +34,11 @@ Domain from URL - https://regex101.com/r/MOIFTy/3
 
 	/^(?:https?:)?(?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/igm
 
+Find all links EXCLUDING "screen:"
+
+	/href="((?!screen:).+)"/g
+
+
 ### CSV
 
 	\n".*(\n).*"

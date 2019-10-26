@@ -18,11 +18,11 @@ Change:
 	ls
 	cd
 	pwd
-	mkdir
+	mkdir -p deep/folder/path
+	mkdir {folder1,folder2,folder3}
 
 	ls -R
 
-	mkdir {development,remote,deploy}
 
 ### Find and delete empty folders
 

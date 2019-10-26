@@ -58,7 +58,7 @@ body {
 
 ## Nice & Simple CSS objects
 
-/* Nice & simple: Main - margin:auto */
+/* #NiceAndSimple: Main - margin:auto */
 main {
 	margin: 0.5em auto;
 	width: 80%;
@@ -72,7 +72,7 @@ main {
 	}
 }
 
-/* Nice & simple: Links */
+/* #NiceAndSimple: Links */
 a {
 	color: dodgerblue;
 	text-decoration: none;
@@ -84,7 +84,7 @@ a:hover {
 	border-bottom: 1px dotted dodgerblue;
 }
 
-/* Nice & simple: Label flex */
+/* #NiceAndSimple: Label flex */
 label {
 	max-width: 20em;
 	margin: auto;
@@ -98,14 +98,14 @@ label input {
 	flex: 1;
 }
 
-/* Nice & simple: Label float */
+/* #NiceAndSimple: Label float */
 label {
 	float: left;
 	width: 6em;
 	text-align: right;
 }
 
-/* Nice & simple: Button - http://codepen.io/tomsoderlund/pen/qqyzqp */
+/* #NiceAndSimple: Button - http://codepen.io/tomsoderlund/pen/qqyzqp */
 button,
 .button {
 	position: relative;
@@ -130,7 +130,9 @@ button,
 	/* min-width: 15em; */
 }
 button:focus:not(:disabled),
-.button:focus:not(:disabled),
+.button:focus:not(:disabled) {
+	opacity: 0.8;
+}
 button:hover:not(:disabled),
 .button:hover:not(:disabled) {
 	opacity: 0.8;
@@ -153,7 +155,7 @@ a.button {
 }
 
 
-/* Nice & simple: Input and Dropdown Menu - http://codepen.io/tomsoderlund/pen/GNBbWz */
+/* #NiceAndSimple: Input and Dropdown Menu - http://codepen.io/tomsoderlund/pen/GNBbWz */
 input,
 textarea,
 select {
@@ -200,7 +202,7 @@ select:disabled {
 }
 
 
-/* Nice & simple: Tag */
+/* #NiceAndSimple: Tag */
 .tag {
 	display: inline-block;
 	cursor: pointer;
@@ -224,13 +226,13 @@ select:disabled {
 }
 
 
-/* Nice & simple: List
+/* #NiceAndSimple: List
 ol {
 	list-style-type: decimal;
 	list-style-position: inside;
 }
 
-/* Nice & simple: Table - https://codepen.io/tomsoderlund/pen/mmZrRR */
+/* #NiceAndSimple: Table - https://codepen.io/tomsoderlund/pen/mmZrRR */
 table {
 	border-collapse: collapse;
 }
@@ -250,7 +252,7 @@ tr:nth-child(2n+0) {
 }
 
 
-/* Nice & simple: Horisontal rule */
+/* #NiceAndSimple: Horisontal rule */
 hr {
 	border: 0;
 	height: 1px;
@@ -261,7 +263,7 @@ hr {
 
 
 
-/* Nice & simple: Radio Button */
+/* #NiceAndSimple: Radio Button */
 $color_radio_background: white;
 $color_radio_active: dodgerblue;
 
@@ -270,6 +272,29 @@ $color_radio_active: dodgerblue;
 }
 
 // Slider
+<input type="button">
+<input type="checkbox">
+<input type="color">
+<input type="date">
+<input type="datetime-local">
+<input type="email">
+<input type="file">
+<input type="hidden">
+<input type="image">
+<input type="month">
+<input type="number">
+<input type="password">
+<input type="radio">
+<input type="range">
+<input type="reset">
+<input type="search">
+<input type="submit">
+<input type="tel">
+<input type="text">
+<input type="time">
+<input type="url">
+<input type="week">
+
 <input type="range" id="hue" min="0" max="360"/>
 
 input[type="range"] {
@@ -538,6 +563,7 @@ div:nth-child(4n+1) {
 	font-weight: bold;
 	font-style: italic;
 	text-decoration: underline;
+	text-transform: uppercase;
 
 /* Force box sizing box model. Default is 'content-box'. */
 .new_box_model {
@@ -614,18 +640,18 @@ div:nth-child(4n+1) {
 /*   change 'to bottom' to '45deg' for angle */
 .fx_gradient_linear {
 	background: #ff3232; /* Old browsers */
-	background: -moz-linear-gradient(top,  #ff3232 0%, #ffffff 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  #ff3232 0%, #ffffff 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  #ff3232 0%, #ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: -moz-linear-gradient(top, #ff3232 0%, #ffffff 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #ff3232 0%, #ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #ff3232 0%, #ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
 
 /* Circular gradient: http://colorzilla.com/gradient-editor/#ff3232+0,ffffff+100 */
 .fx_gradient_radial {
 	background: #ff3232; /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  #ff3232 0%, #ffffff 100%); /* FF3.6-15 */
-	background: -webkit-radial-gradient(center, ellipse cover,  #ff3232 0%, #ffffff 100%); /* Chrome10-25,Safari5.1-6 */
-	background: radial-gradient(ellipse at center,  #ff3232 0%, #ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: -moz-radial-gradient(center, ellipse cover, #ff3232 0%, #ffffff 100%); /* FF3.6-15 */
+	background: -webkit-radial-gradient(center, ellipse cover, #ff3232 0%, #ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+	background: radial-gradient(ellipse at center, #ff3232 0%, #ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 

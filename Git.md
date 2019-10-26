@@ -83,28 +83,11 @@ Quick:
 	git checkout [hash]
 	git checkout master
 
-### Bisect for finding errors/bugs
+### Undo/revert/rollback/unstage/reset
 
-(first find a good version by testing randomly or using git log)
+	git checkout . # this removes all changes marked in red
 
-	git bisect start
-	git bisect bad  # Current version is bad
-	git bisect good ddff66ee  # Commit 'ddff66ee' is known to be good
-	git bisect reset
-
-### Undo & Redo commit
-
-	git commit -m "Something terribly misguided"
-	git reset HEAD~
-
-... edit files as necessary
-
-	git add ...
-	git commit -c ORIG_HEAD
-
-### Undo/revert/rollback
-
-Unstage file not yet committed::
+Unstage file not yet committed:
 
 	git reset <file>
 
@@ -114,7 +97,17 @@ Unstage file not yet committed::
 	git checkout production # get new from server
 	git branch -D production && git checkout production   # do both
 
-delete branch both locally and remotely?:
+### Undo & Redo commit
+
+	git commit -m "Something terribly misguided"
+	git reset HEAD~
+
+...edit files as necessary
+
+	git add ...
+	git commit -c ORIG_HEAD
+
+### delete branch both locally and remotely
 
 	git branch -d MY-BRANCH && git push origin :MY-BRANCH   # (caps D for force deletion)
 
@@ -127,15 +120,24 @@ delete branch both locally and remotely?:
 	git reset HEAD <file> # unstages the file in the current commit.
 	git rm --cached <file> # will unstage the file for future commits also. It's unstaged untill it gets added again with git add <file>.
 
-Undo a commit and redo
+### Undo a commit and redo
 
-	git commit ...              (1)
-	git reset --soft 'HEAD^'    (2)
+		git commit ...              (1)
+		git reset --soft 'HEAD^'    (2)
 
-$ edit                        (3)
+	$ edit                        (3)
 
-	git add ....                (4)
-	git commit -c ORIG_HEAD     (5)
+		git add ....                (4)
+		git commit -c ORIG_HEAD     (5)
+
+### Bisect for finding errors/bugs
+
+(first find a good version by testing randomly or using git log)
+
+	git bisect start
+	git bisect bad  # Current version is bad
+	git bisect good ddff66ee  # Commit 'ddff66ee' is known to be good
+	git bisect reset
 
 ## Move files
 

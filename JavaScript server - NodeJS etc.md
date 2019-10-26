@@ -92,11 +92,19 @@ Scheduler: "node app/scheduler/postToSlack.js"
 
 https://zeit.co/now
 
+	yarn global upgrade now@latest
+
 	now switch  # Switch teams
 
 Deploy
 
 	now
+	now -e BING_API_KEY=
+	now -e BING_API_KEY=@my-now-secret
+
+Now Secrets
+
+	now secret add my-now-secret my-value-here
 
 List deployments
 
@@ -106,10 +114,28 @@ Delete deployment
 
 	now rm https://zeit-es38wlezy.now.sh/
 
-Domain:
+Domains and Aliases:
 
 	now alias https://scraping-service-lb71ypc0g.now.sh scraping-service
+	now alias my-alias
 
+### now.json
+
+https://zeit.co/docs/configuration/
+
+### Serverless functions
+
+- `/api` folder
+- All REST actions go here
+- `/api/people/[person].js`: will receive `req.query.person`
+- Run `now dev` to test locally. Place environment in `.env`.
+
+Example module:
+
+	module.exports = (req, res) => {
+	  const { method, url, headers, body, query, cookies } = req
+	  res.json({ method, url, headers, body, query, cookies })
+	}
 
 ## NPM
 
@@ -308,7 +334,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 #### 301 or 302
 
-	res.set('location', newUrl)
+	res.writeHead(302, { Location: 'your/404/path.html' })
+	res.end()
 
 	res.statusCode = 404
 	res.statusMessage = 'Not found'
@@ -325,7 +352,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 Express only:
 
-	res.status(302).send()
+	res.status(302).end()
+	res.set('location', newUrl)
 	res.send = Express write() + end()
 	res.json(myObj)
 
@@ -427,11 +455,20 @@ Client (header):
 
 Server - generate token:
 
-	return (new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payload)
+	yarn add jsonwebtoken
+
+	// Sign/generate
+	jwt.sign(payload, secretOrPrivateKey, [options, callback])
+
+	// Verify
+	jwt.verify(token, secretOrPublicKey, [options, callback])
+
+	// Firebase
+	(new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payload)
 
 Server - verify access:
 
-	const jwt = require('express-jwt')
+	const jwt = require('express-jwt') // https://github.com/auth0/express-jwt
 
 	module.exports.jwtAuthentication = jwt({
 		secret: process.env.MY_SECRET,
@@ -556,6 +593,11 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 			}
 		}
 		return result
+	}
+
+	const parseFile = async function (filename) {
+	  const fsPromises = require('fs').promises
+	  const text = await fsPromises.readFile(filename, 'utf8')
 	}
 
 	const openFile = function (filename, cb) {
@@ -1116,14 +1158,52 @@ Types/Scalars:
 - Boolean: true or false
 - ID (serialized as String)
 
-Next.js:
+### Queries
 
-- Global: https://github.com/zeit/next.js/tree/master/examples/with-apollo
-- Per page: https://github.com/adamsoffer/next-apollo-example
+	{
+		articles {
+			title
+		}
+	}
+
+Filter:
+
+	{
+		articles(category: "news") {
+			title
+		}
+	}
+
+Fragments:
+
+  fragment GameShortInfo on Game {
+    id
+    title
+  }
+
+  query GamesList($system: String) {
+    games (system: $system) {
+      ...GameShortInfo
+    }
+  }
+
+_Note: GamesList($system: String!) for mandatory parameter_
+
+Nested query:
+
+	{
+		articles {
+			title
+	    # Queries can have comments!
+	    author {
+	      name
+	    }
+		}
+	}
 
 ### Server
 
-	yarn add graphql apollo-server(-express)
+	yarn add graphql apollo-server(-express/-micro)
 
 server.js:
 
@@ -1133,6 +1213,33 @@ server.js:
 
 	const apolloServer = new ApolloServer({ typeDefs, resolvers })
 	apolloServer.applyMiddleware({ app: server })
+
+### Next.js
+
+- Global: https://github.com/zeit/next.js/tree/master/examples/with-apollo
+- New:    https://github.com/zeit/next.js/tree/canary/examples/with-apollo
+- Per page: https://github.com/adamsoffer/next-apollo-example
+
+### Zeit Now
+
+https://zeit.co/guides/deploying-apolloserver-to-now
+
+	yarn add apollo-server-micro graphql
+	mkdir -p api/graphql
+	touch api/graphql/index.js
+
+api/graphql/index.js:
+
+	const { ApolloServer, gql } = require('apollo-server-micro')
+
+	const server = new ApolloServer({
+	  typeDefs,
+	  resolvers,
+	  introspection: true,
+	  playground: true
+	})
+
+	module.exports = server.createHandler({ path: '/api/graphql' })
 
 
 # Desktop App

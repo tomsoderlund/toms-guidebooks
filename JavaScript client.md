@@ -2,7 +2,7 @@
 
 Exclude:
 
-	-node_modules/,-.next/,-yarn*
+	-node_modules/,-.next/,-build/,-dist/,-yarn*
 
 ## Javascript include
 
@@ -25,8 +25,6 @@ https://github.com/sorrycc/awesome-javascript
 CommonJS: export object
 
 http://stackoverflow.com/questions/16521471/relation-between-commonjs-amd-and-requirejs
-
-webpack
 
 UMD: https://github.com/umdjs/umd
 e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
@@ -99,21 +97,21 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 ### try/catch, throw, finally
 
+	throw new Error('Something went wrong')
+
 	try {
-		adddlert("Welcome guest!")
+		throw new Error('Something went wrong')
 	}
 	catch (err) {
-		console.error(err)
+		console.error(`Error: ${err.message || err}`)
 	}
 	finally {
-		// Block of code to be executed regardless of the try / catch result
+		// Code to be executed regardless of the try/catch result
 	}
 
 ### Console
 
-	console.warn
-
-	throw new Error('Something went wrong')
+	console.log/warn/error
 
 	console.log(event.fromElement.tagName) // works only in Firefox?
 	process.stdout.write('no line')
@@ -424,6 +422,9 @@ From https://www.jstips.co/en/javascript/array-average-and-median/
 	  return (values[lowMiddle] + values[highMiddle]) / 2
 	}
 
+  min = Math.min(...values)
+  max = Math.max(...values)
+
 ### Power/root
 
 	Math.pow(3, 2)
@@ -533,6 +534,8 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	// See also _.capitalize and _.upperFirst
 	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
 
+	const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+
 	const capitalize = str => _.startCase(_.toLower(str))
 
 	// Strip HTML
@@ -577,6 +580,16 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	newStr = str.replace('Google', 'Weld')  // first only
 	newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
 	newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
+
+	const characterReplacements = {
+	  ' ': '-'
+	}
+
+	const replaceAll = (str, dictionary, reverse = false) => Object.keys(dictionary).reduce((result, phrase, index) => {
+	  const fromStr = reverse ? Object.values(dictionary)[index] : phrase
+	  const toStr = reverse ? phrase : Object.values(dictionary)[index]
+	  return result.replace(new RegExp(fromStr, 'g'), toStr)
+	}, str)
 
 	/** '{variable}' => 'value' */
 	const replaceStrings = (template, stringsObj) => {
@@ -636,6 +649,14 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 		return this.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase()
 	}
 
+	// https://stackoverflow.com/a/52171480/449227
+	const hashCode = str => {
+	  let h
+	  for (let i = 0; i < str.length; i++) {
+	    h = Math.imul(31, h) + str.charCodeAt(i) | 0
+	  }
+	  return h
+	}
 
 ### Regular Expressions in JavaScript / regex
 
@@ -651,6 +672,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	// replace: replace a string
 	const result = str.replace(regExp, newStr)
+	const result = str.replace(new RegExp('\w+', 'g'), newStr)
 
 	// match: executes a search for a match in a string, returns an array of information or null on a mismatch
 	const regexpMatchArray = myString.match(/\d+(\.\d{1,15})?/g)
@@ -685,6 +707,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	encodeURIComponent('ÅÄÖ&') -> "%C3%85%C3%84%C3%96%26"
 	decodeURIComponent('')
 
+  // yarn add html-entities
 	const Entities = require('html-entities').XmlEntities
 	const entities = new Entities()
 	entities.decode('&quotKeywords by Site&quot')
@@ -793,11 +816,14 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 		return size
 	}
 
+
 ### JSON
 
 	str = JSON.stringify(obj, null, 2) // value, replacerArrayOrFunction, spacer
 	str = JSON.stringify(obj)
 	obj = JSON.parse(str)
+
+	const parseObject = obj => (typeof(obj) === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
 
 
 ## Dates & Time
@@ -852,12 +878,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	oneYearFromNow = new Date((new Date()).getTime() + 365*24*60*60*1000)
 
 	// Calculate difference between dates
-	var daysBetweenDates = function (date1, date2) {
-		var diff = new Date(date2.getTime() - date1.getTime())
-		// return (diff.getUTCFullYear() - 1970) // Gives difference as year
-		// return (diff.getUTCMonth()) // Gives month count of difference
-		return (diff.getUTCDate() - 1) // Gives day count of difference
-	}
+	const daysBetweenDates = (date1, date2 = new Date()) => (date2.getTime() - date1.getTime()) / (24*60*60*1000)
 
 	// Timestamp in milliseconds
 	new Date().getTime() => 1390569315900
@@ -1053,8 +1074,8 @@ sessionStorage and localStorage
 	  return result
 	}, {})
 
-	const setCookie = (key, value) => {
-	  window.document.cookie = `${key}=${value}`
+	const setCookie = (name, value) => {
+	  window.document.cookie = `${name}=${JSON.stringify(value)}`
 	}
 
 ### js-cookie
@@ -1062,7 +1083,7 @@ sessionStorage and localStorage
 	import Cookies from 'js-cookie'
 
 	Cookies.get(COOKIE_NAME)
-	const inOneWeek = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 7))
+	const inOneWeek = new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000))
 	Cookies.set(COOKIE_NAME, user, { expires: inOneWeek })
 	Cookies.remove(COOKIE_NAME)
 
@@ -1181,7 +1202,7 @@ Tip: event handlers on `document` for move/end:
 
 #### Fetch
 
-	const domain = await fetch(`${config.appUrl}api/domains/${query.domainName}${queryObjectToString(query)}`).then(res => res.json())
+	const domain = await fetch(url).then(res => res.json()) // or res.text() for HTML
 
 	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
@@ -1211,6 +1232,13 @@ Open window:
 	window.open(pageURL, 'ts_window', 'width=300,height=600,scrollbars=no,titlebar=no,location=no,menubar=no,toolbar=no,status=no,resizable=no', false)
 
 	window.close()
+
+### History
+
+	window.location.href
+
+  window.history.pushState('object or string', 'Title', '/new-url')
+  window.history.pushState(null, null, 'https://twitter.com/hello')
 
 ### Forms
 
@@ -1390,9 +1418,13 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].map((n, index) => n * 3)
 	[1, 2, 3].reduce((result, n) => result + n, 0)
 	[1, 2, 3].filter((n, index) => n < 2)
+	objs.sort((a, b) => (a.property > b.property) ? 1 : ((b.property > a.property) ? -1 : 0))
+	const sortBy = (array, property) => array.sort((a, b) => (a[property] > b[property]) ? 1 : ((b[property] > a[property]) ? -1 : 0))
 
 	Object.keys(obj)
 	Object.values(obj)
+
+	isEmpty = obj => Object.keys(obj).length === 0
 
 	// head/tail
 	const [head, ...tail] = [1, 2, 3]
@@ -1447,6 +1479,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 		}, {})
 
 	const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
+	const queryObjectToStringIfNotUndefined = queryObject => Object.keys(queryObject).reduce((result, key) => (queryObject[key] === undefined) ? result : result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
 	// Lodash:
 	const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
 
@@ -1505,6 +1538,46 @@ index.js
 			file.serve(request, response)
 		}).resume()
 	}).listen(portNr)
+
+
+## Webpack
+
+https://medium.com/@kimberleycook/intro-to-webpack-1d035a47028d
+
+	yarn add webpack webpack-cli --dev
+	touch webpack.config.js
+
+`package.json`:
+
+	"webpack": "webpack-cli",
+
+`webpack.config.js`:
+
+	module.exports = {
+	  mode: 'production', // 'development'
+	  entry: [
+	    './src/public/js/clientUser.js'
+	  ],
+	  output: {
+	    filename: 'index.js',
+	    path: __dirname + '/dist'
+	  },
+	  module: {
+	    rules: [ // formerly 'loaders'
+	    ]
+	  },
+	  plugins: [
+	    // new HtmlWebpackPlugin({
+	    //   template: __dirname + '/src/views/campaigns/list.ejs',
+	    //   filename: 'list.ejs'
+	    // })
+	  ]
+	}
+
+
+### Plugins: HTML/EJS
+
+	yarn add html-webpack-plugin --dev
 
 
 ## Lodash / Underscore
@@ -1658,374 +1731,6 @@ Related:
 	}
 	_.mixin({ 'collectionToArray': collectionToArray })
 
-### All
-
-	_()	(Chain/Seq)
-	_.add	(Math)
-	_.after	(Function)
-	_.all -> every	(Collections)	(v3 only)
-	_.any -> some	(Collections)	(v3 only)
-	_.ary	(Function)
-	_.assign	(Object)
-	_.assignIn	(Object)	(v4 only)
-	_.assignInWith	(Object)	(v4 only)
-	_.assignWith	(Object)	(v4 only)
-	_.at	(Collections/Object)
-	_.attempt	(Utility)
-	_.backflow -> flowRight	(Function)	(v3 only)
-	_.before	(Function)
-	_.bind	(Function)
-	_.bindAll	(Function/Util)
-	_.bindKey	(Function)
-	_.callback	(Utility)	(v3 only)
-	_.camelCase	(String)
-	_.capitalize	(String)
-	_.castArray	(Lang)	(v4 only)
-	_.ceil	(Math)
-	_.chain	(Chain/Seq)
-	_.chunk	(Array)
-	_.clamp	(Number)	(v4 only)
-	_.clone	(Lang)
-	_.cloneDeep	(Lang)
-	_.cloneDeepWith	(Lang)	(v4 only)
-	_.cloneWith	(Lang)	(v4 only)
-	_.collect -> map	(Collections)	(v3 only)
-	_.compact	(Array)
-	_.compose -> flowRight	(Function)	(v3 only)
-	_.concat	(Array)	(v4 only)
-	_.cond	(Utility)	(v4 only)
-	_.conforms	(Utility)	(v4 only)
-	_.conformsTo	(Lang)	(v4 only)
-	_.constant	(Utility)
-	_.contains -> includes	(Collections)	(v3 only)
-	_.countBy	(Collections)
-	_.create	(Object)
-	_.curry	(Function)
-	_.curryRight	(Function)
-	_.debounce	(Function)
-	_.deburr	(String)
-	_.defaults	(Object)
-	_.defaultsDeep	(Object)
-	_.defaultTo	(Utility)	(v4 only)
-	_.defer	(Function)
-	_.delay	(Function)
-	_.detect -> find	(Collections)	(v3 only)
-	_.difference	(Array)
-	_.differenceBy	(Array)	(v4 only)
-	_.differenceWith	(Array)	(v4 only)
-	_.divide	(Math)	(v4 only)
-	_.drop	(Array)
-	_.dropRight	(Array)
-	_.dropRightWhile	(Array)
-	_.dropWhile	(Array)
-	_.each -> forEach	(Collections)
-	_.eachRight -> forEachRight	(Collections)
-	_.endsWith	(String)
-	_.entries -> toPairs	(Object)	(v4 only)
-	_.entriesIn -> toPairsIn	(Object)	(v4 only)
-	_.eq	(Lang)	(v4 only)
-	_.eq -> isEqual	(Lang)	(v3 only)
-	_.escape	(String)
-	_.escapeRegExp	(String)
-	_.every	(Collections)
-	_.extend -> assign	(Object)	(v3 only)
-	_.extend -> assignIn	(Object)	(v4 only)
-	_.extendWith -> assignInWith	(Object)	(v4 only)
-	_.fill	(Array)
-	_.filter	(Collections)
-	_.find	(Collections)
-	_.findIndex	(Array)
-	_.findKey	(Object)
-	_.findLast	(Collections)
-	_.findLastIndex	(Array)
-	_.findLastKey	(Object)
-	_.findWhere	(Collections)	(v3 only)
-	_.first	(Array)	(v3 only)
-	_.first -> head	(Array)	(v4 only)
-	_.flatMap	(Collections)	(v4 only)
-	_.flatMapDeep	(Collections)	(v4 only)
-	_.flatMapDepth	(Collections)	(v4 only)
-	_.flatten	(Array)
-	_.flattenDeep	(Array)
-	_.flattenDepth	(Array)	(v4 only)
-	_.flip	(Function)	(v4 only)
-	_.floor	(Math)
-	_.flow	(Function/Util)
-	_.flowRight	(Function/Util)
-	_.foldl -> reduce	(Collections)	(v3 only)
-	_.foldr -> reduceRight	(Collections)	(v3 only)
-	_.forEach	(Collections)
-	_.forEachRight	(Collections)
-	_.forIn	(Object)
-	_.forInRight	(Object)
-	_.forOwn	(Object)
-	_.forOwnRight	(Object)
-	_.fromPairs	(Array)	(v4 only)
-	_.functions	(Object)
-	_.functionsIn	(Object)	(v4 only)
-	_.get	(Object)
-	_.groupBy	(Collections)
-	_.gt	(Lang)
-	_.gte	(Lang)
-	_.has	(Object)
-	_.hasIn	(Object)	(v4 only)
-	_.head	(Array)	(v4 only)
-	_.head -> first	(Array)	(v3 only)
-	_.identity	(Utility)
-	_.include -> includes	(Collections)	(v3 only)
-	_.includes	(Collections)
-	_.indexBy	(Collections)	(v3 only)
-	_.indexOf	(Array)
-	_.initial	(Array)
-	_.inject -> reduce	(Collections)	(v3 only)
-	_.inRange	(Number/Number)
-	_.intersection	(Array)
-	_.intersectionBy	(Array)	(v4 only)
-	_.intersectionWith	(Array)	(v4 only)
-	_.invert	(Object)
-	_.invertBy	(Object)	(v4 only)
-	_.invoke	(Collections/Object)
-	_.invokeMap	(Collections)	(v4 only)
-	_.isArguments	(Lang)
-	_.isArray	(Lang)
-	_.isArrayBuffer	(Lang)	(v4 only)
-	_.isArrayLike	(Lang)	(v4 only)
-	_.isArrayLikeObject	(Lang)	(v4 only)
-	_.isBoolean	(Lang)
-	_.isBuffer	(Lang)	(v4 only)
-	_.isDate	(Lang)
-	_.isElement	(Lang)
-	_.isEmpty	(Lang)
-	_.isEqual	(Lang)
-	_.isEqualWith	(Lang)	(v4 only)
-	_.isError	(Lang)
-	_.isFinite	(Lang)
-	_.isFunction	(Lang)
-	_.isInteger	(Lang)	(v4 only)
-	_.isLength	(Lang)	(v4 only)
-	_.isMap	(Lang)	(v4 only)
-	_.isMatch	(Lang)
-	_.isMatchWith	(Lang)	(v4 only)
-	_.isNaN	(Lang)
-	_.isNative	(Lang)
-	_.isNil	(Lang)	(v4 only)
-	_.isNull	(Lang)
-	_.isNumber	(Lang)
-	_.isObject	(Lang)
-	_.isObjectLike	(Lang)	(v4 only)
-	_.isPlainObject	(Lang)
-	_.isRegExp	(Lang)
-	_.isSafeInteger	(Lang)	(v4 only)
-	_.isSet	(Lang)	(v4 only)
-	_.isString	(Lang)
-	_.isSymbol	(Lang)	(v4 only)
-	_.isTypedArray	(Lang)
-	_.isUndefined	(Lang)
-	_.isWeakMap	(Lang)	(v4 only)
-	_.isWeakSet	(Lang)	(v4 only)
-	_.iteratee	(Utility)	(v4 only)
-	_.iteratee -> callback	(Utility)	(v3 only)
-	_.join	(Array)	(v4 only)
-	_.kebabCase	(String)
-	_.keyBy	(Collections)	(v4 only)
-	_.keys	(Object)
-	_.keysIn	(Object)
-	_.last	(Array)
-	_.lastIndexOf	(Array)
-	_.lowerCase	(String)	(v4 only)
-	_.lowerFirst	(String)	(v4 only)
-	_.lt	(Lang)
-	_.lte	(Lang)
-	_.map	(Collections)
-	_.mapKeys	(Object)
-	_.mapValues	(Object)
-	_.matches	(Utility)
-	_.matchesProperty	(Utility)
-	_.max	(Math)
-	_.maxBy	(Math)	(v4 only)
-	_.mean	(Math)	(v4 only)
-	_.meanBy	(Math)	(v4 only)
-	_.memoize	(Function)
-	_.merge	(Object)
-	_.mergeWith	(Object)	(v4 only)
-	_.method	(Utility)
-	_.methodOf	(Utility)
-	_.methods -> functions	(Object)	(v3 only)
-	_.min	(Math)
-	_.minBy	(Math)	(v4 only)
-	_.mixin	(Utility)
-	_.modArgs	(Function)	(v3 only)
-	_.multiply	(Math)	(v4 only)
-	_.negate	(Function)
-	_.noConflict	(Utility)
-	_.noop	(Utility)
-	_.now	(Date/Date)
-	_.nth	(Array)	(v4 only)
-	_.nthArg	(Utility)	(v4 only)
-	_.object -> zipObject	(Array)	(v3 only)
-	_.omit	(Object)
-	_.omitBy	(Object)	(v4 only)
-	_.once	(Function)
-	_.orderBy	(Collections)	(v4 only)
-	_.over	(Utility)	(v4 only)
-	_.overArgs	(Function)	(v4 only)
-	_.overEvery	(Utility)	(v4 only)
-	_.overSome	(Utility)	(v4 only)
-	_.pad	(String)
-	_.padEnd	(String)	(v4 only)
-	_.padLeft	(String)	(v3 only)
-	_.padRight	(String)	(v3 only)
-	_.padStart	(String)	(v4 only)
-	_.pairs	(Object)	(v3 only)
-	_.parseInt	(String)
-	_.partial	(Function)
-	_.partialRight	(Function)
-	_.partition	(Collections)
-	_.pick	(Object)
-	_.pickBy	(Object)	(v4 only)
-	_.pluck	(Collections)	(v3 only)
-	_.property	(Utility)
-	_.propertyOf	(Utility)
-	_.prototype.at	(Seq)	(v4 only)
-	_.prototype.chain	(Chain/Seq)
-	_.prototype.commit	(Chain/Seq)
-	_.prototype.concat	(Chain)	(v3 only)
-	_.prototype.next	(Seq)	(v4 only)
-	_.prototype.plant	(Chain/Seq)
-	_.prototype.reverse	(Chain/Seq)
-	_.prototype.run -> value	(Chain)	(v3 only)
-	_.prototype.toJSON -> value	(Chain/Seq)
-	_.prototype.toString	(Chain)	(v3 only)
-	_.prototype.value	(Chain/Seq)
-	_.prototype.valueOf -> value	(Chain/Seq)
-	_.prototype[Symbol.iterator]	(Seq)	(v4 only)
-	_.pull	(Array)
-	_.pullAll	(Array)	(v4 only)
-	_.pullAllBy	(Array)	(v4 only)
-	_.pullAllWith	(Array)	(v4 only)
-	_.pullAt	(Array)
-	_.random	(Number/Number)
-	_.range	(Utility)
-	_.rangeRight	(Utility)	(v4 only)
-	_.rearg	(Function)
-	_.reduce	(Collections)
-	_.reduceRight	(Collections)
-	_.reject	(Collections)
-	_.remove	(Array)
-	_.repeat	(String)
-	_.replace	(String)	(v4 only)
-	_.rest	(Array/Function)
-	_.restParam	(Function)	(v3 only)
-	_.result	(Object)
-	_.reverse	(Array)	(v4 only)
-	_.round	(Math)
-	_.runInContext	(Utility)
-	_.sample	(Collections)
-	_.sampleSize	(Collections)	(v4 only)
-	_.select -> filter	(Collections)	(v3 only)
-	_.set	(Object)
-	_.setWith	(Object)	(v4 only)
-	_.shuffle	(Collections)
-	_.size	(Collections)
-	_.slice	(Array)
-	_.snakeCase	(String)
-	_.some	(Collections)
-	_.sortBy	(Collections)
-	_.sortByAll	(Collections)	(v3 only)
-	_.sortByOrder	(Collections)	(v3 only)
-	_.sortedIndex	(Array)
-	_.sortedIndexBy	(Array)	(v4 only)
-	_.sortedIndexOf	(Array)	(v4 only)
-	_.sortedLastIndex	(Array)
-	_.sortedLastIndexBy	(Array)	(v4 only)
-	_.sortedLastIndexOf	(Array)	(v4 only)
-	_.sortedUniq	(Array)	(v4 only)
-	_.sortedUniqBy	(Array)	(v4 only)
-	_.split	(String)	(v4 only)
-	_.spread	(Function)
-	_.startCase	(String)
-	_.startsWith	(String)
-	_.stubArray	(Utility)	(v4 only)
-	_.stubFalse	(Utility)	(v4 only)
-	_.stubObject	(Utility)	(v4 only)
-	_.stubString	(Utility)	(v4 only)
-	_.stubTrue	(Utility)	(v4 only)
-	_.subtract	(Math)	(v4 only)
-	_.sum	(Math)
-	_.sumBy	(Math)	(v4 only)
-	_.support	(Properties)	(v3 only)
-	_.tail	(Array)	(v4 only)
-	_.tail -> rest	(Array)	(v3 only)
-	_.take	(Array)
-	_.takeRight	(Array)
-	_.takeRightWhile	(Array)
-	_.takeWhile	(Array)
-	_.tap	(Chain/Seq)
-	_.template	(String)
-	_.templateSettings	(Properties)
-	_.templateSettings.escape	(Properties)
-	_.templateSettings.evaluate	(Properties)
-	_.templateSettings.imports	(Properties)
-	_.templateSettings.imports._	(Properties/Methods)
-	_.templateSettings.interpolate	(Properties)
-	_.templateSettings.variable	(Properties)
-	_.throttle	(Function)
-	_.thru	(Chain/Seq)
-	_.times	(Utility)
-	_.toArray	(Lang)
-	_.toFinite	(Lang)	(v4 only)
-	_.toInteger	(Lang)	(v4 only)
-	_.toLength	(Lang)	(v4 only)
-	_.toLower	(String)	(v4 only)
-	_.toNumber	(Lang)	(v4 only)
-	_.toPairs	(Object)	(v4 only)
-	_.toPairsIn	(Object)	(v4 only)
-	_.toPath	(Utility)	(v4 only)
-	_.toPlainObject	(Lang)
-	_.toSafeInteger	(Lang)	(v4 only)
-	_.toString	(Lang)	(v4 only)
-	_.toUpper	(String)	(v4 only)
-	_.transform	(Object)
-	_.trim	(String)
-	_.trimEnd	(String)	(v4 only)
-	_.trimLeft	(String)	(v3 only)
-	_.trimRight	(String)	(v3 only)
-	_.trimStart	(String)	(v4 only)
-	_.trunc	(String)	(v3 only)
-	_.truncate	(String)	(v4 only)
-	_.unary	(Function)	(v4 only)
-	_.unescape	(String)
-	_.union	(Array)
-	_.unionBy	(Array)	(v4 only)
-	_.unionWith	(Array)	(v4 only)
-	_.uniq	(Array)
-	_.uniqBy	(Array)	(v4 only)
-	_.unique -> uniq	(Array)	(v3 only)
-	_.uniqueId	(Utility)
-	_.uniqWith	(Array)	(v4 only)
-	_.unset	(Object)	(v4 only)
-	_.unzip	(Array)
-	_.unzipWith	(Array)
-	_.update	(Object)	(v4 only)
-	_.updateWith	(Object)	(v4 only)
-	_.upperCase	(String)	(v4 only)
-	_.upperFirst	(String)	(v4 only)
-	_.values	(Object)
-	_.valuesIn	(Object)
-	_.VERSION	(Properties)
-	_.where	(Collections)	(v3 only)
-	_.without	(Array)
-	_.words	(String)
-	_.wrap	(Function)
-	_.xor	(Array)
-	_.xorBy	(Array)	(v4 only)
-	_.xorWith	(Array)	(v4 only)
-	_.zip	(Array)
-	_.zipObject	(Array)
-	_.zipObjectDeep	(Array)	(v4 only)
-	_.zipWith	(Array)
-
-
 ## `debounce` vs. `throttle`
 
 	// debounce: waits timeInMs for repeated calls, then executes (“train waiting timeInMs for more passengers”)
@@ -2160,15 +1865,15 @@ http://www.cheatography.com/jonathanberi/cheat-sheets/polymer-js/
 
 https://github.com/facebookincubator/create-react-app
 
-	yarn create react-app my-app  # or npx create-react-app my-app
-	cd my-app/
+	yarn create react-app my-app  # or npx create-react-app my-app, or npm init create-react-app my-app
+	cd my-app
 	yarn start
 
-### Next.js:
+### Next.js (with Zeit Now):
 
-	yarn add react react-dom next
-	mkdir pages
-	yarn dev
+	yarn create next-app my-app
+	cd my-app
+	now dev
 
 ### Directory structure
 
@@ -2460,6 +2165,32 @@ https://github.com/zeit/styled-jsx
 	`}</style>
 
 	<style jsx global>
+
+#### SVG
+
+1) Import:
+
+  "react-svg-inline": "^2.1.1",
+  "svg-inline-loader": "^0.8.0"
+
+2) webpack / next.config.js
+
+	const config = {
+	  webpack: (config, { dev, isServer }) => {
+	    config.module.rules.push({
+	      test: /\.svg$/,
+	      loader: 'svg-inline-loader'
+	    })
+	    return config
+	  }
+	}
+	module.exports = config
+
+3) Use SVG:
+
+	import SVGInline from 'react-svg-inline'
+
+	<SVGInline svg={require('./icons/download.svg')} />
 
 #### Lists = arrays of components
 

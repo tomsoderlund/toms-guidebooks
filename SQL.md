@@ -48,6 +48,10 @@ e.g. `WHERE person.company_id = company.id`
 	\dt: list the tables in the currently connected database
 	\du: list users
 
+## Rename database
+
+	ALTER DATABASE "db" RENAME TO "newdb";
+
 ## Data types
 
 - `serial`: same as `int` (use for relations) except that PostgreSQL will automatically generate and populate values.
