@@ -95,3 +95,8 @@ s3_bucket: www.YOUR-USER-NAME.com
 s3_endpoint: EU
 s3_id: AKIAIKW..
 s3_secret: hEjr8
+
+
+## CORS
+
+Only set in S3, not CloudFront

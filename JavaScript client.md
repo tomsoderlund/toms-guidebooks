@@ -2,7 +2,7 @@
 
 Exclude:
 
-	-node_modules/,-.next/,-build/,-dist/,-yarn*
+	-node_modules/,-.tmp/,-.next/,-build/,-out/,-dist/,-yarn*,-.sass-cache/
 
 ## Javascript include
 
@@ -231,7 +231,7 @@ JavaScript `arguments` works both with without arguments in function signature.
 	}
 
 
-## Classes & Instances
+## Object-Oriented (OOP): Classes & Instances
 
 	var myObject = { myProperty: 'ok', sayHi: function (){ console.log(this) } }
 	var myObj2 = Object.create(myObject)
@@ -273,15 +273,16 @@ http://javascript.crockford.com/prototypal.html
 	/* Custom class: var myMyClass = new MyClass('foo') */
 	function MyClass (property) {
 		// Private
-		var privateVariable = property * 2
-		var privateMethod = function () {}
+		const privateVariable = property * 2
+		const privateMethod = function () {}
 		// Public
 		this.publicProperty = property * 3
 		this.publicPrivilegedMethodOnInstance = function () {}
+		this.getPrivateVariable = function () { return privateVariable }
 	}
-	MyClass.prototype.publicMethod = function () {}
+	MyClass.prototype.publicMethod = function () { return this.getPrivateVariable() }
 
-	var myMyClass = new MyClass('foo')
+	const myMyClass = new MyClass('foo')
 
 
 	WELD.clone = function (obj) {
@@ -370,7 +371,20 @@ http://javascript.crockford.com/prototypal.html
 	Math.random() // 0.0 to 1.0
 
 	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
+	const getRandomString = (length = 5) => Math.round(Math.random() * Math.pow(10, length)).toString()
+	const getRandomString = (length = 5) => window.btoa(Math.random()).substr(-length)
+	const withProbability = prob => Math.random() < prob
 	const getRandomFromArray = array => array[getRandomNumber(0, array.length - 1)]
+	// getRandomIndexFromWeightedArray([0.1, 0.3, 0.6]) --> returns 0-2
+	const getRandomIndexFromWeightedArray = weightedArray => {
+	  const randomNr = Math.random()
+	  let total = 0
+	  for (var i = 0; i < weightedArray.length; i++) {
+	    total += weightedArray[i]
+	    if (total > randomNr) return i
+	  }
+	}
+	const getRandomFromWeightedArray = (array, weightedArray) => array[getRandomIndexFromWeightedArray(weightedArray)]
 	const getSerialFromArray = (array, index) => array[index % array.length]
 	const otherNumber = (allNumbers, notNumber) => shuffleArray(allNumbers).filter(nr => notNumber !== nr)[0]
 
@@ -531,12 +545,24 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	string.substring(start, end) = string.slice(start, end)
 	string.slice(nrOfInitialCharsToRemove, - nrOfEndingCharsToRemove)
 
+### Casing
+
 	// See also _.capitalize and _.upperFirst
 	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
 
 	const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 
 	const capitalize = str => _.startCase(_.toLower(str))
+
+https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
+
+	const snakeToCamel = str => str.replace(/(_\w)/g, match => match[1].toUpperCase())
+	const camelToSnake = str => str.replace(/[\w]([A-Z])/g, match => match[0] + '_' + match[1]).toLowerCase()
+
+### Other
+
+	// Slug
+	const toSlug = str => str.replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
 
 	// Strip HTML
 	const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
@@ -547,8 +573,9 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	string.charAt(index)
 
 	// Left/Right
-	'ABCDE'.slice(3) // = 'DE'
-	'ABCDE'.slice(0,3) // = 'ABC'
+	'ABCDE'.slice(1) // = 'BCDE' (remove initial)
+	'ABCDE'.slice(0, -1) // = 'ABCD' (remove ending)
+	'ABCDE'.slice(0, 3) // = 'ABC' (keep initial)
 	var firstChars = bigString.substr(0, bigString.length - n)
 	var lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
 
@@ -699,9 +726,9 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 ### Encoding
 
 	// base64: Encode the String
-	var encodedString = btoa(string)
+	var encodedString = window.btoa(string)
 	// base64: Decode the String
-	var decodedString = atob(encodedString)
+	var decodedString = window.atob(encodedString)
 
 	// URL encode
 	encodeURIComponent('ÅÄÖ&') -> "%C3%85%C3%84%C3%96%26"
@@ -712,12 +739,21 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	const entities = new Entities()
 	entities.decode('&quotKeywords by Site&quot')
 
+	// Numeric hash code: https://stackoverflow.com/a/52171480/449227
+	const hashCode = str => {
+	  let h
+	  for (let i = 0; i < str.length; i++) {
+	    h = Math.imul(31, h) + str.charCodeAt(i) | 0
+	  }
+	  return h
+	}
 
 ## Arrays and Lists
 
 http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var myCars = new Array() // regular array (add an optional integer
+	var justSaabCars = Array(3).fill('Saab')
 	myCars[0] = "Saab"			 // argument to control array's size)
 	myCars[1] = "Volvo"
 	myCars[2] = "BMW"
@@ -725,6 +761,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	myCars.length
 
 	var lastElement = myCars[myCars.length - 1]
+	pop() // get/remove last element
+	shift()	// remove first element of an array, and returns that element
 
 	// Clone array
 	newArray = oldArray.slice()
@@ -915,26 +953,14 @@ Wait, Sleep etc
 
 	// do once
 	setTimeout(doInOneSecond, 1000)
-
-	setTimeout(
-		function () {
-			console.log('setTimeout')
-		},
-		1000
-	)
+	setTimeout(function () { console.log('setTimeout') }, 1000)
 
 	// Repeat
 	setInterval(doEverySecond, 1000)
+
+	const timerId = setInterval(function () { console.log('setInterval') }, 1000)
 	// Stop timer
 	clearInterval(timerId)
-
-	var timerId = setInterval(
-		function () {
-			console.log('setInterval')
-		},
-		1000
-	)
-
 
 	var doWithTimeoutIfNeeded = function (func, expression) {
 		expression ? setTimeout(func) : func()
@@ -1184,7 +1210,7 @@ Tip: event handlers on `document` for move/end:
 ### Client vs. Server
 
 	// Run only in browser
-	if (typeof(window) !== 'undefined') {
+	if (typeof window !== 'undefined') {
 		// Do in-browser stuff
 	}
 
@@ -1200,21 +1226,29 @@ Tip: event handlers on `document` for move/end:
 		xmlHttp.send(null)
 	}
 
+
 #### Fetch
 
 	const domain = await fetch(url).then(res => res.json()) // or res.text() for HTML
+
+	fetch(url)
+		.then(res => res.json())
+		.then(resJson => setResults(resJson))
 
 	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
 	await fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
+		mode: 'no-cors', // or Access-Control-Allow-Origin: *
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ domains: this.state.domains.split('\n') })
+		body: JSON.stringify(data)
 	})
+	.then(res => res.json())
+
 
 ### DOM / IFrame
 
@@ -1308,10 +1342,14 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 	// let with multi-assign - destructured assignment
 	let [one, two] = [1, 2]
 	let {three, four} = {three: 3, four: 4}
-	const { education: { degree:asNamedDegree } } = user
+	const { education: { degree: asNamedDegree } } = user
 	console.log(asNamedDegree) //prints: Masters
+
 	// Remove a property:
 	const { children, ...propsWithoutChildren } = props
+
+	// Default values
+	function ParallelPool ({ idleTimeoutMillis = 30000 } = {}) {...}
 
 	// Arrow functions => (NOTE: doesn't have `this` or `arguments`, but bind() works for parameters)
 	const doubleIt = a => a * 2 // similar to: var doubleIt = function (a) { return a * 2 }
@@ -1424,7 +1462,16 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.keys(obj)
 	Object.values(obj)
 
-	isEmpty = obj => Object.keys(obj).length === 0
+	// Object forEach
+	Object.keys(objects).forEach(objectId => {})
+
+	// map(object) from Lodash
+	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
+		result[key] = mapFunction(object[key], key)
+		return result
+	}, {})
+
+	const isEmpty = obj => Object.keys(obj).length === 0
 
 	// head/tail
 	const [head, ...tail] = [1, 2, 3]
@@ -1437,10 +1484,11 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.assign({}, o1, o2) // safe inheritance
 	const merged = {...obj1, ...obj2}
 
-	// Optional props
+	// Conditional object elements
 	const obj = {
-		count: 1,
-		true && {  }
+		a: 1,
+		...(true && { b: 2 }),
+		...(true ? [1,2,3] : [])
 	}
 
 	// pick
@@ -1465,12 +1513,6 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// pickMatch({ default: 1, week: 7, year: 365 }, periodName)
 	const pickMatch = (options, key) => options[key] !== undefined ? options[key] : options.default
 
-	// map(object) from Lodash
-	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
-		result[key] = mapFunction(object[key], key)
-		return result
-	}, {})
-
 	const queryObjectFromString = url => (url.split('?')[1] || url || '')
 		.split('&')
 		.reduce((result, propValue) => {
@@ -1478,8 +1520,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 			return result
 		}, {})
 
-	const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
-	const queryObjectToStringIfNotUndefined = queryObject => Object.keys(queryObject).reduce((result, key) => (queryObject[key] === undefined) ? result : result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
+	const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => (queryObject[key] === undefined) ? result : result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
+	const queryObjectToStringIncludingUndefined = queryObject => Object.keys(queryObject).reduce((result, key) => result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
 	// Lodash:
 	const queryObjectToString = queryObject => _.reduce(queryObject, (result, value, key) => result + (result.length ? '&' : '?') + key + '=' + value, '')
 
@@ -1734,9 +1776,9 @@ Related:
 ## `debounce` vs. `throttle`
 
 	// debounce: waits timeInMs for repeated calls, then executes (“train waiting timeInMs for more passengers”)
-	var myFunctionDebounced = _.debounce(myFunction, timeInMs, { leading: false, trailing: true, maxWait: X })
+	const myFunctionDebounced = _.debounce(myFunction, timeInMs, { leading: false, trailing: true, maxWait: X })
 	// throttle: ignores repeated calls that happens within timeInMs limit (“train leaves each timeInMs no matter what”)
-	var myFunctionThrottled = _.throttle(myFunction, timeInMs, { leading: true, trailing: true })
+	const myFunctionThrottled = _.throttle(myFunction, timeInMs, { leading: true, trailing: true })
 
 
 ## AngularJS
@@ -1869,37 +1911,22 @@ https://github.com/facebookincubator/create-react-app
 	cd my-app
 	yarn start
 
-### Next.js (with Zeit Now):
+### Next.js
 
 	yarn create next-app my-app
 	cd my-app
 	now dev
 
-### Directory structure
-
-	/public
-	/src
-		/config
-		/App
-			/Components
-		/Views
-			/StartPage
-				/Components
-
-https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
-
 #### Folders
 
-	mkdir components; mkdir pages; mkdir lib; mkdir static
-
-* `components`: React components
 * `pages`: Page components
+* `public`: e.g. CSS files, images
+* `components`: React components
 * `lib`: data
-* `static`: e.g. CSS files, images
 
 #### Next.js Page written as functional component with React Hooks
 
-	function MyPage ({ query }) {
+	const MyPage => ({ query }) {
 	  const { data, loading, error } = useQuery(personQuery(query.slug))
 	  if (loading) return 'Loading...'
 	  if (error) return `Error! ${error.message}`
@@ -1915,52 +1942,40 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 
 	export default MyPage
 
-#### Minimal app
+#### Next.js export static HTML app
 
-	class MyApp extends React.Component {
+`package.json`:
 
-		state = {
-			isLoading: false
-		}
-
-		constructor (props) {
-			super(props)
-			this.state = { prop1: 'this prop' }
-			this.handleClick = this.handleClick.bind(this)
-		}
-
-		handleClick (event) {
-			event.stopPropagation()
-			this.setState({ count: ++this.state.count })
-		}
-
-		handleClickArrow = event => {
-			event.stopPropagation()
-		}
-
-		onInputChange(event) {
-			this.setState({ searchText: event.target.value })
-		}
-
-		render: function () {
-			return (
-				{/* A JSX comment */}
-				<div>
-					<label>This button has been clicked {this.state.count} times:</label>
-				<br/>
-					<button onClick={this.handleClick}>Hello {this.props.name}</button>
-				</div>
-			)
-		}
-
+	"scripts": {
+	  "build": "next build",
+	  "export": "next build && next export"
 	}
 
-	ReactDOM.render(
-		<MyApp name="World" />,
-		document.getElementById('container')
-	)
+`next.config.js`:
 
-React.createClass is deprecated
+	module.exports = {
+	  exportPathMap: function () {
+	    return {
+	      '/': { page: '/' },
+	      '/about': { page: '/about' }
+	    }
+	  }
+	}
+
+Note: NODE_ENV becomes 'production', all scripts run client-side.
+
+### Directory structure
+
+	/public
+	/src
+		/config
+		/App
+			/Components
+		/Views
+			/StartPage
+				/Components
+
+https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
 
 ### Import components
 
@@ -2019,8 +2034,8 @@ Push route:
 	import Link from 'next/link'
 
 	<Link
-		href='/aboutPage' // Internal Next.js URL
-		as='/about' // Pretty URL visible for users
+		href='/people?peopleId=123' // Internal Next.js URL
+		as='/people/123' // Pretty URL visible for users
 	>
 		<a>My link</a>
 	</Link>
@@ -2155,9 +2170,10 @@ https://github.com/zeit/styled-jsx
 
 	<div>My DIV</div>
 	<style jsx>{`
-		div { background-color: blue }
+		div { background-color: ${props.theme.background}; }
 	`}</style>
 
+Global:
 
 	<style jsx>{`
 		.weld-element :global(.apply-styles) {
@@ -2491,9 +2507,53 @@ then:
 	tinycolor(colorStr).toHexString()
 
 	tinycolor.mix(color1, color2, amount = 50)
-	lighten, darken
+	lighten(0-100), darken(0-100), (brighten(0-100))
 
-https://github.com/bgrins/TinyColor#methods
+- isLight
+- isDark
+- getBrightness
+- getLuminance
+- getAlpha
+- setAlpha
+- toHsl: { h, s, l, a }
+- toHslString
+- toHsv: { h, s, v, a }
+- toHsvString
+- toRgb
+- toRgbString
+- toPercentageRgb
+- toPercentageRgbString
+- toHex
+- toHexString
+- toHex8
+- toHex8String
+- toName
+
+Color Modification
+
+- lighten(0-100)
+- brighten(0-100)
+- darken(0-100)
+- desaturate(0-100)
+- saturate(0-100)
+- greyscale()
+- spin(0-360)
+
+Color Combinations
+
+- spin(0-360)
+- analogous(, results = 6, slices = 30)
+- complement
+- splitcomplement
+- monochromatic(, results = 6)
+- triad
+- tetrad
+- random
+
+Readability
+
+- readability(c1, c2)
+- isReadable
 
 
 ## Async

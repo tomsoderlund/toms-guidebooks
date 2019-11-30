@@ -118,6 +118,7 @@ button,
 	display: inline-block;
 	cursor: pointer;
 	user-select: none;
+	-webkit-user-select: none;
 	font-family: inherit;
 	font-size: inherit;
 	line-height: normal;
@@ -300,6 +301,62 @@ $color_radio_active: dodgerblue;
 input[type="range"] {
 }
 
+----------
+
+Toggle Switch:
+
+.toggle-switch-container {
+  position: relative;
+  display: inline-block;
+}
+.toggle-switch-container > input {
+  display: none;
+}
+.toggle-switch-container > label {
+  display: block;
+  width: 48px;
+  height: 1.5em;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  user-select: none;
+}
+.toggle-switch-container > label:before, .toggle-switch-container > label:after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+.toggle-switch-container > label:before {
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  border-radius: 1.5em;
+  transition: background-color 0.25s ease;
+}
+.toggle-switch-container > label:after {
+  top: 0;
+  left: 0;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 1.5em;
+  background-color: white;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.25s ease, box-shadow 0.1s;
+}
+.toggle-switch-container > label:hover:after {
+  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.5);
+}
+.toggle-switch-container > input:checked + label:before {
+  background-color: #00CED1;
+}
+.toggle-switch-container > input:checked + label:after {
+  left: calc(100% - 23px);
+}
+
+----------
+
+
 input[type="radio"] {
 	position: absolute;
 	opacity: 0;
@@ -355,10 +412,10 @@ input[type="radio"] {
 	}
 }
 
-	<div class="radio-wrapper">
+<div class="radio-wrapper">
 	<input id="radio-1" name="radio" type="radio" checked>
 	<label for="radio-1" class="radio-label">Checked</label>
-	</div>
+</div>
 
 
 ## HTML5 Semantic Tags
@@ -389,6 +446,11 @@ http://caniuse.com/#feat=html5semantic
 	max-height: 20em;
 }
 
+
+##
+
+:before
+:after
 
 ## IFrame
 
@@ -495,7 +557,7 @@ Flexbox
 
 .flex-parent {
 	display: flex;
-	flex-direction: row; /* DIRECTION: "column" -> create rows */
+	flex-direction: row; /* DIRECTION: "row" is default. "column" -> create rows */
 	justify-content: space-between; /* PRIMARY AXIS: flex-start (default) / flex-end / center / space-between / space-around */
 	align-items: center; /* SECONDARY AXIS: stretch (default) / flex-start / flex-end / center / baseline */
 	flex-wrap: wrap; /* Wrap to columns, set child width e.g. 33.33% */
@@ -699,10 +761,21 @@ h1 span {
 	padding: 0px 8px 0px 8px;
 }
 
+## Word wrap and whitespace
+
+	white-space: nowrap;
+	word-wrap: break-word;
+	word-break: 
+	overflow-wrap: 
+	hyphens: 
+  text-overflow: ellipsis;
+
 ## Select text
 
 	user-select: none;
-	word-wrap: break-word;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 
 ## Transform
 
@@ -958,6 +1031,8 @@ code {
 
 
 ## CSS Colors / colors / COLORS
+
+namedColors.json: https://gist.github.com/tomsoderlund/548d39611c45397f48434e706b8c9b92
 
 http://www.crockford.com/wrrrld/color.html
 http://www.quackit.com/css/css_color_codes.cfm
@@ -1228,6 +1303,8 @@ http://www.fileformat.info/info/unicode/char/2714/index.htm
 
 # HTTP Error codes
 
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/300
+
 100 Continue
 101 Switching Protocols
 102 Processing (WebDAV; RFC 2518)
@@ -1261,7 +1338,7 @@ http://www.fileformat.info/info/unicode/char/2714/index.htm
 406 Not Acceptable
 407 Proxy Authentication Required (RFC 7235)
 408 Request Timeout
-409 Conflict
+409 Conflict: duplicate resource or resource already exists
 410 Gone
 411 Length Required
 412 Precondition Failed (RFC 7232)

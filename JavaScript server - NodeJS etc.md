@@ -94,17 +94,27 @@ https://zeit.co/now
 
 	yarn global upgrade now@latest
 
+Teams
+
 	now switch  # Switch teams
+
+Run locally (serverless)
+
+	now dev --listen 3123
 
 Deploy
 
 	now
-	now -e BING_API_KEY=
-	now -e BING_API_KEY=@my-now-secret
+	now --prod  # Production
 
 Now Secrets
 
-	now secret add my-now-secret my-value-here
+	now secrets add my-now-secret my-value-here
+
+	now -e BING_API_KEY=
+	now -e BING_API_KEY=@my-now-secret
+
+You can use `now.json`, `.env` (localhost) and `.env.build` (production) files, too.
 
 List deployments
 
@@ -116,19 +126,68 @@ Delete deployment
 
 Domains and Aliases:
 
-	now alias https://scraping-service-lb71ypc0g.now.sh scraping-service
-	now alias my-alias
+	now domains add mixbag.app
+	now domains verify mixbag.app
+
+	now alias mixbag.tomsoderlund.now.sh www.mixbag.app
+	now alias scraping-service-lb71ypc0g.now.sh scraping-service
+
+DNS changes:
+
+	now dns ls
+	now dns add YOURDOMAINHERE.COM @ TXT 'your string'
+	now dns add YOURDOMAINHERE.COM SUBDOMAIN TXT 'your string'
+	# Mailgun:
+	now dns add mydomain.com mg TXT 'v=spf1 include:eu.mailgun.org ~all'
+	now dns add mydomain.com k1._domainkey.mg TXT 'k=rsa; p=MIGf...'
+	now dns add mydomain.com mg MX mxa.eu.mailgun.org 10
+	now dns add mydomain.com email.mg CNAME eu.mailgun.org
 
 ### now.json
 
 https://zeit.co/docs/configuration/
+
+`now.json`:
+
+	{
+		"name": "zeit-chat",
+		"version": 2,
+		"alias": ["my-domain.com", "my-alias"],
+		"scope": "my-team",
+	  "env": {
+	    "MY_KEY": "this is the value",
+	    "SECRET": "@my-secret-name"
+	  },
+		"build": { "env": {} },
+		"builds": [{ "src": "*.js", "use": "@now/node" }],
+		"routes": [{ "src": "/about", "dest": "/about.html" }],
+		"regions": ["arn1", "sfo1"],
+		"public": true,
+		"github": {},
+		"currentTeam": "team_ofwUZockJlL53hINUGCc1ONW",
+		"api": "https://api-sfo1.zeit.co",
+		"collectMetrics": true
+	}
+
+#### Redirect
+
+	  "routes": [
+	    {
+	      "src": "/(.*)",
+	      "status": 301,
+	      "headers": { "Location": "https://www.mydomain.com/$1" }
+	    }
+	  ]
 
 ### Serverless functions
 
 - `/api` folder
 - All REST actions go here
 - `/api/people/[person].js`: will receive `req.query.person`
-- Run `now dev` to test locally. Place environment in `.env`.
+- Prefix with _ or . to disable serverless function
+- Run `now dev` to test locally.
+	- Place environment in `.env`.
+	- `now dev --listen 3123`
 
 Example module:
 
@@ -215,6 +274,7 @@ Adding a dependency to different categories of dependencies (devDependencies, pe
 Upgrading a dependency
 
 	yarn upgrade [package] // [package]@[version/tag]
+	yarn upgrade-interactive
 
 Removing a dependency
 
@@ -350,7 +410,15 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	res.write
 	res.end
 
-Express only:
+#### CORS
+
+	const setAccessControlHeaders = (res, methods = 'POST') => {
+	  res.setHeader('Access-Control-Allow-Origin', '*')
+	  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+	  res.setHeader('Access-Control-Allow-Methods', methods)
+	}
+
+#### Express only
 
 	res.status(302).end()
 	res.set('location', newUrl)
@@ -457,6 +525,8 @@ Server - generate token:
 
 	yarn add jsonwebtoken
 
+	const jwt = require('jsonwebtoken')
+
 	// Sign/generate
 	jwt.sign(payload, secretOrPrivateKey, [options, callback])
 
@@ -486,7 +556,7 @@ https://jasmine.github.io/2.0/introduction.html
 
 Config: `spec/support/jasmine.json`:
 
-	mkdir spec && mkdir spec/support
+	mkdir -p spec/support
 	touch spec/support/jasmine.json
 
 	{
@@ -1086,23 +1156,22 @@ See SQL.md
 
 ## Firebase
 
+https://console.firebase.google.com/
 https://www.firebase.com/docs/web/api/
 
-	const firebaseRef = new Firebase('https://<your instance>.firebaseio.com/branch/sub-branch')
+yarn add firebase
 
-* firebaseRef.set(newObject, callback) // callback(err) - write/replace
-* firebaseRef.update(partialObject, callback) // merge/update existing
-* newChildRef = firebaseRef.push(newChild, callback) // use newChildRef.key()/.key to get new key
-* firebaseRef.remove(callbackAfterDeleted) // same as: set(null)
-* firebaseRef.key() -> .key
-* firebaseRef.authWithCustomToken
-* firebaseRef.child
-* firebaseRef.delete
-* firebaseRef.off
-* firebaseRef.on
-* firebaseRef.once
+const firebase = require('firebase/app')
+require('firebase/database')
+
+const userRef = userId => firebase.database().ref(`users/${userId}`)
 
 Events: on/once
+
+	const userSnapshot = await userRef.once('value')
+	const user = userSnapshot.val()
+
+Or:
 
 	firebaseRef.once('value', function (snapshot) {
 		// snapshot.exportVal() has '.priority', snapshot.val() does not
@@ -1118,34 +1187,18 @@ queryRef
 		console.log('queryRef.child_added', snap.val())
 	})
 
+More:
 
-### AngularFire
-
-https://www.firebase.com/docs/web/libraries/angular/api.html
-
-$firebaseObject
-	$id
-	$priority
-	$value
-	$remove()
-	$save()
-	$loaded()
-	$ref()
-	$bindTo(scope, varName)
-	$watch(callback, context)
-	$destroy()
-
-$firebaseArray
-	$add(newData)
-	$remove(recordOrIndex_NOTkey)
-	$save(recordOrIndex_NOTkey)
-	$getRecord(key)
-	$keyAt(recordOrIndex_NOTkey)
-	$indexFor(key)
-	$loaded()
-	$ref()
-	$watch(cb[, context])
-	$destroy()
+- firebaseRef.once
+- firebaseRef.on
+- firebaseRef.off
+- firebaseRef.child(keyName)
+- firebaseRef.set(newObject, callback) // callback(err) - write/replace
+- firebaseRef.update(partialObject, callback) // merge/update existing
+- newChildRef = firebaseRef.push(newChild, callback) // use push().key or newChildRef.key() to get new key
+- firebaseRef.remove(callbackAfterDeleted) // same as: set(null)
+- firebaseRef.key() -> .key
+- firebaseRef.authWithCustomToken
 
 
 ## GraphQL
@@ -1251,6 +1304,16 @@ npm install --save-dev electron
 
 ## PassportJS / Authentication
 
+Best practice: server-side encrypted cookie
+
+https://www.npmjs.com/package/express-session
+https://www.npmjs.com/package/cookie-session
+
+Domain-wide cookie:
+
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=.topdomain.com
+
+
 **See LoveBot**
 
 Twitter: need Callback URL in settings but it’s overridden in code.
@@ -1298,3 +1361,130 @@ Files end up in in /etc/letsencrypt/live/MYDOMAIN/
 
 sudo heroku certs:add /etc/letsencrypt/live/MYDOMAIN/fullchain.pem /etc/letsencrypt/live/MYDOMAIN/privkey.pem
 	Need Hobby or Professional dynos
+
+## Email - Mailgun
+
+https://github.com/bojand/mailgun-js
+
+	MAILGUN_DOMAIN=mg.wrux.it
+
+	const mailgun = require('mailgun-js')({
+		apiKey: process.env.MAILGUN_KEY,
+		host: 'api.eu.mailgun.net',
+		domain: process.env.MAILGUN_DOMAIN,
+    testMode: false
+	})
+
+### Send email
+
+	curl --user 'api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0' \ 
+	https://api.mailgun.net/v3/samples.mailgun.org/messages \
+	 -F from='Excited User <excited@samples.mailgun.org>' \
+	 -F to='devs@mailgun.net' \
+	 -F subject='Hello' \
+	 -F text='Testing some Mailgun awesomeness!'
+
+Node.js:
+
+	const emailData = {
+		from,
+		to,
+		cc,
+		bcc,
+		subject,
+		html,
+		text,
+		'h:Reply-To',
+		'o:tag': [],
+		'v:my-variable': '123'
+	}
+
+	mailgun.messages().send(emailData, (error, body) => console.log({ error, body }))
+
+#### Preview
+
+	const getEmailPreview = emailData => `------------------------------
+	from: ${emailData.from} | reply-to: ${emailData['h:Reply-To']}
+	to: ${emailData.to}
+	bcc: ${emailData.bcc}
+	tags: [${emailData['o:tag'].join(', ')}]
+	------------------------------
+	subject: ${emailData.subject}
+	------------------------------
+	${emailData.html.replace(/<br\/>/g, '\n')}`
+
+#### Debug: CURL test
+
+	const getCurl = (emailData, mailgunConfig) => `------------------------------
+	curl --user 'api:${mailgunConfig.apiKey}' \\
+	https://${mailgunConfig.host}/v3/${mailgunConfig.domain}/messages \\
+	--form from='${emailData.from}' \\
+	--form to='curl <${emailData.to}>' \\
+	--form subject='${emailData.subject} (curl)' \\
+	--form-string html='${emailData.html}'
+	------------------------------`
+
+#### Send with fetch
+
+	const fetch = require('node-fetch')
+	const btoa = require('btoa')
+	const { URLSearchParams } = require('url')
+
+	const createFormBody = params => {
+	  const urlParams = new URLSearchParams()
+	  const keys = Object.keys(params)
+	  for (const k in keys) {
+	    console.log(`  - ${keys[k]}: ${params[keys[k]]}`)
+	    urlParams.append(keys[k], params[keys[k]])
+	  }
+	  return urlParams
+	}
+
+	const mailgunSendMessage = async (emailData, mailgunConfig) => {
+	  try {
+	    const result = await fetch(`https://${mailgunConfig.host}/v3/${mailgunConfig.domain}/messages`, {
+	      method: 'POST',
+	      headers: {
+	        Authorization: 'Basic ' + btoa('api:' + mailgunConfig.apiKey)
+	      },
+	      body: createFormBody(emailData)
+	    })
+	    console.log('result:', result)
+	  } catch (err) {
+	    console.warn(`Warning: ${err.message || err}`)
+	  }
+	}
+
+### Read email
+
+	const mailgunQuery = { event: 'stored', limit: 300 }
+  const body = await mailgun.events().get(mailgunQuery)
+  const results = body.items.map(item => )
+
+  // These won't work?
+  // const messageId = results[i].key
+  // const message = await mailgun.messages(messageId).info((err, body) => console.log({err, body}))
+  // const message = await mailgun.get(`/${config.mailgunDomain}/messages/${messageId}`)
+  // const message = await mailgun.get(results[i].url)
+
+	const fetchEmail = (emailUrl, method = 'GET') => fetch(emailUrl, {
+	  method,
+	  headers: { Authorization: 'Basic ' + Buffer.from('api' + ':' + process.env.MAILGUN_KEY).toString('base64') }
+	})
+
+	const deleteReceivedEmail = messageUrl => fetchEmail(messageUrl, 'DELETE') // mailgun.messages(messageId).delete()
+
+### URL tracking - utm_medium etc
+
+	const urlRegex = require('url-regex')
+
+	const addUrlParameters = (url, newParameters) => url.includes('http')
+	  ? url.includes('?')
+	    ? `${url}&${newParameters}`
+	    : `${url}?${newParameters}`
+	  : url
+
+	const addLinkTracking = (html, person) => {
+	  const utmParameters = `utm_medium=email&utm_source=cabal&utm_custom[email]=${person.email}&utm_custom[name]=${encodeURIComponent(person.name)}`
+	  return html.replace(urlRegex({ strict: false }), url => addUrlParameters(url, utmParameters))
+	}
