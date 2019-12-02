@@ -530,8 +530,8 @@ Server - generate token:
 	// Sign/generate
 	jwt.sign(payload, secretOrPrivateKey, [options, callback])
 
-	// Verify
-	jwt.verify(token, secretOrPublicKey, [options, callback])
+	// Verify/decode
+	const decoded = jwt.verify(token, secretOrPublicKey, [options, callback])
 
 	// Firebase
 	(new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payload)

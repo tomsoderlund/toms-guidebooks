@@ -156,10 +156,11 @@ Wildcard search:
 Examples:
 
 	SELECT city, temp_lo, temp_hi, prcp, date, location
-		FROM weather, cities
-		WHERE city = name;
+	FROM weather, cities
+	WHERE city = name;
 
-	SELECT * FROM weather INNER JOIN cities ON (weather.city = cities.name);
+	SELECT * FROM weather
+	LEFT JOIN cities ON (weather.city = cities.name);
 
 Note: `LEFT` refers to the left table in `ON` statement:
 
@@ -244,6 +245,11 @@ Modify existing table:
 
 	ALTER TABLE "domain_updates" ADD FOREIGN KEY ("domain_updates_domain_id_fkey") REFERENCES "domains"("id") ON DELETE CASCADE;
 	ALTER TABLE person ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
+
+
+## Indexes
+
+	CREATE UNIQUE INDEX app_username_unique_idx ON person_app(app_id, username);
 
 
 ## Transactions

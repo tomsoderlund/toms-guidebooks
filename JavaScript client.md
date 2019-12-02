@@ -702,7 +702,7 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	const result = str.replace(new RegExp('\w+', 'g'), newStr)
 
 	// match: executes a search for a match in a string, returns an array of information or null on a mismatch
-	const regexpMatchArray = myString.match(/\d+(\.\d{1,15})?/g)
+	const regexpMatchArray = myString.match(/([a-z]*)/gi)
 
 	// exec(str): executes a search for a match in a string, it returns an array of information
 
@@ -711,15 +711,15 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	let m
 
 	while ((m = regex.exec(str)) !== null) {
-			// This is necessary to avoid infinite loops with zero-width matches
-			if (m.index === regex.lastIndex) {
-					regex.lastIndex++
-			}
+		// This is necessary to avoid infinite loops with zero-width matches
+		if (m.index === regex.lastIndex) {
+			regex.lastIndex++
+		}
 
-			// The result can be accessed through the `m`-variable.
-			m.forEach((match, groupIndex) => {
-					console.log(`Found match, group ${groupIndex}: ${match}`)
-			})
+		// The result can be accessed through the `m`-variable.
+		m.forEach((match, groupIndex) => {
+			console.log(`Found match, group ${groupIndex}: ${match}`)
+		})
 	}
 
 
@@ -1093,6 +1093,10 @@ sessionStorage and localStorage
 – https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
 
 ### Cookies in JS
+
+	window.document.cookie // get all
+	window.document.cookie = `key=value` // set one
+	window.document.cookie = `key=value;max-age=` + (60 * 60 * 24 * 365) // one year
 
 	const getCookies = () => window.document.cookie.split('; ').reduce((result, str) => {
 	  const keyValue = str.split('=')
@@ -2092,12 +2096,12 @@ Comparison:
 
 https://reactjs.org/docs/hooks-overview.html
 
-- `useState(initialState)`: returns `[state, setState]`.
-- `useEffect(fn, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
-- `useContext`
-- `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
 - `useCallback(fn, [deps])`: returns a memoized version of the callback that only changes if one of the dependencies has changed. Use to prevent this passing a new function each render.
 - `useMemo(() => computeExpensiveValue(a, b), [a, b])`: Returns a memoized value.
+- `useState(initialState)`: returns `[state, setState]`.
+- `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
+- `useEffect(fn, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
+- `useContext`: see below.
 - `useRef(initialValue)`: returns a mutable ref object.
 - `useImperativeHandle(ref, createHandle, [deps])`
 - `useLayoutEffect(fn, [deps])`: identical to useEffect, but it fires synchronously after all DOM mutations.
@@ -2105,13 +2109,29 @@ https://reactjs.org/docs/hooks-overview.html
 
 **Note:** never call Hooks inside loops, conditions, or nested functions – https://reactjs.org/docs/hooks-rules.html
 
-#### React Context
+### React Context
 
+Context is another way of sharing state, without using child props.
 https://reactjs.org/docs/context.html
 
-- myContext = React.createContext(defaultValue)
-- React.useContext(myContext) // hook
-- myContext.Provider
+	export const MyContext = React.createContext('a default value') // outside hook
+
+Use with hook:
+
+	const value = React.useContext(MyContext)
+
+Use with Provider/Consumer:
+
+	<MyContext.Provider value={staticOrStateValue}>
+		{/* provide context value to children further down */}
+	</MyContext.Provider>
+
+	<MyContext.Consumer>
+  	{value => /* use the context value when rendering */}
+	</MyContext.Consumer>
+
+
+### Styling React
 
 #### styled-components
 
@@ -2162,7 +2182,6 @@ Refer to ${ChildComponent}:
 			fill: rebeccapurple;
 		}
 	`;
-
 
 #### styled-jsx
 
@@ -2225,14 +2244,13 @@ Global:
 
 		console.log('dateValues', dateValues)
 
-		const dateValueList = _.map(
-			dateValues,
+		const dateValueList = dateValues.map(
 			(dateValue, key) => <DateValue key={key} dateValue={dateValue} handleRemove={handleRemove}/>
 		)
 
 		return 	(
 			<div>
-				<button className="add" onClick={handleAdd}>+ Add value</button>
+				<button className='add' onClick={handleAdd}>+ Add value</button>
 				{dateValueList}
 			</div>
 		)

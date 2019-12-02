@@ -68,7 +68,7 @@ Find all in {{double curly brackets}}
 	\s	Any whitespace character
 	\S	Any non-whitespace character
 	\d	Any digit/number
-	\D	Any non-digit/number
+	\D	Any non-digit/number/character
 	\w	Any word character (letter, digit/number, underscore)
 	\W	Any non-word character
 	\b	Any word boundary character
