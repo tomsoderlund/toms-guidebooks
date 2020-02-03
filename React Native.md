@@ -4,6 +4,7 @@ React Native is an easy way to build native iOS/Android (also Windows, macOS, we
 
 With https://expo.io the steps are easy:
 
+1. Update expoo-cli with `npm install -g expo-cli`
 1. Create a new app (`expo init`)
 2. Run it on device or simulator (`expo start`)
 3. Publish it to Expo.io (`expo publish`)
@@ -25,15 +26,21 @@ Install https://expo.io client on your device.
 
 ### How to run
 
-	yarn global add expo-cli  # or: npm install -g expo-cli
-
-(Upgrade: `yarn global upgrade expo-cli`)
+	npm install -g expo-cli  # Does not work? yarn global add expo-cli (Upgrade: `yarn global upgrade expo-cli`)
 
 	expo init MyReactNativeApp
 
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
 
+### Web development (react-native-web)
+
+	expo start --web
+
+Get web viewport size:
+
+	import { Dimensions } from 'react-native'
+	const { width, height } = Dimensions.get('window')
 
 ## Components
 
@@ -99,6 +106,13 @@ Error handling methods:
 
 - `componentDidCatch`
 
+### Touch events
+
+  <View
+    onTouchStart={(e) => console.log('onTouchStart', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
+    onTouchMove={(e) => console.log('onTouchMove', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
+    onTouchEnd={(e) => console.log('onTouchEnd', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
+  />
 
 ## Responsive design
 

@@ -136,6 +136,7 @@ http://www.cs.fsu.edu/general/vimanual.html
 
 ## For loops
 
+	for i in {Apple,Banana}; do echo ${i}; done
 	for i in *; do echo ${i}; done
 	for i in *.URL; do echo ${i}; cat "${i}"; done
 
@@ -219,115 +220,12 @@ http://www.macworld.com/article/1143351/netprocesses.html
 
 	export NEW_RELIC_HOME=lib/config
 	export PATH=$PATH:/path/to/my/stuff
-	echo $PATH
-
-	// .bash_profile is executed for logins, while .bashrc is executed for all new shells
-	$HOME/.bashrc
-	cat $HOME/.bash_profile
-	source ~/.bashrc # reload, also . ~/.bashrc
-
-### Run with variable set:
-
-	DEBUG=weld:socket.io grunt serve
-
-
-## Kill processes
-
-	pkill -9 "process name"
-
-	sudo killall Python
-	sudo killall -s SIGINT "process name"
-
-### History
-
-	history
-	type rvm | head -1
-
-
-## Cron
-
-http://www.scrounge.org/linux/cron.html
-
-
-## SSH/SCP
-
-	/usr/bin/ssh tom@domainname.com
-	/usr/bin/scp -r * tom@domainname.com:/home/tom/www/adifferentgame/public/downloads/
-
-Copy home:
-
-	/usr/bin/scp tom@domainname.com:/home/tom/www/ghostwire-interaction/backup/ghostwire_interaction_production_20100601.sql.gz .
-
-
-## Users
-
-	useradd -d /home/tom -m tom
-	passwd username
-
-### User preferences
-
-	~/.bash_profile
-
-
-## Download files:
-
-	curl
-	wget "http://rubyforge.org/frs/download.php/38646/rubygems-1.2.0.tgz"
-	apt-get libmysql-ruby ruby1.8-dev libmysql-ruby1.8
-	curl https://github.com/X1011/git-directory-deploy/raw/master/deploy.sh -o deploy.sh
-
-## REST with Curl
-
-	curl -i -H 'Content-Type: application/json' -X GET http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-	curl -i -H 'Content-Type: application/json' -X POST -d '{ "firstName": "james" }' http://localhost:9000/persons/person
-	curl -i -H 'Content-Type: application/json' -X PUT -d '{ "firstName": "james" }' http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-	curl -i -H 'Content-Type: application/json' -X PATCH -d '{ "firstName": "james" }' http://localhost:9000/api/projects/52e96b4732d10c8b91000003
-	curl -i -H 'Content-Type: application/json' -X DELETE http://localhost:9000/persons/person/1  
-
-Multiple headers: multiple `-H ""`
-
-	curl -H "accept-version: 2.0.0" http://localhost:9000/api/embed
-
-Line breaks:
-
-	curl -X POST https://domain-production-eu-weld.herokuapp.com/api -H "Content-Type: application/json" -d \
-	'{
-		 "domain": {
-				 "hostname": "w-collection.se",
-				 "projectId": "-LOT0ZHo5jxO8tHveExw",
-				 "owner": "5893172c7ca8f70011be4222"
-		 }
-	}'
-
-## TAR: extract files
-
-	tar xvfpz file_name.tar.gz
-
-
-## Autostart
-
-	/etc/init.d
-
-
-## Encryption
-
-	# generate a 2048-bit RSA key and store it in key.txt
-	openssl genrsa -out key.txt 2048
-
-	# encrypt "hello world" using the RSA key in key.txt
-	echo "hello world" | openssl rsautl -inkey key.txt -encrypt > encryptedFile.bin
-
-	# decrypt the message and output to stdout
-	openssl rsautl -inkey key.txt -decrypt < encryptedFile.bin
-
-Longer guide: https://gist.github.com/colinstein/de1755d2d7fbe27a0f1e
-
-
-## DNS domain
+	echo $PATHSS domain
 
 Flush dns:
 
 	dscacheutil -flushcache
+	sudo killall -HUP mDNSResponder
 
 Debug DNS:
 
@@ -336,6 +234,10 @@ Debug DNS:
 	dig @SERVER-IP weld.io
 	nslookup weld.io
 	nslookup weld.io SERVER-IP
+
+Switch DNS only on localhost, for testing:
+
+	sudo local-cname staging.weld.io origin.cloudfront.net
 
 
 ### Batch Files

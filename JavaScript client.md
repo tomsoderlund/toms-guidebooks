@@ -51,6 +51,7 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 	// Public API
 
 	// ES6: export default {
+	// export default MyFunction = () => {}
 	module.exports = {
 
 		functionName,
@@ -111,7 +112,10 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 ### Console
 
-	console.log/warn/error
+	console.log
+	console.warn
+	console.error
+	console.info
 
 	console.log(event.fromElement.tagName) // works only in Firefox?
 	process.stdout.write('no line')
@@ -457,10 +461,24 @@ From https://www.jstips.co/en/javascript/array-average-and-median/
 
 X/Y distances:
 
-	var calcDistance = function (pos1, pos2) {
-		var x = pos1[0] - pos2[0]
-		var y = pos1[1] - pos2[1]
-		return Math.sqrt(x*x + y*y)
+	const getDistance = (point1, point2) => Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point1[1], 2))
+	const getVector = (point1, point2) => ([point2[0] - point1[0], point2[1] - point1[1]])
+	const addVector = (vector1, vector2) => vector1.map((v, index) => v + vector2[index])
+	const multiplyVector = (vector, multiplier) => vector.map(v => v * multiplier)
+
+	Math.sign(-3) // -1
+
+	const splitLine = (point1, point2, segmentLength) => {
+	  const distance = getDistance(point1, point2)
+	  const vector = getVector(point1, point2)
+	  const segmentCount = Math.floor(distance / segmentLength)
+	  const segmentVector = multiplyVector(vector, segmentLength / distance)
+	  const segments = [
+	    point1,
+	    ...fillArray(segmentCount, index => multiplyVector(segmentVector, index + 1)),
+	    point2
+	  ]
+	  return segments
 	}
 
 Get angle:
@@ -480,17 +498,14 @@ Vector to X/Y:
 
 Graph circle:
 
-	var findNewPoint = function (x, y, angle, distance) {
-		var result = {
-			x: Math.round(Math.cos(angle * Math.PI / 180) * distance + x),
-			y: Math.round(Math.sin(angle * Math.PI / 180) * distance + y)
-		}
-		return result
-	}
+	const findNewPoint = (x, y, angle, distance) => ({
+		x: Math.round(Math.cos(angle * Math.PI / 180) * distance + x),
+		y: Math.round(Math.sin(angle * Math.PI / 180) * distance + y)
+	})
 
 Bounce and gravity:
 
-	const applyRuleBounce = ({ position, speed, acceleration }) => {
+	const applyRuleBounce = (position, speed, acceleration) => {
 		if (position[Y] > 200) {
 			speed[Y] = -speed[Y] * 0.9
 			speed[ROTATION] = -speed[ROTATION] * 0.9
@@ -499,23 +514,10 @@ Bounce and gravity:
 		}
 	}
 
-	const applyRuleBlackHole = ({ gravity = 0.01, holePosition = [150, 150], position, speed, acceleration }) => {
+	const applyRuleBlackHole = (gravity = 0.01, holePosition = [150, 150], position, speed, acceleration) => {
 		for (let dim = X; dim <= Z; dim++) {
 			acceleration[dim] = (holePosition[dim] - position[dim]) * gravity
 		}
-	}
-
-What is this?
-
-	Math.sign(-3) // -1
-
-	var calcDeltaMovement = function (pos1, pos2) {
-		var x = pos1[0] - pos2[0]
-		var y = pos1[1] - pos2[1]
-		return [
-			x > 0 ? 1 : 0,
-			y > 0 ? 1 : 0
-		]
 	}
 
 
@@ -550,9 +552,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	// See also _.capitalize and _.upperFirst
 	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
 
-	const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
-
-	const capitalize = str => _.startCase(_.toLower(str))
+	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 
 https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
 
@@ -677,6 +677,8 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	}
 
 	// https://stackoverflow.com/a/52171480/449227
+	const hashCode = str => Array.from(str).reduce((result, char) => Math.imul(31, result) + char.charCodeAt(0), 0)
+
 	const hashCode = str => {
 	  let h
 	  for (let i = 0; i < str.length; i++) {
@@ -753,8 +755,15 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var myCars = new Array() // regular array (add an optional integer
-	var justSaabCars = Array(3).fill('Saab')
-	myCars[0] = "Saab"			 // argument to control array's size)
+	var justSaabCars = Array(3).fill('Saab') // can't `map` over empty array slots
+	var justSaabCars = [...Array(6)].map((val, index) => 'Saab')
+
+	const fillArray = (length, expression) => [...Array(length)].map((empty, index) => expression ? (typeof expression === 'function' ? expression(index) : expression) : undefined)
+	const fillMatrix = (columns, rows, expression) => [...Array(rows)].map((row, y) => [...Array(columns)].map((col, x) => expression ? (typeof expression === 'function' ? expression(x, y) : expression) : undefined))
+	// fillMatrix previously called mapGrid
+	const mapMatrix = (matrix, expression) => matrix.map((row, y) => row.map((value, x) => expression ? (typeof expression === 'function' ? expression(value, x, y) : expression) : undefined))
+
+	myCars[0] = "Saab"  // argument to control array's size
 	myCars[1] = "Volvo"
 	myCars[2] = "BMW"
 
@@ -912,8 +921,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	var diffInMillisecs = new Date() - oldDate
 
 	// Add to date
-	futureDate = new Date(startDate.getTime() + days*24*60*60*1000)
-	oneYearFromNow = new Date((new Date()).getTime() + 365*24*60*60*1000)
+	futureDate = (startDate, days) => new Date(startDate.getTime() + days*24*60*60*1000)
+	oneYearFromNow = new Date(Date.now() + 365*24*60*60*1000)
 
 	// Calculate difference between dates
 	const daysBetweenDates = (date1, date2 = new Date()) => (date2.getTime() - date1.getTime()) / (24*60*60*1000)
@@ -1083,11 +1092,19 @@ https://gionkunz.github.io/chartist-js/
 
 ## Local Storage, Session Storage, and Cookies
 
-sessionStorage and localStorage
+sessionStorage vs localStorage: sessionStorage is cleared when the page session ends
 
-	localStorage.colorSetting = '#a4509b'
-	localStorage['colorSetting'] = '#a4509b'
-	localStorage.setItem('colorSetting', '#a4509b')
+	// Save data to localStorage
+	localStorage.setItem('key', 'value')
+
+	// Get saved data from localStorage
+	let data = localStorage.getItem('key')
+
+	// Remove saved data from localStorage
+	localStorage.removeItem('key')
+
+	// Remove all saved data from localStorage
+	localStorage.clear()
 
 > “Stormpath recommends that you store your JWT in cookies for web applications, because of the additional security they provide, and the simplicity of protecting against CSRF with modern web frameworks. HTML5 Web Storage is vulnerable to XSS, has a larger attack surface area, and can impact all application users on a successful attack.”
 – https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
@@ -1098,15 +1115,19 @@ sessionStorage and localStorage
 	window.document.cookie = `key=value` // set one
 	window.document.cookie = `key=value;max-age=` + (60 * 60 * 24 * 365) // one year
 
-	const getCookies = () => window.document.cookie.split('; ').reduce((result, str) => {
+	const getAllCookies = () => window.document.cookie.split('; ').reduce((result, str) => {
 	  const keyValue = str.split('=')
 	  result[keyValue[0]] = keyValue[1]
 	  return result
 	}, {})
 
-	const setCookie = (name, value) => {
-	  window.document.cookie = `${name}=${JSON.stringify(value)}`
+	const getCookie = (name, defaultValue) => getAllCookies()[name] || defaultValue
+
+	const setCookie = (name, value, options = { maxAge: 31536000 }) => {
+	  window.document.cookie = `${name}=${JSON.stringify(value)}${options.maxAge ? `;max-age=${options.maxAge}` : ''}`
 	}
+
+	const deleteCookie = (name) => setCookie(name, '', { maxAge: 0 })
 
 ### js-cookie
 
@@ -1266,6 +1287,7 @@ Tip: event handlers on `document` for move/end:
 
 Open window:
 
+	window.open(url) // new tab; will ask browser for permission
 	window.open(URL, name, specs, replaceUrlInHistory)
 	window.open(pageURL, 'ts_window', 'width=300,height=600,scrollbars=no,titlebar=no,location=no,menubar=no,toolbar=no,status=no,resizable=no', false)
 
@@ -1434,9 +1456,9 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 	p.then(result => result.json())
 		.then(onFulfilled) // will get JSON
 
-	Promise.all(promiseArray)
+	Promise.all(promiseArrayOrObject)
 		.then(...)
-	Promise.race(promiseArray)
+	Promise.race(promiseArrayOrObject)
 		.then(...)
 
 	Promise.resolve(value)
@@ -1459,7 +1481,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].forEach((n, index) => console.log(n))
 	[1, 2, 3].map((n, index) => n * 3)
 	[1, 2, 3].reduce((result, n) => result + n, 0)
-	[1, 2, 3].filter((n, index) => n < 2)
+	[1, 2, 3].filter((n, index, array) => n < 2)
 	objs.sort((a, b) => (a.property > b.property) ? 1 : ((b.property > a.property) ? -1 : 0))
 	const sortBy = (array, property) => array.sort((a, b) => (a[property] > b[property]) ? 1 : ((b[property] > a[property]) ? -1 : 0))
 
@@ -1468,6 +1490,9 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 
 	// Object forEach
 	Object.keys(objects).forEach(objectId => {})
+
+	// unique
+	const unique = values.filter((value, index, array) => array.indexOf(value) === index)
 
 	// map(object) from Lodash
 	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
@@ -1941,6 +1966,7 @@ https://github.com/facebookincubator/create-react-app
 	}
 
 	MyPage.getInitialProps = async ({ req, res, pathname, asPath, query }) => {
+		console.log({ pathname, asPath, query })
 	  return { query }
 	}
 
@@ -1981,11 +2007,6 @@ Note: NODE_ENV becomes 'production', all scripts run client-side.
 
 https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
 
-### Import components
-
-	import { Link } from 'react-router-dom'
-	import AppHeader from '../../components/AppHeader/AppHeader'
-
 ### Routing/multiple pages/views
 
 react-router-dom:
@@ -1993,18 +2014,25 @@ react-router-dom:
 * https://reacttraining.com/react-router/web/guides/quick-start
 * https://github.com/ReactTraining/react-router
 
-Code:
+Routing setup:
 
+	import React from 'react'
 	import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 	export default () => (
 	  <Router>
 	    <div>
-	      <Route path='/' component={Screen} />
+	      <Route path='/' exact component={Screen} />
 	      <Route path='/gamepad' component={Gamepad} />
+	      <Route path='/withProps' render={(props) => <Dashboard {...props} isAuthed={true} />} />
 	    </div>
 	  </Router>
 	)
+
+Links:
+
+	import { Link } from 'react-router-dom'
+	<Link to='/users'>Users</Link>
 
 Push route:
 
@@ -2012,6 +2040,14 @@ Push route:
 
 	console.log(this.props.location.pathname)
 	this.props.history.push(`/path`)
+
+	withRouter(MyComponent)
+
+Redirect:
+
+	const RouteIfLoggedIn = props => isLoggedIn()
+	  ? <Route {...props} />
+	  : <Redirect from={props.from} to={ROUTE_LOGIN} />
 
 #### Next.js: next-routes (better)
 
@@ -2048,18 +2084,18 @@ Push route:
 
 Comparison:
 
-	// Variant 1: Compact with arrow function - you can remove {return} for even more compact:
-	const MyComponent = ({prop1}) => {
+	// 1. Functional component: compact with arrow function - you can remove {return} for even more compact:
+	const MyFunctionalComponent = ({ prop1 }) => {
 		return (
 			<div>
 					<h2>About {prop1}</h2>
 				</div>
 		)
 	}
-	export default DateValue
+	export default MyFunctionalComponent
 
-	// Variant 2: Class/extends with state etc
-	export default class MyComponent extends React.Component {
+	// 2. Class component: class/extends with state etc
+	export default class MyClassComponent extends React.Component {
 
 		constructor(props) {
 			super(props)
@@ -2096,11 +2132,11 @@ Comparison:
 
 https://reactjs.org/docs/hooks-overview.html
 
+- `useEffect(fn, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
 - `useCallback(fn, [deps])`: returns a memoized version of the callback that only changes if one of the dependencies has changed. Use to prevent this passing a new function each render.
 - `useMemo(() => computeExpensiveValue(a, b), [a, b])`: Returns a memoized value.
-- `useState(initialState)`: returns `[state, setState]`.
+- `useState(initialState)`: e.g. `const [active, setActive] = useState(false)`.
 - `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
-- `useEffect(fn, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
 - `useContext`: see below.
 - `useRef(initialValue)`: returns a mutable ref object.
 - `useImperativeHandle(ref, createHandle, [deps])`
@@ -2114,21 +2150,52 @@ https://reactjs.org/docs/hooks-overview.html
 Context is another way of sharing state, without using child props.
 https://reactjs.org/docs/context.html
 
-	export const MyContext = React.createContext('a default value') // outside hook
+	export const MyContext = React.createContext('defaultValue') // outside hook
 
-Use with hook:
-
-	const value = React.useContext(MyContext)
-
-Use with Provider/Consumer:
+Set up Provider:
 
 	<MyContext.Provider value={staticOrStateValue}>
 		{/* provide context value to children further down */}
 	</MyContext.Provider>
 
+1) Use with Consumer:
+
 	<MyContext.Consumer>
   	{value => /* use the context value when rendering */}
 	</MyContext.Consumer>
+
+2) Use with hook:
+
+	const value = React.useContext(MyContext)
+
+#### Use Context with State
+
+https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share-state-between-different-components-sgop6lnrd
+
+	import React, { createContext, useState } from 'react'
+
+	export const UserContext = createContext()
+
+	export const UserContextProvider = props => {
+	  // Use State to keep the values. Initial values are obtained from UserContextProvider’s props.
+	  const [user, setUser] = useState(props.user)
+	  // Make the context object (or array)
+	  const userContext = [user, setUser]
+	  // Pass the value in Provider and return
+	  return <UserContext.Provider value={userContext}>{props.children}</UserContext.Provider>
+	}
+
+	export const { Consumer: UserContextConsumer } = UserContext
+
+	// Wrap your app/page with the Provider:
+
+	import { UserContextProvider } from './UserContext'
+	<UserContextProvider user={1}>...</UserContextProvider>
+
+	// Then to use (“consume”) inside component or hook:
+
+	import { UserContext } from './UserContext'
+	const [user, setUser] = useContext(UserContext)
 
 
 ### Styling React
@@ -2345,6 +2412,17 @@ Then:
 	gatsby build && gatsby serve
 
 
+### Storybook
+
+Install Storybook. Checks if you use React/Angular etc. Works with `yarn` too.
+
+	npx -p @storybook/cli sb init
+
+
+### React Games (react-game-kit)
+
+- Loop: context.loop.(un)subscribe
+
 ## Redux
 
 https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f
@@ -2379,6 +2457,44 @@ https://jaysoo.ca/2016/02/28/organizing-redux-application/
 	index.js
 	rootReducer.js
 
+### React Animations
+
+https://github.com/digital-flowers/react-animated-css
+
+https://popmotion.io/pose/	
+
+### React Spring
+
+	import { useSpring, animated } from 'react-spring'
+
+  const [show, setShow] = useState(false)
+  const props = useSpring({ opacity: show ? 1 : 0 }) // values can also be Arrays
+	// Advanced: const [props, set, stop] = useSpring(() => ({ opacity: 1 }))
+	return <animated.div style={props} onClick={() => setShow(!show)}>I will fade when clicked</animated.div>
+
+	// styled-components
+	const AnimatedBox = styled(animated.div)`/* CSS here */`
+
+Methods:
+
+- `useSpring`: basic
+- `useSprings`: multiple, independent
+- `useTrail`: multiple, follow the last one
+- `useTransition`: when adding/removing to lists
+- `useChain`: 
+
+Config:
+
+	useSpring({ config: { mass: 1.5 }, ... })
+
+- `mass`: 1
+- `tension`: 170
+- `friction`: 26
+- `clamp`: false
+- `precision`: 0.01
+- `velocity`: 0
+- `duration`: undefined
+- `easing`: t => t
 
 ## JQuery
 

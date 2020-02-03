@@ -78,7 +78,7 @@ Quick:
 
 ## Troubleshooting
 
-### Test a specific commit
+### Test a specific commit - history
 
 	git checkout [hash]
 	git checkout master

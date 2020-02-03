@@ -62,8 +62,8 @@ e.g. `WHERE person.company_id = company.id`
 - Numbers:
 	- `smallint`: 2-byte signed integer that has a range from -32,768 to 32,767.
 	- `int`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
-	- `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
 	- `real` or float8: double-precision (8-byte) floating-point number.
+	- `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
 	- `numeric` or `numeric(p,s)`: real number with p digits with s number after the decimal point. The `numeric(p,s)` is the exact number.
 - `boolean`: true/false, t/f
 - Time & Date:
@@ -213,8 +213,8 @@ Multiple values:
 
 ## Modify table: add columns, remove columns
 
-	ALTER TABLE my_table
-	ADD COLUMN email VARCHAR;
+	ALTER TABLE person
+	ADD COLUMN company_id integer NOT NULL REFERENCES company(id) ON DELETE CASCADE;
 
 Remove:
 

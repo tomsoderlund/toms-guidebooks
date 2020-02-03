@@ -452,6 +452,10 @@ http://caniuse.com/#feat=html5semantic
 :before
 :after
 
+button.inProgress:after {
+  content: '...';
+}
+
 ## IFrame
 
 <iframe src="https://renderer-production-weld.freetls.fastly.net/embed/-LG0SMxKSC6BzBcXD8r7?width=1000&dpr=2" width="100%" height="100%" frameborder="0" style="height: 560px;"></iframe>
@@ -1297,6 +1301,8 @@ http://www.fileformat.info/info/unicode/char/2714/index.htm
 
 
 # SVG
+
+viewBox="0 0 50 20"
 
 <g>, <use>, <defs> and <symbol>
 

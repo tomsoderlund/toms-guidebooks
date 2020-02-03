@@ -171,13 +171,7 @@ https://zeit.co/docs/configuration/
 
 #### Redirect
 
-	  "routes": [
-	    {
-	      "src": "/(.*)",
-	      "status": 301,
-	      "headers": { "Location": "https://www.mydomain.com/$1" }
-	    }
-	  ]
+301 for root/apex domain: handle in Dashboard.
 
 ### Serverless functions
 
@@ -195,6 +189,7 @@ Example module:
 	  const { method, url, headers, body, query, cookies } = req
 	  res.json({ method, url, headers, body, query, cookies })
 	}
+
 
 ## NPM
 
@@ -234,9 +229,13 @@ Author: Tom Söderlund <tom@YOUR-USER-NAME.com> (http://www.YOUR-USER-NAME.com)
 	npm login # OR npm adduser # OR create new on https://www.npmjs.com
 	npm config ls # to ensure that the credentials are stored on your client.
 
-excluding files in .gitignore or .npmignore
+Make local package (TGZ file):
 
-	npm publish
+	npm pack
+
+Publish to NPM:
+
+	npm publish ## will run prepublish if exists
 
 Update:
 
@@ -250,6 +249,30 @@ Rename package:
 
 GitHub: no problem
 Codeship: change git:// link
+
+#### Ignore files (blacklist/whitelist)
+
+- Excluding files in .gitignore or .npmignore, including files in package.json "files"
+- Ignore files: https://zellwk.com/blog/ignoring-files-from-npm-package/
+
+#### Create NPM package with React
+
+- https://www.codementor.io/peterodekwo/create-a-simple-react-npm-package-in-simple-steps-using-cra-w966okagi
+
+Add Babel and a preset:
+
+	yarn add @babel/cli @babel/preset-react --dev ## or babel-preset-next
+
+package.json:
+
+	"main": "dist/index.js",
+	"scripts": {
+		"prepare": "rm -rf dist && mkdir dist && babel ./components -d dist --copy-files --presets=@babel/preset-react",
+		"prepare": "rm -rf dist && for folder in {components,lib,config,public}; do mkdir -p dist/${folder} && babel ${folder} -d dist/${folder} --copy-files --presets=@babel/preset-env,next; done && cp package.json dist/",
+	},
+	"files": [
+	  "dist/"
+	],
 
 ## Yarn
 
@@ -392,6 +415,29 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 	const { path, route, params, query, body } = req
 
+#### Generic request handler
+
+	/** handleRequest(async () => {...}, { req, res }) */
+	const handleRequest = async (actionFunction, { req, res }) => {
+	  try {
+	    await actionFunction(req, res)
+	  } catch (err) {
+	    const message = err.message.split(':')[0]
+	    const status = err.message.split(':')[1] || 500
+	    console.error(`Error ${status}: ${message}`)
+	    res.status(status)
+	    res.json({ message, status })
+	  }
+	}
+
+#### Write
+
+	res.writeHead(200, {
+		'Content-Type': 'image/png',
+		'Content-Length': img.length
+	})
+	res.end(img)
+
 #### 301 or 302
 
 	res.writeHead(302, { Location: 'your/404/path.html' })
@@ -399,6 +445,7 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 	res.statusCode = 404
 	res.statusMessage = 'Not found'
+	res.end(statusMessage)
 	res.writeHead(statusCode[, statusMessage][, headers])
 
 #### Content-Type
@@ -407,8 +454,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	res.setHeader('content-type', 'text/javascript')
 	res.setHeader('Cache-Control', 'public, max-age=31557600') // One year
 
-	res.write
-	res.end
+	res.write()
+	res.end()
 
 #### CORS
 
@@ -563,13 +610,37 @@ Config: `spec/support/jasmine.json`:
 		"spec_dir": "",
 		"spec_files": [
 			"lib/**/*.test.js",
-			"lib/**/*[sS]pec.js",
-			"server/**/*.test.js",
-			"server/**/*[sS]pec.js"
+			"lib/**/*[sS]pec.js"
 		],
 		"helpers": [
 		]
 	}
+
+#### Jasmine with ES2015
+
+https://blog.fullstacktraining.com/using-jasmine-with-javascript-es2015/
+
+	yarn add @babel/core @babel/node @babel/preset-env --dev
+	touch .babelrc
+	touch spec/run.js
+
+`.babelrc`:
+
+	{
+	  "presets": ["@babel/env"]
+	}
+
+`spec/run.js`:
+
+	import Jasmine from 'jasmine'
+
+	const jasmine = new Jasmine()
+	jasmine.loadConfigFile('spec/support/jasmine.json')
+	jasmine.execute()
+
+`package.json`:
+
+	"unit": "babel-node spec/run.js"
 
 #### Tests
 
@@ -1102,6 +1173,19 @@ http://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-
 
 ### MongoDB
 
+Install
+
+	brew tap mongodb/brew
+	brew install mongodb-community
+
+To have launchd start mongodb/brew/mongodb-community now and restart at login:
+
+	brew services start mongodb/brew/mongodb-community
+
+Or, if you don't want/need a background service you can just run:
+
+ 	mongod --config /usr/local/etc/mongod.conf
+
 http://docs.mongodb.org/v2.2/reference/mongo-shell/
 
 mongod # server: /usr/local/Cellar/mongodb-community@3.6/3.6.12/bin/mongod
@@ -1211,6 +1295,17 @@ Types/Scalars:
 - Boolean: true or false
 - ID (serialized as String)
 
+### GraphQLDateTime
+
+https://www.npmjs.com/package/graphql-iso-date
+
+	const { GraphQLDateTime } = require('graphql-iso-date')
+
+- typeDefs: scalar DateTime, dateUpdated: DateTime
+- resolvers: DateTime: GraphQLDateTime
+- dateUpdated = new Date()
+
+
 ### Queries
 
 	{
@@ -1219,7 +1314,7 @@ Types/Scalars:
 		}
 	}
 
-Filter:
+#### Filters
 
 	{
 		articles(category: "news") {
@@ -1227,7 +1322,7 @@ Filter:
 		}
 	}
 
-Fragments:
+#### Fragments
 
   fragment GameShortInfo on Game {
     id
@@ -1242,17 +1337,29 @@ Fragments:
 
 _Note: GamesList($system: String!) for mandatory parameter_
 
-Nested query:
+#### Nested queries
 
 	{
 		articles {
 			title
-	    # Queries can have comments!
+	    # Queries can have comments
 	    author {
 	      name
 	    }
 		}
 	}
+
+##### Nesting in resolvers
+
+	Query: {
+		...
+	},
+
+	Company: { // same name as in schema
+	  async employees (parent, variables, context, info) {
+	  	...
+	  }
+	},
 
 ### Server
 
@@ -1294,6 +1401,21 @@ api/graphql/index.js:
 
 	module.exports = server.createHandler({ path: '/api/graphql' })
 
+### Combine schemas
+
+merge-graphql-schemas
+
+	const { mergeTypes, mergeResolvers }  = require('merge-graphql-schemas')
+
+	const typeDefs = mergeTypes([
+	  require('../../graphql/gift/schema'),
+	  require('../../graphql/wishlist/schema')
+	], { all: true })
+
+	const resolvers = mergeResolvers([
+	  require('../../graphql/gift/resolvers')(pool),
+	  require('../../graphql/wishlist/resolvers')(pool)
+	])
 
 # Desktop App
 
