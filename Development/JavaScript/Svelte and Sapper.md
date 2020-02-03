@@ -10,6 +10,21 @@ https://www.svelte.dev/
     {@html expression}
     {@debug var1, var2, ..., varN}
 
+## Component children: <slot> tag
+
+    <div class="box">
+      <slot></slot>
+    </div>
+
+## onMount
+
+    import { onMount } from 'svelte'
+
+    onMount(async () => {
+      const module = await import('my-non-ssr-component')
+      MyComponent = module.default
+    })
+
 ## Context and Stores
 
 https://flaviocopes.com/svelte-state-management/
@@ -20,6 +35,12 @@ https://flaviocopes.com/svelte-state-management/
     import { getContext } from 'svelte'
     const someObject = getContext('someKey')
 
+## "module" context
+
+https://svelte.dev/tutorial/module-exports
+
+    <script context="module">
+
 
 ## Sapper
 
@@ -29,9 +50,18 @@ https://sapper.svelte.dev/
     cd MYAPP
     yarn && yarn dev
 
+### Preloading data
+
+https://sapper.svelte.dev/docs#Preloading
+
+### Stores for page and session:
+
+https://sapper.svelte.dev/docs#Stores
+
 ### Sapper on Zeit Now
 
-https://github.com/beyonk-adventures/now-sapper-demo
+- https://github.com/beyonk-adventures/now-sapper
+- https://github.com/beyonk-adventures/now-sapper-demo
 
     npx degit beyonk-adventures/now-sapper-demo MYAPP
     cd MYAPP
