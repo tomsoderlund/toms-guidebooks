@@ -1239,6 +1239,9 @@ Tip: event handlers on `document` for move/end:
 		// Do in-browser stuff
 	}
 
+	// Short version
+	(typeof window !== 'undefined') && ...
+
 ### HTTP Get
 
 	function httpGetAsync(url, callback) {

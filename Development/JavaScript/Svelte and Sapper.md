@@ -2,19 +2,59 @@
 
 https://www.svelte.dev/
 
+    npx degit sveltejs/template MYAPP
+    cd MYAPP
+    yarn && yarn dev
+
+## Reactive declarations
+
+    $: doubled = count * 2
+
+Block:
+
+    $: {
+      console.log(`the count is ${count}`);
+      alert(`I SAID THE COUNT IS ${count}`);
+    }
+
+## Props
+
+    <script>
+      export let myProp
+    </script>
+
 ## Special tags
 
     {#if expression}...{:else if expression}...{/if}
-    {#each expression as name, index}...{/each}
+    {#each expression as name, index (keyField)}...{/each}
     {#await expression}...{:then name}...{:catch name}...{/await}
     {@html expression}
     {@debug var1, var2, ..., varN}
+
+## Events
+
+    <button on:click={handleClick}>Click Me</button>
+    <div on:mousemove={event => m = { x: event.clientX, y: event.clientY }} />
+
+Modifiers: https://svelte.dev/tutorial/event-modifiers
+
+    <button on:click|preventDefault={handleClick}>Click Me</button>
 
 ## Component children: <slot> tag
 
     <div class="box">
       <slot></slot>
     </div>
+
+## Event forwarding to parent
+
+https://svelte.dev/tutorial/dom-event-forwarding
+
+## Binding input to variable
+
+    <input bind:value={value}>
+    <input bind:value>
+    <input type=checkbox bind:checked={didApprove}>
 
 ## onMount
 
@@ -25,7 +65,7 @@ https://www.svelte.dev/
       MyComponent = module.default
     })
 
-## Context and Stores
+## Context
 
 https://flaviocopes.com/svelte-state-management/
 
@@ -34,6 +74,20 @@ https://flaviocopes.com/svelte-state-management/
 
     import { getContext } from 'svelte'
     const someObject = getContext('someKey')
+
+## Stores
+
+https://svelte.dev/tutorial/writable-stores
+
+stores.js:
+
+    import { writable } from 'svelte/store'
+    export const count = writable(0)
+
+Component:
+
+    import { count } from './stores.js'
+    <p>The count is {$count}</p>
 
 ## "module" context
 
@@ -50,9 +104,17 @@ https://sapper.svelte.dev/
     cd MYAPP
     yarn && yarn dev
 
-### Preloading data
+### Preloading data (server-side)
 
 https://sapper.svelte.dev/docs#Preloading
+
+    <script context="module">
+      export function preload({ params, query }) {
+        return this.fetch(`blog.json`).then(r => r.json()).then(posts => {
+          return { posts }
+        })
+      }
+    </script>
 
 ### Stores for page and session:
 
@@ -62,6 +124,7 @@ https://sapper.svelte.dev/docs#Stores
 
 - https://github.com/beyonk-adventures/now-sapper
 - https://github.com/beyonk-adventures/now-sapper-demo
+- https://github.com/sveltejs/sapper/issues/564
 
     npx degit beyonk-adventures/now-sapper-demo MYAPP
     cd MYAPP
