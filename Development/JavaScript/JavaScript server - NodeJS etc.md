@@ -11,51 +11,7 @@
 
 http://nodejs.org/download/
 
-
 ## Upgrade Node with NPM
-
-## Grunt
-
-## Yeoman
-
-### Yeoman Angular
-
-https://github.com/yeoman/generator-angular
-
-	sudo npm update -g yo & sudo npm install -g generator-angular-fullstack
-
-generator-angular
-generator-angular-fullstack
-
-	yo angular-fullstack [appname]
-	npm install & bower install
-
-### Yeoman Polymer
-
-Use just bower instead!
-
-	bower install --save Polymer/polymer#^1.0.0
-
-Install element:
-
-	bower install --save PolymerElements/paper-fab#^1.0.0
-
-Yeoman way:
-
-	sudo npm install -g generator-polymer
-	mkdir -p my-project && cd $_
-
-	yo polymer (aka polymer:app)
-	yo polymer:element
-	yo polymer:seed
-	yo polymer:gh
-
-### Yeoman Express
-
-	sudo npm install -g yo # Make sure you have yo installed
-	sudo npm install generator-express # Install the generator locally
-	yo express # then run Yeoman and select Basic
-
 
 ## Express
 
