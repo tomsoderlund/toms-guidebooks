@@ -760,11 +760,11 @@ db.projects.update( { _id: ObjectId("52e57805d87d0e2618000003") }, { $set: { nam
 db.projects.update( { slug: "myapp" }, { $set: { screens: [ {name: 'Nr1', data: {}}, {name: 'Nr2', data: {}} ] } } )
 db.projects.update( { slug: "test-project" }, { $set: {'screens.0': 'testVal'} }, { upsert: true } )
 db.projects.update( { slug: "test-project" }, { $set: {screens.0.elements.elem1: 'testVal'} }, { upsert: true } )
-db.users.find( { email: "tom@YOUR-USER-NAME.com" } )
+db.users.find( { email: "NAME@YOURWEBSITE.com" } )
 db.users.update( { email: "tom+expired@weld.io" }, { $set: {'subscriptions.0.expires': ISODate("2014-01-01")} }, { upsert: true } )
-db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'dateLastLogin': ISODate("2014-11-20")} }, { upsert: true } )
-db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'role': 'admin' } } )
-db.users.update( { email: "tom@YOUR-USER-NAME.com" }, { $set: {'tags': ['beta2.0'] } } )
+db.users.update( { email: "NAME@YOURWEBSITE.com" }, { $set: {'dateLastLogin': ISODate("2014-11-20")} }, { upsert: true } )
+db.users.update( { email: "NAME@YOURWEBSITE.com" }, { $set: {'role': 'admin' } } )
+db.users.update( { email: "NAME@YOURWEBSITE.com" }, { $set: {'tags': ['beta2.0'] } } )
 
 db.posts.insert({ title: "Hello World", text: "yoda yoda" })
 db.projects.save() // update or insert

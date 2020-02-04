@@ -49,7 +49,7 @@ Check if existing: go to https://npmjs.com/package/<package>
 
   npm init  # OR npm init --scope=weld-io
 
-Author: Tom Söderlund <tom@YOUR-USER-NAME.com> (http://www.YOUR-USER-NAME.com)
+Author: Tom Söderlund <NAME@YOURWEBSITE.com> (http://www.YOURWEBSITE.com)
 
   npm whoami # check user
   npm login # OR npm adduser # OR create new on https://www.npmjs.com

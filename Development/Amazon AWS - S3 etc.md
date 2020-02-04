@@ -91,7 +91,7 @@ s3_website cfg apply
 s3_website push
 
 ### Config (same user for all sites):
-s3_bucket: www.YOUR-USER-NAME.com
+s3_bucket: www.YOURWEBSITE.com
 s3_endpoint: EU
 s3_id: AKIAIKW..
 s3_secret: hEjr8
