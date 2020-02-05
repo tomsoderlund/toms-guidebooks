@@ -17,19 +17,25 @@ Block:
       alert(`I SAID THE COUNT IS ${count}`);
     }
 
-## Props
+## Binding input to variable
 
-    <script>
-      export let myProp
-    </script>
+    <input bind:value={value}>
+    <input bind:value>
+    <input type=checkbox bind:checked={didApprove}>
 
 ## Special tags
 
     {#if expression}...{:else if expression}...{/if}
-    {#each expression as name, index (keyField)}...{/each}
+    {#each arrayLikeObject as name, index (keyField)}...{/each}
     {#await expression}...{:then name}...{:catch name}...{/await}
     {@html expression}
     {@debug var1, var2, ..., varN}
+
+## Component props
+
+    <script>
+      export let myProp
+    </script>
 
 ## Events
 
@@ -40,21 +46,15 @@ Modifiers: https://svelte.dev/tutorial/event-modifiers
 
     <button on:click|preventDefault={handleClick}>Click Me</button>
 
+### Event forwarding to parent
+
+https://svelte.dev/tutorial/dom-event-forwarding
+
 ## Component children: <slot> tag
 
     <div class="box">
       <slot></slot>
     </div>
-
-## Event forwarding to parent
-
-https://svelte.dev/tutorial/dom-event-forwarding
-
-## Binding input to variable
-
-    <input bind:value={value}>
-    <input bind:value>
-    <input type=checkbox bind:checked={didApprove}>
 
 ## onMount
 
@@ -94,6 +94,10 @@ Component:
 https://svelte.dev/tutorial/module-exports
 
     <script context="module">
+
+## Making components
+
+https://github.com/YogliB/svelte-component-template
 
 
 ## Sapper
