@@ -4,7 +4,7 @@ React Native is an easy way to build native iOS/Android (also Windows, macOS, we
 
 With https://expo.io the steps are easy:
 
-1. Update expoo-cli with `npm install -g expo-cli`
+1. Update expo-cli with `npm install -g expo-cli`
 1. Create a new app (`expo init`)
 2. Run it on device or simulator (`expo start`)
 3. Publish it to Expo.io (`expo publish`)
