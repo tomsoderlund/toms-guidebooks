@@ -59,9 +59,19 @@ https://zeit.co/docs/configuration/
 
 `now.json`:
 
+{
+  "version": 2,
+  "name": "myapp",
+  "regions": [
+    "arn1"
+  ]
+}
+
+Larger:
+
   {
-    "name": "zeit-chat",
     "version": 2,
+    "name": "myapp",
     "alias": ["my-domain.com", "my-alias"],
     "scope": "my-team",
     "env": {

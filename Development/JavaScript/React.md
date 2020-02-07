@@ -1,4 +1,39 @@
+# React and Redux
+
+- @zeit/next-bundle-analyzer
+- terser-webpack-plugin
+
 ## React
+
+- React is just the View layer. **Flux** (incl. **Redux**) is the Model layer.
+- **Relay** is an alternative data layer using GraphQL.
+- React is more than front-end web; can be used to generate all sorts of views: DOM, HTML, native apps etc.
+- React Native generates real native code.
+- React supports isomorphic/universal apps: code on both server and client. User downloads rendered HTML, is then activated client-side.
+- React can co-exist with other frameworks.
+- React components combine controller + view in the same file.
+- It’s recommended to use JSX (HTML in JS code) with React.
+- Data: `this.props` is static data, `this.state` is dynamic - keep it minimal.
+- Unidirectional data flow is encouraged.
+- A React component is just an object, and can be passed as props.
+
+## Redux
+
+- One **Store** holds the entire **State** tree of your application. State is immutable. Create with `createStore(reducer, initialState, enhancer)`. Get the State with `getState()`.
+- **Actions** change the state e.g. `{ type: 'CREATE_TODO' }`, where `type` is the only required property. Use `Store.dispatch(action)` to trigger a state change.
+- A **Reducer** is just a _pure function*_ that takes State + Action and returns new State, e.g: `function todoReducer(state, action) {}`.  
+*Pure function = no side effects, doesn’t modify arguments.
+- Use one Store, but separate Reducers for each data model. One **Root Reducer** combines all the other reducers with `combineReducers()`.
+- **Middleware** is a way to extend Redux. Use `applyMiddleware(...middleware)` ([returns a function](https://redux.js.org/docs/api/applyMiddleware.html#returns)). Each middleware receives Store’s `dispatch` and `getState` functions as named arguments, and returns a function.
+- `redux-thunk` lets the action creators invert control by dispatching functions. They would receive `dispatch` and may call it asynchronously. Such functions are called **Thunks**.
+- `react-redux` binds Redux to React components: `connectedTodoItem = connect(mapStateToProps, mapDispatchToProps)(TodoItem)`. **Provider** is the higher-order component provided by React Redux that lets you bind Redux to React.
+- Redux’ State has nothing to do with React’s `this.state`.
+
+https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f
+
+https://egghead.io/courses/getting-started-with-redux
+
+https://medium.com/@maxlynch/redux-is-the-pivotal-frontend-innovation-a406736552cb
 
 ### create-react-app
 
@@ -304,10 +339,10 @@ Attributes:
 
 Change element type:
 
-  const PrimaryLink = PrimaryButton.withComponent('a')
-  // or:
   <PrimaryButton as='a'/>
-
+  // or, deprecated:
+  const PrimaryLink = PrimaryButton.withComponent('a')
+  
 Refer to ${ChildComponent}:
 
   const PrimaryButton = styled.button`

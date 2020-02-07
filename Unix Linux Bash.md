@@ -8,6 +8,15 @@ Change:
 
 	chmod u+x myscript.sh
 
+## Chaining multiple commands
+
+- `&&`: run if previous success
+- `||`: run if previous fail
+- `;`: run in either case
+- `echo $?`: echo previous status code/result (`0` means success)
+
+	./runScript.sh && echo "success" || (sudo ./runScript.sh && echo "success" || echo "fail")
+
 ## Multiple files
 
 	touch index.{html,js}

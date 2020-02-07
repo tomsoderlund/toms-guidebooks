@@ -1895,6 +1895,39 @@ https://caolan.github.io/async/docs.html
 		whenDone
 	)
 
+## RxJS
+
+https://www.learnrxjs.io/
+
+- Observable
+- Subject: Observable that you can inject a new value in
+- BehaviorSubject: Subject that remember the old value
+- ReplaySubject: Subject with history of previous values
+- pipe: 
+- from: create Observable from a Promise
+- of: create Observable from value
+- Observable.value: get current value
+- Observable.next: set the new value
+- exhaustMap: like map but returns an Observable
+
+
+## Immutable.js
+
+https://immutable-js.github.io/immutable-js/docs/
+
+- get(keyOrIndex)
+- getIn(arrayPath)
+- set(keyOrIndex, value)
+- setIn(arrayPath, value)
+- updateIn(arrayPath, value => { return value })
+
+	  immutableCollection
+	    .map(screen => ({
+	      label: screen.get('name'),
+	      value: screen.get('id')
+	    }))
+	    .toSet()
+	    .toArray()
 
 ## Linting
 

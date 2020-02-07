@@ -133,3 +133,7 @@ https://sapper.svelte.dev/docs#Stores
     npx degit beyonk-adventures/now-sapper-demo MYAPP
     cd MYAPP
     yarn && yarn dev
+
+# Svelte Native
+
+https://svelte-native.technology/
