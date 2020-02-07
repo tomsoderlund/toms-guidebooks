@@ -15,6 +15,8 @@ Change:
 - `;`: run in either case
 - `echo $?`: echo previous status code/result (`0` means success)
 
+Example:
+
 	./runScript.sh && echo "success" || (sudo ./runScript.sh && echo "success" || echo "fail")
 
 ## Multiple files
@@ -67,7 +69,6 @@ List `./folder/subfolder/file.ext`:
 ### Count lines of code (LOCs)
 
 	find . -name '*.js' | xargs wc -l
-
 
 ## Finding files
 
@@ -185,7 +186,6 @@ http://www.cs.fsu.edu/general/vimanual.html
 	chown -R www drupal-6.15/
 	chgrp -R www drupal-6.15/
 
-
 ## Superuser
 
 	su: switch user, su tom
@@ -193,8 +193,6 @@ http://www.cs.fsu.edu/general/vimanual.html
 	sudo visudo
 
 	nohup: start and continue after hangup
-
-
 
 ### Show processes:
 
@@ -220,7 +218,6 @@ http://www.macworld.com/article/1143351/netprocesses.html
 	ufw allow [PORT]
 	ufw allow 3000
 
-
 ### Check version
 
 	lsb_release -a  # "Ubuntu 8.04.1 hardy"
@@ -231,7 +228,9 @@ http://www.macworld.com/article/1143351/netprocesses.html
 	export PATH=$PATH:/path/to/my/stuff
 	echo $PATHSS domain
 
-Flush dns:
+### DNS (dns)
+
+Flush DNS:
 
 	dscacheutil -flushcache
 	sudo killall -HUP mDNSResponder
