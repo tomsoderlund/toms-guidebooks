@@ -109,7 +109,7 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 	// text/html, text/javascript, text/csv, application/json, image/svg+xml, image/jpeg
 	res.setHeader('content-type', 'text/javascript')
-	res.setHeader('Cache-Control', 'public, max-age=31557600') // One year
+	res.setHeader('cache-control', 'public, max-age=31557600') // One year
 
 	res.write()
 	res.end()

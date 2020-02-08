@@ -2,7 +2,7 @@
 
 Exclude:
 
-	-node_modules/,-.tmp/,-.next/,-build/,-out/,-dist/,-yarn*,-.sass-cache/
+	-node_modules/,-.tmp/,-build/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
 
 ## Javascript include
 
@@ -938,6 +938,15 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	Math.round(new Date().getTime() / 1000)
 
 
+### Times in seconds/milliseconds
+
+- 1 year in milliseconds: 365*24*60*60*1000 = 31536000000
+- 1 year in seconds: 365*24*60*60 = 31536000
+- 1 month in seconds: 30*24*60*60 = 2592000
+- 1 week in seconds: 7*24*60*60 = 604800
+- 1 day in seconds: 24*60*60 = 86400
+- 1 hour in seconds: 60*60 = 3600
+
 ### Moment.js
 
 	moment(dateObj)
@@ -965,7 +974,7 @@ Wait, Sleep etc
 
 	// do once
 	setTimeout(doInOneSecond, 1000)
-	setTimeout(function () { console.log('setTimeout') }, 1000)
+	setTimeout(() => console.log('setTimeout'), 1000)
 
 	// Repeat
 	setInterval(doEverySecond, 1000)
@@ -1155,6 +1164,10 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	element.offsetLeft // also offsetTop - both relative to parent
 	element.offsetWidth // offsetHeight
 	element.dispatchEvent(new Event('change'))
+
+	// toggle class
+	const activeClass = ' inProgress'
+	event.target.className = event.target.className.includes(activeClass) ? event.target.className.replace(activeClass, '') : event.target.className + activeClass
 
 	var setElementDisabled = function (elementId, setDisabled) {
 		setDisabled

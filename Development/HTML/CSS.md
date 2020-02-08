@@ -19,7 +19,7 @@ body {
   /* Flexbox: */
   display: flex; /* inline-flex */
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   /* flex-wrap: wrap; */
 }
@@ -555,8 +555,8 @@ h1 span {
 ## Animation: Keyframes (`animation`)
 
   .pulsate {
-    /*         name              dur delay repetitions*/
-    animation: animation-pulsate 10s 5s infinite;
+    /*         name              dur delay repetitions */
+    animation: animation-pulsate 10s 0s infinite;
   }
 
   @keyframes animation-pulsate {
@@ -580,29 +580,48 @@ h1 span {
     }
   }
 
-  #box {
-    animation-name: resize;
-    animation-duration: 1s;
-    animation-iteration-count: 4;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-  }
-
-  div {
+  .animated1 {
     animation-name: example;
     animation-duration: 5s;
     animation-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
     animation-delay: 2s;
     animation-iteration-count: infinite;
-    animation-direction: normal|reverse|alternate|alternate-reverse
-    /* Extra */
-    animation-play-state: running|paused
-    animation-fill-mode: Specifies a style for the element when the animation is not playing
+    animation-direction: normal|reverse|alternate|alternate-reverse;
+    animation-play-state: running|paused;
+    animation-fill-mode: (specifies a style for the element when the animation is not playing);
   }
 
-  div {
+  .animated2 {
     animation: example 5s linear 2s infinite alternate;
   }
+
+### Progress animation
+
+    .progress-button {
+      background: linear-gradient(
+        90deg,
+        darkturquoise 0%,
+        darkturquoise 45%,
+        salmon 55%,
+        salmon 100%
+      );
+      background-size: 400% 100%;
+      background-position: 0% 50%;
+    }
+    .progress-button.in-progress {
+      animation: animation-progress 5s 0s 1;
+    }
+    .progress-button.done {
+      background-position: -50% 50%;
+    }
+    @keyframes animation-progress {
+      from {
+        background-position: 0% 50%;
+      }
+      to {
+        background-position: -50% 50%;
+      }
+    }
 
 ## Responsive
 
@@ -736,7 +755,7 @@ namedColors.json: https://gist.github.com/tomsoderlund/548d39611c45397f48434e706
 http://www.crockford.com/wrrrld/color.html
 http://www.quackit.com/css/css_color_codes.cfm
 
-Favorites:
+Tom’s favorites:
 
 darkturquoise
 rebeccapurple

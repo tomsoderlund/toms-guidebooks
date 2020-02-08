@@ -128,11 +128,34 @@ https://sapper.svelte.dev/docs#Stores
 
 - https://github.com/beyonk-adventures/now-sapper
 - https://github.com/beyonk-adventures/now-sapper-demo
-- https://github.com/sveltejs/sapper/issues/564
 
     npx degit beyonk-adventures/now-sapper-demo MYAPP
     cd MYAPP
     yarn && yarn dev
+
+#### 500 ECONNREFUSED error on Zeit Now v2
+
+To fix 500 ECONNREFUSED error on Zeit Now v2:
+
+    export default function zeitNowUrl (path, host = '') {
+      const baseUrl = (!process.browser && process.env.NOW_REGION)
+        ? `https://${host}`
+        : ''
+      return `${baseUrl}/${path}`
+    }
+
+...and then in each page:
+
+    <script context="module">
+      import zeitNowUrl from '../../lib/zeitNowUrl'
+
+      export function preload({ host, params, query }) {
+        return this.fetch(zeitNowUrl('blog.json', host)).then(r => r.json()).then(posts => {
+          return { posts };
+        });
+      }
+    </script>
+
 
 # Svelte Native
 

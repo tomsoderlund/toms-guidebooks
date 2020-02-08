@@ -10,6 +10,7 @@
 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
 <meta property="og:title" content="{TITLE}"/>
 <meta property="og:description" content="{DESCRIPTION}"/>
+<meta property="og:image" content="https://screen.tomorroworld.com/?url={IMAGE_URL}"/>
 <meta property="og:locale" content="en_US"/>
 <link rel="shortcut icon" type="image/x-icon" href="./icon.png"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600i&display=swap"/>
