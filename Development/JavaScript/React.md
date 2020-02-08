@@ -375,8 +375,7 @@ Global:
 
 1) Import:
 
-  "react-svg-inline": "^2.1.1",
-  "svg-inline-loader": "^0.8.0"
+  yarn add react-svg-inline svg-inline-loader
 
 2) webpack / next.config.js
 

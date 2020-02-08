@@ -606,7 +606,10 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 
 	newStr = str.replace('Google', 'Weld')  // first only
 	newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
+	// dynamic regex
 	newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
+	// replace function (also: '$&' inserts the matched substring)
+	newStr = str.replace(/([^\d]*)(\d*)([^\w]*)/, (match, p1, p2, p3, offset, string) => [p1, p2, p3].join(' - '))
 
 	const characterReplacements = {
 	  ' ': '-'
@@ -1070,17 +1073,6 @@ https://codepen.io/YOUR-USER-NAME/pen/Gdjrdx
 	ctx.shadowBlur=10
 	ctx.shadowOffsetX=20
 	ctx.shadowColor="black"
-
-
-### SVG
-
-http://svgjs.com
-http://svgjs.com/svg.draw.js/
-
-http://codepen.io/YOUR-USER-NAME/pen/jyooRG (basic demo)
-http://codepen.io/YOUR-USER-NAME/pen/ZBpoKW (drawing with mouse)
-
-https://gionkunz.github.io/chartist-js/
 
 
 ## Sound
