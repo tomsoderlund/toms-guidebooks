@@ -79,7 +79,7 @@ e.g. `WHERE person.company_id = company.id`
 
 ## Export data
 
-	COPY domain_updates TO '/Users/tomsoderlund/Documents/Projects/Weld.io/Development/weld-extensions/site-activity-index/data/domain_updates.csv' DELIMITER ',' CSV HEADER;
+	COPY domain_update TO '/Users/tomsoderlund/Documents/Projects/Weld.io/Development/weld-extensions/site-activity-index/data/domain_update.csv' DELIMITER ',' CSV HEADER;
 
 
 ### From JavaScript to SQL
@@ -156,16 +156,16 @@ Wildcard search:
 Examples:
 
 	SELECT city, temp_lo, temp_hi, prcp, date, location
-	FROM weather, cities
+	FROM weather, city
 	WHERE city = name;
 
 	SELECT * FROM weather
-	LEFT JOIN cities ON (weather.city = cities.name);
+	LEFT JOIN city ON (weather.city = city.name);
 
 Note: `LEFT` refers to the left table in `ON` statement:
 
-	SELECT * FROM weather LEFT OUTER JOIN cities ON (weather.city = cities.name);
-	SELECT domains.id, name, avg(sai) AS avg_sai FROM domains LEFT OUTER JOIN domain_updates ON (domains.id = domain_updates.domain_id) GROUP BY domains.id;
+	SELECT * FROM weather LEFT OUTER JOIN city ON (weather.city = city.name);
+	SELECT domain.id, name, avg(sai) AS avg_sai FROM domain LEFT OUTER JOIN domain_update ON (domain.id = domain_update.domain_id) GROUP BY domain.id;
 
 ### Nested SELECT with ()
 
@@ -178,20 +178,20 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 ## Create - Insert
 
-	INSERT INTO domains (name) VALUES ('indiska.se') RETURNING id;
+	INSERT INTO domain (name) VALUES ('indiska.se') RETURNING id;
 
 Multiple values:
 
-	INSERT INTO domains (name) VALUES ('domain1.se'), ('domain2.se');
+	INSERT INTO domain (name) VALUES ('domain1.se'), ('domain2.se');
 
 ## Update
 
-	UPDATE domains SET content_last_update = '2019-01-01 12:00', content_previous_update = null WHERE id=1;
+	UPDATE domain SET content_last_update = '2019-01-01 12:00', content_previous_update = null WHERE id=1;
 
 ## Delete
 
-	DELETE * from domains;
-	DELETE from domains where name = 'formomiljo.se';
+	DELETE * from domain;
+	DELETE from domain where name = 'formomiljo.se';
 
 ## Create a new table
 
@@ -218,7 +218,7 @@ Multiple values:
 
 Remove:
 
-	ALTER TABLE domains
+	ALTER TABLE domain
 	DROP COLUMN "change_fraction";
 
 ## Delete table
@@ -243,7 +243,7 @@ If delete Company, then delete Person too:
 
 Modify existing table:
 
-	ALTER TABLE "domain_updates" ADD FOREIGN KEY ("domain_updates_domain_id_fkey") REFERENCES "domains"("id") ON DELETE CASCADE;
+	ALTER TABLE "domain_update" ADD FOREIGN KEY ("domain_update_domain_id_fkey") REFERENCES "domain"("id") ON DELETE CASCADE;
 	ALTER TABLE person ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
 
 
