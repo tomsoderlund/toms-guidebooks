@@ -1221,6 +1221,17 @@ Tip: event handlers on `document` for move/end:
 	window.document.addEventListener('mousemove', listeners.move)
 	window.document.addEventListener('mouseup', listeners.end)
 
+#### Media queries
+
+	const mediaQueryTablet = window.matchMedia('(max-width: 600px)')
+	mediaQueryTablet.addListener(event => {
+		event.matches && console.log('tablet')
+	})
+
+	// Short:
+  window.matchMedia('(max-width: 969px) and (min-width: 524px)')
+  	.addListener(e => e.matches && console.log('tablet'))
+
 #### Create custom event
 
 	var event = new Event('click')

@@ -24,6 +24,7 @@
 </body>
 </html>
 
+<!-- comment -->
 
 <input type="button">
 <input type="checkbox">

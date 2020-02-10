@@ -1,6 +1,6 @@
-## GraphQL
+# GraphQL
 
-Types/Scalars:
+## Types/Scalars
 
 - Int: Signed 32‐bit integer
 - Float: Signed double-precision floating-point value
@@ -12,121 +12,150 @@ Types/Scalars:
 
 https://www.npmjs.com/package/graphql-iso-date
 
-  const { GraphQLDateTime } = require('graphql-iso-date')
+    const { GraphQLDateTime } = require('graphql-iso-date')
 
 - typeDefs: scalar DateTime, dateUpdated: DateTime
 - resolvers: DateTime: GraphQLDateTime
 - dateUpdated = new Date()
 
 
-### Queries
+## Queries
 
-  {
-    articles {
+    {
+      # Queries can have comments
+      articles {
+        title
+      }
+    }
+
+### Filters
+
+    {
+      articles(category: "news") {
+        title
+      }
+    }
+
+### Fragments
+
+    fragment GameShortInfo on Game {
+      id
       title
     }
-  }
 
-#### Filters
-
-  {
-    articles(category: "news") {
-      title
+    query GamesList($system: String) {
+      games (system: $system) {
+        ...GameShortInfo
+      }
     }
-  }
-
-#### Fragments
-
-  fragment GameShortInfo on Game {
-    id
-    title
-  }
-
-  query GamesList($system: String) {
-    games (system: $system) {
-      ...GameShortInfo
-    }
-  }
 
 _Note: GamesList($system: String!) for mandatory parameter_
 
-#### Nested queries
 
-  {
-    articles {
-      title
-      # Queries can have comments
-      author {
+## Mutations (create, update, delete)
+
+    mutation {
+      addSimilarFont (name1: "Roboto", name2: "Futura") {
+        id
         name
       }
     }
-  }
 
-##### Nesting in resolvers
+## Nested data
 
-  Query: {
-    ...
-  },
+### Nesting in schema
 
-  Company: { // same name as in schema
-    async employees (parent, variables, context, info) {
-      ...
+    type Category {
+      id: ID
+      name: String
     }
-  },
 
-### Server
+    type Font {
+      id: ID
+      name: String
+      category: Category
+    }
 
-  yarn add graphql apollo-server(-express/-micro)
+### Nesting in resolvers
+
+    Query: {
+      async company (parent, variables, context, info) {
+        ...
+      }
+    },
+
+    Company: { // same name as *parent* in schema
+      async employees (parent, variables, context, info) {
+        return await sqlFind(pool, 'employees', { company_id: parent.id })
+      }
+    },
+
+### Nested queries
+
+    {
+      articles {
+        title
+        author {
+          name
+        }
+      }
+    }
+
+
+## Server
+
+    yarn add graphql apollo-server(-express/-micro)
 
 server.js:
 
-  const server = require('express')()
-  const { ApolloServer } = require('apollo-server-express')
-  const { typeDefs, resolvers } = require('./graphql/schema')
+    const server = require('express')()
+    const { ApolloServer } = require('apollo-server-express')
+    const { typeDefs, resolvers } = require('./graphql/schema')
 
-  const apolloServer = new ApolloServer({ typeDefs, resolvers })
-  apolloServer.applyMiddleware({ app: server })
+    const apolloServer = new ApolloServer({ typeDefs, resolvers })
+    apolloServer.applyMiddleware({ app: server })
 
 
-### GraphQL on Next.js
+## GraphQL on Next.js
 
 - Global: https://github.com/zeit/next.js/tree/master/examples/with-apollo
 - New:    https://github.com/zeit/next.js/tree/canary/examples/with-apollo
 - Per page: https://github.com/adamsoffer/next-apollo-example
 
-### GraphQL on Zeit Now
+## GraphQL on Zeit Now
 
 https://zeit.co/guides/deploying-apolloserver-to-now
 
-  yarn add apollo-server-micro graphql
-  mkdir -p api/graphql
-  touch api/graphql/index.js
+    yarn add apollo-server-micro graphql
+    mkdir -p api/graphql
+    touch api/graphql/index.js
 
 api/graphql/index.js:
 
-  const { ApolloServer, gql } = require('apollo-server-micro')
+    const { ApolloServer, gql } = require('apollo-server-micro')
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    introspection: true,
-    playground: true
-  })
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      introspection: true,
+      playground: true
+    })
 
-  module.exports = server.createHandler({ path: '/api/graphql' })
+    module.exports = server.createHandler({ path: '/api/graphql' })
 
-### Combine schemas
+
+## Combine schemas
 
 merge-graphql-schemas
 
-  const { mergeTypes, mergeResolvers }  = require('merge-graphql-schemas')
+    const { mergeTypes, mergeResolvers }  = require('merge-graphql-schemas')
 
-  const typeDefs = mergeTypes([
-    require('../../graphql/gift/schema'),
-    require('../../graphql/wishlist/schema')
-  ], { all: true })
+    const typeDefs = mergeTypes([
+      require('../../graphql/gift/schema'),
+      require('../../graphql/wishlist/schema')
+    ])
 
-  const resolvers = mergeResolvers([
-    require('../../graphql/gift/resolvers')(pool),
-    require('../../graphql/wishlist/resolvers')(pool)
-  ])
+    const resolvers = mergeResolvers([
+      require('../../graphql/gift/resolvers')(pool),
+      require('../../graphql/wishlist/resolvers')(pool)
+    ])

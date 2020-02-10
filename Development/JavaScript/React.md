@@ -58,7 +58,7 @@ https://github.com/facebookincubator/create-react-app
 
 #### Next.js Page written as functional component with React Hooks
 
-  const MyPage => ({ query }) {
+  const MyPage = ({ query }) => {
     const { data, loading, error } = useQuery(personQuery(query.slug))
     if (loading) return 'Loading...'
     if (error) return `Error! ${error.message}`

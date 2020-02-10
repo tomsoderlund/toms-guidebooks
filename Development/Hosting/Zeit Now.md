@@ -47,6 +47,8 @@ DNS changes:
   now dns ls
   now dns add YOURDOMAINHERE.COM @ TXT 'your string'
   now dns add YOURDOMAINHERE.COM SUBDOMAIN TXT 'your string'
+  # Google Search Console:
+  now dns add mydomain.com @ TXT 'google-site-verification=UKMH7gni3xbkJDxpVGtRVJV2DbY-tK3qyN0az5pUSZY'
   # Mailgun:
   now dns add mydomain.com mg TXT 'v=spf1 include:eu.mailgun.org ~all'
   now dns add mydomain.com k1._domainkey.mg TXT 'k=rsa; p=MIGf...'

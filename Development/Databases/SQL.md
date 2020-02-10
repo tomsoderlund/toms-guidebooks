@@ -125,11 +125,30 @@ Update:
 
 # SQL syntax
 
-## Find - Select
+## Finding data with SELECT
 
 	SELECT * FROM table WHERE id = 123;
 
-Wildcard search:
+### Complex example
+
+	const sqlString = `SELECT
+	font.id, font.name,
+	category.name AS category_name,
+	source.name AS source_name,
+	creator.name AS creator_name
+	FROM font
+	LEFT JOIN category ON (category.id = font.category_id)
+	LEFT JOIN source ON (source.id = font.source_id)
+	LEFT JOIN creator ON (creator.id = font.creator_id)
+	WHERE true
+	${name ? `AND font.name ILIKE '${name}%'` : ''}
+	${category ? `AND category.name = '${category}'` : ''}
+	${weight ? `AND font.variants ILIKE '%${weight}%'` : ''}
+	${source ? `AND source.name = '${source}'` : ''}
+	LIMIT 100
+	;`
+
+### Wildcard search
 
 	SELECT * FROM table WHERE columnName ILIKE 'A%';
 	SELECT * FROM company WHERE name ILIKE '%weld%';
@@ -175,6 +194,30 @@ Note: `LEFT` refers to the left table in `ON` statement:
 	  FROM person
 	) subquery
 	WHERE title='CEO';
+
+### UNION to combine/concatenate multiple queries
+
+	SELECT
+	*
+	FROM (
+		SELECT
+		font.id, name, slug, category_id
+		FROM
+		similar_font
+		LEFT JOIN font ON (similar_font.font2_id = font.id)
+		WHERE font1_id = 1643
+		
+		UNION
+		
+		SELECT
+		font.id, name, slug, category_id
+		FROM
+		similar_font
+		LEFT JOIN font ON (similar_font.font1_id = font.id)
+		WHERE font2_id = 1643
+
+	) AS combined
+	ORDER BY name;
 
 ## Create - Insert
 

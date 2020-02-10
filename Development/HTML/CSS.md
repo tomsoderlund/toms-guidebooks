@@ -1,3 +1,5 @@
+# CSS
+
 ## CodePen Starting Point
 
 body {
@@ -339,17 +341,24 @@ div:nth-child(4n+1) {
   padding: 0px;
 }
 
-// Typography
+## Borders
+
+none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
+
+## Typography
 
   font: 30px/300px Helvetica, Arial, sans-serif;
 
   font-family: sans-serif;
   font-size: 12px;
-
   font-weight: bold;
   font-style: italic;
   text-decoration: underline;
   text-transform: uppercase;
+
+  letter-spacing: normal; /* 1em */
+  word-spacing: normal;
+  line-height: 1em;
 
 /* Force box sizing box model. Default is 'content-box'. */
 .new_box_model {
@@ -623,7 +632,7 @@ h1 span {
       }
     }
 
-## Responsive
+## Responsive – @media queries
 
   @media only screen and (max-width: 480px) {
   }
@@ -634,11 +643,44 @@ h1 span {
     }
   }
 
-CSS to detect screen orientation:
+### @media operators
 
-  @media screen and (orientation:portrait) { … }
-  @media screen and (orientation:landscape) { … }
+Operators for media queries:
 
+- `,` (comma, which works as an OR in a list of media queries)
+- `and`
+- `not`
+- `only`: useful for preventing older browsers from applying selected styles
+
+Examples:
+
+    @media screen and (color), print and not (color) {...}
+    @media (min-width: 640px) and (max-width: 767px) {...}
+    @media (max-width: 639px), (min-width: 768px) {...}
+
+    @media (min-resolution: 192dpi) and (max-width: 320px),
+           (-webkit-min-device-pixel-ratio: 2) and (max-width: 320px) {
+      body {
+        border: 1px solid blue;
+      }
+    }
+
+### CSS to detect device-pixel-ratio (DPR)
+
+- Need both -webkit-min-device-pixel-ratio and min-resolution for different devices:
+- 96 is base (1x)
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+      /* 2x-specific stuff here */
+    }
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) { 
+      /* 1.5x-specific stuff here */
+    }
+
+### CSS to detect screen orientation:
+
+    @media screen and (orientation:portrait) { … }
+    @media screen and (orientation:landscape) { … }
 
 ## Pseudo classes
 
