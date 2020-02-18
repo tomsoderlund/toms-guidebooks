@@ -1,6 +1,5 @@
 # Testing and QA
 
-
 ## TDD / BDD behavior-driven development
 
 http://jrsinclair.com/articles/2016/gentle-introduction-to-javascript-tdd-intro/
@@ -45,6 +44,83 @@ obj.method.argsForCall // How to get all arguments for all calls that have been 
 var dummy = jasmine.createSpy('dummy') // How to make a standalone spy function?
 $('button#mybutton').click(dummy)
 
+## Jasmine
+
+https://jasmine.github.io/2.0/introduction.html
+
+  yarn add jasmine --dev
+
+Config: `spec/support/jasmine.json`:
+
+  mkdir -p spec/support
+  touch spec/support/jasmine.json
+
+  {
+    "spec_dir": "",
+    "spec_files": [
+      "lib/**/*.test.js",
+      "lib/**/*[sS]pec.js"
+    ],
+    "helpers": [
+    ]
+  }
+
+### Jasmine with ES2015
+
+https://blog.fullstacktraining.com/using-jasmine-with-javascript-es2015/
+
+  yarn add @babel/core @babel/node @babel/preset-env --dev
+  touch .babelrc
+  touch spec/run.js
+
+`.babelrc`:
+
+  {
+    "presets": ["@babel/env"]
+  }
+
+`spec/run.js`:
+
+  import Jasmine from 'jasmine'
+
+  const jasmine = new Jasmine()
+  jasmine.loadConfigFile('spec/support/jasmine.json')
+  jasmine.execute()
+
+`package.json`:
+
+  "unit": "babel-node spec/run.js"
+
+### Tests
+
+* `toBe`
+* `toEqual`
+* `toBeGreaterThan`
+* `toBeLessThan`
+* `toBeCloseTo`
+* `toBeFalsy`
+* `toBeTruthy`
+* `toContain`
+* `toBeDefined`
+* `toBeUndefined`
+* `toBeNull`
+* `toMatch`
+* `toHaveBeenCalled`
+* `toHaveBeenCalledWith`
+* `toThrow`
+* `toThrowError`
+
+### Mock a function
+
+  it('should sqlFind to sort', async function () {
+    const pool = jasmine.createSpyObj('pool', ['query'])
+    pool.query.and.callFake((pool, tableName, query, options) => ({ rows: pool }))
+    expect(
+      await sqlFind(pool, 'people', { id: 5, sort: 'name' })
+    ).toEqual(
+      'SELECT * FROM people WHERE id=5 ORDER BY name NULLS LAST;'
+    )
+  })
 
 ## Protractor testing
 
@@ -105,9 +181,6 @@ var styleStr = newElement.getElementsByClassName('apply-styles')[0].getAttribute
 var hasCorrectImageUrl = (styleStr.indexOf(GHOST_INSPECTOR_FILENAME) !== -1);
 return hasCorrectImageUrl;
 
-
-
-
 // JavaScript returns true: Assert color is #aabbcc
 var correctColor = 'rgb(71, 226, 161)'; // aabbcc
 var elementSelector = '.weld-custom-element form input[type="submit"]';
@@ -116,3 +189,56 @@ var hasCorrectColor = (currentColor === correctColor);
 console.log('Color correct?', hasCorrectColor, currentColor);
 return hasCorrectColor;
 
+
+## Linting
+
+### Standard JS
+
+  yarn add standard --dev
+  yarn add pre-commit --dev  # If you want Git commit check
+
+package.json:
+
+  "scripts": {
+    "test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+    "lint": "standard",
+    "fix": "standard --fix",
+    "unit": "jasmine"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "standard": {
+    "ignore": [
+      ".next"
+    ],
+    "globals": [
+      "beforeAll",
+      "beforeEach",
+      "describe",
+      "expect",
+      "it",
+      "jasmine",
+      "spyOn"
+    ]
+  },
+
+Ignore line:
+
+  myCode() // eslint-disable-line no-useless-escape
+
+
+### ESLint
+
+  yarn add eslint --dev
+  npm install eslint --save-dev
+
+Config: `.eslintrc.js`
+
+### Prettier
+
+  yarn add prettier --dev --exact
+  # or globally
+  yarn global add prettier
+
+Config: `.prettierrc`

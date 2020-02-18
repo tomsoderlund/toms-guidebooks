@@ -84,7 +84,7 @@ label {
   text-align: right;
 }
 
-/* #NiceAndSimple: Button - http://codepen.io/tomsoderlund/pen/qqyzqp */
+/* #NiceAndSimple: Button - https://codepen.io/tomsoderlund/pen/qqyzqp */
 button,
 .button {
   position: relative;
@@ -135,50 +135,53 @@ a.button {
 }
 
 
-/* #NiceAndSimple: Input and Dropdown Menu - http://codepen.io/tomsoderlund/pen/GNBbWz */
+/* #NiceAndSimple: Input and Dropdown Menu - https://codepen.io/tomsoderlund/pen/GNBbWz */
 input,
+.input,
 textarea,
 select {
+  -webkit-appearance: none;
   background-color: white;
   color: inherit;
   outline: none;
   resize: none;
-  box-shadow: inset 0 0.125em 0.125em rgba(0,0,0, 0.3);
   box-sizing: border-box;
-  border-radius: 0.1em;
+  border-radius: 0.2em;
   border: 1px solid lightgray;
+  box-shadow: none;
   font-family: inherit;
   font-size: inherit;
+  font-weight: inherit;
   padding: 0.6em;
-  margin: 0.2em;
-  /* min-width: 15em; */
+  margin-right: 0.6em;
+  min-width: 15em;
 }
 input::placeholder,
 textarea::placeholder {
   color: lightgray;
 }
 input:hover:not(:disabled):not(:focus),
-.input-like:hover:not(:disabled):not(:focus),
+.input:hover:not(:disabled):not(:focus),
 textarea:hover:not(:disabled):not(:focus),
 select:hover:not(:disabled):not(:focus) {
   border-color: silver;
 }
 input:focus,
-.input-like:focus,
+.input:focus,
 textarea:focus,
 select:focus {
   border-color: darkgray;
-  background-color: lightyellow;
 }
 input:read-only,
 textarea:read-only {
   color: darkgray;
 }
 input:disabled,
-.input-like:disabled,
+.input:disabled,
 textarea:disabled,
 select:disabled {
   background-color: whitesmoke;
+  color: darkgray;  
 }
 
 

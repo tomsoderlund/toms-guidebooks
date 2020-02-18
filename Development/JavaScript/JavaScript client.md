@@ -976,6 +976,9 @@ Wait, Sleep etc
 	setTimeout(doInOneSecond, 1000)
 	setTimeout(() => console.log('setTimeout'), 1000)
 
+	// async
+	const timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 	// Repeat
 	setInterval(doEverySecond, 1000)
 
@@ -1944,59 +1947,6 @@ https://immutable-js.github.io/immutable-js/docs/
 	    }))
 	    .toSet()
 	    .toArray()
-
-## Linting
-
-### Standard JS
-
-	yarn add standard --dev
-	yarn add pre-commit --dev  # If you want Git commit check
-
-package.json:
-
-	"scripts": {
-		"test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
-		"lint": "standard",
-		"fix": "standard --fix",
-		"unit": "jasmine"
-	},
-	"pre-commit": [
-		"lint"
-	],
-	"standard": {
-		"ignore": [
-			".next"
-		],
-		"globals": [
-			"beforeAll",
-			"beforeEach",
-			"describe",
-			"expect",
-			"it",
-			"jasmine",
-			"spyOn"
-		]
-	},
-
-Ignore line:
-
-	myCode() // eslint-disable-line no-useless-escape
-
-
-### ESLint
-
-	yarn add eslint --dev
-	npm install eslint --save-dev
-
-Config: `.eslintrc.js`
-
-### Prettier
-
-	yarn add prettier --dev --exact
-	# or globally
-	yarn global add prettier
-
-Config: `.prettierrc`
 
 
 ## Documentation - JSDoc

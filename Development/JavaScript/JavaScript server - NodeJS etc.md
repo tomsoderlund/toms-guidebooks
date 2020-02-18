@@ -250,85 +250,13 @@ Server - verify access:
 	})
 
 
-## Testing
+## Babel / ES6 on Node
 
-### Jasmine
+Note: doesn’t help import/export
 
-https://jasmine.github.io/2.0/introduction.html
+	yarn add @babel/core @babel/node @babel/preset-env
+	babel-node app.js
 
-	yarn add jasmine --dev
-
-Config: `spec/support/jasmine.json`:
-
-	mkdir -p spec/support
-	touch spec/support/jasmine.json
-
-	{
-		"spec_dir": "",
-		"spec_files": [
-			"lib/**/*.test.js",
-			"lib/**/*[sS]pec.js"
-		],
-		"helpers": [
-		]
-	}
-
-#### Jasmine with ES2015
-
-https://blog.fullstacktraining.com/using-jasmine-with-javascript-es2015/
-
-	yarn add @babel/core @babel/node @babel/preset-env --dev
-	touch .babelrc
-	touch spec/run.js
-
-`.babelrc`:
-
-	{
-	  "presets": ["@babel/env"]
-	}
-
-`spec/run.js`:
-
-	import Jasmine from 'jasmine'
-
-	const jasmine = new Jasmine()
-	jasmine.loadConfigFile('spec/support/jasmine.json')
-	jasmine.execute()
-
-`package.json`:
-
-	"unit": "babel-node spec/run.js"
-
-#### Tests
-
-* `toBe`
-* `toEqual`
-* `toBeGreaterThan`
-* `toBeLessThan`
-* `toBeCloseTo`
-* `toBeFalsy`
-* `toBeTruthy`
-* `toContain`
-* `toBeDefined`
-* `toBeUndefined`
-* `toBeNull`
-* `toMatch`
-* `toHaveBeenCalled`
-* `toHaveBeenCalledWith`
-* `toThrow`
-* `toThrowError`
-
-#### Mock a function
-
-	it('should sqlFind to sort', async function () {
-		const pool = jasmine.createSpyObj('pool', ['query'])
-		pool.query.and.callFake((pool, tableName, query, options) => ({ rows: pool }))
-		expect(
-			await sqlFind(pool, 'people', { id: 5, sort: 'name' })
-		).toEqual(
-			'SELECT * FROM people WHERE id=5 ORDER BY name NULLS LAST;'
-		)
-	})
 
 ## Node Command Line Application
 
@@ -396,6 +324,14 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	const parseFile = async function (filename) {
 	  const fsPromises = require('fs').promises
 	  const text = await fsPromises.readFile(filename, 'utf8')
+	}
+
+	// CSV
+	const parseCsvFile = function (fileName, actionFunction) {
+	  const fs = require('fs')
+	  const parse = require('csv-parse')
+	  const parser = parse({ delimiter: ',' }, actionFunction)
+	  fs.createReadStream(path.join(__dirname, fileName)).pipe(parser)
 	}
 
 	const openFile = function (filename, cb) {
