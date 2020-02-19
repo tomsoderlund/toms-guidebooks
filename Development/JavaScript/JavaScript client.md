@@ -665,7 +665,7 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 
 ### Contact info
 
-	const anonymizeEmail = email => email.split('@').map((part, isDomain) => isDomain ? part : part[0] + '•••').join('@')
+	const anonymizeEmail = email => email.split('@').map((part, isDomain) => isDomain ? part : part[0] + new Array(part.length).join('•')).join('@')
 
 ### Regular Expressions in JavaScript / regex
 
