@@ -134,6 +134,10 @@ a.button {
   text-decoration: none;
 }
 
+button.primary:not(:disabled) {
+  background-color: #FF3E00;
+}
+
 
 /* #NiceAndSimple: Input and Dropdown Menu - https://codepen.io/tomsoderlund/pen/GNBbWz */
 input,

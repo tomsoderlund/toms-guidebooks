@@ -241,12 +241,19 @@ https://reactjs.org/docs/hooks-overview.html
 - `useState(initialState)`: e.g. `const [active, setActive] = useState(false)`.
 - `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
 - `useContext`: see below.
-- `useRef(initialValue)`: returns a mutable ref object.
+- `useRef(initialValue)`: returns a mutable ref object. See below.
 - `useImperativeHandle(ref, createHandle, [deps])`
 - `useLayoutEffect(fn, [deps])`: identical to useEffect, but it fires synchronously after all DOM mutations.
 - `useDebugValue(value)`: to display a label for custom hooks in React DevTools.
 
 **Note:** never call Hooks inside loops, conditions, or nested functions – https://reactjs.org/docs/hooks-rules.html
+
+#### useRef
+
+    const inputElement = useRef(null)
+    useEffect(() => inputElement.current.focus(), [])
+
+    <input ref={inputElement} type='text' />
 
 ### React Context
 

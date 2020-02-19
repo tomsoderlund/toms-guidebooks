@@ -2,8 +2,12 @@
 
 ### Search
 
-Exclude: -node_modules/*, -.next/*
+Exclude:
+
+-node_modules/,-.tmp/,-build/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
+
 Note: no initial slash /
+
 
 ### Difference
 

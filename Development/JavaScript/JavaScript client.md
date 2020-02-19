@@ -1,10 +1,6 @@
-## Search files
+# JavaScript
 
-Exclude:
-
-	-node_modules/,-.tmp/,-build/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
-
-## Javascript include
+## JavaScript include
 
 	<script type="text/javascript" src="ajax.js" async defer></script>
 
@@ -529,6 +525,10 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	console.log('String: “%s”, Integer: %d, Float: %f, Boolean: %s', myString, myInteger, myFloat, myBoolean)
 
+### Make strings
+
+	const makeStringOfLength = (char, length) => new Array(length + 1).join(char)
+
 ### String search/comparison
 
 	string.indexOf(searchstring, start)
@@ -538,98 +538,13 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	s.startsWith('hello')
 	s.endsWith('hello')
 
-	const makeStringOfLength = (char, length) => new Array(length + 1).join(char)
-
 	const stringContains = (bigString, searchString) => bigString.toLowerCase().includes(searchString.toLowerCase())
-
-	string.substr(start, length)
-	string.substr(nrOfInitialCharsToRemove) = string.substring(nrOfInitialCharsToRemove) = string.slice(nrOfInitialCharsToRemove)
-	string.substring(start, end) = string.slice(start, end)
-	string.slice(nrOfInitialCharsToRemove, - nrOfEndingCharsToRemove)
-
-### Casing
-
-	// See also _.capitalize and _.upperFirst
-	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
-
-	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
-
-https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
-
-	const snakeToCamel = str => str.replace(/(_\w)/g, match => match[1].toUpperCase())
-	const camelToSnake = str => str.replace(/[\w]([A-Z])/g, match => match[0] + '_' + match[1]).toLowerCase()
-
-### Other
-
-	// Slug
-	const toSlug = str => str.replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
-
-	// Strip HTML
-	const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
-
-	// hex
-	module.exports.isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
-
-	string.charAt(index)
-
-	// Left/Right
-	'ABCDE'.slice(1) // = 'BCDE' (remove initial)
-	'ABCDE'.slice(0, -1) // = 'ABCD' (remove ending)
-	'ABCDE'.slice(0, 3) // = 'ABC' (keep initial)
-	var firstChars = bigString.substr(0, bigString.length - n)
-	var lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
 
 	doesStringContainX = (bigString.indexOf(x) !== -1)
 	doesStringBeginWithX = (bigString.substring(0, x.length) === x)
 	doesStringEndWithX = bigString.endsWith(x)
-	upUntilString = bigString.substring(0, bigString.indexOf('_')) // up until '_'
-	upUntilStringOrAll = (bigString.indexOf('_') !== -1) ? bigString.substring(0,bigString.indexOf('_')) : bigString
-	upUntilLastString = bigString.substring(0, bigString.lastIndexOf('/'))
-	fromStringToEnd1 = bigString.substring(bigString.indexOf('_')+1, bigString.length) // Note: first index of, can use lastIndexOf too
-	fromStringToEnd1OrNone = (bigString.indexOf('_') !== -1) ? bigString.substring(bigString.indexOf('_')+1, bigString.length) : ''
-	fromStringToEnd2 = bigString.split('_').pop() // only works if only one '_'
-	fileExtension = filename.substring(filename.lastIndexOf('_')+1, filename.length)
 
-	// Name splitting
-	var nameSpacePosition = user.name.indexOf(' ')
-	if (nameSpacePosition === -1) nameSpacePosition = user.name.length
-	var firstName = user.name.substring(0, nameSpacePosition) // up until ' '
-	var lastName = user.name.substring(nameSpacePosition + 1, user.name.length) // from ' '
-
-	string.split(separator, limit) -> array
-	array.join(', ') -> string
-
-	var recipientArray = recipients.split(',')
-	for (var i in recipientArray) {
-		console.log(i + ": " + recipientArray[i])
-	}
-
-	newStr = str.replace('Google', 'Weld')  // first only
-	newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
-	// dynamic regex
-	newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
-	// replace function (also: '$&' inserts the matched substring)
-	newStr = str.replace(/([^\d]*)(\d*)([^\w]*)/, (match, p1, p2, p3, offset, string) => [p1, p2, p3].join(' - '))
-
-	const characterReplacements = {
-	  ' ': '-'
-	}
-
-	const replaceAll = (str, dictionary, reverse = false) => Object.keys(dictionary).reduce((result, phrase, index) => {
-	  const fromStr = reverse ? Object.values(dictionary)[index] : phrase
-	  const toStr = reverse ? phrase : Object.values(dictionary)[index]
-	  return result.replace(new RegExp(fromStr, 'g'), toStr)
-	}, str)
-
-	/** '{variable}' => 'value' */
-	const replaceStrings = (template, stringsObj) => {
-	  let newString = template
-	  const keys = Object.keys(stringsObj)
-	  for (let k in keys) {
-	    newString = newString.replace(new RegExp(`{${keys[k]}}`, 'g'), stringsObj[keys[k]])
-	  }
-	  return newString
-	}
+	string.charAt(index)
 
 	const getStringBetweenTags = (source, tag1, tag2) => {
 		if (source === undefined || tag1 === undefined || tag2 === undefined) return
@@ -658,37 +573,99 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 		return newText
 	}
 
-	string.trim()
+### Cutting strings
+
+	string.substr(start, length)
+	string.substring(start, end) = string.slice(start, end)
+
+	string.substr(nrOfInitialCharsToRemove) = string.substring(nrOfInitialCharsToRemove) = string.slice(nrOfInitialCharsToRemove)
+	string.substr(-nrOfEndingCharsToKeep) = string.substring(-nrOfEndingCharsToKeep) = string.slice(-nrOfEndingCharsToKeep)
+	string.slice(nrOfInitialCharsToRemove, -nrOfEndingCharsToRemove)
+
+	// Examples
+	'ABCDE'.slice(1) // = 'BCDE' (remove initial)
+	'ABCDE'.slice(0, -1) // = 'ABCD' (remove ending)
+	'ABCDE'.slice(0, 3) // = 'ABC' (keep initial)
+
+	firstChars = bigString.substr(0, bigString.length - n)
+	lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
+
+	upUntilString = bigString.substring(0, bigString.indexOf('_')) // up until '_'
+	upUntilStringOrAll = (bigString.indexOf('_') !== -1) ? bigString.substring(0,bigString.indexOf('_')) : bigString
+	upUntilLastString = bigString.substring(0, bigString.lastIndexOf('/'))
+	fromStringToEnd1 = bigString.substring(bigString.indexOf('_')+1, bigString.length) // Note: first index of, can use lastIndexOf too
+	fromStringToEnd1OrNone = (bigString.indexOf('_') !== -1) ? bigString.substring(bigString.indexOf('_')+1, bigString.length) : ''
+	fromStringToEnd2 = bigString.split('_').pop() // only works if only one '_'
+
+	fileExtension = filename.substring(filename.lastIndexOf('_')+1, filename.length)
+
+### Casing
+
 	string.toLowerCase()
 	string.toUpperCase()
+
+	// See also _.capitalize and _.upperFirst
+	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
+	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+	const toDash = str => replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
+	const toCamelCase = str => replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
+
+	// Slug
+	const toSlug = str => str.trim().replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
+
+https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
+
+	const snakeToCamel = str => str.replace(/(_\w)/g, match => match[1].toUpperCase())
+	const camelToSnake = str => str.replace(/[\w]([A-Z])/g, match => match[0] + '_' + match[1]).toLowerCase()
+
+### Search/replace
+
+	newStr = str.replace('Google', 'Weld')  // first only
+	newStr = str.replace(/Google/g, 'Weld') // all - 'g' is the key
+	// dynamic regex
+	newStr = str.replace(new RegExp(variableToFind, 'g'), replaceText)
+	// replace function (also: '$&' inserts the matched substring)
+	newStr = str.replace(/([^\d]*)(\d*)([^\w]*)/, (match, p1, p2, p3, offset, string) => [p1, p2, p3].join(' - '))
+
+	const characterReplacements = {
+	  ' ': '-'
+	}
+
+	const replaceAll = (str, dictionary, reverse = false) => Object.keys(dictionary).reduce((result, phrase, index) => {
+	  const fromStr = reverse ? Object.values(dictionary)[index] : phrase
+	  const toStr = reverse ? phrase : Object.values(dictionary)[index]
+	  return result.replace(new RegExp(fromStr, 'g'), toStr)
+	}, str)
+
+	/** '{variable}' => 'value' */
+	const replaceStrings = (template, stringsObj) => {
+	  let newString = template
+	  const keys = Object.keys(stringsObj)
+	  for (let k in keys) {
+	    newString = newString.replace(new RegExp(`{${keys[k]}}`, 'g'), stringsObj[keys[k]])
+	  }
+	  return newString
+	}
+
+### Other
+
+	// Strip HTML
+	const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
+
+	// hex
+	module.exports.isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
+
+	string.split(separator, limit) -> array
+	array.join(', ') -> string
+
+	string.trim()
 	parseInt(StringorNum)
 	parseFloat(String)
 	valueOf()
 
-	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+### Contact info
 
-	String.prototype.toDash = function () {
-		return this.replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
-	}
-
-	String.prototype.toCamelCase = function () {
-		return this.replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
-	}
-
-	String.prototype.toSlug = function () {
-		return this.trim().replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase()
-	}
-
-	// https://stackoverflow.com/a/52171480/449227
-	const hashCode = str => Array.from(str).reduce((result, char) => Math.imul(31, result) + char.charCodeAt(0), 0)
-
-	const hashCode = str => {
-	  let h
-	  for (let i = 0; i < str.length; i++) {
-	    h = Math.imul(31, h) + str.charCodeAt(i) | 0
-	  }
-	  return h
-	}
+	const anonymizeEmail = email => email.split('@').map((part, isDomain) => isDomain ? part : part[0] + '•••').join('@')
 
 ### Regular Expressions in JavaScript / regex
 
@@ -727,7 +704,6 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 		})
 	}
 
-
 ### Encoding
 
 	// base64: Encode the String
@@ -744,7 +720,11 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	const entities = new Entities()
 	entities.decode('&quotKeywords by Site&quot')
 
-	// Numeric hash code: https://stackoverflow.com/a/52171480/449227
+### Hash
+
+	// https://stackoverflow.com/a/52171480/449227
+	const hashCode = str => Array.from(str).reduce((result, char) => Math.imul(31, result) + char.charCodeAt(0), 0)
+
 	const hashCode = str => {
 	  let h
 	  for (let i = 0; i < str.length; i++) {
@@ -752,6 +732,7 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	  }
 	  return h
 	}
+
 
 ## Arrays and Lists
 
