@@ -237,7 +237,7 @@ Server - generate token:
 	// Verify/decode
 	const decoded = jwt.verify(token, secretOrPublicKey, [options, callback])
 
-	// Firebase
+	// Firebase JWT token
 	(new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payload)
 
 Server - verify access:

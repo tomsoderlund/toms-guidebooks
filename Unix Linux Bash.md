@@ -52,7 +52,20 @@ List `folder/subfolder/file.ext`:
 
 List `./folder/subfolder/file.ext`:
 
-	find . -name *.js -print
+	find . -name '*.js' -print
+
+## Finding files
+
+	ls
+	find
+
+	find /usr/bin -name 'filename*'
+	find . -type d -name '.svn' -exec rm -rf {} \;
+	find [dirname] -type f -name '\*.js'
+
+### Finding using grep
+
+	ls -1 | grep json
 
 ### Find text inside files
 
@@ -62,6 +75,10 @@ List `./folder/subfolder/file.ext`:
 	egrep -lir --include=*.{php,html,js} "(searchtext1|searchtext2)" .   # change -lir to -ir to show more...
 	egrep -lir --include=Gruntfile.js "(livereload)" .
 
+### Find text on web pages
+
+	curl -v --silent https://server.com/project.json 2>&1 | tr '{' '\n{' | grep 'searchstring' >> output.txt
+
 ### Pretty file tree
 
 	find ./ | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'  # add '-type d' for directories only
@@ -69,13 +86,6 @@ List `./folder/subfolder/file.ext`:
 ### Count lines of code (LOCs)
 
 	find . -name '*.js' | xargs wc -l
-
-## Finding files
-
-	ls
-	find: find files: find /usr/bin -name r*
-	find . -type d -name .svn -exec rm -rf {} \;
-	find [dirname] -type f -name \*.js
 
 ### Find applications
 

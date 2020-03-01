@@ -582,10 +582,32 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	string.substr(-nrOfEndingCharsToKeep) = string.substring(-nrOfEndingCharsToKeep) = string.slice(-nrOfEndingCharsToKeep)
 	string.slice(nrOfInitialCharsToRemove, -nrOfEndingCharsToRemove)
 
-	// Examples
-	'ABCDE'.slice(1) // = 'BCDE' (remove initial)
-	'ABCDE'.slice(0, -1) // = 'ABCD' (remove ending)
-	'ABCDE'.slice(0, 3) // = 'ABC' (keep initial)
+	// substr vs substring vs slice
+	// One param:
+	'ABCDE'.substr(1) === 'BCDE' // Remove initial
+	'ABCDE'.substring(1) === 'BCDE'
+	'ABCDE'.slice(1) === 'BCDE'
+
+	'ABCDE'.substr(-1) === 'E' // Keep ending
+	'ABCDE'.substring(-1) === 'ABCDE'
+	'ABCDE'.slice(-1) === 'E'
+
+	// Two params:
+	'ABCDE'.substr(0, 2) === 'AB' // Keep initial
+	'ABCDE'.substring(0, 2) === 'AB'
+	'ABCDE'.slice(0, 2) === 'AB'
+
+	'ABCDE'.substr(1, 2) === 'BC'
+	'ABCDE'.substring(1, 2) === 'B'
+	'ABCDE'.slice(1, 2) === 'B'
+
+	'ABCDE'.substr(-1, 2) === 'E'
+	'ABCDE'.substring(-1, 2) === 'AB'
+	'ABCDE'.slice(-1, 2) === ''
+
+	'ABCDE'.substr(1, -2) === ''
+	'ABCDE'.substring(1, -2) === 'A'
+	'ABCDE'.slice(1, -2) === 'BC'
 
 	firstChars = bigString.substr(0, bigString.length - n)
 	lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
@@ -847,6 +869,11 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 		return size
 	}
 
+	const asObject = (stringOrObject) => ({
+	  ...(typeof stringOrObject === 'object' && stringOrObject),
+	  name: typeof stringOrObject === 'object' ? stringOrObject.name : stringOrObject,
+	  value: typeof stringOrObject === 'object' ? stringOrObject.value : stringOrObject
+	})
 
 ### JSON
 
@@ -1080,7 +1107,7 @@ https://codepen.io/YOUR-USER-NAME/pen/Gdjrdx
 sessionStorage vs localStorage: sessionStorage is cleared when the page session ends
 
 	// Save data to localStorage
-	localStorage.setItem('key', 'value')
+	localStorage.setItem('key', 'string')
 
 	// Get saved data from localStorage
 	let data = localStorage.getItem('key')
@@ -1151,7 +1178,8 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 
 	// toggle class
 	const activeClass = ' inProgress'
-	event.target.className = event.target.className.includes(activeClass) ? event.target.className.replace(activeClass, '') : event.target.className + activeClass
+	const element = event.target
+	element.className = element.className.includes(activeClass) ? element.className.replace(activeClass, '') : element.className + activeClass
 
 	var setElementDisabled = function (elementId, setDisabled) {
 		setDisabled

@@ -43,3 +43,8 @@ More:
 - firebaseRef.remove(callbackAfterDeleted) // same as: set(null)
 - firebaseRef.key() -> .key
 - firebaseRef.authWithCustomToken
+
+
+Firebase + React: re-base
+
+Firebase + Redux: https://github.com/prescottprue/react-redux-firebase

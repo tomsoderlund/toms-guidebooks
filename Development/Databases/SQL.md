@@ -137,7 +137,8 @@ Update:
 	source.name AS source_name,
 	creator.name AS creator_name
 	FROM font
-	LEFT JOIN category ON (category.id = font.category_id)
+	LEFT JOIN category_font ON (category_font.font_id = font.id)
+	LEFT JOIN category ON (category.id = category_font.category_id)
 	LEFT JOIN source ON (source.id = font.source_id)
 	LEFT JOIN creator ON (creator.id = font.creator_id)
 	WHERE true
@@ -221,7 +222,7 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 ## Create - Insert
 
-	INSERT INTO domain (name) VALUES ('indiska.se') RETURNING id;
+	INSERT INTO domain (name, site_count) VALUES ('indiska.se', 5) RETURNING id;
 
 Multiple values:
 

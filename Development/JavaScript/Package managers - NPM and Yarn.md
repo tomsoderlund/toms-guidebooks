@@ -83,6 +83,12 @@ Codeship: change git:// link
 
 #### Create NPM package with React
 
+##### New: use Webpack (DOESN’T WORK YET)
+
+https://itnext.io/how-to-package-your-react-component-for-distribution-via-npm-d32d4bf71b4f
+
+##### Old: only using Babel (but can’t bundle files)
+
 - https://www.codementor.io/peterodekwo/create-a-simple-react-npm-package-in-simple-steps-using-cra-w966okagi
 
 Add Babel and a preset:
@@ -100,7 +106,7 @@ package.json:
       "dist/"
     ],
 
-#### prebuild, postbuild, prepare
+#### prepare, prebuild, postbuild, prepublish
 
     "scripts": {
       "prebuild": "echo I run before the build script",
@@ -128,6 +134,7 @@ Starting a new project
 Adding a dependency
 
   yarn add [package] // [package]@[version/tag]
+  yarn global add [package]
 
 Adding a dependency to different categories of dependencies (devDependencies, peerDependencies, and optionalDependencies)
 

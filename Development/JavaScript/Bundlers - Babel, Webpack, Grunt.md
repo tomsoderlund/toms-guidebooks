@@ -48,21 +48,26 @@ https://medium.com/@kimberleycook/intro-to-webpack-1d035a47028d
 
 `package.json`:
 
-  "webpack": "webpack-cli",
+  "prepare": "rm -rf dist && webpack-cli",
 
 `webpack.config.js`:
 
   module.exports = {
     mode: 'production', // 'development'
     entry: [
-      './src/public/js/clientUser.js'
+      './src/components/index.js'
     ],
     output: {
       filename: 'index.js',
-      path: __dirname + '/dist'
+      path: require('path').join(__dirname, '/dist')
     },
     module: {
       rules: [ // formerly 'loaders'
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: ['babel-loader']
+        }
       ]
     },
     plugins: [

@@ -166,8 +166,10 @@ input[type="radio"] {
 }
 
 <div class="radio-wrapper">
-	<input id="radio-1" name="radio" type="radio" checked>
-	<label for="radio-1" class="radio-label">Checked</label>
+  <input type="radio" name="gender" id="male" value="male">
+  <label for="male">Male</label><br>
+  <input type="radio" name="gender" id="female" value="female">
+  <label for="female">Female</label>
 </div>
 
 
@@ -207,14 +209,30 @@ http://caniuse.com/#feat=html5semantic
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
 
 
+## Images
+
+- background-image: url("paper.gif");
+- background-size: cover;
+- background-position: center;
+- background-repeat: no-repeat;
+
+    backgroundImage: `url("https://picsum.photos/seed/react-zeroconfig-components-${index}/320/240")`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+
+object-size: cover;
+
+
 ## FORMS
 
-<form name="MyForm" method="post" action="" onSubmit="updateView(this);">
-<p>Search discussion topics: <input type="text" name="searchtext" value="" class="formfield" size="15">
-<input name="searchButton" value="Search" type="button" class="formbutton"></p>
-</form>
-
-<fieldset></fieldset>
+    <form action="/endpoint">
+      <fieldset>
+        <legend>User info:</legend>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+        <input type="submit" value="Submit" />
+      </fieldset>
+    </form>
 
 
 ## FORM FIELDS

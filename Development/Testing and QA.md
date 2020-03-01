@@ -22,10 +22,18 @@ https://www.smashingmagazine.com/2014/10/introduction-to-unit-testing-in-angular
 ## Karma / Jasmine
 
 describe('Test Suite Name', function () {
-	it('should do something', function() {
-		expect(receivedValue).toEqual('expected value');
-	});
-});
+
+  beforeAll(func)
+  afterAll(func)
+
+	it('should do something', function () {
+		expect(receivedValue).toEqual('expected value')
+	})
+
+})
+
+beforeAll/beforeEach
+afterAll/afterEach
 
 .toBe()
 .toBeCloseTo()
@@ -122,7 +130,8 @@ https://blog.fullstacktraining.com/using-jasmine-with-javascript-es2015/
     )
   })
 
-## Protractor testing
+
+## Protractor for AngularJS
 
 https://angular.github.io/protractor
 

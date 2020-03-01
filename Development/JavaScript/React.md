@@ -152,7 +152,27 @@ Redirect:
     ? <Route {...props} />
     : <Redirect from={props.from} to={ROUTE_LOGIN} />
 
-#### Next.js: next-routes (better)
+#### Next.js: next/link (built in)
+
+  import Link from 'next/link'
+
+  <Link
+    href='/people?peopleId=123' // Internal Next.js URL
+    as='/people/123' // Pretty URL visible for users
+  >
+    <a>My link</a>
+  </Link>
+
+Push route:
+
+    import { useRouter } from 'next/router'
+    const router = useRouter()
+    router.push(href)
+
+    import Router from 'next/router'
+    Router.push(url, as, options)
+
+#### Next.js: next-routes
 
   // routes.js
   const routes = require('next-routes')
@@ -171,17 +191,6 @@ Redirect:
   Router.pushRoute('/blog/hello-world')
   // With route name and params
   Router.pushRoute('blog', {slug: 'hello-world'})
-
-#### Next.js: next/link (built in)
-
-  import Link from 'next/link'
-
-  <Link
-    href='/people?peopleId=123' // Internal Next.js URL
-    as='/people/123' // Pretty URL visible for users
-  >
-    <a>My link</a>
-  </Link>
 
 ### Components with JSX
 
@@ -218,10 +227,15 @@ Comparison:
 
 #### Without JSX
 
+  React.createElement(typeFunctionOrString, props, children)
+
+Examples:
+
   React.createElement('div', { styles: 'color: red' }, `Hello ${this.props.toWhat}`)
   React.createElement(Rectangle, { className: 'apply-styles' }, children)
 
-  // All props
+#### All props
+
   <Button {...props} />
 
 #### Clone children - add props to children
@@ -254,6 +268,27 @@ https://reactjs.org/docs/hooks-overview.html
     useEffect(() => inputElement.current.focus(), [])
 
     <input ref={inputElement} type='text' />
+
+### Forms with useState
+
+    const [inputValues, setInputValues] = useState({
+      firstName: '',
+      lastName: ''
+    })
+
+    const handleInputValuesChange = (event) => {
+      const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
+      setInputValues({
+        ...inputValues,
+        [event.target.name]: value
+      })
+    }
+
+    <input
+      name='firstName'
+      value={inputValues.firstName}
+      onChange={handleInputValuesChange}
+    />
 
 ### React Context
 
@@ -372,7 +407,7 @@ https://github.com/zeit/styled-jsx
 Global:
 
   <style jsx>{`
-    .weld-element :global(.apply-styles) {
+    .root :global(button:selected:hover) {
     }
   `}</style>
 
@@ -480,8 +515,6 @@ HTML:
 
   <div dangerouslySetInnerHTML={{ __html: article.content }} />
 
-Firebase + React: re-base
-
 ### Events
 
   <button onClick={this.handleClick}>Hello {this.props.name} {this.props.children}</button>
@@ -490,6 +523,11 @@ Optional event/props:
 
   {onAdd ? <button className='icon add' onClick={onAdd.bind(undefined, person)}>+</button> : null}
 
+#### KeyDown
+
+    const onKeyDown = (event) => {
+      console.log('keyCode', event.keyCode)
+    }
 
 #### create-react-app on Heroku
 
@@ -532,12 +570,11 @@ Install Storybook. Checks if you use React/Angular etc. Works with `yarn` too.
 
 - Loop: context.loop.(un)subscribe
 
+
 ## Redux
 
 https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f
 https://egghead.io/courses/getting-started-with-redux
-
-Firebase + Redux: https://github.com/prescottprue/react-redux-firebase
 
 ### Concepts
 
@@ -566,7 +603,7 @@ https://jaysoo.ca/2016/02/28/organizing-redux-application/
   index.js
   rootReducer.js
 
-### React Animations
+## React Animations
 
 https://github.com/digital-flowers/react-animated-css
 

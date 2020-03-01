@@ -23,8 +23,15 @@ heroku addons:create scheduler:standard
 heroku addons:add mongolab
 heroku addons:create heroku-postgresql:hobby-dev
 
-heroku access:add info@weld.io # collaborator first, then owner
-heroku apps:transfer info@weld.io # owner
+heroku access:add user@domain.com # collaborator first, then owner
+heroku apps:transfer -a appname [user@domain.com or teamname] # owner
+heroku apps:transfer --bulk [user@domain.com or teamname]
+
+Change stack:
+heroku stack:set heroku-18 -a appname
+
+Delete app:
+heroku apps:destroy -a appname
 
 heroku features:enable preboot # double servers
 
@@ -37,7 +44,7 @@ heroku rename NEWNAME #also renames Heroku-Git remote
 
 ### Multiple apps
 
-  heroku logs -a my-app
+  heroku logs -a appname
 
   heroku create myappname --remote beta
   git push beta master
