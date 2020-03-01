@@ -380,7 +380,7 @@ div {
   margin-right: 1em;
 }
 div:last-child {
-  margin-right: initial;
+  margin-right: unset;
 }
 
 ### Reset
