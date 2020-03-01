@@ -37,6 +37,8 @@ body {
 
 ## Nice & Simple CSS objects
 
+### Main
+
 /* #NiceAndSimple: Main - margin:auto */
 main {
   margin: 0.5em auto;
@@ -51,6 +53,8 @@ main {
   }
 }
 
+### Links
+
 /* #NiceAndSimple: Links */
 a {
   color: dodgerblue;
@@ -62,6 +66,8 @@ a:hover {
   opacity: 0.8;
   border-bottom: 1px dotted dodgerblue;
 }
+
+### Label
 
 /* #NiceAndSimple: Label flex */
 label {
@@ -83,6 +89,8 @@ label {
   width: 6em;
   text-align: right;
 }
+
+### Button
 
 /* #NiceAndSimple: Button - https://codepen.io/tomsoderlund/pen/qqyzqp */
 button,
@@ -107,7 +115,7 @@ button,
   padding: 0.6em;
   margin: 0.2em;
   transition: all 0.1s;
-  /* min-width: 15em; */
+  min-width: 15em;
 }
 button:focus:not(:disabled),
 .button:focus:not(:disabled) {
@@ -138,6 +146,7 @@ button.primary:not(:disabled) {
   background-color: #FF3E00;
 }
 
+### Input/Select
 
 /* #NiceAndSimple: Input and Dropdown Menu - https://codepen.io/tomsoderlund/pen/GNBbWz */
 input,
@@ -188,6 +197,7 @@ select:disabled {
   color: darkgray;  
 }
 
+### Tag/Token
 
 /* #NiceAndSimple: Tag */
 .tag {
@@ -212,12 +222,15 @@ select:disabled {
   background-color: limegreen;
 }
 
+### List
 
 /* #NiceAndSimple: List
 ol {
   list-style-type: decimal;
   list-style-position: inside;
 }
+
+### Table
 
 /* #NiceAndSimple: Table - https://codepen.io/tomsoderlund/pen/mmZrRR */
 table {
@@ -238,6 +251,7 @@ tr:nth-child(2n+0) {
   background-color: #eee;
 }
 
+### Horisontal rule (HR)
 
 /* #NiceAndSimple: Horisontal rule */
 hr {
@@ -247,8 +261,7 @@ hr {
   background: rgba(0,0,0, 0.2);
 }
 
-
-
+### Radio button
 
 /* #NiceAndSimple: Radio Button */
 $color_radio_background: white;
@@ -258,8 +271,86 @@ $color_radio_active: dodgerblue;
   margin: 0.2em;
 }
 
+## Three Zone Navigation System
 
+/* #ThreeZoneNavigationSystem: https://codepen.io/tomsoderlund/pen/YzXNdpZ */
 
+.nav-circle {
+  position: fixed;
+  z-index: 100;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 2vh;
+  width: 4em;
+  height: 4em;
+  top: 1em;
+  left: 1em;
+  border-radius: 50%;
+  background-color: darkturquoise;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-circle.right {
+  left: initial;
+  right: 1em;
+}
+.nav-circle.bottom {
+  top: initial;
+  bottom: 1em;
+}
+
+/* States */
+
+.nav-circle:hover:not(.open) {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+.nav-circle.open {
+  background-color: rebeccapurple;
+}
+
+/* Icon */
+
+.nav-circle i {
+  font-size: 1.8em;
+}
+
+/* Menu */
+
+.nav-circle:not(.open) .menu {
+  height: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.menu {
+  background-color: rebeccapurple;
+  z-index: -1;
+  overflow: hidden;
+  transition: all 0.2s;
+  width: 10em;
+  height: 18em;
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 2em;
+  padding: 1em;
+  border-radius: 0.5em;
+  display: flex; /* inline-flex */
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu a {
+  font-size: 1.5em;
+  color: white;
+  text-decoration: none;
+}
 
 /* Can grow/shrink vertically */
 .collapsable {
@@ -272,7 +363,9 @@ $color_radio_active: dodgerblue;
 }
 
 
-##
+## Reference
+
+### before/after
 
 :before
 :after
@@ -281,12 +374,20 @@ button.inProgress:after {
   content: '...';
 }
 
+### last-child
 
-Reset:
+div {
+  margin-right: 1em;
+}
+div:last-child {
+  margin-right: initial;
+}
+
+### Reset
 
 https://meyerweb.com/eric/tools/css/reset/
 
-Flexbox
+### Flexbox
 
 .flex-parent {
   display: flex;
@@ -303,11 +404,11 @@ Flexbox
   }
 }
 
+### Viewport units
 
+vw, vh, vmin, vmax - Web Design Weekly
 
-Search Results
-Viewport units: vw, vh, vmin, vmax - Web Design Weekly
-
+### Other
 
 /*
 
@@ -331,7 +432,7 @@ hsla(0,0,0, 0.4);
 rgb(0,0,0);
 rgba(0,0,0, 0.3)
 
-### CSS Selectors
+### Selectors
 
 `>` = child
 `*` = grandchild or later
@@ -348,11 +449,11 @@ div:nth-child(4n+1) {
   padding: 0px;
 }
 
-## Borders
+### Borders
 
 none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
-## Typography
+### Typography
 
   font: 30px/300px Helvetica, Arial, sans-serif;
 
@@ -366,6 +467,10 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   letter-spacing: normal; /* 1em */
   word-spacing: normal;
   line-height: 1em;
+
+### Images
+
+### Other
 
 /* Force box sizing box model. Default is 'content-box'. */
 .new_box_model {
@@ -501,7 +606,7 @@ h1 span {
   padding: 0px 8px 0px 8px;
 }
 
-## Word wrap and whitespace
+### Word wrap and whitespace
 
   white-space: nowrap;
   word-wrap: break-word;
@@ -510,14 +615,14 @@ h1 span {
   hyphens: 
   text-overflow: ellipsis;
 
-## Select text
+### Select text
 
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 
-## Transform
+### Transform
 
   transform: translate(x,y);
   transform: translate3d(x,y,z);
@@ -541,8 +646,60 @@ h1 span {
   transform: matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n);
   transform: perspective(n); // doesn’t affect the element itself, but affects the transforms of descendent elements' 3D transforms, allowing them all to have a consistent depth perspective.
 
+## Responsive – @media queries
 
-## Animation: Transitions (`transition`)
+  @media only screen and (max-width: 480px) {
+  }
+
+  @media (max-width: 904px) and (min-width: 544px) {
+    #rectangle-84 .apply-styles {
+      background-color: #47E2A1;
+    }
+  }
+
+### @media operators
+
+Operators for media queries:
+
+- `,` (comma, which works as an OR in a list of media queries)
+- `and`
+- `not`
+- `only`: useful for preventing older browsers from applying selected styles
+
+Examples:
+
+    @media screen and (color), print and not (color) {...}
+    @media (min-width: 640px) and (max-width: 767px) {...}
+    @media (max-width: 639px), (min-width: 768px) {...}
+
+    @media (min-resolution: 192dpi) and (max-width: 320px),
+           (-webkit-min-device-pixel-ratio: 2) and (max-width: 320px) {
+      body {
+        border: 1px solid blue;
+      }
+    }
+
+### CSS to detect device-pixel-ratio (DPR)
+
+- Need both -webkit-min-device-pixel-ratio and min-resolution for different devices:
+- 96 is base (1x)
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+      /* 2x-specific stuff here */
+    }
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) { 
+      /* 1.5x-specific stuff here */
+    }
+
+### CSS to detect screen orientation:
+
+    @media screen and (orientation:portrait) { … }
+    @media screen and (orientation:landscape) { … }
+
+
+## Animations
+
+### Transitions (`transition`)
 
   .box {
     border-style: solid;
@@ -568,7 +725,7 @@ h1 span {
     transition-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
   }
 
-## Animation: Keyframes (`animation`)
+### Keyframes (`animation`)
 
   .pulsate {
     /*         name              dur delay repetitions */
@@ -639,57 +796,9 @@ h1 span {
       }
     }
 
-## Responsive – @media queries
-
-  @media only screen and (max-width: 480px) {
-  }
-
-  @media (max-width: 904px) and (min-width: 544px) {
-    #rectangle-84 .apply-styles {
-      background-color: #47E2A1;
-    }
-  }
-
-### @media operators
-
-Operators for media queries:
-
-- `,` (comma, which works as an OR in a list of media queries)
-- `and`
-- `not`
-- `only`: useful for preventing older browsers from applying selected styles
-
-Examples:
-
-    @media screen and (color), print and not (color) {...}
-    @media (min-width: 640px) and (max-width: 767px) {...}
-    @media (max-width: 639px), (min-width: 768px) {...}
-
-    @media (min-resolution: 192dpi) and (max-width: 320px),
-           (-webkit-min-device-pixel-ratio: 2) and (max-width: 320px) {
-      body {
-        border: 1px solid blue;
-      }
-    }
-
-### CSS to detect device-pixel-ratio (DPR)
-
-- Need both -webkit-min-device-pixel-ratio and min-resolution for different devices:
-- 96 is base (1x)
-
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-      /* 2x-specific stuff here */
-    }
-    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) { 
-      /* 1.5x-specific stuff here */
-    }
-
-### CSS to detect screen orientation:
-
-    @media screen and (orientation:portrait) { … }
-    @media screen and (orientation:landscape) { … }
-
 ## Pseudo classes
+
+input:not([type="radio"])
 
 :active
 :any-link
@@ -797,7 +906,7 @@ code {
 }
 
 
-## CSS Colors / colors / COLORS
+## Colors / colors / COLORS
 
 namedColors.json: https://gist.github.com/tomsoderlund/548d39611c45397f48434e706b8c9b92
 
