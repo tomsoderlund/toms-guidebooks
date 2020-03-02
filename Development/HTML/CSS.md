@@ -470,6 +470,66 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
 ### Images
 
+### Shiny Button
+
+.shiny-button {
+  transition: all 0.5s;
+  background: white;
+  background: linear-gradient(135deg, $color_button_background 0%, $color_button_background 45%, $color_gradient_start 55%, $color_gradient_end 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color_gradient_start', endColorstr='$color_gradient_end', GradientType=1);
+  background-size: 400% 100%;
+  background-position: 0% 50%;
+}
+.shiny-button:focus:not(:disabled) {
+  border-color: $color_gradient_end;
+}
+.shiny-button:hover:not(:disabled) {
+  border-color: $color_gradient_start;
+  color: white;
+  background-position: 100% 50%;
+}
+.shiny-button:active:hover {
+  transition: all 0.1s;
+  border-color: $color_gradient_start;
+  background: $color_gradient_start;
+  color: white;
+}
+.shiny-button:disabled {
+  cursor: initial;
+  border-color: silver;
+  color: silver;
+}
+
+### In Progress Button
+
+.progress-button {
+ background: linear-gradient(
+  90deg,
+  $color_button_foreground 0%,
+  $color_button_foreground 50%,
+  $color_button_background 50%,
+  $color_button_background 100%
+ );
+ background-size: 400% 100%;
+ background-position: 70% 50%;
+}
+.progress-button.in-progress {
+ animation: animation-progress 3s 1 ease-out;
+}
+.progress-button.done {
+ background-position: 30% 50%;
+ color: $color_button_background;
+}
+@keyframes animation-progress {
+ from {
+  background-position: 70% 50%;
+ }
+ to {
+  background-position: 30% 50%;
+  color: $color_button_background;
+ }
+}
+
 ### Other
 
 /* Force box sizing box model. Default is 'content-box'. */

@@ -794,28 +794,27 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var fruits = ["Banana", "Orange", "Apple", "Mango"]
 	fruits.sort()
-	array.sort((a, b) => a - b)
 	array.sort((a, b) => a > b)
-	array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+	array.sort((a, b) => a - b)
+	array.sort((a, b) => parseFloat(a.price) > parseFloat(b.price))
+
 	array.reverse()
 
 ### Randomize/shuffle array
 
-	const shuffleArray = array => {
-		let currentIndex = array.length
-		let temporaryValue
-		let randomIndex
-		// While there remain elements to shuffle...
-		while (currentIndex !== 0) {
-			// Pick a remaining element...
-			randomIndex = Math.floor(randomizer() * currentIndex)
-			currentIndex -= 1
-			// And swap it with the current element.
-			temporaryValue = array[currentIndex]
-			array[currentIndex] = array[randomIndex]
-			array[randomIndex] = temporaryValue
-		}
-		return array
+	function shuffleArray (array) {
+	  var currentIndex = array.length; var temporaryValue; var randomIndex
+	  // While there remain elements to shuffle...
+	  while (currentIndex !== 0) {
+	    // Pick a remaining element...
+	    randomIndex = Math.floor(Math.random() * currentIndex)
+	    currentIndex -= 1
+	    // And swap it with the current element.
+	    temporaryValue = array[currentIndex]
+	    array[currentIndex] = array[randomIndex]
+	    array[randomIndex] = temporaryValue
+	  }
+	  return array
 	}
 
 ### Add
@@ -886,6 +885,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 ## Dates & Time
 
+	Date.now() // = new Date().getTime()
+
 	var todaysDate = new Date()
 	var d = new Date(2014, 0, 1) // months are zero-based
 
@@ -903,8 +904,6 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	getSeconds() // Get the seconds (0-59)
 	getMilliseconds() // Get the milliseconds (0-999)
 	getTime() // Get the time (milliseconds since January 1, 1970)
-
-	Date.now() // = new Date().getTime()
 
 	thisYear = (new Date()).getYear() + 1900
 
@@ -956,6 +955,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 - 1 hour in seconds: 60*60 = 3600
 
 ### Moment.js
+
+	import moment from 'moment'
 
 	moment(dateObj)
 	moment().toDate() // JS date obj
@@ -1523,7 +1524,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.keys(objects).forEach(objectId => {})
 
 	// unique
-	const unique = values.filter((value, index, array) => array.indexOf(value) === index)
+	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
 
 	// map(object) from Lodash
 	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {

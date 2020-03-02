@@ -12,11 +12,23 @@
 
 https://www.npmjs.com/package/graphql-iso-date
 
+#### typeDefs/schema
+
+    scalar DateTime
+    dateUpdated: DateTime
+
+#### resolvers
+
     const { GraphQLDateTime } = require('graphql-iso-date')
 
-- typeDefs: scalar DateTime, dateUpdated: DateTime
-- resolvers: DateTime: GraphQLDateTime
-- dateUpdated = new Date()
+    module.exports.resolvers = (pool) => mergeResolvers([
+      { DateTime: GraphQLDateTime },
+      require('./game/resolvers')(pool)
+    ])
+
+#### Data
+
+    dateUpdated = new Date()
 
 
 ## Queries
@@ -86,7 +98,7 @@ _Note: GamesList($system: String!) for mandatory parameter_
 
     Company: { // same name as *parent* in schema
       async employees (parent, variables, context, info) {
-        return await sqlFind(pool, 'employees', { company_id: parent.id })
+        return await sqlFind(pool, 'person', { company_id: parent.id })
       }
     },
 
@@ -101,6 +113,21 @@ _Note: GamesList($system: String!) for mandatory parameter_
       }
     }
 
+## Polling and Subscriptions
+
+### Polling
+
+https://www.apollographql.com/docs/react/data/queries/#polling
+
+		const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
+			variables: { breed },
+			skip: !breed,
+			pollInterval: 500,
+		})
+
+### Subscriptions
+
+https://www.apollographql.com/docs/react/data/subscriptions/
 
 ## Server
 

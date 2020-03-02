@@ -321,17 +321,19 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 		return result
 	}
 
-	const parseFile = async function (filename) {
+	// text = await getTextFromFile(filename)
+	const getTextFromFile = async function (filename) {
 	  const fsPromises = require('fs').promises
-	  const text = await fsPromises.readFile(filename, 'utf8')
+	  return await fsPromises.readFile(filename, 'utf8')
 	}
 
-	// CSV
-	const parseCsvFile = function (fileName, actionFunction) {
-	  const fs = require('fs')
-	  const parse = require('csv-parse')
-	  const parser = parse({ delimiter: ',' }, actionFunction)
-	  fs.createReadStream(path.join(__dirname, fileName)).pipe(parser)
+	// Read one line at a time / cb = (line) => {}
+	const getTextFromFileOneLineAtATime = async function (filename, cbLine, cbClose) {
+	  const lineReader = require('readline').createInterface({
+	    input: require('fs').createReadStream(filename)
+	  })
+	  lineReader.on('line', cbLine)
+	  lineReader.on('close', cbClose)
 	}
 
 	const openFile = function (filename, cb) {
@@ -345,6 +347,14 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 				cb(data)
 			}
 		})
+	}
+
+	// CSV
+	const parseCsvFile = function (fileName, actionFunction) {
+	  const fs = require('fs')
+	  const parse = require('csv-parse')
+	  const parser = parse({ delimiter: ',' }, actionFunction)
+	  fs.createReadStream(require('path').join(__dirname, fileName)).pipe(parser)
 	}
 
 	var fs = require('fs')

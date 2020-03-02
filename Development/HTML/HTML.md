@@ -230,7 +230,7 @@ object-size: cover;
         <legend>User info:</legend>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" />
-        <input type="submit" value="Submit" />
+        <button type="submit">Submit</button>
       </fieldset>
     </form>
 
