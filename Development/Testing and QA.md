@@ -35,10 +35,6 @@ describe('Test Suite Name', function () {
 beforeAll/beforeEach
 afterAll/afterEach
 
-.toBe()
-.toBeCloseTo()
-.toBeDefined()
-.toEqual()
 spyOn(obj, 'method') // assumes obj.method is a function // How to spy on a method?
 spyOn(obj, 'method').andCallThrough() // (and.callThrough() in Jasmine 2) How to have spied method also calls through to the real function?
 spyOn(obj, 'method').andReturn('Pow!') // and.returnValue(value) // How do I fix the return value of a spy?

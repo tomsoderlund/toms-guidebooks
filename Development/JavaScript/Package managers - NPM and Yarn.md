@@ -55,6 +55,12 @@ Author: Tom Söderlund <NAME@YOURWEBSITE.com> (http://www.YOURWEBSITE.com)
   npm login # OR npm adduser # OR create new on https://www.npmjs.com
   npm config ls # to ensure that the credentials are stored on your client.
 
+Licenses:
+
+  "license": "ISC",
+  "license": "MIT",
+  "license": "UNLICENSED",
+
 Make local package (TGZ file):
 
   npm pack

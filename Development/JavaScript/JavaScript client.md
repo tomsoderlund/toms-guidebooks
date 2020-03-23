@@ -254,11 +254,10 @@ http://javascript.crockford.com/prototypal.html
 
 ### Object Types
 
-	(o3 instanceof D) // true
-	isNaN(123)
-
 	// Simple, faster: 'object', 'string', 'number', 'boolean'
-	typeof(myObj)
+	typeof myObj
+
+	myDateObj instanceof Date // true
 
 	// Advanced: Object, Array, String, Number, Boolean, Function
 	Array.isArray(objectOrArray)
@@ -267,6 +266,7 @@ http://javascript.crockford.com/prototypal.html
 	// Advanced, slower: '[object X]' where X can be Object, Array, String, Number, Boolean, Function
 	Object.prototype.toString.call(myObj) === '[object Array]'
 
+	isNaN(123) // false
 
 ### Custom classes
 
@@ -597,6 +597,10 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	'ABCDE'.substring(0, 2) === 'AB'
 	'ABCDE'.slice(0, 2) === 'AB'
 
+	'ABCDE'.substr(0, -1) === ''
+	'ABCDE'.substring(0, -1) === ''
+	'ABCDE'.slice(0, -1) === 'ABCD' // Remove ending
+
 	'ABCDE'.substr(1, 2) === 'BC'
 	'ABCDE'.substring(1, 2) === 'B'
 	'ABCDE'.slice(1, 2) === 'B'
@@ -649,6 +653,15 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	// replace function (also: '$&' inserts the matched substring)
 	newStr = str.replace(/([^\d]*)(\d*)([^\w]*)/, (match, p1, p2, p3, offset, string) => [p1, p2, p3].join(' - '))
 
+- `$$`: Inserts a "$".
+- `$&`: Inserts the matched substring.
+- `$\``: Inserts the portion of the string that precedes the matched substring.
+- `$'`: Inserts the portion of the string that follows the matched substring.
+- `$n`: Where n is a positive integer less than 100, inserts the nth parenthesized submatch string, provided the first argument was a RegExp object. Note that this is 1-indexed.
+
+	// replaceArray(['This is $1', 'Sparta'])
+	const replaceArray = (array, str) => (str || array[0]).replace(/(\$\d)/gm, strId => array[parseInt(strId.slice(1))])
+
 	const characterReplacements = {
 	  ' ': '-'
 	}
@@ -674,9 +687,6 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	// Strip HTML
 	const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
 
-	// hex
-	module.exports.isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
-
 	string.split(separator, limit) -> array
 	array.join(', ') -> string
 
@@ -684,6 +694,26 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 	parseInt(StringorNum)
 	parseFloat(String)
 	valueOf()
+
+### Sorting letters
+
+	const shuffleString = (str) => shuffleArray(str.split('')).join('')
+
+	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
+	const uniqueLetters = (str) => unique(str.toLowerCase().split('')).join('')
+
+	const sortString = (str) => str.split('').sort().join('')
+	const uniqueSortedLetters = (str) => sortString(uniqueLetters(str))
+
+	const obfuscateString = (str, visible) => {
+	  const showVisible = visible || Math.round(str.length / 3)
+	  const positions = str.split('').map((char, index) => index)
+	  const shuffledPositions = shuffleArray(positions).slice(showVisible)
+	  const newString = str.split('').map((char, index) => shuffledPositions.includes(index) ? '•' : char).join('')
+	  return newString
+	}
+
+	const vowelCount = (str) => unique(str.toLowerCase().split('')).reduce((result, char) => result + (VOWELS.includes(char) ? 1 : 0), 0)
 
 ### Contact info
 
@@ -697,6 +727,8 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 
 	// test: tests for a match in a string, returns true/false
 	const isValid = regExp.test(str)
+	// hex
+	const isHexString = str => /[0-9A-Fa-f]{6}/g.test(str)
 
 	// search: returns the position of the match or -1
 	const index = str.search(regExp)
@@ -760,9 +792,10 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 
 http://www.w3schools.com/jsref/jsref_obj_array.asp
 
-	var myCars = new Array() // regular array (add an optional integer
+	var myCars = new Array() // regular array (add an optional integer)
 	var justSaabCars = Array(3).fill('Saab') // can't `map` over empty array slots
 	var justSaabCars = [...Array(6)].map((val, index) => 'Saab')
+	Array(100).fill(1).forEach((nr, index) => console.log(`generateCode(${index}):`, generateCode(index)))
 
 	const fillArray = (length, expression) => [...Array(length)].map((empty, index) => expression ? (typeof expression === 'function' ? expression(index) : expression) : undefined)
 	const fillMatrix = (columns, rows, expression) => [...Array(rows)].map((row, y) => [...Array(columns)].map((col, x) => expression ? (typeof expression === 'function' ? expression(x, y) : expression) : undefined))
@@ -787,8 +820,9 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 ### Searching
 
-	var index = fruits.indexOf('Apple')
 	fruits.includes('Apple')
+	fruits.indexOf('Apple') !== -1
+	url.search(/api\/users\/(.+)/) !== -1
 
 ### Sorting and reversing
 
@@ -803,25 +837,26 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 ### Randomize/shuffle array
 
 	function shuffleArray (array) {
-	  var currentIndex = array.length; var temporaryValue; var randomIndex
+	  const shuffledArray = [...array]
+	  let currentIndex = shuffledArray.length; let temporaryValue; let randomIndex
 	  // While there remain elements to shuffle...
 	  while (currentIndex !== 0) {
 	    // Pick a remaining element...
 	    randomIndex = Math.floor(Math.random() * currentIndex)
 	    currentIndex -= 1
 	    // And swap it with the current element.
-	    temporaryValue = array[currentIndex]
-	    array[currentIndex] = array[randomIndex]
-	    array[randomIndex] = temporaryValue
+	    temporaryValue = shuffledArray[currentIndex]
+	    shuffledArray[currentIndex] = shuffledArray[randomIndex]
+	    shuffledArray[randomIndex] = temporaryValue
 	  }
-	  return array
+	  return shuffledArray
 	}
 
 ### Add
 
 	newArray = [newItem, ...oldArray, newItem2]
 	push() // add to end
-	unshift // add to beginning
+	unshift() // add to beginning
 	array.splice(index, howmany, element1, …, elementX) // adds/removes items to/from an array, and returns the removed item(s), mutates original array
 	var combined = list1.concat(list2)
 
@@ -905,10 +940,12 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	getMilliseconds() // Get the milliseconds (0-999)
 	getTime() // Get the time (milliseconds since January 1, 1970)
 
-	thisYear = (new Date()).getYear() + 1900
+	thisYear = new Date().getYear() + 1900
 
 	const formatDate = dateObj => `${dateObj.getFullYear()}-${('0' + (dateObj.getMonth()+1)).slice(-2)}-${('0' + dateObj.getDate()).slice(-2)}`
 	const formatTime = dateObj => `${dateObj.getHours()}:${dateObj.getMinutes()}`
+
+	`[${new Date().getHours()}:${new Date().getMinutes()}]`
 
 	const formatDate = function (dateObj) {
 		return (dateObj.getFullYear()
@@ -975,6 +1012,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	moment(dateObj).format('YYYY-MM-DD')
 	moment(dateObj).format('YYYY-MM-DD HH:mm')
 	moment(dateObj).format('dddd, MMMM Do YYYY HH:mm')
+	moment().format('YYYYMMDDHHmm') // e.g. slug
 
 
 ## Timers
@@ -1532,6 +1570,9 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 		return result
 	}, {})
 
+	// flatten
+	array.flat()
+
 	const isEmpty = obj => Object.keys(obj).length === 0
 
 	// head/tail
@@ -1553,7 +1594,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	}
 
 	// pick
-	const { a, c } = { a: 1, b: 2, c: 3 }
+	const { a, c } = abcObject
+	abcArray.map(({ a, c }) => ({ a, c }))
 	const keyToRemove = 'mykey'
 	const { [keyToRemove]: 0, ...newState } = state
 

@@ -39,9 +39,38 @@ https://medium.com/@maxlynch/redux-is-the-pivotal-frontend-innovation-a406736552
 
 https://github.com/facebookincubator/create-react-app
 
-  yarn create react-app my-app  # or npx create-react-app my-app, or npm init create-react-app my-app
-  cd my-app
-  yarn start
+    yarn create react-app my-app  # or npx create-react-app my-app, or npm init create-react-app my-app
+    cd my-app
+    yarn start
+
+Removing non-necessary files:
+
+    rm public/favicon.ico
+    rm public/logo192.png
+    rm public/logo512.png
+    rm src/logo.svg
+    rm src/App.css
+    # rm src/index.css
+
+    # Optional:
+    rm src/App.test.js
+    rm src/serviceWorker.js
+    rm src/setupTests.js
+    mkdir src/components
+    mkdir src/pages
+    git mv src/App.js src/pages/Start.js
+
+Adding nice extras:
+
+    yarn add standard --dev
+    yarn add react-router-dom
+    yarn add styled-components
+
+    "dev": "PORT=3123 react-scripts start",
+    "test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+    "lint": "standard",
+    "fix": "standard --fix",
+    "unit": "jasmine"
 
 ### Next.js
 
@@ -124,11 +153,9 @@ Routing setup:
 
   export default () => (
     <Router>
-      <div>
-        <Route path='/' exact component={Screen} />
-        <Route path='/gamepad' component={Gamepad} />
-        <Route path='/withProps' render={(props) => <Dashboard {...props} isAuthed={true} />} />
-      </div>
+      <Route path='/' exact component={Start} />
+      <Route path='/page2' component={Page2} />
+      <Route path='/withProps' render={(props) => <Page3 {...props} isAuthed={true} />} />
     </Router>
   )
 
@@ -137,7 +164,16 @@ Links:
   import { Link } from 'react-router-dom'
   <Link to='/users'>Users</Link>
 
-Push route:
+Push route (hook):
+
+  import { useHistory, useLocation } from 'react-router-dom'
+  const history = useHistory()
+  history.push('/home')
+
+  const location = useLocation()
+  location.pathname
+
+Push route (withRouter):
 
   import { withRouter } from 'react-router-dom'
 
@@ -191,6 +227,13 @@ Push route:
   Router.pushRoute('/blog/hello-world')
   // With route name and params
   Router.pushRoute('blog', {slug: 'hello-world'})
+
+#### Localization: next-i18next
+
+    mkdir -p public/static/locales/en
+    touch public/static/locales/en/common.json
+
+    touch lib/i18n.js  # config
 
 ### Components with JSX
 
@@ -290,6 +333,43 @@ https://reactjs.org/docs/hooks-overview.html
       onChange={handleInputValuesChange}
     />
 
+#### useCountdown hook
+
+    import { useState, useEffect } from 'react'
+
+    const INTERVAL = 1000
+
+    export const useCountdown = function (startTimeLeft = 60000) {
+      const [timeLeft, setTimeLeft] = useState(startTimeLeft)
+
+      useEffect(() => {
+        const timeoutID = window.setTimeout(() => {
+          setTimeLeft(timeLeft - INTERVAL)
+        }, INTERVAL)
+
+        return () => window.clearInterval(timeoutID)
+      })
+
+      return [timeLeft, setTimeLeft]
+    }
+    export default useCountdown
+
+    // import useCountdown from '../hooks/useCountdown'
+    // const [timeLeft, setTimeLeft] = useCountdown(startTimeLeft)
+
+
+#### Dynamic className
+
+    <div
+      className={[
+        'big-package',
+        ...(true ? ['selectable'] : []),
+        ...(isActive ? ['selected'] : []),
+        ...(false ? ['active'] : [])
+      ].join(' ')}
+      onClick={onClick}
+    >
+
 ### React Context
 
 Context is another way of sharing state, without using child props.
@@ -317,7 +397,7 @@ Set up Provider:
 
 https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share-state-between-different-components-sgop6lnrd
 
-  import React, { createContext, useState } from 'react'
+  import React, { createContext, useState, useContext } from 'react'
 
   export const UserContext = createContext()
 
@@ -332,15 +412,17 @@ https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share
 
   export const { Consumer: UserContextConsumer } = UserContext
 
-  // Wrap your app/page with the Provider:
+  export const useUser = () => useContext(UserContext)
 
-  import { UserContextProvider } from './UserContext'
+  // Wrap your app/page with the Provider
+  // NOTE: must be wrapped on higher level than where useUser is used
+
+  import { UserContextProvider } from './useUser'
   <UserContextProvider user={1}>...</UserContextProvider>
 
   // Then to use (“consume”) inside component or hook:
 
-  import { UserContext } from './UserContext'
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useUser()
 
 
 ### Styling React

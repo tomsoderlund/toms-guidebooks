@@ -119,11 +119,11 @@ button,
 }
 button:focus:not(:disabled),
 .button:focus:not(:disabled) {
-  opacity: 0.8;
+  filter: brightness(125%);
 }
 button:hover:not(:disabled),
 .button:hover:not(:disabled) {
-  opacity: 0.8;
+  filter: brightness(125%);
   top: -0.1em;
   box-shadow: 0 0.2em 0.1em rgba(0, 0, 0, 0.2);
 }
@@ -136,7 +136,7 @@ button:hover:active,
 button:disabled,
 .button:disabled {
   cursor: initial;
-  background-color: silver;
+  filter: grayscale(100%);
 }
 a.button {
   text-decoration: none;
@@ -470,6 +470,16 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
 ### Images
 
+.photo {
+  background-image: url("background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: block;
+  width: 400px;
+  height: 300px;
+}
+
 ### Shiny Button
 
 .shiny-button {
@@ -502,56 +512,81 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
 ### In Progress Button
 
-.progress-button {
- background: linear-gradient(
-  90deg,
-  $color_button_foreground 0%,
-  $color_button_foreground 50%,
-  $color_button_background 50%,
-  $color_button_background 100%
- );
- background-size: 400% 100%;
- background-position: 70% 50%;
-}
-.progress-button.in-progress {
- animation: animation-progress 3s 1 ease-out;
-}
-.progress-button.done {
- background-position: 30% 50%;
- color: $color_button_background;
-}
-@keyframes animation-progress {
- from {
-  background-position: 70% 50%;
- }
- to {
-  background-position: 30% 50%;
-  color: $color_button_background;
- }
-}
+  .progress-button {
+    background: linear-gradient(
+      90deg,
+      $color_button_foreground 0%,
+      $color_button_foreground 50%,
+      $color_button_background 50%,
+      $color_button_background 100%
+    );
+    background-size: 400% 100%;
+    background-position-x: 70%;
+    background-position-y: 50%;
+  }
+  .progress-button.in-progress {
+    animation: animation-progress 3s 1 ease-out;
+  }
+  .progress-button.done {
+    background-position-x: 30%;
+    color: $color_button_background;
+  }
+  @keyframes animation-progress {
+    from {
+      background-position-x: 70%;
+    }
+    to {
+      background-position-x: 30%;
+      color: $color_button_background;
+    }
+  }
+
+### Filters
+
+    filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+    filter: blur(20px) grayscale(20%);
+    filter: blur(20px);
+    filter: blur(20px);”. Wouldn’t the effect then work in firefox?
+    filter: blur(<length>)
+    filter: brightness([ <number> | <percentage> ])
+    filter: contrast([ <number> | <percentage> ])
+    filter: drop-shadow(<length>{2,3} <color>?)
+    filter: grayscale([ <number> | <percentage> ])
+    filter: hue-rotate(<angle>)
+    filter: invert([ <number> | <percentage> ])
+    filter: opacity([ <number> | <percentage> ])
+    filter: saturate([ <number> | <percentage> ])
+    filter: sepia(0) saturate(2);
+    filter: sepia(0) saturate(2);
+    filter: sepia(1) saturate(8);
+    filter: sepia([ <number> | <percentage> ])
+    filter: url(<url>)
 
 ### Other
 
-/* Force box sizing box model. Default is 'content-box'. */
+#### Force box sizing box model. Default is 'content-box'.
+
 .new_box_model {
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-  box-sizing: border-box;         /* Opera/IE 8+ */
+  box-sizing: border-box;
 }
 
-/* Uppercase */
+#### Uppercase
+
 .fx_uppercase {
   text-transform: uppercase;
 }
 
-/* Text Shadow */
+#### Text Shadow
+
 .fx_text_shadow {
   color: #222;
   text-shadow: 0px 2px 3px #555; /* X Y Blur Color */
   filter: dropshadow(color=#555, offX=0, offY=2); /* for IE */
 }
 
-/* Box Shadow */
+#### Box Shadow
+
 .shaded_box {
   box-shadow: 0 1px 5px rgba(0,0,0, 0.4);
   box-shadow: 1px 2px 3px #555; /* X Y Blur Color */
@@ -559,52 +594,65 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   -moz-box-shadow: 1px 2px 3px #555;
 }
 
-/* Inset Shadow */
+#### Inset Shadow
+
 .inset_shaded_box {
   box-shadow: inset 1px 2px 3px #555; /* X Y Blur Color */
   -webkit-box-shadow: inset 1px 2px 3px #555; /* X Y Blur Color */
   -moz-box-shadow: inset 1px 2px 3px #555;
 }
 
-/* Embossing with border */
+#### Embossing with border
+
 .embossed_box {
   border: 2px solid #d3e8fc; /* Lighter shade */
   border-top-color: #4b84b7;
   border-left-color: #4b84b7;
 }
 
-/* Text Embossed */
+#### Text Embossed
+
 .fx_text_embossed {
   font-weight: bold;
   color: #808080;
   text-shadow: #fff 0px 1px 0, #000 0 -1px 0; /* X Y Blur Color */
 }
 
-/* Text "Outlined" */
+#### Text "Outlined"
+
 .fx_text_outlined {
   color: #222;
   text-shadow: -1px 0 #00F, 0 1px #00F, 1px 0 #00F, 0 -1px #00F;
 }
 
-/* Opacity/Transparency */
+#### Opacity/Transparency
+
 .fx_transparent {
     background-color: black;
   opacity:0.6; /* CSS3 standard */
   filter:alpha(opacity=60); /* for IE */
 }
 
+Transparent background
+
 .fx_transparent_background {
   background-color: rgb(255,0,0); /* fallback */
   background-color: rgba(255,0,0,0.5);
 }
+
+#### Blur
 
 .fx_blurred {
   filter: blur(10px);
   -webkit-filter: blur(10px);
 }
 
-/* Linear gradient: http://colorzilla.com/gradient-editor/#ff3232+0,ffffff+100 */
-/*   change 'to bottom' to '45deg' for angle */
+#### Linear gradient
+
+http://colorzilla.com/gradient-editor/#ff3232+0,ffffff+100
+
+Change 'to bottom' to '45deg' for angle
+
 .fx_gradient_linear {
   background: #ff3232; /* Old browsers */
   background: -moz-linear-gradient(top, #ff3232 0%, #ffffff 100%); /* FF3.6-15 */
@@ -613,7 +661,10 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
 
-/* Circular gradient: http://colorzilla.com/gradient-editor/#ff3232+0,ffffff+100 */
+#### Circular gradient
+
+http://colorzilla.com/gradient-editor/#ff3232+0,ffffff+100
+
 .fx_gradient_radial {
   background: #ff3232; /* Old browsers */
   background: -moz-radial-gradient(center, ellipse cover, #ff3232 0%, #ffffff 100%); /* FF3.6-15 */
@@ -622,11 +673,13 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-// Rainbow
+#### Rainbow
+
 background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
 background: linear-gradient(to right, hsl(0,100,50), hsl(45,100,50), hsl(90,100,50), hsl(135,100,50), hsl(180,100,50), hsl(225,100,50), hsl(270,100,50), hsl(315,100,50), hsl(360,100,50));
 
-/* Rounded Box with Shadows */
+#### Rounded Box with Shadows
+
 .rounded_box {
   width: 500px; margin: 0 auto; background: #222; padding: 20px;
   font-size: 22px; color: #555; text-shadow: 0px 2px 3px #171717;
@@ -639,12 +692,14 @@ background: linear-gradient(to right, hsl(0,100,50), hsl(45,100,50), hsl(90,100,
   -moz-box-shadow: 1px 2px 3px #555;
 }
 
-/* One rounded corner */
+#### One rounded corner
+
 .rounded_corner {
-  border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 1em;
 }
 
-/* Text with gradient/image */
+#### Text with gradient/image
+
 h1 {
   font: bold 330%/100% "Lucida Grande";
   position: relative;
@@ -652,12 +707,14 @@ h1 {
 }
 
 h1 span {
-  background: url(gradient.png) repeat-x;
+  background: url("gradient.png") repeat-x;
   position: absolute;
   display: block;
   width: 100%;
   height: 31px;
 }
+
+#### Keyboard-style button
 
 .keyboard-button {
   color: #999;
@@ -929,18 +986,19 @@ Either: IMG tag or element with background image.
 <div class="photo"></div>
 
 .photo {
-    background-image: url(Retina-image-800x600-2x.png);
-    background-size: 400px 300px;
-    background-repeat: no-repeat;
-    display: block;
-    width: 400px;
-    height: 300px;
+  background-image: url("retina-image-800x600-2x.png");
+  background-position: center;
+  background-size: 400px 300px;
+  background-repeat: no-repeat;
+  display: block;
+  width: 400px;
+  height: 300px;
 }
 
 
 /* CSS for devices with normal screens */
 .icons {
-    background-image: url(icon-sprite.png);
+    background-image: url("icon-sprite.png");
     background-repeat: no-repeat;
 }
 
@@ -950,7 +1008,7 @@ only screen and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-device-pixel-ratio: 1.5) {
     .icons {
-        background-image: url(icon-sprite-2x.png);
+        background-image: url("icon-sprite-2x.png");
         background-size: 200px 100px;
         background-repeat: no-repeat;
     }

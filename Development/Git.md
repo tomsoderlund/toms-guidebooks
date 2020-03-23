@@ -76,6 +76,22 @@ Quick:
 
 	git log -g --grep=Feature
 
+## Forks
+
+https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
+
+	# 1. Fetch the branches from the upstream repository
+	git fetch upstream
+	# 2. Merge the changes from upstream/master into your local master branch
+	git merge upstream/master
+
+Custom fork in `package.json`:
+
+	username/repo#branch-name
+
+	"botkit": "jonchurch/botkit#multi-hears",
+	"mongoose-crudify": "git+https://github.com/tomsoderlund/mongoose-crudify.git",
+
 ## Troubleshooting
 
 ### Test a specific commit - history

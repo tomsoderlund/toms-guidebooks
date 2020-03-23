@@ -220,6 +220,19 @@ Note: `LEFT` refers to the left table in `ON` statement:
 	) AS combined
 	ORDER BY name;
 
+### COUNT
+
+	COUNT(DISTINCT(field))
+
+Example:
+
+	SELECT
+	company.*,
+	COUNT(DISTINCT(company_person.person_id)) AS person_count
+	FROM company
+	LEFT JOIN company_person ON (company_person.company_id = company.id)
+	GROUP BY company.id;
+
 ## Create - Insert
 
 	INSERT INTO domain (name, site_count) VALUES ('indiska.se', 5) RETURNING id;

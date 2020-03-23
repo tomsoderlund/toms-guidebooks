@@ -79,6 +79,10 @@ List `./folder/subfolder/file.ext`:
 
 	curl -v --silent https://server.com/project.json 2>&1 | tr '{' '\n{' | grep 'searchstring' >> output.txt
 
+### Download a file
+
+	wget https://server.com/myfile
+
 ### Pretty file tree
 
 	find ./ | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'  # add '-type d' for directories only

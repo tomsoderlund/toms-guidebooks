@@ -61,9 +61,10 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 	var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
+	req.method // 'GET'
+	req.originalUrl
 	req.url
-	req.path = req.originalUrl // '/highscore/monthly/2017-01-01/2018-01-01'
-	req.route.path // '/highscore/:grouping/:startDate/:endDate'
+	req.path
 
 	req.params (url/:key)
 	req.query (url?key=value)
@@ -72,18 +73,27 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 	const { path, route, params, query, body } = req
 
+#### next()
+
+	const typicalRoute = function (req, res, next) {
+	  cacheProvider.setKeyOnResponse(res, get(req, 'crudify.user.account.reference'))
+	  next()
+		next(new Error(...))
+	}
+
 #### Generic request handler
 
 	/** handleRequest(async () => {...}, { req, res }) */
-	const handleRequest = async (actionFunction, { req, res }) => {
+	module.exports.handleRequest = async (actionFunction, { req, res }) => {
 	  try {
 	    await actionFunction(req, res)
 	  } catch (err) {
-	    const message = err.message.split(':')[0]
-	    const status = err.message.split(':')[1] || 500
-	    console.error(`Error ${status}: ${message}`)
-	    res.status(status)
-	    res.json({ message, status })
+	    const reference = `E${Math.round(1000 * Math.random())}`
+	    const message = err.message.split(';')[0]
+	    const status = err.message.split(';')[1] || 500
+	    console.error(`[${reference}] Error ${status}: “${message}” –`, err)
+	    if (!isNaN(status)) res.status(status)
+	    res.json({ status, message, reference })
 	  }
 	}
 
@@ -268,43 +278,25 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	'use strict'
 	console.log('adsfs', process.argv.length)
 
+	// process.argv -> name/value collection
+	const ARGUMENTS = ['languageId:1']
+	if ((process.argv.length - 2) < ARGUMENTS.length) {
+	  console.log('Usage: node tasks/myNodeApp ' + ARGUMENTS.map(str => `[${str.split(':')[0]}]`).join(' '))
+	  console.log('  E.g: node tasks/myNodeApp ' + ARGUMENTS.map(str => str.split(':')[1] || '“something”').join(' '))
+	} else {
+	  const argumentObj = process.argv.slice(2).reduce((result, value, index) => ({ ...result, [ARGUMENTS[index] ? ARGUMENTS[index].split(':')[0] : `arg${index + 1}`]: value }), {})
+	  myNodeApp(argumentObj)
+	}
+
 	// process.argv = ['node', 'yourscript.js', ...]
 	// First custom argument is 2
 	const NR_OF_ARGUMENTS_REQUIRED = 2
 	if ((process.argv.length - 2) < NR_OF_ARGUMENTS_REQUIRED) {
-		console.log('Usage: node app.js [filename] [JSON key]')
-		console.log('  E.g: node app.js data/test.json projects.562e3d6dfd53820c00e98bd7')
+		console.log('Usage: node myNodeApp [filename] [JSON key]')
+		console.log('  E.g: node myNodeApp data/test.json projects.562e3d6dfd53820c00e98bd7')
 	}
 	else {
-		//.. do run
-		myFunction(process.argv[2])
-	}
-
-	// process.argv -> name/value collection
-	const processCommandLineArguments = function () {
-		const ARGUMENTS = [
-			{ key: 'inputFile', default: 'companies.csv', required: true },
-			{ key: 'workTitle', default: 'digital marketing' },
-			{ key: 'location', default: 'Sweden' },
-		]
-		const argvCollection = {}
-		for (var i = 2; i < Math.max(process.argv.length, ARGUMENTS.length+2); i++) {
-			argvCollection[ARGUMENTS[i-2].key] = process.argv[i] || ARGUMENTS[i-2].default
-		}
-		return argvCollection
-	}
-
-	// process.argv -> name/value collection (OLD)
-	var processCommandLine = function (defaultOptions) {
-		var options = _.merge({}, defaultOptions)
-		for (var i = 2; i < process.argv.length; i++) {
-			var arg = process.argv[i]
-			if (arg.indexOf('=') !== -1) {
-				var param = arg.split('=')
-				options[param[0]] = param[1]
-			}
-		}
-		return options
+		myNodeApp(process.argv)
 	}
 
 	// process.argv -> two arrays of files/options
@@ -322,10 +314,7 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	}
 
 	// text = await getTextFromFile(filename)
-	const getTextFromFile = async function (filename) {
-	  const fsPromises = require('fs').promises
-	  return await fsPromises.readFile(filename, 'utf8')
-	}
+	const getTextFromFile = (filename) => require('fs').promises.readFile(filename, 'utf8')
 
 	// Read one line at a time / cb = (line) => {}
 	const getTextFromFileOneLineAtATime = async function (filename, cbLine, cbClose) {

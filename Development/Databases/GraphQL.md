@@ -125,6 +125,8 @@ https://www.apollographql.com/docs/react/data/queries/#polling
 			pollInterval: 500,
 		})
 
+Note: use `skip` for conditional queries
+
 ### Subscriptions
 
 https://www.apollographql.com/docs/react/data/subscriptions/
