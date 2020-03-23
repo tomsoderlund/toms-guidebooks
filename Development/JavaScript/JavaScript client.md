@@ -1021,6 +1021,7 @@ Wait, Sleep etc
 
 	// do once
 	setTimeout(doInOneSecond, 1000)
+	setTimeout(doInOneSecond, 1000, param1, param2)
 	setTimeout(() => console.log('setTimeout'), 1000)
 
 	// async
@@ -1028,6 +1029,7 @@ Wait, Sleep etc
 
 	// Repeat
 	setInterval(doEverySecond, 1000)
+	setInterval(doEverySecond, 1000, param1, param2)
 
 	const timerId = setInterval(function () { console.log('setInterval') }, 1000)
 	// Stop timer
