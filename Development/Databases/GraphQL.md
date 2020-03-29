@@ -188,3 +188,25 @@ merge-graphql-schemas
       require('../../graphql/gift/resolvers')(pool),
       require('../../graphql/wishlist/resolvers')(pool)
     ])
+
+## Cache
+
+    export const useUpdateProject = () => {
+      const [updateProjectMutation] = useMutation(UPDATE_PROJECT, {
+        update: (cache, { data: { updateProject } }) => {
+          const { variables } = cache.watches.values().next().value
+          cache.writeQuery({
+            query: GET_PROJECT,
+            variables,
+            data: { project: updateProject }
+          })
+          const { project } = cache.readQuery({
+            query: GET_PROJECT,
+            variables
+          })
+          console.log(`New data:`, updateProject)
+          console.log(`From cache:`, project)
+        }
+      })
+      return updateProjectMutation
+    }

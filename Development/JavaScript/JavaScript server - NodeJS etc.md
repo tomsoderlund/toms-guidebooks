@@ -41,20 +41,6 @@ http://nodejs.org/download/
 			return result
 		}, {})
 
-### Next.js with/without Express
-
-	// Next.js: without Express - just Node.js
-	const { createServer } = require('http')
-	app.prepare().then(() => {
-		createServer(handler).listen(3000)
-	})
-
-	// Next.js: with Express
-	const express = require('express')
-	app.prepare().then(() => {
-		express().use(handler).listen(3000)
-	})
-
 ### Routes
 
 https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express

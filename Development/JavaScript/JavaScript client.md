@@ -922,6 +922,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	Date.now() // = new Date().getTime()
 
+	unixTimeStamp = Math.round(Date.now() / 1000)
+
 	var todaysDate = new Date()
 	var d = new Date(2014, 0, 1) // months are zero-based
 
@@ -1756,12 +1758,13 @@ Related:
 	// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
 	module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
 
-	// includesSome is NOT pickAny
+	// includesSome (NOT pickAny or includesAny)
 	// includesSome(url, ['localhost', 'staging'])
-	module.exports.includesSome = (parentObj, childObjects) => _.filter(childObjects, childObj => _.includes(parentObj, childObj))
-	_.mixin({ 'includesSome': module.exports.includesSome })
-	const includesSome = (parentObj, childObjects) => childObjects.filter(childObj => parentObj.includes(childObj))
-	const startsWithSome = (parentObj, childObjects) => childObjects.filter(childObj => parentObj.startsWith(childObj))
+	// incl = includesSome(collection1, collection2).length > 0
+  const includesSome = (collection1, collection2) => collection2.filter(childObj => collection1.includes(childObj))
+  const startsWithSome = (collection1, collection2) => collection2.filter(childObj => collection1.startsWith(childObj))
+  module.exports.includesSome = (collection1, collection2) => _.filter(collection2, childObj => _.includes(collection1, childObj))
+  _.mixin({ 'includesSome': module.exports.includesSome })
 
 	var doWhen = function (func, expressionFunc, failFunc, iterations) {
 		iterations = iterations || 0

@@ -228,6 +228,10 @@ package.json:
     ]
   },
 
+Running with voice feedback:
+
+    yarn fix && say Lint OK || say Lint failed
+
 Ignore line:
 
   myCode() // eslint-disable-line no-useless-escape

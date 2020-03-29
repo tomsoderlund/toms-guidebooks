@@ -439,9 +439,8 @@ rgba(0,0,0, 0.3)
 `+` = adjacent sibling
 `~` = general sibling
 
-div:nth-child(4n+1) {
-}
-
+div:nth-child(1) {}
+div:nth-child(4n+1) {}
 
 /* Universal */
 * {
@@ -846,7 +845,7 @@ Examples:
 
   .pulsate {
     /*         name              dur delay repetitions */
-    animation: animation-pulsate 10s 0s infinite;
+    animation: animation-pulsate 1s 0s infinite;
   }
 
   @keyframes animation-pulsate {
@@ -884,6 +883,14 @@ Examples:
   .animated2 {
     animation: example 5s linear 2s infinite alternate;
   }
+
+### Animate multiple
+
+    .box:nth-child(2) {
+      animation-delay: -2s;
+    }
+
+### 3D Flip Animation
 
 ### Progress animation
 

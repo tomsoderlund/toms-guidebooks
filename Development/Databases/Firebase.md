@@ -44,7 +44,31 @@ More:
 - firebaseRef.key() -> .key
 - firebaseRef.authWithCustomToken
 
+## Snapshots
 
-Firebase + React: re-base
+Not `map`, but `forEach`:
+
+    projectsSnapshot.forEach(project => console.log(project.key))
+
+https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
+
+## Unique keys/slugs
+
+    async addProject (parent, variables, context, info) {
+      const { userId, title } = variables
+      const slugBase = toSlug(title)
+      for (let i = 1; i < 100; i++) {
+        const slug = slugBase + (i > 1 ? `-${i}` : '')
+        const newProjectRef = userProjectRef({ userId, projectId: slug })
+        const project = (await newProjectRef.once('value')).val()
+        if (project === null) {
+          await newProjectRef.set({ title, dateUpdated: Math.round(Date.now() / 1000) })
+          return { id: slug }
+        }
+      }
+      throw new Error(`Could not generate a unique project ID`)
+    }
+
+## Firebase + React: re-base
 
 Firebase + Redux: https://github.com/prescottprue/react-redux-firebase

@@ -2,22 +2,27 @@
 
 ### Update NPM
 
-  npm update npm -g
+    npm update npm -g
 
 ### Install 'n' helper
 
-  sudo npm cache clean -f
-  sudo npm install -g n
-  sudo n stable
-  sudo n 0.8.21 # specific version
+    sudo npm cache clean -f
+    sudo npm install -g n
+    sudo n stable
+    sudo n 0.8.21 # specific version
 
 ### See versions
 
-  npm view <package> versions
-  0.8.3<package>@<version>
+    npm view <package> versions
+    0.8.3<package>@<version>
 
-  npm view bcrypt versions
-  npm install bcrypt@0.8.3
+    npm view bcrypt versions
+    npm install bcrypt@0.8.3
+
+## List package
+
+    yarn list
+    npm ls
 
 package.json
 
