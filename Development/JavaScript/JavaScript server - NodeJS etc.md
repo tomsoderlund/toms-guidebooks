@@ -73,13 +73,22 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	module.exports.handleRequest = async (actionFunction, { req, res }) => {
 	  try {
 	    await actionFunction(req, res)
-	  } catch (err) {
+	  } catch (error) {
 	    const reference = `E${Math.round(1000 * Math.random())}`
-	    const message = err.message.split(';')[0]
-	    const status = err.message.split(';')[1] || 500
-	    console.error(`[${reference}] Error ${status}: “${message}” –`, err)
+	    const { message, status = 400 } = error
+	    console.error(`[${reference}] Error ${status}: “${message}” –`, error)
 	    if (!isNaN(status)) res.status(status)
 	    res.json({ status, message, reference })
+	  }
+	}
+
+	// throw new CustomError(`Account not found`, 404)
+	// From: https://levelup.gitconnected.com/the-definite-guide-to-handling-errors-gracefully-in-javascript-58424d9c60e6
+	module.exports.CustomError = class CustomError extends Error {
+	  constructor (message, status) {
+	    super(message)
+	    if (Error.captureStackTrace) Error.captureStackTrace(this, CustomError)
+	    this.status = status
 	  }
 	}
 
