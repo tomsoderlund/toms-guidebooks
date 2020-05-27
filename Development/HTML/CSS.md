@@ -459,13 +459,17 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   font-family: sans-serif;
   font-size: 12px;
   font-weight: bold;
-  font-style: italic;
+  font-style: italic; /* normal */
   text-decoration: underline;
   text-transform: uppercase;
 
   letter-spacing: normal; /* 1em */
   word-spacing: normal;
   line-height: 1em;
+
+#### Default fonts for fast loading
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
 ### Images
 
@@ -726,9 +730,9 @@ h1 span {
 
   white-space: nowrap;
   word-wrap: break-word;
-  word-break: 
-  overflow-wrap: 
-  hyphens: 
+  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
   text-overflow: ellipsis;
 
 ### Select text
@@ -843,12 +847,12 @@ Examples:
 
 ### Keyframes (`animation`)
 
-  .pulsate {
+  .pulsate-animation {
     /*         name              dur delay repetitions */
-    animation: animation-pulsate 1s 0s infinite;
+    animation: keyframes-pulsate 1s 0s infinite;
   }
 
-  @keyframes animation-pulsate {
+  @keyframes keyframes-pulsate {
     from {
       background-color: rgba(255,255,255, 0);
     }
@@ -857,7 +861,7 @@ Examples:
     }
   }
 
-  @keyframes animation-pulsate {
+  @keyframes keyframes-pulsate {
     0% {
       background-color: rgba(255,255,255, 0);
     }
@@ -1044,13 +1048,13 @@ darkturquoise
 rebeccapurple
 salmon
 
-Green: darkturquoise, greenyellow, lime/limegreen
+Green: limegreen, lime, darkturquoise, greenyellow
+Blue: dodgerblue, deepskyblue
 Purple: rebeccapurple, slateblue
 Red/Pink: salmon, deeppink
-Blue: dodgerblue, deepskyblue
-Orange: darkorange
 Red: tomato
-Yellow: lemonchiffon, gold
+Orange: darkorange
+Yellow: gold, lemonchiffon
 
 slategray (blueish)
 darkslategray (blueish)

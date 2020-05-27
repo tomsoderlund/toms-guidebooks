@@ -166,10 +166,10 @@ input[type="radio"] {
 }
 
 <div class="radio-wrapper">
-  <input type="radio" name="gender" id="male" value="male">
-  <label for="male">Male</label><br>
-  <input type="radio" name="gender" id="female" value="female">
-  <label for="female">Female</label>
+  <input type="radio" name="fruit" id="apple" value="apple">
+  <label for="apple">Apple</label><br>
+  <input type="radio" name="fruit" id="banana" value="banana">
+  <label for="banana">Banana</label>
 </div>
 
 
@@ -208,6 +208,9 @@ http://caniuse.com/#feat=html5semantic
 <h3>Heading 3</h3>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
 
+### Target _blank
+
+    target="_blank" rel="noopener noreferrer"
 
 ## Images
 
@@ -228,8 +231,8 @@ object-size: cover;
     <form action="/endpoint">
       <fieldset>
         <legend>User info:</legend>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" />
+        <label for="emailField">Email:</label>
+        <input id="emailField" type="email" autocomplete="email" placeholder="Your email" required />
         <button type="submit">Submit</button>
       </fieldset>
     </form>
@@ -297,8 +300,8 @@ Text: <input type="text" name="searchtext" value="" class="formfield" size="15">
 		<textarea name="searchtext" class="formfieldsmall" cols="35" rows="2">value</textarea>
 
 Radio:
-<input type="radio" name="sex" value="male" checked>
-<input type="radio" name="gender" value="female"/> Female
+<input type="radio" name="sex" value="apple" checked>
+<input type="radio" name="fruit" value="banana"/> Banana
 
 Checkbox:
 <input type="checkbox" name="vehicle" value="Bike">

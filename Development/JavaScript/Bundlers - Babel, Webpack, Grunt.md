@@ -83,6 +83,33 @@ https://medium.com/@kimberleycook/intro-to-webpack-1d035a47028d
 
   yarn add html-webpack-plugin --dev
 
+### CSS
+
+	yarn add --dev style-loader css-loader
+
+	module.exports = {
+	  module: {
+	    rules: [
+	      {
+	        test: /\.css$/i,
+	        use: ['style-loader', 'css-loader'],
+	      },
+	    ],
+	  },
+	}
+
+### SVG
+
+@svgr/webpack included with create-react-app.
+
+    {
+      test: /\.svg$/,
+      use: ['@svgr/webpack']
+    }
+
+    import IconSearch from '../../assets/icons/search.svg'
+
+    <IconSearch />
 
 ## Grunt
 

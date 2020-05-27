@@ -297,21 +297,25 @@ http://javascript.crockford.com/prototypal.html
 
 ## Loops
 
-	for (let i in array) {
-		console.log(`${i}: ${array[key]}`)
+	for (const entry of array) {
+	  console.log(entry)
 	}
 
-	for (let key in object) {
+	for (const i in array) {
+		console.log(`${i}: ${array[i]}`)
+	}
+
+	for (const key in object) {
 		console.log(`${key}: ${object[key]}`)
 	}
 
 	const keys = ['apple', 'banana', 'citrus']
-	for (let k in keys) {
+	for (const k in keys) {
 		console.log(`${keys[k]}: ${object[keys[k]]}`)
 	}
 
 	for (let i = 0; i < array.length; i++) {
-		console.log(`${i}: ${array[key]}`)
+		console.log(`${i}: ${array[i]}`)
 	}
 
 	const keys = ['apple', 'banana', 'citrus']
@@ -454,6 +458,8 @@ From https://www.jstips.co/en/javascript/array-average-and-median/
 
 	// ~= 0.866 * a
 	const triangleHeight = a => Math.sqrt(3) / 2 * a
+
+	const hypotenuse = (a, b) => Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))
 
 X/Y distances:
 
@@ -638,6 +644,28 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	// Slug
 	const toSlug = str => str.trim().replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
+
+	const toSlug = function (str, removeInternationalChars) {
+	  // Abort if not a proper string value
+	  if (!str || typeof (str) !== 'string') { return str }
+	  // For both
+	  var newStr = str.trim()
+	    .toLowerCase()
+	    .replace(/ /g, '-') // space to dash
+	    .replace(/_/g, '-') // underscore to dash
+	  // Remove ÅÄÖ etc?
+	  if (removeInternationalChars) {
+	    newStr = newStr.replace(/[åäæâãáà]/g, 'a').replace(/[ëêéè]/g, 'e').replace(/[öøôõóò]/g, 'o').replace(/[üûúù]/g, 'u') // convert ÅÄÖÜ to Latin characters
+	    newStr = newStr.replace(/[^\w-]+/g, '') // remove all other characters
+	  } else {
+	    newStr = newStr.replace(/[\t.,?;:‘’“”"'`!@#$€%^&§°*<>()[\]{}_+=/|\\]/g, '') // remove invalid characters but keep ÅÄÖ etc
+	  }
+	  // For both
+	  newStr = newStr.replace(/---/g, '-') // fix for the ' - ' case
+	    .replace(/--/g, '-') // fix for the '- ' case
+	    .replace(/--/g, '-') // fix for the '- ' case
+	  return newStr
+	}
 
 https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
 
@@ -1348,6 +1376,7 @@ Tip: event handlers on `document` for move/end:
 	})
 	.then(res => res.json())
 
+Axios: similar but URL is part of object
 
 ### DOM / IFrame
 
@@ -1443,7 +1472,7 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 	let [one, two] = [1, 2]
 	let {three, four} = {three: 3, four: 4}
 	const { education: { degree: asNamedDegree } } = user
-	console.log(asNamedDegree) //prints: Masters
+	console.log(asNamedDegree) // prints: Masters
 
 	// Remove a property:
 	const { children, ...propsWithoutChildren } = props
@@ -1605,6 +1634,26 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 
 	get/set: no matching ES6
 
+	/* Implementation of lodash.get function: https://gist.github.com/harish2704/d0ee530e6ee75bad6fd30c98e5ad9dab */
+	function get (object, keys, defaultVal) {
+	  keys = Array.isArray(keys) ? keys : keys.split('.')
+	  object = object[keys[0]]
+	  if (object && keys.length > 1) {
+	    return getProp(object, keys.slice(1))
+	  }
+	  return object === undefined ? defaultVal : object
+	}
+
+	/* Implementation of lodash.set function */
+	function set (object, keys, val) {
+	  keys = Array.isArray(keys) ? keys : keys.split('.')
+	  if (keys.length > 1) {
+	    object[keys[0]] = object[keys[0]] || {}
+	    return setProp(object[keys[0]], keys.slice(1), val)
+	  }
+	  object[keys[0]] = val
+	}
+
 	// Function composition
 	const add = a => b => a + b
 	const add235 = add(235)
@@ -1758,7 +1807,7 @@ Related:
 	// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
 	module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
 
-	// includesSome (NOT pickAny or includesAny)
+	// includesSome (NOT pickAny/includesAny/hasAny)
 	// includesSome(url, ['localhost', 'staging'])
 	// incl = includesSome(collection1, collection2).length > 0
   const includesSome = (collection1, collection2) => collection2.filter(childObj => collection1.includes(childObj))

@@ -199,8 +199,24 @@ return hasCorrectColor;
 
 ### Standard JS
 
-  yarn add standard --dev
-  yarn add pre-commit --dev  # If you want Git commit check
+    yarn add standard --dev
+
+Use `standardx` if you want eslint (.eslintrc) config:
+
+    yarn add standardx --dev
+    yarn add eslint-plugin-react-hooks --dev
+
+`.eslintrc`:
+
+    {
+      "extends": [
+        "plugin:react-hooks/recommended"
+      ]
+    }
+
+If you want Git commit check:
+
+    yarn add pre-commit --dev
 
 package.json:
 

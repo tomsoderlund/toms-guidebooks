@@ -8,6 +8,8 @@ Exclude:
 
 Note: no initial slash /
 
+"irregular whitespace": " "
+
 
 ### Difference
 

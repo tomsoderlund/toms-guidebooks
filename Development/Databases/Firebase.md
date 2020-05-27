@@ -48,7 +48,10 @@ More:
 
 Not `map`, but `forEach`:
 
-    projectsSnapshot.forEach(project => console.log(project.key))
+    projectsSnapshot.forEach(projectSnapshot => {
+      const projectKey = projectSnapshot.key
+      const project = projectSnapshot.val()
+    })
 
 https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
 
@@ -72,3 +75,23 @@ https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
 ## Firebase + React: re-base
 
 Firebase + Redux: https://github.com/prescottprue/react-redux-firebase
+
+
+## Firebase rules
+
+- https://firebase.google.com/docs/database/security
+- https://firebase.google.com/docs/auth/web/custom-auth
+
+    await firebase.auth().signInWithCustomToken(firebaseToken)
+
+data.child('createdByUser').val() === auth.uid
+
+    {
+      "rules": {
+        "users": {
+          "$uid": {
+            ".write": "$uid === auth.uid"
+          }
+        }
+      }
+    }

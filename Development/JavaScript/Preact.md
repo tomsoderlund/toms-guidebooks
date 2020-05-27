@@ -1,17 +1,18 @@
 # Preact
 
-from https://twitter.com/slightlylate/status/1240422104668897280
+Why use? See https://twitter.com/slightlylate/status/1240422104668897280
 
-## Create with preact-cli
+## Create project with preact-cli
 
 https://github.com/preactjs/preact-cli
 
     yarn global add preact-cli
     npm install -g preact-cli
 
-Then
+Then:
 
     preact create default my-project
+    preact create simple my-simple-project
 
 Templates:
 
@@ -22,13 +23,73 @@ Templates:
 - `netlify`: Netlify CMS template using preact.
 - `typescript`: Default template implemented in TypeScript
 
-## Issues
+## Good extras when setting up new project
 
-    yarn add --dev preact-cli@rc
-    yarn add preact@latest preact-router@latest preact-render-to-string@latest
-    yarn remove preact-compat
+Folders:
 
-## preact.config.js
+    mkdir -p src/pages/Start  # most likely multiple files
+    mkdir -p src/components/common
+    mkdir -p src/hooks
+    mkdir -p lib  # both for client and server
+    mkdir -p config  # both for client and server
+    mkdir -p api  # for Zeit Now etc
+
+Port:
+    
+    "dev": "PORT=3201 preact watch",
+
+Packages:
+
+    yarn add preact-router
+    yarn add preact-helmet
+
+StandardJS:
+
+    yarn add standard --dev
+
+    "scripts": {
+      "test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+      "lint": "standard",
+      "fix": "standard --fix",
+      "unit": "jasmine"
+    },
+
+Other:
+
+- https://github.com/preactjs/awesome-preact
+
+## CSS Styles
+
+    import style from './style.css'
+
+    <div className={style.innerBox} />
+
+## Hooks
+
+    import { useState } from 'preact/hooks'
+
+## Router
+
+    import { Router } from 'preact-router'
+
+Typically keep shared components outside of `<Router>`:
+
+    <div id='app'>
+      <PageHead />
+      <Header />
+
+      <main>
+        <Router>
+          <Page1 path='/' />
+          <Page2 path='/user' userProp='me' />
+          <Page2 path='/user/:user' />
+        </Router>
+      </main>
+    </div>
+
+Lazy loading: https://github.com/preactjs/preact-router#lazy-loading
+
+## preact.config.js (or webpack config)
 
     export default (config, env, helpers) => {
       config.resolve = {
@@ -39,3 +100,23 @@ Templates:
         }
       }
     }
+
+## Issues with using React components
+
+    yarn add --dev preact-cli@rc
+    yarn add preact@latest preact-router@latest preact-render-to-string@latest
+    yarn remove preact-compat
+
+Works (design-profile-generator-2):
+
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-synacor": "^3.0.4",
+    "preact-cli": "^3.0.0-rc.6",
+    "sirv-cli": "^0.4.5"
+  },
+  "dependencies": {
+    "preact": "^10.1.0",
+    "preact-render-to-string": "^5.1.2",
+    "react-draggable": "^4.3.1"
+  }

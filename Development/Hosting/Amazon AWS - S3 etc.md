@@ -100,3 +100,11 @@ s3_secret: hEjr8
 ## CORS
 
 Only set in S3, not CloudFront
+
+## CloudFront
+
+- Override time
+- Alternate Domain Names (CNAMEs)
+	- Needs a Custom SSL Certificate
+	- Request or Import a Certificate with ACM
+- Route 53: "A" to Alias "d3htstcz5zldi1.cloudfront.net."

@@ -30,6 +30,14 @@
 
   export default MyPage
 
+## getServerSideProps
+
+- getStaticProps (Static Generation): Fetch data at build time.
+- getStaticPaths (Static Generation): Specify dynamic routes to pre-render based on data.
+- getServerSideProps (Server-side Rendering): Fetch data on each request.
+
+https://nextjs.org/docs/basic-features/data-fetching
+
 ## Next.js export static HTML app
 
 `package.json`:
@@ -127,12 +135,12 @@ Redirect:
 
 Push route:
 
+    import Router from 'next/router'
+    Router.push(url, as, options)
+
     import { useRouter } from 'next/router'
     const router = useRouter()
     router.push(href)
-
-    import Router from 'next/router'
-    Router.push(url, as, options)
 
 ## Next.js: next-routes
 
@@ -160,6 +168,42 @@ Push route:
     touch public/static/locales/en/common.json
 
     touch lib/i18n.js  # config
+
+### JSON files
+
+    {
+      "Latest": "Senaste",
+      "Show word list": "Visa funna ord"
+    }
+
+## Localization: custom lib/i18n.js
+
+    const getLocaleFile = (locale) => require(`../public/static/locales/${locale}/common.json`)
+
+    const localeFiles = {
+      en: getLocaleFile('en'),
+      sv: getLocaleFile('sv')
+    }
+
+    // replaceMultipleStrings(['This is $1', 'Sparta']) --> 'This is Sparta'
+    const replaceMultipleStrings = (array, str) => (str || array[0]).replace(/(\$\d)/gm, strId => array[parseInt(strId.slice(1))])
+
+    const t = (stringKeyOrArray, locale) => {
+      const stringKey = Array.isArray(stringKeyOrArray) ? stringKeyOrArray[0] : stringKeyOrArray
+      if (!localeFiles[locale] || !localeFiles[locale][stringKey]) return stringKey
+      return Array.isArray(stringKeyOrArray)
+        ? replaceMultipleStrings(stringKeyOrArray, localeFiles[locale][stringKey])
+        : localeFiles[locale][stringKey]
+    }
+
+    // const t = tForLocale('sv')
+    const tForLocale = (locale) => (stringKeyOrArray) => t(stringKeyOrArray, locale)
+
+    module.exports = {
+      t,
+      tForLocale
+    }
+
 
 ## Cookies: next-cookies
 

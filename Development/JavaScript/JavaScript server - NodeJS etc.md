@@ -82,8 +82,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	  }
 	}
 
-	// throw new CustomError(`Account not found`, 404)
 	// From: https://levelup.gitconnected.com/the-definite-guide-to-handling-errors-gracefully-in-javascript-58424d9c60e6
+	/** throw new CustomError(`Account not found`, 404) */
 	module.exports.CustomError = class CustomError extends Error {
 	  constructor (message, status) {
 	    super(message)
@@ -271,7 +271,7 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 
 	#!/usr/bin/env node
 	'use strict'
-	console.log('adsfs', process.argv.length)
+	console.log('process.argv', process.argv.length)
 
 	// process.argv -> name/value collection
 	const ARGUMENTS = ['languageId:1']

@@ -162,6 +162,10 @@ Update:
 
 	SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');
 
+### Pagination
+
+	SELECT * FROM company LIMIT 10 OFFSET 30;
+
 ### Sorting
 
 	ORDER BY field_name ASC/DESC NULLS FIRST/LAST
@@ -175,12 +179,14 @@ Update:
 
 Examples:
 
-	SELECT city, temp_lo, temp_hi, prcp, date, location
-	FROM weather, city
-	WHERE city = name;
-
 	SELECT * FROM weather
 	LEFT JOIN city ON (weather.city = city.name);
+
+	SELECT company.id, company.name
+	FROM company
+	LEFT JOIN company_person ON (company_person.company_id = company.id)
+	LEFT JOIN person ON (person.id = company_person.person_id)
+	ORDER BY name;
 
 Note: `LEFT` refers to the left table in `ON` statement:
 
@@ -190,17 +196,15 @@ Note: `LEFT` refers to the left table in `ON` statement:
 ### Nested SELECT with ()
 
 	SELECT * FROM (
-	  SELECT DISTINCT ON (person.id)
-	  person.*, title,
-	  FROM person
+		SELECT DISTINCT ON (person.id)
+		person.*, title,
+		FROM person
 	) subquery
 	WHERE title='CEO';
 
 ### UNION to combine/concatenate multiple queries
 
-	SELECT
-	*
-	FROM (
+	SELECT * FROM (
 		SELECT
 		font.id, name, slug, category_id
 		FROM
@@ -262,11 +266,16 @@ Multiple values:
 
 ### Create a many-to-many relationship table
 
-	CREATE TABLE company_person (
-	  company_id integer NOT NULL REFERENCES company(id) ON DELETE CASCADE,
-	  person_id integer NOT NULL REFERENCES person(id) ON DELETE CASCADE
+	CREATE TABLE category (
+	  id SERIAL PRIMARY KEY,
+	  name character varying(64) UNIQUE
 	);
-	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
+
+	CREATE TABLE category_font (
+	  id SERIAL PRIMARY KEY,
+	  category_id integer REFERENCES category(id) ON DELETE CASCADE,
+	  font_id integer REFERENCES font(id) ON DELETE CASCADE
+	);
 
 ## Modify table: add columns, remove columns
 
@@ -306,7 +315,7 @@ Modify existing table:
 
 ## Indexes
 
-	CREATE UNIQUE INDEX app_username_unique_idx ON person_app(app_id, username);
+	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
 
 ## Transactions
@@ -319,6 +328,9 @@ Modify existing table:
 		INSERT INTO t1 SELECT a,b FROM t1_backup;
 		DROP TABLE t1_backup;
 	COMMIT;
+
+
+# MySQL
 
 
 # SQLite

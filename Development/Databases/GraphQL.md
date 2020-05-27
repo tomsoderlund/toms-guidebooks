@@ -8,6 +8,16 @@
 - Boolean: true or false
 - ID (serialized as String)
 
+### Input types
+
+    input ProjectInput {
+      id: ID
+      title: String
+      tasks: [TaskInput]
+    }
+
+    updateProject(id: ID!, project: ProjectInput): Project
+
 ### GraphQLDateTime
 
 https://www.npmjs.com/package/graphql-iso-date
@@ -67,7 +77,7 @@ _Note: GamesList($system: String!) for mandatory parameter_
 ## Mutations (create, update, delete)
 
     mutation {
-      addSimilarFont (name1: "Roboto", name2: "Futura") {
+      addFont (name: "Futura") {
         id
         name
       }

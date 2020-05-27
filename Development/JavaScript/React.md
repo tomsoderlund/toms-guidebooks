@@ -49,15 +49,14 @@ Removing non-necessary files:
     rm public/logo192.png
     rm public/logo512.png
     rm src/logo.svg
-    # rm src/App.css
-    # rm src/index.css
+    rm src/App.css  # or index.css
     mkdir src/components
+    mkdir src/pages
 
     # Optional:
     rm src/App.test.js
     rm src/serviceWorker.js
     rm src/setupTests.js
-    mkdir src/pages
     git mv src/App.js src/pages/Start.js
     git mv src/App.css src/pages/Start.css
 
@@ -171,6 +170,14 @@ https://reactjs.org/docs/hooks-overview.html
       onChange={handleInputValuesChange}
     />
 
+### Forms
+
+    <form onSubmit={handleSubmit}>
+      <label htmlFor='emailField'>Email:</label>
+      <input id='emailField' type='email' autoComplete='email' placeholder='Your email' required />
+      <button type='submit'>Submit</button>
+    </form>
+
 #### useCountdown hook
 
     import { useState, useEffect } from 'react'
@@ -195,6 +202,11 @@ https://reactjs.org/docs/hooks-overview.html
     // import useCountdown from '../hooks/useCountdown'
     // const [timeLeft, setTimeLeft] = useCountdown(startTimeLeft)
 
+#### SWR Hook
+
+https://github.com/zeit/swr
+
+    const { data, error } = useSWR('/api/user', fetcher)
 
 #### Dynamic className
 
@@ -561,6 +573,22 @@ Config:
 - `velocity`: 0
 - `duration`: undefined
 - `easing`: t => t
+
+### Drag & Drop
+
+https://github.com/STRML/react-draggable
+
+Note: `<Draggable>` must wrap a `<div>`.
+
+- clientX/Y
+- layerX/Y
+- movementX/Y
+- offsetX/Y
+- pageX/Y
+- screenX/Y
+- x/y
+
+https://github.com/atlassian/react-beautiful-dnd
 
 ### Debounce
 
