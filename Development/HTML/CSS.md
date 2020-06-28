@@ -404,6 +404,16 @@ https://meyerweb.com/eric/tools/css/reset/
   }
 }
 
+### Grid
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      justify-content: space-evenly;
+      align-content: space-evenly;
+    }
+
 ### Viewport units
 
 vw, vh, vmin, vmax - Web Design Weekly
@@ -477,6 +487,7 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   background-image: url("background.jpg");
   background-position: center;
   background-size: cover;
+  object-fit: cover;
   background-repeat: no-repeat;
   display: block;
   width: 400px;
@@ -591,7 +602,7 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 #### Box Shadow
 
 .shaded_box {
-  box-shadow: 0 1px 5px rgba(0,0,0, 0.4);
+  box-shadow: 0 0.2em 0.5em rgba(0,0,0, 0.4);
   box-shadow: 1px 2px 3px #555; /* X Y Blur Color */
   -webkit-box-shadow: 1px 2px 3px #555; /* X Y Blur Color */
   -moz-box-shadow: 1px 2px 3px #555;

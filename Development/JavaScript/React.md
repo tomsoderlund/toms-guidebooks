@@ -170,11 +170,13 @@ https://reactjs.org/docs/hooks-overview.html
       onChange={handleInputValuesChange}
     />
 
-### Forms
+### Forms / Fieldset
 
     <form onSubmit={handleSubmit}>
-      <label htmlFor='emailField'>Email:</label>
-      <input id='emailField' type='email' autoComplete='email' placeholder='Your email' required />
+      <div className='fieldset'>
+        <label htmlFor='emailField'>Email:</label>
+        <input id='emailField' type='email' autoComplete='email' placeholder='Your email' required />
+      </div>
       <button type='submit'>Submit</button>
     </form>
 
@@ -201,6 +203,27 @@ https://reactjs.org/docs/hooks-overview.html
 
     // import useCountdown from '../hooks/useCountdown'
     // const [timeLeft, setTimeLeft] = useCountdown(startTimeLeft)
+
+#### useSavedState hook
+
+    import { useState } from 'react'
+    import { getSessionValue, setSessionValue } from 'simple-browser-session'
+
+    const cookieName = 'makamap'
+
+    export default function useSavedState (propertyName, defaultValue) {
+      const storedValue = getSessionValue(propertyName, defaultValue, { cookieName })
+      const [state, setState] = useState(storedValue)
+      const setStateAndSaveIt = (value) => {
+        setState(value)
+        setSessionValue(propertyName, value, { updateStored: true, updatePath: true, cookieName })
+      }
+      return [state, setStateAndSaveIt]
+    }
+
+    // import useSavedState from '../hooks/useSavedState'
+    // const [myState, setMyState] = useSavedState(propertyName)
+
 
 #### SWR Hook
 

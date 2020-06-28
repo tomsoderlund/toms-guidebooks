@@ -2,11 +2,11 @@
 
 AARRR: Acquisition, Activation, Retention, Referral, Revenue
 
-Acquisition	You acquire the user. For a SaaS product, this usually means a sign up.
-Activation	The user uses your product, indicating a good first visit.
-Retention	The user continues to use your product, indicating they like your product.
-Referral	The user likes your product so much he refers other new users.
-Revenue	The user pays you.
+- **Acquisition**	You acquire the user. For a SaaS product, this usually means a sign up.
+- **Activation**	 The user uses your product, indicating a good first visit.
+- **Retention**	The user continues to use your product, indicating they like your product.
+- **Referral**	 The user likes your product so much he refers other new users.
+- **Revenue**	The user pays you.
 
 -----------
 
@@ -15,6 +15,7 @@ Revenue	The user pays you.
 Filter out localhost: http://chipsandtv.com/articles/localhost-google-analytics
 
 Admin -> Profiles -> Filters
+
 * Custom filter
 * Name: Exclude localhost
 * Exclude

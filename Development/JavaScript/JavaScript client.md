@@ -856,9 +856,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var fruits = ["Banana", "Orange", "Apple", "Mango"]
 	fruits.sort()
-	array.sort((a, b) => a > b)
 	array.sort((a, b) => a - b)
-	array.sort((a, b) => parseFloat(a.price) > parseFloat(b.price))
+	array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
 
 	array.reverse()
 
@@ -943,8 +942,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	str = JSON.stringify(obj)
 	obj = JSON.parse(str)
 
-	const parseObject = obj => (typeof(obj) === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
-
+	const parseObject = obj => (typeof obj === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
+	const stringifyObject = obj => typeof obj === 'object' ? JSON.stringify(obj) : obj.toString()
 
 ## Dates & Time
 
@@ -1468,7 +1467,7 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 	let x = 1
 	const Y = 1
 
-	// let with multi-assign - destructured assignment
+	// let with multi-assign - destructured assignment (not deconstructing)
 	let [one, two] = [1, 2]
 	let {three, four} = {three: 3, four: 4}
 	const { education: { degree: asNamedDegree } } = user
@@ -1585,8 +1584,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].map((n, index) => n * 3)
 	[1, 2, 3].reduce((result, n) => result + n, 0)
 	[1, 2, 3].filter((n, index, array) => n < 2)
-	objs.sort((a, b) => (a.property > b.property) ? 1 : ((b.property > a.property) ? -1 : 0))
-	const sortBy = (array, property) => array.sort((a, b) => (a[property] > b[property]) ? 1 : ((b[property] > a[property]) ? -1 : 0))
+	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
+	const sortBy = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
 
 	Object.keys(obj)
 	Object.values(obj)

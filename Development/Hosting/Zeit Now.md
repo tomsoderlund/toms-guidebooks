@@ -55,6 +55,21 @@ DNS changes:
   now dns add mydomain.com mg MX mxa.eu.mailgun.org 10
   now dns add mydomain.com email.mg CNAME eu.mailgun.org
 
+### DNS servers
+
+ns1.vercel-dns.com
+ns2.vercel-dns.com
+
+### Email forwarding
+
+https://forwardemail.net/en/faq?domain=trustlinc.com#table-dns-management-by-registrar
+@ or leave blank  3600  MX  10  mx1.forwardemail.net
+@ or leave blank  3600  MX  20  mx2.forwardemail.net
+
+  now dns add trustlinc.com www CNAME 7841671.group21.sites.hubspot.net
+
+forward-email=tom:xxx@tomorroworld.com,adam:yyyy@gmail.com
+
 ### now.json
 
 https://zeit.co/docs/configuration/

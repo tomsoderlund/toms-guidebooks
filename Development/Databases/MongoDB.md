@@ -215,6 +215,7 @@ Restaurant.findOne( {'_id' : restaurantId }, function (err, restaurant) {
 
 #### Wildcard search
 
+db.users.find({"name": /m/})
 query['locationDetails.original'] = new RegExp(req.query.city, 'ig')
 
 Starts with:

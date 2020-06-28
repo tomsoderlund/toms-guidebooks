@@ -1,5 +1,7 @@
 # GraphQL
 
+https://atheros.ai/blog/graphql-best-practices-for-graphql-schema-design
+
 ## Types/Scalars
 
 - Int: Signed 32‐bit integer
@@ -10,13 +12,26 @@
 
 ### Input types
 
-    input ProjectInput {
+    input CreateProjectInput {
       id: ID
       title: String
       tasks: [TaskInput]
     }
 
-    updateProject(id: ID!, project: ProjectInput): Project
+    updateProject(id: ID!, project: CreateProjectInput): Project
+
+### implements
+
+	interface Character {
+	  id: ID!
+	  name: String!
+	}
+	
+	type Human implements Character {
+	  id: ID!
+	  name: String!
+	  age: Int
+	}
 
 ### GraphQLDateTime
 

@@ -21,6 +21,30 @@ With server:
     "start": "nodemon scripts/index.js --exec browserify scripts/index.js -o .tmp/browserify.js -t [ babelify --presets [ es2015 es2016 es2017 ] ] & python -m SimpleHTTPServer"
   },
 
+Example .babelrc:
+
+    {
+      "plugins": [
+        "transform-react-jsx"
+      ],
+      "ignore": [
+        "foo.js",
+        "bar/**/*.js"
+      ]
+    }
+
+or via package.json:
+
+    {
+      "name": "my-package",
+      "version": "1.0.0",
+      "babel": {
+        "plugins": [
+          "transform-react-jsx"
+        ]
+      }
+    }
+
 Simple server:
 
   npm install node-static

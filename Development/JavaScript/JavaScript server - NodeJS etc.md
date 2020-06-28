@@ -48,14 +48,14 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
 	req.method // 'GET'
-	req.originalUrl
 	req.url
-	req.path
-
+	req.originalUrl (Express)
+	req.path (Express)
+	req.headers
+	req.headers.host = 'localhost:3206'
 	req.params (url/:key)
 	req.query (url?key=value)
 	req.body (JSON body)
-	req.headers
 
 	const { path, route, params, query, body } = req
 
@@ -70,9 +70,9 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 #### Generic request handler
 
 	/** handleRequest(async () => {...}, { req, res }) */
-	module.exports.handleRequest = async (actionFunction, { req, res }) => {
+	module.exports.handleRequest = async function handleRequest (actionFunction, { req, res }) {
 	  try {
-	    await actionFunction(req, res)
+	    await acti onFunction(req, res)
 	  } catch (error) {
 	    const reference = `E${Math.round(1000 * Math.random())}`
 	    const { message, status = 400 } = error
