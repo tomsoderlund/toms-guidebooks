@@ -860,6 +860,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
 
 	array.reverse()
+	newarray = array.slice().reverse()
 
 ### Randomize/shuffle array
 
@@ -917,6 +918,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 		lastname = allNames.join(' ')
 	}
 
+	const firstThreeSummary = (array) => array.length ? array.slice(0, 3).map(item => item.name).join(', ') : ''
 
 ## Collections/hashes/objects
 
@@ -1638,7 +1640,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	  keys = Array.isArray(keys) ? keys : keys.split('.')
 	  object = object[keys[0]]
 	  if (object && keys.length > 1) {
-	    return getProp(object, keys.slice(1))
+	    const newObject = get(object, keys.slice(1))
+	    return newObject === undefined ? defaultVal : newObject
 	  }
 	  return object === undefined ? defaultVal : object
 	}
@@ -1648,7 +1651,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	  keys = Array.isArray(keys) ? keys : keys.split('.')
 	  if (keys.length > 1) {
 	    object[keys[0]] = object[keys[0]] || {}
-	    return setProp(object[keys[0]], keys.slice(1), val)
+	    return set(object[keys[0]], keys.slice(1), val)
 	  }
 	  object[keys[0]] = val
 	}

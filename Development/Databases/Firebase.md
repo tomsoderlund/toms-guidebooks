@@ -45,6 +45,9 @@ Old: Realtime Database
 
 ## Authentication
 
+1. Enable Email/Password authentication in https://console.firebase.google.com/u/0/project/MYAPP/authentication/providers
+2. Magic link login creates user automatically.
+
 	const user = firebase.auth().currentUser
 
 - https://firebase.google.com/docs/auth/web/email-link-auth
@@ -84,11 +87,11 @@ https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentSnapsho
 
 Search:
 
-	var query = citiesRef.where("capital", "==", true)
+	var query = citiesRef.where('capital', '==', true)
 
 Order:
 
-	citiesRef.orderBy("name", "desc").limit(3)
+	citiesRef.orderBy('name', 'desc').limit(3)
 
 ### Get
 
@@ -98,6 +101,7 @@ Order:
 
 	const cityRef = db.collection('cities').doc('LA')
 	let setDoc = cityRef.set(obj)
+
 	// Merge:
 	let setDoc = cityRef.set(obj, { merge: true })
 	let updateSingle = cityRef.update({ capital: true })
@@ -116,9 +120,10 @@ Order:
 	
 	let removeCapital = cityRef.update({ capital: FieldValue.delete() })
 
-### Timestamp
+### Timestamp/Date
 
     FieldValue.serverTimestamp()
+    firebase.firestore.FieldValue.serverTimestamp()
 
 ### Geopoint
 
@@ -127,6 +132,20 @@ Order:
 ### Events/Triggers
 
 https://firebase.google.com/docs/functions/firestore-events
+
+- `onCreate`: Triggered when a document is written to for the first time.
+- `onUpdate`: Triggered when a document already exists and has any value changed.
+- `onDelete`: Triggered when a document with data is deleted.
+- `onWrite`: Triggered when onCreate, onUpdate or onDelete is triggered.
+- `DocumentReference.onSnapshot`/`CollectionReference.onSnapshot`
+
+		functions.firestore
+		  .document('users/{userId}')
+		  .onUpdate((change, context) => {})
+
+		const unsubscribe = db.collection('cities').onSnapshot(function (querySnaphot) {
+		  // do something with the data.
+		})
 
 ## Realtime Database (old)
 
@@ -222,33 +241,34 @@ Firebase + Redux: https://github.com/prescottprue/react-redux-firebase
 	 * @module firebase
 	 * @author Tom Söderlund
 	 */
-	
-	import firebase from 'firebase/app'
-	import 'firebase/analytics'
-	import 'firebase/auth'
-	
-	import isClientSide from './isClientSide'
-	
+
+	const firebase = require('firebase/app')
+	require('firebase/auth')
+	require('firebase/firestore')
+	require('firebase/analytics')
+
+	const isClientSide = require('./isClientSide')
+
 	const firebaseConfig = {
-	  apiKey: 'AIza…',
-	  authDomain: 'MYAPP.firebaseapp.com',
-	  databaseURL: 'https://MYAPP.firebaseio.com',
-	  projectId: 'MYAPP',
-	  storageBucket: 'MYAPP.appspot.com',
-	  messagingSenderId: '741…',
-	  appId: '1:74182…',
-	  measurementId: 'G-5D…'
+	  apiKey: process.env.FIREBASE_API_KEY,
+	  authDomain: 'MYAPPNAME.firebaseapp.com',
+	  databaseURL: 'https://MYAPPNAME.firebaseio.com',
+	  projectId: 'MYAPPNAME',
+	  storageBucket: 'MYAPPNAME.appspot.com',
+	  messagingSenderId: '741...',
+	  appId: '1:741...',
+	  measurementId: 'G-5D...'
 	}
-	
+
 	// Initialize Firebase
 	const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
 	if (isClientSide()) firebase.analytics()
-	
-	export default firebaseApp
+
+	module.exports = firebaseApp
 
 ## Custom domain for email
 
 	makamap.com TXT v=spf1 include:_spf.firebasemail.com ~all
-	makamap.com TXT firebase=makamap-map-creator
+	makamap.com TXT firebase=MYAPPNAME
 	firebase1._domainkey.makamap.com  CNAME mail-makamap-com.dkim1._domainkey.firebasemail.com.
 	firebase2._domainkey.makamap.com  CNAME mail-makamap-com.dkim2._domainkey.firebasemail.com.

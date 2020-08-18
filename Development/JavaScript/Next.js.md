@@ -1,6 +1,6 @@
 # Next.js
 
-  yarn create next-app my-app
+  yarn create next-app [my-app]
   cd my-app
   now dev
 
@@ -23,6 +23,7 @@
     </main>
   }
 
+  // Now use getServerSideProps instead
   MyPage.getInitialProps = async ({ req, res, pathname, asPath, query }) => {
     console.log({ pathname, asPath, query })
     return { query }
@@ -35,6 +36,12 @@
 - getStaticProps (Static Generation): Fetch data at build time.
 - getStaticPaths (Static Generation): Specify dynamic routes to pre-render based on data.
 - getServerSideProps (Server-side Rendering): Fetch data on each request.
+
+    export async function getServerSideProps(context) {
+      return {
+        props: { myProp: 1 } // will be passed to the page component as props
+      }
+    }
 
 https://nextjs.org/docs/basic-features/data-fetching
 
@@ -59,6 +66,10 @@ https://nextjs.org/docs/basic-features/data-fetching
   }
 
 Note: NODE_ENV becomes 'production', all scripts run client-side.
+
+## Environment
+
+  NEXT_PUBLIC_* for client-side env.
 
 ## Directory structure
 
@@ -95,8 +106,34 @@ Routing setup:
 
 Links:
 
-  import { Link } from 'react-router-dom'
-  <Link to='/users'>Users</Link>
+    import { Link } from 'react-router-dom'
+    <Link to='/users'>Users</Link>
+
+Optional link:
+
+    const OptionalLink = (props) => {
+      const { href, children } = props
+      return (
+        href ? (
+          <a
+            href={href}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            {children}
+            <style jsx>{`
+              a {
+                color: inherit;
+                border-bottom: none;
+              }
+            `}
+            </style>
+          </a>
+        ) : (
+          children
+        )
+      )
+    }
 
 Push route (hook):
 
@@ -232,3 +269,14 @@ Push route:
   app.prepare().then(() => {
     express().use(handler).listen(3000)
   })
+
+### Next.js and Firebase
+
+https://leerob.io/blog/nextjs-firebase-serverless
+
+- useSWR
+
+
+### Import
+
+    import MyComponent from '@/components/MyComponent'

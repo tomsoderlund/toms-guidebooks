@@ -11,7 +11,7 @@ https://github.com/preactjs/preact-cli
 
 Then:
 
-    preact create default my-project
+    preact create default my-project # Multi-page template
     preact create simple my-simple-project
 
 Templates:
@@ -32,7 +32,7 @@ Folders:
     mkdir -p src/hooks
     mkdir -p lib  # both for client and server
     mkdir -p config  # both for client and server
-    mkdir -p api  # for Zeit Now etc
+    mkdir -p api  # for Vercel etc
 
 Port:
     
@@ -100,6 +100,25 @@ Lazy loading: https://github.com/preactjs/preact-router#lazy-loading
         }
       }
     }
+
+## SSR - prerenderUrls
+
+https://stackoverflow.com/a/63378770/449227
+
+    "build": "preact build --prerenderUrls ./prerenderUrls.json"
+
+prerenderUrls.json:
+
+    [
+      {
+        "url": "/",
+        "title": "Amazing Startup Guide"
+      },
+      {
+        "url": "/namegenerator",
+        "title": "Name Generator – Amazing Startup Guide"
+      }
+    ]
 
 ## Issues with using React components
 

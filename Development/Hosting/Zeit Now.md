@@ -57,6 +57,8 @@ DNS changes:
 
 ### DNS servers
 
+Update: https://dcc.godaddy.com/manage/DOMAIN.EXT/dns
+
 ns1.vercel-dns.com
 ns2.vercel-dns.com
 

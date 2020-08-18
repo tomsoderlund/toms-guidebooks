@@ -274,7 +274,7 @@ https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share
 
   export const UserContext = createContext()
 
-  export const UserContextProvider = props => {
+  export const UserContextProvider = (props) => {
     // Use State to keep the values. Initial values are obtained from UserContextProvider’s props.
     const [user, setUser] = useState(props.user)
     // Make the context object (or array)
@@ -287,8 +287,8 @@ https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share
 
   export const useUser = () => useContext(UserContext)
 
-  // Wrap your app/page with the Provider
-  // NOTE: must be wrapped on higher level than where useUser is used
+Wrap your app/page with the Provider.
+NOTE: must be wrapped on higher level than where useUser is used.
 
   import { UserContextProvider } from './useUser'
   <UserContextProvider user={1}>...</UserContextProvider>
@@ -299,6 +299,10 @@ https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share
 
 
 ### Styling React
+
+#### style prop
+
+    <div style={{ color: 'orange' }} />
 
 #### styled-components
 
@@ -617,3 +621,19 @@ https://github.com/atlassian/react-beautiful-dnd
 
     import { useDebouncedCallback } from 'use-debounce'
     const [onChangeTextDebounced] = useDebouncedCallback(onChangeText, 1000)
+
+### Links
+
+  <a
+    href='url'
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    Contact
+  </a>
+
+### Toast / Notifications
+
+react-toastify
+
+https://github.com/trustlinc/trustlinc-app/commit/a798ca1bd6dfb17bd728d9dc84e9b3c8c79aadac

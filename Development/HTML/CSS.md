@@ -481,14 +481,32 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
+Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif
+
+### Word wrap and whitespace
+
+  white-space: nowrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-overflow: ellipsis;
+
+### Select text
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+
 ### Images
 
 .photo {
   background-image: url("background.jpg");
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   object-fit: cover;
-  background-repeat: no-repeat;
   display: block;
   width: 400px;
   height: 300px;
@@ -736,22 +754,6 @@ h1 span {
   border-radius: 8px;
   padding: 0px 8px 0px 8px;
 }
-
-### Word wrap and whitespace
-
-  white-space: nowrap;
-  word-wrap: break-word;
-  word-break: break-all;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  text-overflow: ellipsis;
-
-### Select text
-
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
 
 ### Transform
 

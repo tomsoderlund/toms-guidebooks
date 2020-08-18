@@ -333,6 +333,10 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 		})
 	}
 
+	// List files in folder
+	const { promises: fs } = require('fs')
+	const names = await fs.readdir('path/to/dir')
+
 	// CSV
 	const parseCsvFile = function (fileName, actionFunction) {
 	  const fs = require('fs')
