@@ -62,6 +62,15 @@ Old: Realtime Database
 
 ID Tokens for client/server: https://firebase.google.com/docs/auth/admin/verify-id-tokens
 
+### Server-side authentication
+
+https://github.com/vercel/next.js/tree/canary/examples/with-firebase-authentication
+
+1. Listen to `firebase.auth().onIdTokenChanged`: https://github.com/vercel/next.js/blob/canary/examples/with-firebase-authentication/utils/auth/useUser.js#L33
+2. Save the fresh `user.xa` property as a token in a cookie.
+3. SSR/getServerSideProps: Use `admin.auth().verifyIdToken` in the firebase-admin SDK to verify token.
+
+
 ## Cloud Firestore (new)
 
 https://firebase.google.com/docs/firestore/quickstart
@@ -146,6 +155,118 @@ https://firebase.google.com/docs/functions/firestore-events
 		const unsubscribe = db.collection('cities').onSnapshot(function (querySnaphot) {
 		  // do something with the data.
 		})
+
+### Admin package
+
+https://github.com/vercel/next.js/tree/master/examples/with-firebase-authentication
+
+Env:
+
+		NEXT_PUBLIC_FIREBASE_PROJECT_ID=myappname
+		NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://myappname.firebaseio.com
+		FIREBASE_CLIENT_EMAIL=firebase-adminsdk...
+		FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEv
+
+Node:
+
+		import * as admin from 'firebase-admin'
+
+	  if (!admin.apps.length) {
+	    admin.initializeApp({
+	      credential: admin.credential.cert({
+	        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+	        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+	        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+	      }),
+	      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+	    })
+	  }
+
+### Security and User Rights
+
+#### Firebase Security Rules
+
+https://firebase.google.com/docs/firestore/security/get-started
+
+		rules_version = '2';
+		service cloud.firestore {
+		  match /databases/{database}/documents {
+
+		    // If you have a matching custom claim "account"
+		    match /accounts/{account}/{document=**} {
+		      allow read, write: if request.auth != null && request.auth.token.account == account;
+		      
+		      // Override rules for the 'conversations' subcollection
+		      match /teams/{team}/conversations/{conversation}/messages/{message} {
+		        allow read, write: if true;
+		      }
+		    }
+
+		    //match /{document=**} {
+		      //allow read, write: if true;
+		    //}
+		  }
+		}
+
+		allow read, write: if request.time < timestamp.date(2021, 7, 24);
+		allow read: if request.auth != null;
+		allow write: if request.auth.token.isAdmin == true;
+    // Make sure a 'users' document exists for the requesting user before allowing any writes to the 'cities' collection
+    allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+    // Allow the user to delete cities if their user document has the 'admin' field set to 'true'
+    allow delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true
+		allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+		allow read: if resource.data.visibility == 'public';
+		allow update: if request.resource.data.population > 0
+
+    function isAccountUser() {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.account == account;
+    }
+    function isAccountAdmin() {
+      return isAccountUser() && get(/databases/$(database)/documents/accounts/$(account)/users/$(request.auth.uid)).data.role == 'admin';
+    }
+		allow read: if isAccountUser();
+		allow write: if isAccountAdmin();
+
+#### Custom Claims (metadata)
+
+https://stackoverflow.com/a/63548916/449227
+https://firebase.google.com/docs/auth/admin/custom-claims
+https://medium.com/firebase-developers/patterns-for-security-with-firebase-supercharged-custom-claims-with-firestore-and-cloud-functions-bb8f46b24e11
+https://medium.com/google-developers/controlling-data-access-using-firebase-auth-custom-claims-88b3c2c9352a
+
+##### Set custom claims/metadata (server only)
+
+Here’s an example on how to set `device_id` on a Firebase User object (on the server):
+
+	await admin.auth().setCustomUserClaims(uid, { deviceId })
+
+Note: You can not set custom claims on the client.
+
+##### Get custom claims/metadata (server and client)
+
+Then to retrieve the the `device_id` from the User on the server:
+	
+	const userRecord = await admin.auth().getUser(uid)
+	console.log(userRecord.customClaims.deviceId)
+
+…and on the client:
+
+	const idTokenResult = await firebase.auth().currentUser.getIdTokenResult()
+	console.log(idTokenResult.claims.deviceId)
+
+##### Use custom claims/metadata in Firebase Security Rules
+
+The neat thing is that custom claims are also available in Firebase Security Rules. This (slightly unrealistic) example only allows users with `deviceId === 123` to see the data:
+
+	{
+	  "rules": {
+	    "secureContent": {
+	      ".read": "auth.token.deviceId === 123"
+	    }
+	  }
+	}
+
 
 ## Realtime Database (old)
 

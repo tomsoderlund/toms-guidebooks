@@ -41,11 +41,7 @@ http://nodejs.org/download/
 			return result
 		}, {})
 
-### Routes
-
-https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
-
-	var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
+### Request object
 
 	req.method // 'GET'
 	req.url
@@ -53,11 +49,22 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	req.path (Express)
 	req.headers
 	req.headers.host = 'localhost:3206'
+	req.headers.origin = ''http://localhost:3301' // 
+	req.headers.referer = 'http://localhost:3301/my-page'
 	req.params (url/:key)
 	req.query (url?key=value)
 	req.body (JSON body)
 
-	const { path, route, params, query, body } = req
+#### Error handling
+
+  if (req.method !== 'POST') throw new CustomError('Method not allowed', 405)
+  if (!ALLOW_ORIGINS.includes(req.headers.origin)) throw new CustomError('Request not authorized', 401)
+
+#### Full URL
+
+https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
+
+	var fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`
 
 #### next()
 
@@ -69,10 +76,10 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 #### Generic request handler
 
-	/** handleRequest(async () => {...}, { req, res }) */
+	/** handleRequest(async (req, res) => {...}, { req, res }) */
 	module.exports.handleRequest = async function handleRequest (actionFunction, { req, res }) {
 	  try {
-	    await acti onFunction(req, res)
+	    await actionFunction(req, res)
 	  } catch (error) {
 	    const reference = `E${Math.round(1000 * Math.random())}`
 	    const { message, status = 400 } = error

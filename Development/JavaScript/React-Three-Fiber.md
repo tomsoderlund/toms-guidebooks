@@ -5,6 +5,14 @@
 - https://codesandbox.io/examples/package/react-three-fiber
 - https://www.digitalocean.com/community/tutorials/react-react-with-threejs
 
+## Versions
+
+- react: 16.12.0
+- react-dom: 16.12.0
+- react-scripts: 3.0.1
+- react-three-fiber: 4.2.10
+- three: 0.119.1
+
 ## Problems
 
 - Doesn’t update animations
@@ -50,3 +58,5 @@
 		penumbra={1}
 		castShadow
 	/>
+
+### Animation - useFrame

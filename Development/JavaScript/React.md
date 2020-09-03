@@ -144,10 +144,15 @@ https://reactjs.org/docs/hooks-overview.html
 
 #### useRef
 
-    const inputElement = useRef(null)
-    useEffect(() => inputElement.current.focus(), [])
+    import { useRef, useEffect } from 'react'
 
-    <input ref={inputElement} type='text' />
+    export default function useFocus () {
+      const focusRef = useRef(null)
+      useEffect(() => focusRef.current.focus(), [])
+      return focusRef
+    }
+
+    // <input ref={focusRef} />
 
 ### Forms with useState
 
@@ -175,7 +180,16 @@ https://reactjs.org/docs/hooks-overview.html
     <form onSubmit={handleSubmit}>
       <div className='fieldset'>
         <label htmlFor='emailField'>Email:</label>
-        <input id='emailField' type='email' autoComplete='email' placeholder='Your email' required />
+        <input
+          id='emailField'
+          type='email'
+          autoComplete='email'
+          placeholder='Email'
+          required
+          value={inputs.name}
+          onChange={handleInputChange}
+          disabled={inProgress}
+        />
       </div>
       <button type='submit'>Submit</button>
     </form>

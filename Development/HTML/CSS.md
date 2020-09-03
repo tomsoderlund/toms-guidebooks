@@ -406,12 +406,18 @@ https://meyerweb.com/eric/tools/css/reset/
 
 ### Grid
 
-    .grid {
+    .parent {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: auto auto;
       grid-template-rows: 1fr 1fr 1fr;
+      grid-gap: 10px;
       justify-content: space-evenly;
       align-content: space-evenly;
+    }
+
+    .child.two-rows {
+      grid-row: 1 / 3;
+      grid-column: 2;
     }
 
 ### Viewport units
@@ -514,6 +520,8 @@ Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstrea
 
 ### Shiny Button
 
+https://codepen.io/tomsoderlund/pen/GRROEGL
+
 .shiny-button {
   transition: all 0.5s;
   background: white;
@@ -544,6 +552,8 @@ Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstrea
 
 ### In Progress Button
 
+https://codepen.io/tomsoderlund/pen/WNvbzXp
+
   .progress-button {
     background: linear-gradient(
       90deg,
@@ -553,8 +563,7 @@ Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstrea
       $color_button_background 100%
     );
     background-size: 400% 100%;
-    background-position-x: 70%;
-    background-position-y: 50%;
+    background-position: 70% 50%;
   }
   .progress-button.in-progress {
     animation: animation-progress 3s 1 ease-out;
@@ -1052,7 +1061,7 @@ code {
 
 namedColors.json: https://gist.github.com/tomsoderlund/548d39611c45397f48434e706b8c9b92
 
-http://www.crockford.com/wrrrld/color.html
+https://www.crockford.com/colors.html
 http://www.quackit.com/css/css_color_codes.cfm
 
 Tom’s favorites:
@@ -1062,12 +1071,22 @@ rebeccapurple
 salmon
 
 Green: limegreen, lime, darkturquoise, greenyellow
+Turquoise: darkturquoise
 Blue: dodgerblue, deepskyblue
 Purple: rebeccapurple, slateblue
 Red/Pink: salmon, deeppink
 Red: tomato
 Orange: darkorange
 Yellow: gold, lemonchiffon
+
+.turquoise { background-color: darkturquoise; }
+.purple { background-color: rebeccapurple; }
+.pink { background-color: salmon; }
+.yellow { background-color: gold; }
+.blue { background-color: dodgerblue; }
+.green { background-color: limegreen; }
+.red { background-color: tomato; }
+
 
 slategray (blueish)
 darkslategray (blueish)

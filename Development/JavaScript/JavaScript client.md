@@ -638,6 +638,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	// See also _.capitalize and _.upperFirst
 	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
+	const titleCase = str => str.replace(/(?:^|\s|[-"'([{])+\S/g, (c) => c.toUpperCase())
 	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 	const toDash = str => replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
 	const toCamelCase = str => replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
@@ -1560,6 +1561,11 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 	p.then(result => result.json())
 		.then(onFulfilled) // will get JSON
 
+Promise.all/race:
+
+  const promiseArray = userIds.map(userId => getUser(userId))
+  const userArray = await Promise.all(promiseArray)
+
 	Promise.all(promiseArrayOrObject)
 		.then(...)
 	Promise.race(promiseArrayOrObject)
@@ -1586,6 +1592,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].map((n, index) => n * 3)
 	[1, 2, 3].reduce((result, n) => result + n, 0)
 	[1, 2, 3].filter((n, index, array) => n < 2)
+	[1, 2, 3].find((n, index, array) => n < 2)
 	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
 	const sortBy = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
 
@@ -1813,7 +1820,7 @@ Related:
 	// includesSome(url, ['localhost', 'staging'])
 	// incl = includesSome(collection1, collection2).length > 0
   const includesSome = (collection1, collection2) => collection2.filter(childObj => collection1.includes(childObj))
-  const startsWithSome = (collection1, collection2) => collection2.filter(childObj => collection1.startsWith(childObj))
+  const startsWithSome = (collection1, collection2) => collection2load(childObj => collection1.startsWith(childObj))
   module.exports.includesSome = (collection1, collection2) => _.filter(collection2, childObj => _.includes(collection1, childObj))
   _.mixin({ 'includesSome': module.exports.includesSome })
 
