@@ -376,12 +376,14 @@ button.inProgress:after {
 
 ### last-child
 
-div {
-  margin-right: 1em;
-}
-div:last-child {
-  margin-right: unset;
-}
+    div {
+      margin-right: 1em;
+      margin-bottom: 1em;
+    }
+    div:last-child {
+      margin-right: unset;
+      margin-bottom: unset;
+    }
 
 ### Reset
 
@@ -410,7 +412,7 @@ https://meyerweb.com/eric/tools/css/reset/
       display: grid;
       grid-template-columns: auto auto;
       grid-template-rows: 1fr 1fr 1fr;
-      grid-gap: 10px;
+      grid-gap: 1em;
       justify-content: space-evenly;
       align-content: space-evenly;
     }
@@ -418,6 +420,20 @@ https://meyerweb.com/eric/tools/css/reset/
     .child.two-rows {
       grid-row: 1 / 3;
       grid-column: 2;
+    }
+
+Named areas: https://codepen.io/tomsoderlund/pen/YzqpbEo
+
+    .container {
+      display: grid;
+      /* 2 columns * 3 rows = 6 areas */
+      grid-template-columns: 1fr 3fr;
+      grid-template-rows: 1fr 4fr 1fr;
+      grid-template-areas: "header header" "sidebar content" "footer footer";
+    }
+
+    .header {
+      grid-area: header;
     }
 
 ### Viewport units
@@ -457,6 +473,11 @@ rgba(0,0,0, 0.3)
 
 div:nth-child(1) {}
 div:nth-child(4n+1) {}
+div:nth-child(odd) {}
+
+div:nth-child(3n+1) { background-color: darkturquoise; }
+div:nth-child(3n+2) { background-color: rebeccapurple; }
+div:nth-child(3n+3) { background-color: salmon; }
 
 /* Universal */
 * {

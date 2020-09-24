@@ -31,21 +31,53 @@
 
   export default MyPage
 
+## Code optimization
+
+https://next-code-elimination.now.sh/
+
+## Inherit another page (export/import)
+
+    export { default, getServerSideProps } from './otherPage'
+
 ## getServerSideProps
+
+https://nextjs.org/docs/basic-features/data-fetching
 
 Note: SSR → SSG: remove getServerSideProps
 
-- getStaticProps (Static Generation): Fetch data at build time.
-- getStaticPaths (Static Generation): Specify dynamic routes to pre-render based on data.
+- getStaticProps (Static Site Generation): Fetch data at build time.
+- getStaticPaths (Static Site Generation): Specify dynamic routes to pre-render based on data.
 - getServerSideProps (Server-side Rendering): Fetch data on each request.
 
-    export async function getServerSideProps(context) {
+### SSG: getStaticProps/-Paths
+
+    // pages/articles/[propNameThatMustBePartOfFolderStructure].js
+    export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue' } }) {
+      const article = await getArticle(propNameThatMustBePartOfFolderStructure)
+      return {
+        revalidate: 1, // Default: 1 second. This timeout could be longer depending on how often data changes.
+        props: {
+          article
+        }
+      }
+    }
+
+    export async function getStaticPaths() {
+      return {
+        paths: [
+          { params: { propNameThatMustBePartOfFolderStructure: 'value' } }
+        ],
+        fallback: true or false // false -> 404, true: Next tries to generate page
+      }
+    }
+
+### SSR: getServerSideProps
+
+    export async function getServerSideProps({ req, res, query }) {
       return {
         props: { myProp: 1 } // will be passed to the page component as props
       }
     }
-
-https://nextjs.org/docs/basic-features/data-fetching
 
 ## Next.js export static HTML app
 
@@ -282,3 +314,15 @@ https://leerob.io/blog/nextjs-firebase-serverless
 ### Import
 
     import MyComponent from '@/components/MyComponent'
+
+### Timeout
+
+vercel.json:
+
+    {
+      "functions": {
+        "pages/api/myFunction.js": {
+          "maxDuration": 60
+        }
+      }
+    }

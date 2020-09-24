@@ -86,9 +86,10 @@ e.g. `WHERE person.company_id = company.id`
 
 https://www.npmjs.com/package/pg
 
-	pool.query(sqlString, valuesArray)
-		.then()
-		.catch()
+    const client = await pool.connect()
+    const results = await client.query(sqlString, paramArray)
+    await client.end()
+    await client.release()
 
 https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
 
@@ -158,7 +159,7 @@ Update:
 	SELECT * FROM person WHERE contact_status_date < '2019-02-09';
 	SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
 
-### Multiple values
+### Multiple values / array
 
 	SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');
 
@@ -266,16 +267,18 @@ Multiple values:
 
 ### Create a many-to-many relationship table
 
-	CREATE TABLE category (
+	CREATE TABLE company (
 	  id SERIAL PRIMARY KEY,
 	  name character varying(64) UNIQUE
 	);
 
-	CREATE TABLE category_font (
+	CREATE TABLE company_person (
 	  id SERIAL PRIMARY KEY,
-	  category_id integer REFERENCES category(id) ON DELETE CASCADE,
-	  font_id integer REFERENCES font(id) ON DELETE CASCADE
+	  company_id integer REFERENCES company(id) ON DELETE CASCADE,
+	  person_id integer REFERENCES person(id) ON DELETE CASCADE
 	);
+
+	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
 ## Modify table: add columns, remove columns
 

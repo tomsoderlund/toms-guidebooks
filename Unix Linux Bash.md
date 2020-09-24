@@ -548,3 +548,35 @@ Say - MacOS:
 ## Web server
 
 	python -m SimpleHTTPServer
+
+
+## Cron / scheduled tasks / daemons
+
+https://www.easycron.com/ - HTTP
+
+https://cloud.google.com/scheduler/
+
+### Linux/macOS: crontab or launchd
+
+https://ole.michelsen.dk/blog/schedule-jobs-with-crontab-on-mac-osx/
+
+	crontab -l
+
+Edit:
+
+	env EDITOR=nano crontab -e
+	
+In file:
+
+	0 12 * * *  cd ~/Documents/Development/JavaScript/Projects/niche-news && node lib/data/articles
+
+(`Min Hour DayOfMonth Month DayOfWeek`)
+
+Press CTRL+O and CTRL+X to save and exit.
+
+Execute on workdays 1am: `0 1 * * 1-5 myscript.sh`
+Execute every 10 minutes: `*/10 * * * * myscript.sh`
+
+#### launchd
+
+https://www.launchd.info/

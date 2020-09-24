@@ -270,7 +270,7 @@ Note: doesn’t help import/export
 	babel-node app.js
 
 
-## Node Command Line Application
+## Node Command Line Application (CLI)
 
 http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 
@@ -279,6 +279,11 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	#!/usr/bin/env node
 	'use strict'
 	console.log('process.argv', process.argv.length)
+
+	// Check if running from command-line
+	if (process.argv[1].split('/').pop() === 'myJsFilename') {
+	  ...run code
+	}
 
 	// process.argv -> name/value collection
 	const ARGUMENTS = ['languageId:1']
@@ -447,8 +452,8 @@ https://github.com/bojand/mailgun-js
 
 	const mailgun = require('mailgun-js')({
 		apiKey: process.env.MAILGUN_KEY,
-		host: 'api.eu.mailgun.net',
 		domain: process.env.MAILGUN_DOMAIN,
+		host: 'api.eu.mailgun.net',
     testMode: false
 	})
 
@@ -565,3 +570,11 @@ Node.js:
 	  const utmParameters = `utm_medium=email&utm_source=cabal&utm_custom[email]=${person.email}&utm_custom[name]=${encodeURIComponent(person.name)}`
 	  return html.replace(urlRegex({ strict: false }), url => addUrlParameters(url, utmParameters))
 	}
+
+### Process death
+
+		const onProcessDeath = require('death')
+
+		onProcessDeath(function (signal, err) {
+		  // clean up code here
+		})

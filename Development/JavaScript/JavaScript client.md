@@ -579,6 +579,17 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 		return newText
 	}
 
+	// replaceMultipleStrings(['This is $1', 'Sparta']) --> 'This is Sparta'
+	const replaceMultipleStrings = (array, str) => (str || array[0]).replace(/(\$\d)/gm, strId => array[parseInt(strId.slice(1))])
+
+	// "Hello {{value|My Default Value}}"
+	const replaceTemplatePlaceholders = function (stringTemplate, keyValues) {
+	  return stringTemplate.replace(/{{([\w|||\s]+)}}/g, function (match, matchedString) {
+	    const keyAndDefault = matchedString.split('|')
+	    return keyValues ? keyValues[keyAndDefault[0]] || keyAndDefault[1] || '' : ''
+	  })
+	}
+
 ### Cutting strings
 
 	string.substr(start, length)
@@ -1023,7 +1034,16 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 - 1 day in seconds: 24*60*60 = 86400
 - 1 hour in seconds: 60*60 = 3600
 
-### Moment.js
+### Date & Time: Moment.js
+
+Use dayjs instead (smaller):
+
+		import dayjs from 'dayjs'
+		import relativeTime from 'dayjs/plugin/relativeTime'
+		dayjs.extend(relativeTime)
+		dayjs(myDate).fromNow()
+
+Moment.js
 
 	import moment from 'moment'
 

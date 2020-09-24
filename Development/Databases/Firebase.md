@@ -62,6 +62,26 @@ Old: Realtime Database
 
 ID Tokens for client/server: https://firebase.google.com/docs/auth/admin/verify-id-tokens
 
+### Phone signup
+
+Add a phone number to an existing, logged-in user:
+
+    const appVerifier = new firebase.auth.RecaptchaVerifier('save-user-button', { size: 'invisible' }) // An element with id="save-user-button" must exist
+    const authProvider = new firebase.auth.PhoneAuthProvider()
+    const verificationId = await authProvider.verifyPhoneNumber(phoneNumber, appVerifier)
+    const verificationCode = window.prompt('Please enter the verification code that was sent to your phone.')
+    const phoneCredential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode)
+    user.updatePhoneNumber(phoneCredential)
+
+Sign up new user from phone number:
+
+    const appVerifier = new firebase.auth.RecaptchaVerifier('create-new-user-button', { size: 'invisible' }) // An element with id="create-new-user-button" must exist
+    const confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+    const verificationCode = window.prompt('Please enter the verification code that was sent to your phone.')
+    const { user } = await confirmationResult.confirm(verificationCode)
+
+https://firebase.google.com/docs/auth/web/phone-auth
+
 ### Server-side authentication
 
 https://github.com/vercel/next.js/tree/canary/examples/with-firebase-authentication
@@ -96,7 +116,10 @@ https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentSnapsho
 
 Search:
 
-	var query = citiesRef.where('capital', '==', true)
+	citiesRef.where('capital', '==', true)
+	citiesRef.where("population", "<", 100000)
+	citiesRef.where("regions", "array-contains", "west_coast")
+	citiesRef.where('country', 'in', ['USA', 'Japan']);
 
 Order:
 
