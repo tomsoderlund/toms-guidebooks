@@ -156,43 +156,46 @@ https://reactjs.org/docs/hooks-overview.html
 
 ### Forms with useState
 
-    const [inputValues, setInputValues] = useState({
-      firstName: '',
-      lastName: ''
-    })
+    const [inputs, setInputs] = useState({ firstName: '', lastName: '' })
 
-    const handleInputValuesChange = (event) => {
-      const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
-      setInputValues({
-        ...inputValues,
-        [event.target.name]: value
-      })
+    const handleInputChange = ({ target }) => {
+      const value = target.type === 'checkbox' ? target.checked : target.value
+      setInputs(inputs => ({ ...inputs, [target.name]: value }))
     }
 
-    <input
-      name='firstName'
-      value={inputValues.firstName}
-      onChange={handleInputValuesChange}
-    />
-
-### Forms / Fieldset
+Form:
 
     <form onSubmit={handleSubmit}>
       <div className='fieldset'>
         <label htmlFor='emailField'>Email:</label>
         <input
           id='emailField'
+          name='email'
           type='email'
           autoComplete='email'
           placeholder='Email'
           required
-          value={inputs.name}
+          value={inputs.email}
           onChange={handleInputChange}
           disabled={inProgress}
         />
       </div>
+
       <button type='submit'>Submit</button>
     </form>
+
+Checkbox (`checked`):
+
+    <span className='checkbox-wrapper'>
+      <input
+        type='checkbox'
+        name='doSendNotification'
+        id='doSendNotification'
+        checked={inputs.doSendNotification}
+        onChange={handleInputChange}
+      />
+      <label htmlFor='doSendNotification'>Send notification</label>
+    </span>
 
 #### useCountdown hook
 
@@ -390,26 +393,51 @@ Global:
 
 1) Import:
 
-  yarn add react-svg-inline svg-inline-loader
+  yarn add react-svg-inline raw-loader
 
-2) webpack / next.config.js
+2) webpack / `next.config.js`:
 
-  const config = {
-    webpack: (config, { dev, isServer }) => {
-      config.module.rules.push({
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
-      })
-      return config
+    module.exports = {
+      webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+        config.module.rules.push({
+          test: /\.svg$/,
+          loader: 'raw-loader'
+        })
+        return config
+      }
     }
-  }
-  module.exports = config
 
 3) Use SVG:
 
   import SVGInline from 'react-svg-inline'
+  import mySvgImage from './images/icon.svg'
 
-  <SVGInline svg={require('./icons/download.svg')} />
+  <SVGInline svg={mySvgImage} />
+
+or:
+
+  <SVGInline svg={require('./images/icon.svg').default} />
+
+##### Custom SVG component
+
+    import React from 'react'
+    import SVGInline from 'react-svg-inline'
+
+    const DEFAULT_SIZE = '16'
+
+    const Icon = ({ type = 'arrow', width = DEFAULT_SIZE, height = DEFAULT_SIZE, color = 'black', rotation }) => {
+      return (
+        <SVGInline
+          svg={require(`public/images/icons/${type}.svg`).default}
+          width={width}
+          height={height}
+          fill={color}
+          style={rotation && { display: 'inline-block', transform: `rotate(${rotation}deg)` }}
+          cleanup
+        />
+      )
+    }
+    export default Icon
 
 #### Lists = arrays of components
 

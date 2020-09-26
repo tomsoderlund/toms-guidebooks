@@ -69,6 +69,12 @@ Config: `spec/support/jasmine.json`:
     ]
   }
 
+package.json:
+
+    "scripts": {
+      "unit": "jasmine"
+    }
+
 ### Jasmine with ES2015
 
 https://blog.fullstacktraining.com/using-jasmine-with-javascript-es2015/

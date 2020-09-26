@@ -1390,10 +1390,7 @@ Tip: event handlers on `document` for move/end:
 	await fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
 		mode: 'no-cors', // or Access-Control-Allow-Origin: *
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 		body: JSON.stringify(data)
 	})
 	.then(res => res.json())
@@ -1421,6 +1418,16 @@ Open window:
 ### History
 
 	window.location.href
+
+- href: "http://localhost:3301/accounts/create?wow=1#isahash"
+- pathname: "/accounts/create"
+- search: "?wow=1"
+- hash: "#isahash"
+- hostname: "localhost"
+- host: "localhost:3301"
+- protocol: "http:"
+- origin: "http://localhost:3301"
+- port: "3301"
 
   window.history.pushState('object or string', 'Title', '/new-url')
   window.history.pushState(null, null, 'https://twitter.com/hello')
@@ -1697,6 +1704,14 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 
 	// pickMatch({ default: 1, week: 7, year: 365 }, periodName)
 	const pickMatch = (options, key) => options[key] !== undefined ? options[key] : options.default
+
+	// queryObjectFromString / queryObjectToString
+
+	// Node.js: use querystring
+	const querystring = require('querystring')
+	querystring.stringify({ param: 1 })
+	querystring.parse('param=1')
+	querystring.parse(window.search.substr(1))
 
 	const queryObjectFromString = url => (url.split('?')[1] || url || '')
 		.split('&')

@@ -67,6 +67,11 @@ List `./folder/subfolder/file.ext`:
 
 	ls -1 | grep json
 
+### Find applications
+
+	which node
+	which sass # find command "sass"
+
 ### Find text inside files
 
 	grep -r --exclude-dir=node_modules "blabla" *
@@ -90,11 +95,6 @@ List `./folder/subfolder/file.ext`:
 ### Count lines of code (LOCs)
 
 	find . -name '*.js' | xargs wc -l
-
-### Find applications
-
-	which node
-	which sass # find command "sass"
 
 ## Text files
 
@@ -576,6 +576,12 @@ Press CTRL+O and CTRL+X to save and exit.
 
 Execute on workdays 1am: `0 1 * * 1-5 myscript.sh`
 Execute every 10 minutes: `*/10 * * * * myscript.sh`
+
+See logs:
+
+	mail
+
+Use `d *` to delete all.
 
 #### launchd
 

@@ -291,6 +291,11 @@ The neat thing is that custom claims are also available in Firebase Security Rul
 	}
 
 
+## Cloud Functions
+
+https://firebase.google.com/docs/functions
+
+
 ## Realtime Database (old)
 
 ### Events: on/once

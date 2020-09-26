@@ -295,6 +295,23 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	  myNodeApp(argumentObj)
 	}
 
+	// process.argv -> value array
+	if (process.argv[1].split('/').pop() === 'myNodeApp') {
+	  if ((process.argv.length - 2) < 1) {
+	    console.log('Usage: node tasks/myNodeApp [action]')
+	    console.log('  E.g: node tasks/myNodeApp search "Topic"')
+	    console.log('  E.g: node tasks/myNodeApp add "Name" "URL" technology,business')
+	    console.log('  E.g: node tasks/myNodeApp import')
+	  } else {
+	    const cliFunctions = {
+	      add: cliAddSource,
+	      import: cliAddSourcesFromJSON,
+	      search: cliSearchNewSources
+	    }
+	    runDatabaseFunction((pool) => cliFunctions[process.argv[2]](pool, process.argv.slice(3)))
+	  }
+	}
+
 	// process.argv = ['node', 'yourscript.js', ...]
 	// First custom argument is 2
 	const NR_OF_ARGUMENTS_REQUIRED = 2

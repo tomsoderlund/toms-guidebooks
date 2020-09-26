@@ -315,7 +315,12 @@ https://leerob.io/blog/nextjs-firebase-serverless
 
     import MyComponent from '@/components/MyComponent'
 
-### Timeout
+### SVG images
+
+See React doc (`react-svg-inline`).
+
+
+### API timeout
 
 vercel.json:
 
