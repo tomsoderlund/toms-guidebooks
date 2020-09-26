@@ -15,7 +15,7 @@ Set `BING_API_KEY` in env.
      * @author Tom Söderlund
      */
 
-    require('dotenv').config({ path: './.env.local' })
+    require('dotenv').config() // For BING_API_KEY
 
     const AzureWebSearch = require('@azure/cognitiveservices-websearch')
     const CognitiveServicesCredentials = require('@azure/ms-rest-azure-js').CognitiveServicesCredentials
