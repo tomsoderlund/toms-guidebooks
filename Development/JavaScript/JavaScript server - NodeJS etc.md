@@ -285,8 +285,8 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	  ...run code
 	}
 
-	// process.argv -> name/value collection
-	const ARGUMENTS = ['languageId:1']
+	// Single action: process.argv -> name/value collection
+	const ARGUMENTS = ['languageId:1', 'otherArgument']
 	if ((process.argv.length - 2) < ARGUMENTS.length) {
 	  console.log('Usage: node tasks/myNodeApp ' + ARGUMENTS.map(str => `[${str.split(':')[0]}]`).join(' '))
 	  console.log('  E.g: node tasks/myNodeApp ' + ARGUMENTS.map(str => str.split(':')[1] || '“something”').join(' '))
@@ -295,7 +295,7 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	  myNodeApp(argumentObj)
 	}
 
-	// process.argv -> value array
+	// Multiple actions: process.argv -> value array
 	if (process.argv[1].split('/').pop() === 'myNodeApp') {
 	  if ((process.argv.length - 2) < 1) {
 	    console.log('Usage: node tasks/myNodeApp [action]')
