@@ -13,9 +13,11 @@ Structure:
 
     ᠅ Element1 (component)
         ⬚ Normal (group)
-            Normal (e.g. text, rectangle)
-            Normal (e.g. text, rectangle)
-            _:hover (e.g. text, rectangle)
+            Normal (e.g. text, rectangle – NOT a group)
+            Normal (e.g. text, rectangle – NOT a group)
+            :hover (e.g. text, rectangle – NOT a group)
+            _NotExported
+            _:hover (not exported)
         ⬚ OtherVariant (group)
     ᠅ Element2 (component)
         ⬚ Normal (group)
