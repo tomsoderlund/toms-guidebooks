@@ -215,8 +215,11 @@ http://www.cs.fsu.edu/general/vimanual.html
 	ps aux # with CPU/memory usage
 	top
 
-	Port usage - checks port 80:
-	lsof -i :80
+Port usage - checks port 3104:
+
+	sudo lsof -i :3104
+
+	sudo lsof -iTCP -sTCP:LISTEN -n -P | grep 3104
 
 	check memory: free
 	check disk: df -h ./

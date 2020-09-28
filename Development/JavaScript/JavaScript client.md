@@ -1041,7 +1041,9 @@ Use dayjs instead (smaller):
 		import dayjs from 'dayjs'
 		import relativeTime from 'dayjs/plugin/relativeTime'
 		dayjs.extend(relativeTime)
+
 		dayjs(myDate).fromNow()
+		dayjs().subtract(2, 'day').format('YYYY-MM-DD')
 
 Moment.js
 

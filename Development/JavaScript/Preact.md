@@ -40,8 +40,7 @@ Port:
 
 Packages:
 
-    yarn add preact-router
-    yarn add preact-helmet
+    yarn add preact-router preact-helmet
 
 StandardJS:
 
@@ -86,6 +85,11 @@ Typically keep shared components outside of `<Router>`:
         </Router>
       </main>
     </div>
+
+Redirects
+
+    import { route } from 'preact-router'
+    route('/mypage')
 
 Lazy loading: https://github.com/preactjs/preact-router#lazy-loading
 
