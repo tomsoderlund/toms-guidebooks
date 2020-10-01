@@ -156,6 +156,7 @@ Order:
 
     FieldValue.serverTimestamp()
     firebase.firestore.FieldValue.serverTimestamp()
+    // Server firebase-admin: admin.firestore.FieldValue.serverTimestamp()
 
 ### Geopoint
 

@@ -142,6 +142,12 @@ https://reactjs.org/docs/hooks-overview.html
 
 **Note:** never call Hooks inside loops, conditions, or nested functions – https://reactjs.org/docs/hooks-rules.html
 
+#### useMemo vs. useCallback vs. useEffect
+
+- useMemo: return value
+- useCallback: return function
+- useEffect + useState: if need async/await
+
 #### useRef
 
     import { useRef, useEffect } from 'react'
@@ -432,7 +438,11 @@ or:
           width={width}
           height={height}
           fill={color}
-          style={rotation && { display: 'inline-block', transform: `rotate(${rotation}deg)` }}
+          style={{
+            display: 'inline-block',
+            transition: 'transform 0.3s',
+            ...(rotation && { transform: `rotate(${rotation}deg)` })
+          }}
           cleanup
         />
       )

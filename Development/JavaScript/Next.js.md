@@ -55,7 +55,7 @@ Note: SSR → SSG: remove getServerSideProps
     export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue' } }) {
       const article = await getArticle(propNameThatMustBePartOfFolderStructure)
       return {
-        revalidate: 1, // Default: 1 second. This timeout could be longer depending on how often data changes.
+        revalidate: 60, // Seconds. This refresh time could be longer depending on how often data changes.
         props: {
           article
         }

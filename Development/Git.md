@@ -103,6 +103,16 @@ Custom fork in `package.json`:
 
 	git checkout . # this removes all changes marked in red
 
+	git revert HEAD~3 # rollback 3 commits
+
+	git reset --hard 0d1d7fc32e5a947fbd92ee598033d85bfc445a50
+
+Reset/rollback to _specific_ commit:
+
+- Empty the working tree: `git rm -r --cached . && git clean -f -d`
+- Bring the working tree to the state we want: `git checkout c366a0de9fe00309a3427c25903e876bfd42fd35 .`
+- Create the revert commit: `git add --all && git commit -m "revert to c366a0de9fe00309a3427c25903e876bfd42fd35"`
+
 Unstage file not yet committed:
 
 	git reset <file>
