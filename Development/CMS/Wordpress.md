@@ -11,24 +11,25 @@
 https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/
 
     const getPostsList = function (options = {}) {
+      const { fields = 'ID,slug,title,featured_image,date,excerpt,attachments,categories,tags,sticky' } = options
       const url = [
-        `${WORDPRESS_BASE_URL}${WORDPRESS_ID}/posts/?`,
-        'fields=' + 'ID,slug,title,featured_image,date,excerpt,attachments,categories,sticky',
+        `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/posts/?`,
+        `fields=${fields}`,
         options.order ? `&order_by=${options.order}&order=ASC` : '',
         options.category ? `&category=${options.category}` : '',
         options.search ? `&search=${options.search}` : '',
         `&number=${POSTS_LIMIT}`
       ].join('')
-      return fetch(url).then(res => res.json()).then(res => res.posts.map(fixWordpressPost))
+      return fetch(url).then(res => res.json()).then(res => res.posts.map(fixWordpressPost)) // eslint-disable-line no-undef
     }
 
 ### Get one post
 
 https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/slug:%24post_slug/
 
-    const getPostDetails = function (slug) {
-      const url = `${WORDPRESS_BASE_URL}${WORDPRESS_ID}/posts/slug:${slug}`
-      return fetch(url).then(res => res.json()).then(res => res.error ? undefined : fixWordpressPost(res))
+    const getPostDetails = function (slug, { fields = 'ID,slug,title,featured_image,date,excerpt,content,attachments,categories,tags,sticky' } = {}) {
+      const url = `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/posts/slug:${slug}?fields=${fields}`
+      return fetch(url).then(res => res.json()).then(res => res.error ? undefined : fixWordpressPost(res)) // eslint-disable-line no-undef
     }
 
 Advanced:
@@ -45,10 +46,15 @@ Advanced:
       date: new Date(post.date),
       dateFormatted: moment(new Date(post.date)).format('YYYY-MM-DD'),
       excerpt: stripNewLines(stripHtmlTags(entities.decode(post.excerpt))),
-      url: getURL(post),
+      // url: getURL(post),
       thumbnailImageUrl: post.featured_image || getAttachmentImages(post).thumbnail,
       bigImageUrl: post.featured_image || getAttachmentImages(post).large
     })
+
+    const getAttachmentImages = post => {
+      const attachment0 = post.attachments && Object.values(post.attachments)[0]
+      return (attachment0 ? attachment0.thumbnails : {})
+    }
 
 ### JSON example
 
