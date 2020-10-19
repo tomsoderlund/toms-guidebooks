@@ -6,7 +6,7 @@
     const WORDPRESS_SITE_ID = 'mysite.wordpress.com'
     const POSTS_LIMIT = 100
 
-### List content pages
+### List posts
 
 https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/
 
@@ -22,7 +22,7 @@ https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/
       return fetch(url).then(res => res.json()).then(res => res.posts.map(fixWordpressPost))
     }
 
-### List one page
+### Get one post
 
 https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/slug:%24post_slug/
 
