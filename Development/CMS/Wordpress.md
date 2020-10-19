@@ -8,6 +8,8 @@
 
 ### List content pages
 
+https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/
+
     const getPostsList = function (options = {}) {
       const url = [
         `${WORDPRESS_BASE_URL}${WORDPRESS_ID}/posts/?`,
@@ -21,6 +23,8 @@
     }
 
 ### List one page
+
+https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/slug:%24post_slug/
 
     const getPostDetails = function (slug) {
       const url = `${WORDPRESS_BASE_URL}${WORDPRESS_ID}/posts/slug:${slug}`
