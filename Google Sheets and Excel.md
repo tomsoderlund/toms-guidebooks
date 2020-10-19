@@ -185,6 +185,12 @@ JSON:
 & """message"": """ & E3 & """," & CHAR(10)
 & "}"
 
+File paths:
+
+Split paths by / and get filename:
+
+=INDEX(SPLIT(A2,"/"),1,COUNTA(SPLIT(A2,"/")))
+
 ---------- FILTERS ----------
 
 Remember to us the cell UNDER the filter heading in the formula, so if your filter is on C1, use C2:

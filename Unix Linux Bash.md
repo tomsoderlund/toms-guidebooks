@@ -47,12 +47,15 @@ Example:
 List `folder/subfolder/file.ext`:
 
 	find *
-
 	find myFolder/*
 
 List `./folder/subfolder/file.ext`:
 
 	find . -name '*.js' -print
+
+List all except a pattern:
+
+	find * | grep -v -E '.DS_Store|node_modules|build'
 
 ## Finding files
 

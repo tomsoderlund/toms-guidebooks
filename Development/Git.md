@@ -235,3 +235,13 @@ git mv src/Common/* src/temp/
 rm src/Common
 mkdir src/common
 git mv src/temp/* src/common/
+
+## Move a complex file structure
+
+1. Copy files
+2. Create 2 file lists:
+
+	find * | grep -v -E '.DS_Store|node_modules|build' > ../git-before.txt
+	find * | grep -v -E '.DS_Store|node_modules|build' > ../git-after.txt
+
+Sheet: https://docs.google.com/spreadsheets/d/1E7bQpNLCp_V9yVl1v6Ifxw9Dsn_eA7R_IBTlwj4QS0E/edit

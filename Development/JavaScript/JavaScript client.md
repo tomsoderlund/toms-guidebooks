@@ -425,6 +425,8 @@ http://javascript.crockford.com/prototypal.html
 		return result
 	}
 
+	const wrapPageNumber = (incr = 1) => (incr + pageNumber + numPages - 1) % numPages + 1
+
 ### Sum, average, median
 
 From https://www.jstips.co/en/javascript/array-average-and-median/
@@ -648,11 +650,13 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	string.toUpperCase()
 
 	// See also _.capitalize and _.upperFirst
-	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
 	const titleCase = str => str.replace(/(?:^|\s|[-"'([{])+\S/g, (c) => c.toUpperCase())
 	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
+
 	const toDash = str => replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
 	const toCamelCase = str => replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
+	const toKebabCase = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
 
 	// Slug
 	const toSlug = str => str.trim().replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
@@ -1043,7 +1047,7 @@ Use dayjs instead (smaller):
 		dayjs.extend(relativeTime)
 
 		dayjs(myDate).fromNow()
-		dayjs().subtract(2, 'day').format('YYYY-MM-DD')
+		dayjs().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss')
 
 Moment.js
 
@@ -1230,7 +1234,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 
 	const getCookie = (name, defaultValue) => getAllCookies()[name] || defaultValue
 
-	const setCookie = (name, value, options = { maxAge: 31536000 }) => {
+	const setCookie = (name, value, options = { maxAge: 365*24*60*60 }) => {
 	  window.document.cookie = `${name}=${JSON.stringify(value)}${options.maxAge ? `;max-age=${options.maxAge}` : ''}`
 	}
 
@@ -1419,7 +1423,7 @@ Open window:
 
 ### History
 
-	window.location.href
+	window.location:
 
 - href: "http://localhost:3301/accounts/create?wow=1#isahash"
 - pathname: "/accounts/create"
@@ -1670,6 +1674,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	const { [keyToRemove]: 0, ...newState } = state
 
 	get/set: no matching ES6
+
+	const get = (obj, key, defaultValue) => (obj && Object.prototype.hasOwnProperty.call(obj, key)) ? obj[key] : defaultValue
 
 	/* Implementation of lodash.get function: https://gist.github.com/harish2704/d0ee530e6ee75bad6fd30c98e5ad9dab */
 	function get (object, keys, defaultVal) {
@@ -1923,11 +1929,13 @@ http://www.cheatography.com/jonathanberi/cheat-sheets/polymer-js/
 
 	yarn add tinycolor2
 
+	import tinycolor from 'tinycolor2'
+
 then:
 
 	tinycolor(colorStr).toHexString()
 
-	tinycolor.mix(color1, color2, amount = 50)
+	tinycolor.mix(baseColor, mixInColor, amount = 50)
 	lighten(0-100), darken(0-100), (brighten(0-100))
 
 - isLight

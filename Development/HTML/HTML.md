@@ -49,9 +49,106 @@
 <input type="url">
 <input type="week">
 
-<input type="range" id="hue" min="0" max="360"/>
+  <input
+    type='range'
+    min={min}
+    max={max}
+    step={step}
+  />
+
+/* Range input */
 
 input[type="range"] {
+  background: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+/* Chrome/Safari */
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 1.75em;
+  cursor: pointer;
+  transition: all .2s ease;
+  background: #c4c4c4;
+  border: 0 solid #000;
+  border-radius: 1.75em;
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: calc(1.75em - 4px);
+  width: calc(1.75em - 4px);
+  margin-top: 2px;
+  border-radius: 1.75em;
+  border: none;
+  background: #f4f4f4;
+  cursor: pointer;
+  -webkit-appearance: none;
+  box-shadow: 0 0.2em 0.2em rgba(0,0,0, 0.3);
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0.3em 0.3em rgba(0,0,0, 0.5);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 1.75em;
+  cursor: pointer;
+  transition: all .2s ease;
+  background: #c4c4c4;
+  border: 0 solid #000;
+  border-radius: 1.75em;
+}
+input[type="range"]::-moz-range-thumb {
+  height: calc(1.75em - 4px);
+  width: calc(1.75em - 4px);
+  border-radius: 1.75em;
+  border: none;
+  background: #f4f4f4;
+  cursor: pointer;
+  box-shadow: 0 0.2em 0.2em rgba(0,0,0, 0.3);
+}
+input[type="range"]::-moz-range-thumb:hover {
+  box-shadow: 0 0.3em 0.3em rgba(0,0,0, 0.5);
+}
+input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+
+/* Microsoft */
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 1.75em;
+  cursor: pointer;
+  transition: all .2s ease;
+  background: transparent;
+  border-color: transparent;
+  border-width: 1.75em 0;
+  color: transparent;
+}
+input[type="range"]::-ms-fill-lower {
+  border: 0 solid #000;
+  border-radius: 1.75em;
+}
+input[type="range"]::-ms-fill-upper {
+  background: #c4c4c4;
+  border: 0 solid #000;
+  border-radius: 1.75em;
+}
+input[type="range"]::-ms-thumb {
+  height: calc(1.75em - 4px);
+  width: calc(1.75em - 4px);
+  border-radius: 1.75em;
+  background: #f4f4f4;
+  cursor: pointer;
+  box-shadow: 0 0.2em 0.2em rgba(0,0,0, 0.3);
+}
+input[type="range"]::-ms-thumb:hover {
+  box-shadow: 0 0.3em 0.3em rgba(0,0,0, 0.5);
 }
 
 ----------

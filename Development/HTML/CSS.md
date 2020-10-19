@@ -436,6 +436,8 @@ Named areas: https://codepen.io/tomsoderlund/pen/YzqpbEo
       grid-area: header;
     }
 
+Scrolling grid views: add `min-height: 0;` to parent: https://stackoverflow.com/questions/64216285/why-does-this-css-grid-child-need-a-max-height-to-enable-scrolling
+
 ### Viewport units
 
 vw, vh, vmin, vmax - Web Design Weekly
@@ -517,7 +519,8 @@ Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstrea
   word-break: break-all;
   overflow-wrap: break-word;
   hyphens: auto;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* Need overflow: hidden; too */
+  overflow: hidden;
 
 ### Select text
 

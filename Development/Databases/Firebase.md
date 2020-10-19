@@ -95,11 +95,14 @@ https://github.com/vercel/next.js/tree/canary/examples/with-firebase-authenticat
 
 https://firebase.google.com/docs/firestore/quickstart
 
-### Snapshots
+### Data Snapshots
 
 - doc.id
 - doc.data()
 - doc.get('name')
+- doc.collection('cities')
+- doc.parent
+- doc.path
 
 https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentSnapshot
 
@@ -158,6 +161,8 @@ Order:
     firebase.firestore.FieldValue.serverTimestamp()
     // Server firebase-admin: admin.firestore.FieldValue.serverTimestamp()
 
+    conversation.dateUpdated.toDate()
+
 ### Geopoint
 
     coordinates: new firebase.firestore.GeoPoint(lat, long)
@@ -205,6 +210,43 @@ Node:
 	      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 	    })
 	  }
+
+### File Storage
+
+    folderRef = firebaseApp.storage().ref(`accounts/${accountId}`)
+    await folderRef.listAll()
+    folderRef.fullPath
+    folderRef.parent
+    folderRef.child(file.name)
+    await folderRef.put(file, newMetaData)
+
+    const result = await quoteFolderRef.listAll()
+    result.items.forEach(async function (file) {
+      await file.delete()
+    })
+
+    0:
+    bucket: "myapp.appspot.com"
+    cacheControl: undefined
+    contentDisposition: "inline; filename*=utf-8''MyFile.pdf"
+    contentEncoding: "identity"
+    contentLanguage: undefined
+    contentType: "application/pdf"
+    customMetadata: undefined
+    fullPath: "conversations/EVfZfytxioUjnEExeEdT/quotes/MyFile.pdf"
+    generation: "1601988986266954"
+    md5Hash: "LVIyrqThQeEnYXwbXGFDxA=="
+    metageneration: "1"
+    name: "MyFile.pdf"
+    size: 661171
+    timeCreated: "2020-10-06T12:56:26.266Z"
+    type: "file"
+    updated: "2020-10-06T12:56:26.266Z"
+    ref: 
+
+#### CORS issues
+
+    gsutil cors set firebaseCors.json gs://myapp.appspot.com
 
 ### Security and User Rights
 

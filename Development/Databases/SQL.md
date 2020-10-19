@@ -86,10 +86,20 @@ e.g. `WHERE person.company_id = company.id`
 
 https://www.npmjs.com/package/pg
 
-    const client = await pool.connect()
-    const results = await client.query(sqlString, paramArray)
-    await client.end()
-    await client.release()
+		const { Pool } = require('pg')
+		const pool = new Pool({ connectionString: config.databaseUrl })
+
+		// const results = await runDatabaseFunction(async (pool) => { ... })
+		module.exports.runDatabaseFunction = async function (functionToRun) {
+		  // Connect db
+		  const client = await pool.connect()
+		  // Run function
+		  const results = await functionToRun(client)
+		  // Release db
+		  await client.end()
+		  await client.release()
+		  return results
+		}
 
 https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
 

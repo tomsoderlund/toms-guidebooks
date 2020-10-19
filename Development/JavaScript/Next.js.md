@@ -51,14 +51,29 @@ Note: SSR → SSG: remove getServerSideProps
 
 ### SSG: getStaticProps/-Paths
 
+    // Super simple version
+
+    export const getStaticProps = () => ({
+      props: {
+        title: 'Logging in' // used in _app.js
+      },
+      revalidate: 31536000 // refresh once a year
+    })
+    export const getStaticPaths = () => ({
+      paths: [],
+      fallback: true
+    })
+
+    // Extended version
+
     // pages/articles/[propNameThatMustBePartOfFolderStructure].js
     export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue' } }) {
       const article = await getArticle(propNameThatMustBePartOfFolderStructure)
       return {
-        revalidate: 60, // Seconds. This refresh time could be longer depending on how often data changes.
         props: {
           article
-        }
+        },
+        revalidate: 60 // Seconds. This refresh time could be longer depending on how often data changes.
       }
     }
 
@@ -75,7 +90,9 @@ Note: SSR → SSG: remove getServerSideProps
 
     export async function getServerSideProps({ req, res, query }) {
       return {
-        props: { myProp: 1 } // will be passed to the page component as props
+        props: {
+          article
+        }
       }
     }
 
@@ -331,3 +348,8 @@ vercel.json:
         }
       }
     }
+
+### Dynamic loading
+
+    import dynamic from 'next/dynamic'
+    const FileUploader = dynamic(() => import('components/content/uploading/FileUploader'), { ssr: false, loading: FileUploaderTemporary })

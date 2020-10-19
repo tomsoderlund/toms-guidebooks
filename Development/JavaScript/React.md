@@ -129,15 +129,15 @@ Examples:
 
 https://reactjs.org/docs/hooks-overview.html
 
-- `useEffect(fn, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
-- `useCallback(fn, [deps])`: returns a memoized version of the callback that only changes if one of the dependencies has changed. Use to prevent this passing a new function each render.
+- `useEffect(() => {}, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
+- `useCallback(() => {}, [deps])`: returns a memoized version of the callback that only changes if one of the dependencies has changed. Use to prevent this passing a new function each render.
 - `useMemo(() => computeExpensiveValue(a, b), [a, b])`: Returns a memoized value.
 - `useState(initialState)`: e.g. `const [active, setActive] = useState(false)`.
 - `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
 - `useContext`: see below.
 - `useRef(initialValue)`: returns a mutable ref object. See below.
 - `useImperativeHandle(ref, createHandle, [deps])`
-- `useLayoutEffect(fn, [deps])`: identical to useEffect, but it fires synchronously after all DOM mutations.
+- `useLayoutEffect(() => {}, [deps])`: identical to useEffect, but it fires synchronously after all DOM mutations.
 - `useDebugValue(value)`: to display a label for custom hooks in React DevTools.
 
 **Note:** never call Hooks inside loops, conditions, or nested functions – https://reactjs.org/docs/hooks-rules.html
@@ -162,11 +162,13 @@ https://reactjs.org/docs/hooks-overview.html
 
 ### Forms with useState
 
-    const [inputs, setInputs] = useState({ firstName: '', lastName: '' })
+    const DEFAULT_INPUTS = { firstName: '', lastName: '' }
+    const [inputs, setInputs] = useState(DEFAULT_INPUTS)
 
     const handleInputChange = ({ target }) => {
       const value = target.type === 'checkbox' ? target.checked : target.value
-      setInputs(inputs => ({ ...inputs, [target.name]: value }))
+      setInputs({ ...inputs, [target.name]: value })
+      // setInputs(inputs => ({ ...inputs, [target.name]: value }))
     }
 
 Form:
@@ -202,6 +204,13 @@ Checkbox (`checked`):
       />
       <label htmlFor='doSendNotification'>Send notification</label>
     </span>
+
+#### setTimeout in a React Hook
+
+    useEffect(() => {
+      const timer = window.setTimeout(() => console.log('Hello, World!'), 3000)
+      return () => window.clearTimeout(timer)
+    }, [])
 
 #### useCountdown hook
 

@@ -23,6 +23,12 @@ Templates:
 - `netlify`: Netlify CMS template using preact.
 - `typescript`: Default template implemented in TypeScript
 
+### Next.js with Preact
+
+https://github.com/developit/nextjs-preact-demo
+
+    git clone https://github.com/developit/nextjs-preact-demo.git
+
 ## Good extras when setting up new project
 
 Folders:
