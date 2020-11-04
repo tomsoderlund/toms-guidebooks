@@ -260,8 +260,11 @@ http://javascript.crockford.com/prototypal.html
 	myDateObj instanceof Date // true
 
 	// Advanced: Object, Array, String, Number, Boolean, Function
-	Array.isArray(objectOrArray)
 	objectOrArray.constructor === Array
+
+	objectOrArray && objectOrArray.constructor.name
+
+	Array.isArray(objectOrArray)
 
 	// Advanced, slower: '[object X]' where X can be Object, Array, String, Number, Boolean, Function
 	Object.prototype.toString.call(myObj) === '[object Array]'
@@ -412,6 +415,9 @@ http://javascript.crockford.com/prototypal.html
 
 	parseInt(StringorNum) // to int
 	parseFloat(StringorNum) // to float
+
+	// Pad decimals
+	number.toFixed(2)
 
 	function padDigits (number, digits) {
 		return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number
@@ -586,10 +592,12 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	// "Hello {{value|My Default Value}}"
 	const replaceTemplatePlaceholders = function (stringTemplate, keyValues) {
-	  return stringTemplate.replace(/{{([\w|||\s]+)}}/g, function (match, matchedString) {
-	    const keyAndDefault = matchedString.split('|')
-	    return keyValues ? keyValues[keyAndDefault[0]] || keyAndDefault[1] || '' : ''
-	  })
+	  return stringTemplate
+	    .replace(/{{([\w|||\s]+)}}/g, function (match, matchedString) {
+	      const keyAndDefault = matchedString.split('|')
+	      return keyValues ? keyValues[keyAndDefault[0]] || keyAndDefault[1] || '' : ''
+	    })
+	    .replace(/ {2}/g, ' ') // remove double spaces for missing variables
 	}
 
 ### Cutting strings
@@ -872,7 +880,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var fruits = ["Banana", "Orange", "Apple", "Mango"]
 	fruits.sort()
-	array.sort((a, b) => a - b)
+	array.sort((a, b) => a - b) // return 1, -1, or 0
 	array.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
 
 	array.reverse()
@@ -1031,12 +1039,12 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 ### Times in seconds/milliseconds
 
-- 1 year in milliseconds: 365*24*60*60*1000 = 31536000000
-- 1 year in seconds: 365*24*60*60 = 31536000
-- 1 month in seconds: 30*24*60*60 = 2592000
-- 1 week in seconds: 7*24*60*60 = 604800
-- 1 day in seconds: 24*60*60 = 86400
-- 1 hour in seconds: 60*60 = 3600
+- 1 year in milliseconds: 365 * 24 * 60 * 60 * 1000 = 31536000000
+- 1 year in seconds: 365 * 24 * 60 * 60 = 31536000
+- 1 month in seconds: 30 * 24 * 60 * 60 = 2592000
+- 1 week in seconds: 7 * 24 * 60 * 60 = 604800
+- 1 day in seconds: 24 * 60 * 60 = 86400
+- 1 hour in seconds: 60 * 60 = 3600
 
 ### Date & Time: Moment.js
 
@@ -1206,16 +1214,16 @@ https://codepen.io/YOUR-USER-NAME/pen/Gdjrdx
 sessionStorage vs localStorage: sessionStorage is cleared when the page session ends
 
 	// Save data to localStorage
-	localStorage.setItem('key', 'string')
+	window.localStorage.setItem('key', 'string')
 
 	// Get saved data from localStorage
-	let data = localStorage.getItem('key')
+	let data = window.localStorage.getItem('key')
 
 	// Remove saved data from localStorage
-	localStorage.removeItem('key')
+	window.localStorage.removeItem('key')
 
 	// Remove all saved data from localStorage
-	localStorage.clear()
+	window.localStorage.clear()
 
 > “Stormpath recommends that you store your JWT in cookies for web applications, because of the additional security they provide, and the simplicity of protecting against CSRF with modern web frameworks. HTML5 Web Storage is vulnerable to XSS, has a larger attack surface area, and can impact all application users on a successful attack.”
 – https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
@@ -1449,9 +1457,18 @@ Open window:
 		return false
 	}
 
-## Web Workers
 
-https://github.com/YOUR-USER-NAME/minimalistic-web-workers
+## Web Workers / Service Workers
+
+|              | Web Workers  | Service Workers  |
+|--------------|--------------|------------------|
+| Instances    | Many per tab | One for all tabs |
+| Lifespan     | Same as tab  | Independent      |
+| Intended use | Parallelism  | Offline support  |
+
+### Web Workers
+
+https://github.com/tomsoderlund/minimalistic-web-workers
 
 https://www.w3schools.com/html/html5_webworkers.asp
 
@@ -1487,6 +1504,17 @@ https://www.w3schools.com/html/html5_webworkers.asp
 
 	timedCount()
 
+### Service Workers
+
+	// From service-worker.js:
+	const channel = new BroadcastChannel('sw-messages')
+	channel.postMessage({title: 'Hello from SW'})
+
+	// From your client pages:
+	const channel = new BroadcastChannel('sw-messages')
+	channel.addEventListener('message', event => {
+	  console.log('Received', event.data)
+	})
 
 
 ## ECMAScript ES5/ES6
@@ -1507,6 +1535,8 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 	let [one, two] = [1, 2]
 	let {three, four} = {three: 3, four: 4}
 	const { education: { degree: asNamedDegree } } = user
+	// With both renaming AND default values
+	const { account: accountId = null, team: teamId = null } = teamData
 	console.log(asNamedDegree) // prints: Masters
 
 	// Remove a property:
@@ -1938,9 +1968,11 @@ then:
 	tinycolor.mix(baseColor, mixInColor, amount = 50)
 	lighten(0-100), darken(0-100), (brighten(0-100))
 
+	const contrastColor = (color) => (tinycolor(color).getBrightness() > 128) ? 'black' : 'white'
+
 - isLight
 - isDark
-- getBrightness
+- getBrightness (0-255)
 - getLuminance
 - getAlpha
 - setAlpha

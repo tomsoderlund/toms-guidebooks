@@ -37,7 +37,10 @@ https://next-code-elimination.now.sh/
 
 ## Inherit another page (export/import)
 
-    export { default, getServerSideProps } from './otherPage'
+    import { default as OtherPage } from './OtherPage'
+    export { getStaticProps, getStaticPaths } from './OtherPage'
+
+    export default OtherPage
 
 ## getServerSideProps
 
@@ -353,3 +356,59 @@ vercel.json:
 
     import dynamic from 'next/dynamic'
     const FileUploader = dynamic(() => import('components/content/uploading/FileUploader'), { ssr: false, loading: FileUploaderTemporary })
+
+### Error page
+
+    import ErrorPage from 'next/error'
+
+    <ErrorPage
+      title={error.message || error}
+      statusCode='404'
+    />
+
+Customize /pages/_error.js
+
+    // _error.js is only used in production. In development you'll get an error with the call stack to know where the error originated from.
+    import React from 'react'
+
+    const ErrorPage = ({ title, statusCode }) => (
+      <>
+        <h1>Error (code {statusCode})</h1>
+        <p>Sorry, but there was an error (code {statusCode}).</p>
+      </>
+    )
+
+    ErrorPage.getInitialProps = ({ res, err }) => {
+      const statusCode = res
+        ? res.statusCode
+        : err
+          ? err.statusCode
+          : 404
+      return { title: 'Error', statusCode }
+    }
+
+    export default ErrorPage
+
+### Prepare data object for Next JSON format
+
+    const prepareForJSON = (obj) => {
+      if (obj !== undefined) {
+        const newObj = { ...obj }
+        Object.keys(newObj).forEach(key => {
+          const objectType = typeof newObj[key]
+          const objectClass = newObj[key] && newObj[key].constructor.name
+          if (objectClass === 'Timestamp') {
+            newObj[key] = newObj[key].toDate().toString()
+          } else if (objectType === 'undefined' || objectClass === null) {
+            newObj[key] = null
+          } else if (objectType === 'object' && objectClass !== 'Timestamp') {
+            newObj[key] = prepareForJSON(newObj[key]) // Recursion
+          }
+        })
+        return newObj
+      } else {
+        return null
+      }
+    }
+
+    export default prepareForJSON

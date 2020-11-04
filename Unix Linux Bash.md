@@ -218,6 +218,8 @@ http://www.cs.fsu.edu/general/vimanual.html
 	ps aux # with CPU/memory usage
 	top
 
+### Network usage
+
 Port usage - checks port 3104:
 
 	sudo lsof -i :3104
@@ -227,11 +229,17 @@ Port usage - checks port 3104:
 	check memory: free
 	check disk: df -h ./
 
-### Network usage
-
 http://www.macworld.com/article/1143351/netprocesses.html
 
 	lsof -P -i -n | cut -f 1 -d " " | uniq
+
+### Disk usage - what is using USB disk drive?
+
+http://www.alecjacobson.com/weblog/?p=649
+
+	df  # list volumes
+
+	sudo lsof +D "/Volumes/[name of drive]"
 
 ### Firewall
 

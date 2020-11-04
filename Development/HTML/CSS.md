@@ -515,8 +515,8 @@ Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstrea
 ### Word wrap and whitespace
 
   white-space: nowrap;
-  word-wrap: break-word;
-  word-break: break-all;
+  word-wrap: break-word; /* break words that overflow their container */
+  word-break: break-all; /* breaks all words at the end of a line */
   overflow-wrap: break-word;
   hyphens: auto;
   text-overflow: ellipsis; /* Need overflow: hidden; too */
@@ -1229,7 +1229,6 @@ fuchsia FF00FF
 magenta FF00FF
 mediumorchid  BA55D3
 mediumpurple  9370DB
-amethyst  9966CC
 blueviolet  8A2BE2
 darkviolet  9400D3
 darkorchid  9932CC

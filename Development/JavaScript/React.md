@@ -205,6 +205,37 @@ Checkbox (`checked`):
       <label htmlFor='doSendNotification'>Send notification</label>
     </span>
 
+Fieldset:
+
+    const Fieldset = ({ children, fieldName, label, description }) => {
+      return (
+        <div className='fieldset' title={description}>
+          <label htmlFor={fieldName + 'Field'}>{label}:</label>
+          {children}
+        </div>
+      )
+    }
+
+    const InputWithLabel = ({ fieldName, label, placeholder, description, type = 'text', autoComplete = 'off', value, handleInputChange, inProgress, required, disabled }) => (
+      <Fieldset
+        fieldName={fieldName}
+        label={label}
+        description={description}
+      >
+        <input
+          id={fieldName + 'Field'}
+          name={fieldName}
+          type={type}
+          autoComplete={autoComplete}
+          placeholder={placeholder || label}
+          value={value || ''}
+          onChange={handleInputChange}
+          required={required}
+          disabled={disabled || inProgress}
+        />
+      </Fieldset>
+    )
+
 #### setTimeout in a React Hook
 
     useEffect(() => {
@@ -440,7 +471,7 @@ or:
 
     const DEFAULT_SIZE = '16'
 
-    const Icon = ({ type = 'arrow', width = DEFAULT_SIZE, height = DEFAULT_SIZE, color = 'black', rotation }) => {
+    const Icon = ({ type = 'arrow', width = DEFAULT_SIZE, height = DEFAULT_SIZE, color = 'white', rotation }) => {
       return (
         <SVGInline
           svg={require(`public/images/icons/${type}.svg`).default}

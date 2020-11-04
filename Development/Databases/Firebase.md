@@ -97,12 +97,14 @@ https://firebase.google.com/docs/firestore/quickstart
 
 ### Data Snapshots
 
-- doc.id
-- doc.data()
-- doc.get('name')
-- doc.collection('cities')
-- doc.parent
-- doc.path
+- docRef.collection('cities')
+- collection.doc('YK6lO7LbLkdNU369f9fj')
+- collection.parent
+- ref.parent
+- ref.path
+- snapshot.id
+- snapshot.data()
+- snapshot/ref.get('name')
 
 https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentSnapshot
 
@@ -247,6 +249,18 @@ Node:
 #### CORS issues
 
     gsutil cors set firebaseCors.json gs://myapp.appspot.com
+
+
+### Cloud Messaging (Notifications)
+
+- https://firebase.google.com/docs/cloud-messaging/js/client
+- https://firebase.google.com/docs/cloud-messaging/js/first-message
+- Next.js: https://github.com/vercel/next.js/tree/canary/examples/with-firebase-cloud-messaging
+
+Setup:
+
+- Set server token: https://console.firebase.google.com/project/_/settings/cloudmessaging/web
+- Send message from console: https://console.firebase.google.com/project/_/notification
 
 ### Security and User Rights
 

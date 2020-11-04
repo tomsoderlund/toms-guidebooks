@@ -44,13 +44,12 @@ http://nodejs.org/download/
 ### Request object
 
 	req.method // 'GET'
-	req.url
+	req.url = '/mypage?query=value'
+	req.headers.host = 'localhost:3206'
+	req.headers.origin = ''http://localhost:3301'
+	req.headers.referer = 'http://localhost:3301/my-page'
 	req.originalUrl (Express)
 	req.path (Express)
-	req.headers
-	req.headers.host = 'localhost:3206'
-	req.headers.origin = ''http://localhost:3301' // 
-	req.headers.referer = 'http://localhost:3301/my-page'
 	req.params (url/:key)
 	req.query (url?key=value)
 	req.body (JSON body)
@@ -92,7 +91,7 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	// From: https://levelup.gitconnected.com/the-definite-guide-to-handling-errors-gracefully-in-javascript-58424d9c60e6
 	/** throw new CustomError(`Account not found`, 404) */
 	module.exports.CustomError = class CustomError extends Error {
-	  constructor (message, status) {
+	  constructor (message, status = 400) {
 	    super(message)
 	    if (Error.captureStackTrace) Error.captureStackTrace(this, CustomError)
 	    this.status = status
@@ -228,6 +227,7 @@ https://www.npmjs.org/package/ejs
 	yarn add dotenv
 
 	require('dotenv').config()
+	require('dotenv').config({ path: '.env.local' })
 
 
 ## JWT - JSON Web Token
@@ -279,6 +279,13 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	#!/usr/bin/env node
 	'use strict'
 	console.log('process.argv', process.argv.length)
+
+	// Get all values
+	Object.keys(process.env)
+    .map((key, i) => ({ key, value: Object.values(process.env)[i] }))
+    .filter(({ key }) => !key.startsWith('npm_'))
+    .sort((a, b) => a.key > b.key ? 1 : (a.key < b.key ? -1 : 0))
+    .map(({ key, value }) => `${key}=${value}`)
 
 	// Check if running from command-line
 	if (process.argv[1].split('/').pop() === 'myJsFilename') {

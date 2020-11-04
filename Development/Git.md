@@ -133,9 +133,9 @@ Unstage file not yet committed:
 	git add ...
 	git commit -c ORIG_HEAD
 
-### delete branch both locally and remotely
+### Delete branch both locally and remotely
 
-	git branch -d MY-BRANCH && git push origin :MY-BRANCH   # (caps D for force deletion)
+	git branch -d MYBRANCH && git push origin :MYBRANCH   # (caps D for force deletion)
 
 	git checkout -b production # get new from server, create branch
 

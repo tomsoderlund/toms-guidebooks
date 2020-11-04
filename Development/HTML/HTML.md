@@ -155,36 +155,36 @@ input[type="range"]::-ms-thumb:hover {
 
 Toggle Switch:
 
-.toggle-switch-container {
+.toggle-switch {
   position: relative;
   display: inline-block;
 }
-.toggle-switch-container > input {
+.toggle-switch > input {
   display: none;
 }
-.toggle-switch-container > label {
+.toggle-switch > label {
   display: block;
-  width: 48px;
+  width: 3em;
   height: 1.5em;
   text-indent: -150%;
   clip: rect(0 0 0 0);
   color: transparent;
   user-select: none;
 }
-.toggle-switch-container > label:before, .toggle-switch-container > label:after {
+.toggle-switch > label:before, .toggle-switch > label:after {
   content: "";
   display: block;
   position: absolute;
   cursor: pointer;
 }
-.toggle-switch-container > label:before {
+.toggle-switch > label:before {
   width: 100%;
   height: 100%;
   background-color: gray;
   border-radius: 1.5em;
-  transition: background-color 0.25s ease;
+  transition: background-color 0.1s ease;
 }
-.toggle-switch-container > label:after {
+.toggle-switch > label:after {
   top: 0;
   left: 0;
   width: 1.5em;
@@ -192,17 +192,18 @@ Toggle Switch:
   border-radius: 1.5em;
   background-color: white;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
-  transition: left 0.25s ease, box-shadow 0.1s;
+  transition: left 0.1s ease, box-shadow 0.1s;
 }
-.toggle-switch-container > label:hover:after {
+.toggle-switch > label:hover:after {
   box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.5);
 }
-.toggle-switch-container > input:checked + label:before {
+.toggle-switch > input:checked + label:before {
   background-color: #00CED1;
 }
-.toggle-switch-container > input:checked + label:after {
-  left: calc(100% - 23px);
+.toggle-switch > input:checked + label:after {
+  left: calc(100% - (3em / 2));
 }
+
 
 ----------
 
