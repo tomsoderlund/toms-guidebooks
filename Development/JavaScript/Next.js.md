@@ -4,6 +4,24 @@
   cd my-app
   now dev
 
+## Build - blank project
+
+HTML 3.44 kB, JS 65.1 kB
+
+    Page                                                           Size     First Load JS
+    ┌ ○ /                                                          3.44 kB        65.1 kB
+    ├   └ css/9c4381274c2a4fd9d205.css                             669 B
+    ├   /_app                                                      0 B            61.6 kB
+    ├ ○ /404                                                       3.44 kB        65.1 kB
+    └ λ /api/hello                                                 0 B            61.6 kB
+    + First Load JS shared by all                                  61.6 kB
+      ├ chunks/f6078781a05fe1bcb0902d23dbbb2662c8d200b3.e48df4.js  11.3 kB
+      ├ chunks/framework.9116e7.js                                 41.8 kB
+      ├ chunks/main.7eab65.js                                      7.31 kB
+      ├ chunks/pages/_app.627518.js                                529 B
+      ├ chunks/webpack.e06743.js                                   751 B
+      └ css/381f5b9c92d1673af027.css                               203 B
+
 ## Folders
 
 * `pages`: Page components
@@ -81,11 +99,12 @@ Note: SSR → SSG: remove getServerSideProps
     }
 
     export async function getStaticPaths() {
+      // const paths = (await getPostsList()).map(({ slug }) => ({ params: { slug } }))
       return {
         paths: [
           { params: { propNameThatMustBePartOfFolderStructure: 'value' } }
         ],
-        fallback: true or false // false -> 404, true: Next tries to generate page
+        fallback: true // false -> 404, true: Next tries to generate page
       }
     }
 
@@ -281,7 +300,7 @@ Push route:
 
     const t = (stringKeyOrArray, locale) => {
       const stringKey = Array.isArray(stringKeyOrArray) ? stringKeyOrArray[0] : stringKeyOrArray
-      if (!localeFiles[locale] || !localeFiles[locale][stringKey]) return stringKey
+      if (!localeFiles[locale] || localeFiles[locale][stringKey] === undefined) return stringKey
       return Array.isArray(stringKeyOrArray)
         ? replaceMultipleStrings(stringKeyOrArray, localeFiles[locale][stringKey])
         : localeFiles[locale][stringKey]

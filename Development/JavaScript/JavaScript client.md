@@ -1307,7 +1307,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 
 ### Events
 
-	<button onclick="myFunction()">Click me</button>
+	<button onClick="myFunction()">Click me</button>
 
 	window.myFunction = function () {
 		alert('Hello World')
@@ -1507,14 +1507,12 @@ https://www.w3schools.com/html/html5_webworkers.asp
 ### Service Workers
 
 	// From service-worker.js:
-	const channel = new BroadcastChannel('sw-messages')
-	channel.postMessage({title: 'Hello from SW'})
+	const broadcastChannel = new BroadcastChannel('sw-messages')
+	broadcastChannel.postMessage({ title: 'Hello from Service Worker' })
 
 	// From your client pages:
-	const channel = new BroadcastChannel('sw-messages')
-	channel.addEventListener('message', event => {
-	  console.log('Received', event.data)
-	})
+	const broadcastChannel = new BroadcastChannel('sw-messages')
+	broadcastChannel.addEventListener('message', event => console.log('Received', event.data))
 
 
 ## ECMAScript ES5/ES6

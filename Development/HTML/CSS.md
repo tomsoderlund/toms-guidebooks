@@ -500,7 +500,7 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
   font-weight: bold;
   font-style: italic; /* normal */
   text-decoration: underline;
-  text-transform: uppercase;
+  text-transform: uppercase; /* capitalize, sentence */
 
   letter-spacing: normal; /* 1em */
   word-spacing: normal;
@@ -618,7 +618,7 @@ https://codepen.io/tomsoderlund/pen/WNvbzXp
     filter: contrast([ <number> | <percentage> ])
     filter: drop-shadow(<length>{2,3} <color>?)
     filter: grayscale([ <number> | <percentage> ])
-    filter: hue-rotate(<angle>)
+    filter: hue-rotate(<angle>deg)
     filter: invert([ <number> | <percentage> ])
     filter: opacity([ <number> | <percentage> ])
     filter: saturate([ <number> | <percentage> ])

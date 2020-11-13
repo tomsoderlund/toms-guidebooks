@@ -2,13 +2,13 @@
 
 React Native is an easy way to build native iOS/Android (also Windows, macOS, web) using JavaScript and React.
 
-With https://expo.io the steps are easy:
+With Expo (https://expo.io) the steps are easy:
 
-1. Update expo-cli with `npm install -g expo-cli`
-1. Create a new app (`expo init`)
-2. Run it on device or simulator (`expo start`)
-3. Publish it to Expo.io (`expo publish`)
-4. Bundle it as native iOS/Android app (`expo build:ios`/`expo build:android`)
+1. Update expo-cli with `yarn global add expo-cli` (`npm install -g expo-cli`)
+2. Create a new app (`expo init [project-name]`)
+3. Run it on device or simulator (`expo start`)
+4. Publish it to Expo.io (`expo publish`)
+5. Bundle it as native iOS/Android app (`expo build:ios`/`expo build:android`)
 
 
 ## Read more
@@ -30,8 +30,65 @@ Install https://expo.io client on your device.
 
 	expo init MyReactNativeApp
 
+Templates:
+
+- **Managed workflow**: you only write JavaScript / TypeScript and Expo tools and services take care of everything else for you.
+- **Bare workflow**: you have full control over every aspect of the native project, and Expo tools and services are a little more limited.
+
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
+
+### Standard setup
+
+Create standard folders and files:
+
+	mkdir -p screens/StartScreen
+	touch screens/StartScreen/index.js
+	mkdir -p components/screen
+	touch components/screen/Screen.js
+	mkdir lib
+	mkdir config
+	touch config/config.js
+
+Install useful packages:
+
+	yarn add standard --dev
+	expo install expo-font
+	yarn add @react-navigation/native
+	Managed:
+	expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+#### package.json
+
+	"lint": "standard",
+	"fix": "standard --fix",
+	"screen": "mkdir -p screens/NewScreen && touch screens/NewScreen/index.js",
+	"v+": "yarn version --patch",
+	"v++": "yarn version --minor"
+
+#### App.js
+
+	import * as React from 'react'
+	import { NavigationContainer } from '@react-navigation/native'
+	import { createStackNavigator } from '@react-navigation/stack'
+
+	import StartScreen from './screens/StartScreen'
+
+	// const navigationPersistenceKey = 'NavigationState'
+
+	const Stack = createStackNavigator()
+
+	function App () {
+	  return (
+	    <NavigationContainer>
+	      <Stack.Navigator>
+	        <Stack.Screen name='My App Title' component={StartScreen} />
+	      </Stack.Navigator>
+	    </NavigationContainer>
+	  )
+	}
+
+	export default App
 
 ### Web development (react-native-web)
 
@@ -216,24 +273,19 @@ Animated/LayoutAnimation
 
 ### Fonts
 
-expo.Font
+https://docs.expo.io/versions/latest/sdk/font/
 
-	import { Font } from 'expo'
+	import * as Font from 'expo-font'
 
-	async componentDidMount () {
-	  await Font.loadAsync({
-	    'vollkorn-regular': require('../assets/fonts/Vollkorn-Regular.ttf')
+	function App() {
+	  const [fontsAreLoaded] = useFonts({
+	    Montserrat: require('./assets/fonts/Montserrat.ttf'),
 	  })
-	  this.setState({ fontsLoaded: true })
+
+	  if (!fontsAreLoaded) return null
+
+	  return <Text style={{ fontFamily: 'Montserrat' }} />
 	}
-
-	{this.state.fontsLoaded ? <Text style={styles.headline}>My Headline</Text> : null}
-
-	const styles = StyleSheet.create({
-	  headline: {
-	    fontFamily: 'vollkorn-regular'
-	  }
-	})
 
 ### Sounds
 
