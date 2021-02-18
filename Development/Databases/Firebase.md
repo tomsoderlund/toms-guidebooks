@@ -10,21 +10,21 @@ Old: Realtime Database
 
 ## Installing
 
-	yarn add firebase
+  yarn add firebase
 
 ## Importing
 
-	import * as firebase from 'firebase/app'
-	import 'firebase/auth'
-	import 'firebase/firestore'
+  import * as firebase from 'firebase/app'
+  import 'firebase/auth'
+  import 'firebase/firestore'
 
-	// Better with 'require', you probably need server-side
-	const firebase = require('firebase/app')
-	require('firebase/auth')
-	require('firebase/firestore')
-	require('firebase/database')
-	
-	const userRef = userId => firebase.database().ref(`users/${userId}`)
+  // Better with 'require', you probably need server-side
+  const firebase = require('firebase/app')
+  require('firebase/auth')
+  require('firebase/firestore')
+  require('firebase/database')
+  
+  const userRef = userId => firebase.database().ref(`users/${userId}`)
 
 ## Modules
 
@@ -48,7 +48,7 @@ Old: Realtime Database
 1. Enable Email/Password authentication in https://console.firebase.google.com/u/0/project/MYAPP/authentication/providers
 2. Magic link login creates user automatically.
 
-	const user = firebase.auth().currentUser
+  const user = firebase.auth().currentUser
 
 - https://firebase.google.com/docs/auth/web/email-link-auth
 - Token + user.getIdToken(): https://firebase.google.com/docs/auth/admin/verify-id-tokens + https://firebase.google.com/docs/auth/web/custom-auth
@@ -110,52 +110,52 @@ https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentSnapsho
 
 ### List
 
-	const mapsRef = db.collection('maps')
-	const mapsSnapshot = await mapsRef.get()
-	let maps = []
-	mapsSnapshot.forEach((doc) => {
-		console.log(doc.id, '=>', doc.data())
-		maps.push(doc.data())
-	})
-	return maps
+  const mapsRef = db.collection('maps')
+  const mapsSnapshot = await mapsRef.get()
+  let maps = []
+  mapsSnapshot.forEach((doc) => {
+    console.log(doc.id, '=>', doc.data())
+    maps.push(doc.data())
+  })
+  return maps
 
 Search:
 
-	citiesRef.where('capital', '==', true)
-	citiesRef.where("population", "<", 100000)
-	citiesRef.where("regions", "array-contains", "west_coast")
-	citiesRef.where('country', 'in', ['USA', 'Japan']);
+  citiesRef.where('capital', '==', true)
+  citiesRef.where("population", "<", 100000)
+  citiesRef.where("regions", "array-contains", "west_coast")
+  citiesRef.where('country', 'in', ['USA', 'Japan']);
 
 Order:
 
-	citiesRef.orderBy('name', 'desc').limit(3)
+  citiesRef.orderBy('name', 'desc').limit(3)
 
 ### Get
 
-	let getDoc = db.collection('cities').doc('DC').get()
+  let getDoc = db.collection('cities').doc('DC').get()
 
 ### Set
 
-	const cityRef = db.collection('cities').doc('LA')
-	let setDoc = cityRef.set(obj)
+  const cityRef = db.collection('cities').doc('LA')
+  let setDoc = cityRef.set(obj)
 
-	// Merge:
-	let setDoc = cityRef.set(obj, { merge: true })
-	let updateSingle = cityRef.update({ capital: true })
+  // Merge:
+  let setDoc = cityRef.set(obj, { merge: true })
+  let updateSingle = cityRef.update({ capital: true })
 
-	const docRef = db.collection('users').doc('alovelace')
-	const setName = docRef.set({ name: 'Frank' })
+  const docRef = db.collection('users').doc('alovelace')
+  const setName = docRef.set({ name: 'Frank' })
 
 ### Add to collection
 
-	let newRef = await citiesRef.add({ name: 'Tokyo' })
-	console.log('Added document with ID:', newRef.id)
+  let newRef = await citiesRef.add({ name: 'Tokyo' })
+  console.log('Added document with ID:', newRef.id)
 
 ### Delete
 
-	let deleteDoc = db.collection('cities').doc('DC').delete()
-	
-	let removeCapital = cityRef.update({ capital: FieldValue.delete() })
+  let deleteDoc = db.collection('cities').doc('DC').delete()
+  
+  let removeCapital = cityRef.update({ capital: FieldValue.delete() })
 
 ### Timestamp/Date
 
@@ -163,7 +163,10 @@ Order:
     firebase.firestore.FieldValue.serverTimestamp()
     // Server firebase-admin: admin.firestore.FieldValue.serverTimestamp()
 
+    // To Javascript Date
     conversation.dateUpdated.toDate()
+    // From Javascript Date
+    const timestamp = admin.firestore.Timestamp.fromDate(new Date())
 
 ### Geopoint
 
@@ -179,39 +182,19 @@ https://firebase.google.com/docs/functions/firestore-events
 - `onWrite`: Triggered when onCreate, onUpdate or onDelete is triggered.
 - `DocumentReference.onSnapshot`/`CollectionReference.onSnapshot`
 
-		functions.firestore
-		  .document('users/{userId}')
-		  .onUpdate((change, context) => {})
+    functions.firestore
+      .document('users/{userId}')
+      .onUpdate((change, context) => {})
 
-		const unsubscribe = db.collection('cities').onSnapshot(function (querySnaphot) {
-		  // do something with the data.
-		})
+    const unsubscribe = db.collection('cities').onSnapshot(function (querySnaphot) {
+      // do something with the data.
+    })
 
-### Admin package
+### JSON REST API for Firestore
 
-https://github.com/vercel/next.js/tree/master/examples/with-firebase-authentication
+https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)/documents/cities/LA
 
-Env:
-
-		NEXT_PUBLIC_FIREBASE_PROJECT_ID=myappname
-		NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://myappname.firebaseio.com
-		FIREBASE_CLIENT_EMAIL=firebase-adminsdk...
-		FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEv
-
-Node:
-
-		import * as admin from 'firebase-admin'
-
-	  if (!admin.apps.length) {
-	    admin.initializeApp({
-	      credential: admin.credential.cert({
-	        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-	        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-	        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-	      }),
-	      databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-	    })
-	  }
+    import FireStoreParser from 'firestore-parser'
 
 ### File Storage
 
@@ -268,36 +251,27 @@ Setup:
 
 https://firebase.google.com/docs/firestore/security/get-started
 
-		rules_version = '2';
-		service cloud.firestore {
-		  match /databases/{database}/documents {
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+        // Users data: read everything, only write to your own
+        match /users/{userId}/{document=**} {
+          allow read: if true;
+          allow write: if userId == request.auth.uid;
+        }
+      }
+    }
 
-		    // If you have a matching custom claim "account"
-		    match /accounts/{account}/{document=**} {
-		      allow read, write: if request.auth != null && request.auth.token.account == account;
-		      
-		      // Override rules for the 'conversations' subcollection
-		      match /teams/{team}/conversations/{conversation}/messages/{message} {
-		        allow read, write: if true;
-		      }
-		    }
-
-		    //match /{document=**} {
-		      //allow read, write: if true;
-		    //}
-		  }
-		}
-
-		allow read, write: if request.time < timestamp.date(2021, 7, 24);
-		allow read: if request.auth != null;
-		allow write: if request.auth.token.isAdmin == true;
+    allow read, write: if request.time < timestamp.date(2021, 7, 24);
+    allow read: if request.auth != null;
+    allow write: if request.auth.token.isAdmin == true;
     // Make sure a 'users' document exists for the requesting user before allowing any writes to the 'cities' collection
     allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid))
     // Allow the user to delete cities if their user document has the 'admin' field set to 'true'
     allow delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true
-		allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-		allow read: if resource.data.visibility == 'public';
-		allow update: if request.resource.data.population > 0
+    allow create: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+    allow read: if resource.data.visibility == 'public';
+    allow update: if request.resource.data.population > 0
 
     function isAccountUser() {
       return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.account == account;
@@ -305,8 +279,8 @@ https://firebase.google.com/docs/firestore/security/get-started
     function isAccountAdmin() {
       return isAccountUser() && get(/databases/$(database)/documents/accounts/$(account)/users/$(request.auth.uid)).data.role == 'admin';
     }
-		allow read: if isAccountUser();
-		allow write: if isAccountAdmin();
+    allow read: if isAccountUser();
+    allow write: if isAccountAdmin();
 
 #### Custom Claims (metadata)
 
@@ -319,33 +293,33 @@ https://medium.com/google-developers/controlling-data-access-using-firebase-auth
 
 Here’s an example on how to set `device_id` on a Firebase User object (on the server):
 
-	await admin.auth().setCustomUserClaims(uid, { deviceId })
+  await admin.auth().setCustomUserClaims(uid, { deviceId })
 
 Note: You can not set custom claims on the client.
 
 ##### Get custom claims/metadata (server and client)
 
 Then to retrieve the the `device_id` from the User on the server:
-	
-	const userRecord = await admin.auth().getUser(uid)
-	console.log(userRecord.customClaims.deviceId)
+  
+  const userRecord = await admin.auth().getUser(uid)
+  console.log(userRecord.customClaims.deviceId)
 
 …and on the client:
 
-	const idTokenResult = await firebase.auth().currentUser.getIdTokenResult()
-	console.log(idTokenResult.claims.deviceId)
+  const idTokenResult = await firebase.auth().currentUser.getIdTokenResult()
+  console.log(idTokenResult.claims.deviceId)
 
 ##### Use custom claims/metadata in Firebase Security Rules
 
 The neat thing is that custom claims are also available in Firebase Security Rules. This (slightly unrealistic) example only allows users with `deviceId === 123` to see the data:
 
-	{
-	  "rules": {
-	    "secureContent": {
-	      ".read": "auth.token.deviceId === 123"
-	    }
-	  }
-	}
+  {
+    "rules": {
+      "secureContent": {
+        ".read": "auth.token.deviceId === 123"
+      }
+    }
+  }
 
 
 ## Cloud Functions
@@ -357,28 +331,29 @@ https://firebase.google.com/docs/functions
 
 ### Events: on/once
 
-	  const userSnapshot = await userRef.once('value')
-	  const user = userSnapshot.val()
+    const userSnapshot = await userRef.once('value')
+    const user = userSnapshot.val()
 
 Or:
 
-	  firebaseRef.once('value', function (snapshot) {
-	    // snapshot.exportVal() has '.priority', snapshot.val() does not
-	    var newProject = _.cloneDeep(snapshot.exportVal())
-	  }, function (err) {
-	    // code to handle read error
-	  })
+    firebaseRef.once('value', function (snapshot) {
+      // snapshot.exportVal() has '.priority', snapshot.val() does not
+      var newProject = _.cloneDeep(snapshot.exportVal())
+    }, function (err) {
+      // code to handle read error
+    })
 
 queryRef
 
-	  var queryRef = ref.orderBy('created').startAt(Firebase.ServerValue.TIMESTAMP)
-	  queryRef.on('child_added', function(snap) {
-	    console.log('queryRef.child_added', snap.val())
-	  })
+    var queryRef = ref.orderBy('created').startAt(Firebase.ServerValue.TIMESTAMP)
+    queryRef.on('child_added', function(snap) {
+      console.log('queryRef.child_added', snap.val())
+    })
 
 More:
 
-- firebaseRef.once
+- firebase.database().ref('users/' + userId).set(...)
+- firebaseRef.once('value')
 - firebaseRef.on
 - firebaseRef.off
 - firebaseRef.child(keyName)
@@ -393,10 +368,10 @@ More:
 
 Not `map`, but `forEach`:
 
-	projectsSnapshot.forEach(projectSnapshot => {
-	  const projectKey = projectSnapshot.key
-	  const project = projectSnapshot.val()
-	})
+  projectsSnapshot.forEach(projectSnapshot => {
+    const projectKey = projectSnapshot.key
+    const project = projectSnapshot.val()
+  })
 
 https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
 
@@ -421,19 +396,19 @@ https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
 
 https://firebase.google.com/docs/database/security
 
-		await firebase.auth().signInWithCustomToken(firebaseToken)
+    await firebase.auth().signInWithCustomToken(firebaseToken)
 
-		data.child('createdByUser').val() === auth.uid
-	
-	    {
-	      "rules": {
-	        "users": {
-	          "$uid": {
-	            ".write": "$uid === auth.uid"
-	          }
-	        }
-	      }
-	    }
+    data.child('createdByUser').val() === auth.uid
+  
+      {
+        "rules": {
+          "users": {
+            "$uid": {
+              ".write": "$uid === auth.uid"
+            }
+          }
+        }
+      }
 
 ## Firebase + React: re-base
 
@@ -441,40 +416,86 @@ Firebase + Redux: https://github.com/prescottprue/react-redux-firebase
 
 ## Firebase in Next.js
 
-	/**
-	 * firebase module
-	 * @description Firebase implementation
-	 * @module firebase
-	 * @author Tom Söderlund
-	 */
+  /**
+   * firebase module
+   * @description Firebase implementation
+   * @module firebase
+   * @author Tom Söderlund
+   */
 
-	const firebase = require('firebase/app')
-	require('firebase/auth')
-	require('firebase/firestore')
-	require('firebase/analytics')
+  const firebase = require('firebase/app')
+  require('firebase/auth')
+  require('firebase/firestore')
+  require('firebase/analytics')
 
-	const isClientSide = require('./isClientSide')
+  const isClientSide = require('./isClientSide')
 
-	const firebaseConfig = {
-	  apiKey: process.env.FIREBASE_API_KEY,
-	  authDomain: 'MYAPPNAME.firebaseapp.com',
-	  databaseURL: 'https://MYAPPNAME.firebaseio.com',
-	  projectId: 'MYAPPNAME',
-	  storageBucket: 'MYAPPNAME.appspot.com',
-	  messagingSenderId: '741...',
-	  appId: '1:741...',
-	  measurementId: 'G-5D...'
-	}
+  const firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: 'MYAPPNAME.firebaseapp.com',
+    databaseURL: 'https://MYAPPNAME.firebaseio.com',
+    projectId: 'MYAPPNAME',
+    storageBucket: 'MYAPPNAME.appspot.com',
+    messagingSenderId: '741...',
+    appId: '1:741...',
+    measurementId: 'G-5D...'
+  }
 
-	// Initialize Firebase
-	const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
-	if (isClientSide()) firebase.analytics()
+  // Initialize Firebase
+  const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+  if (isClientSide()) firebase.analytics()
 
-	module.exports = firebaseApp
+  module.exports = firebaseApp
+
+## Importing data from JSON
+
+Set `.env`:
+
+    # Admin - see https://console.firebase.google.com/project/MYPROJECT/settings/serviceaccounts/adminsdk
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID=MYPROJECT
+    NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://MYPROJECT.firebaseio.com
+    FIREBASE_CLIENT_EMAIL=firebase-adminsdk-XXXXX@MYPROJECT.iam.gserviceaccount.com
+    FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMII...
+
+Import script:
+
+    require('dotenv').config()
+    const firebaseAdmin = require('firebase-admin')
+
+    if (!firebaseAdmin.apps.length) {
+      firebaseAdmin.initializeApp({
+        credential: firebaseAdmin.credential.cert({
+          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+          privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined
+        }),
+        databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL
+      })
+    }
+
+    // Data collections
+    const sitesCollection = () => firebaseAdmin.firestore().collection('sites')
+    const siteRef = (siteId) => sitesCollection().doc(siteId)
+
+    const mapObject = (object, mapFunction) => Object.keys(object).reduce(async (result, key) => {
+      result[key] = await mapFunction(object[key], key)
+      return result
+    }, {})
+
+    async function importData () {
+      const sites = require('./sites.json')
+      mapObject(sites, async (object, key) => {
+        console.log(key, object)
+        await siteRef(key).set(object)
+      })
+    }
+
+    importData()
+
 
 ## Custom domain for email
 
-	makamap.com TXT v=spf1 include:_spf.firebasemail.com ~all
-	makamap.com TXT firebase=MYAPPNAME
-	firebase1._domainkey.makamap.com  CNAME mail-makamap-com.dkim1._domainkey.firebasemail.com.
-	firebase2._domainkey.makamap.com  CNAME mail-makamap-com.dkim2._domainkey.firebasemail.com.
+  makamap.com TXT v=spf1 include:_spf.firebasemail.com ~all
+  makamap.com TXT firebase=MYAPPNAME
+  firebase1._domainkey.makamap.com  CNAME mail-makamap-com.dkim1._domainkey.firebasemail.com.
+  firebase2._domainkey.makamap.com  CNAME mail-makamap-com.dkim2._domainkey.firebasemail.com.

@@ -4,11 +4,13 @@ React Native is an easy way to build native iOS/Android (also Windows, macOS, we
 
 With Expo (https://expo.io) the steps are easy:
 
-1. Update expo-cli with `yarn global add expo-cli` (`npm install -g expo-cli`)
-2. Create a new app (`expo init [project-name]`)
-3. Run it on device or simulator (`expo start`)
-4. Publish it to Expo.io (`expo publish`)
-5. Bundle it as native iOS/Android app (`expo build:ios`/`expo build:android`)
+(First: update `expo-cli` with `yarn global add expo-cli` or `npm install -g expo-cli`)
+
+1. Create a new app (`expo init [project-name]`)
+2. Run it on device or simulator (`expo start`)
+3. Publish it to Expo.io (`expo publish`)
+4. Bundle it as native iOS/Android app (`expo build:ios`/`expo build:android`)
+5. Add extra packages (location) with `expo install` NOT npm/yarn.
 
 
 ## Read more
@@ -38,6 +40,14 @@ Templates:
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
 
+### Installing packages
+
+NOTE: use `expo install` primarily (rather than yarn/npm), e.g:
+
+	expo install react-native-svg
+	expo install react-native-maps
+	expo install expo-location
+
 ### Standard setup
 
 Create standard folders and files:
@@ -47,6 +57,7 @@ Create standard folders and files:
 	mkdir -p components/screen
 	touch components/screen/Screen.js
 	mkdir lib
+	mkdir hooks
 	mkdir config
 	touch config/config.js
 
@@ -125,6 +136,33 @@ Get web viewport size:
 	    )
 	  }
 	}
+
+### Components:
+
+https://reactnativeelements.com/docs/button/
+
+- Avatar
+- Badge
+- Bottom Sheet
+- Button
+- ButtonGroup
+- Card
+- CheckBox
+- Divider
+- Header
+- Icon
+- Image
+- Input
+- ListItem
+- Overlay
+- Pricing
+- Rating
+- SearchBar
+- Slider
+- SocialIcon
+- Text
+- Tile
+- Tooltip
 
 ### Styling
 
@@ -309,3 +347,66 @@ expo.Audio
 ### Apple Certificates
 
 https://developer.apple.com/account/resources/certificates/list
+
+### Styles
+
+https://reactnative.dev/docs/view-style-props
+
+backfaceVisibility
+backgroundColor
+borderColor
+  borderBottomColor, borderEndColor, borderLeftColor, borderRightColor, borderStartColor, borderTopColor
+borderWidth
+  borderBottomWidth, borderEndWidth, borderLeftWidth, borderRightWidth, borderStartWidth, borderTopWidth
+borderStyle
+  borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
+opacity
+flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
+alignContent, justifyContent
+alignItems: flex-start, flex-end, center, stretch, baseline
+alignSelf: auto, flex-start, flex-end, center, stretch, baseline
+aspectRatio: number
+direction
+display
+start, end
+left, right
+top, bottom
+width, height
+minWidth, maxWidth
+minHeight, maxHeight
+overflow
+margin, marginBottom, marginEnd, marginHorizontal, marginLeft, marginRight, marginStart, marginTop, marginVertical
+padding, paddingBottom, paddingEnd, paddingHorizontal, paddingLeft, paddingRight, paddingStart, paddingTop, paddingVertical
+position
+zIndex, elevation
+
+-----
+
+color
+fontFamily
+fontSize
+fontStyle: normal, italic
+fontVariant: small-caps, oldstyle-nums, lining-nums, tabular-nums, proportional-nums
+fontWeight
+includeFontPadding: true/false
+letterSpacing
+lineHeight
+textAlign: auto, left, right, center, justify
+textAlignVertical: auto, top, bottom, center
+textDecorationColor
+textDecorationLine
+textDecorationStyle
+textTransform
+writingDirection
+
+-----
+
+shadowColor, shadowOffset, shadowRadius, shadowOpacity
+textShadowColor, textShadowOffset, textShadowRadius
+
+-----
+
+backgroundColor
+overlayColor
+resizeMode
+tintColor

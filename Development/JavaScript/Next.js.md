@@ -1,8 +1,28 @@
 # Next.js
 
-  yarn create next-app [my-app]
-  cd my-app
-  now dev
+    yarn create next-app [my-app]
+    cd my-app
+    now dev
+    mkdir components
+
+Nice-to-have’s:
+
+jsconfig.json:
+
+    echo '{
+      "compilerOptions": {
+        "baseUrl": "."
+      }
+    }' > jsconfig.json
+
+    yarn add standard --dev
+
+    "scripts": {
+      "dev": "next dev -p 3666",
+      "deploy": "vercel --prod",
+      "lint": "standard",
+      "fix": "standard --fix",
+    }
 
 ## Build - blank project
 
@@ -78,7 +98,7 @@ Note: SSR → SSG: remove getServerSideProps
       props: {
         title: 'Logging in' // used in _app.js
       },
-      revalidate: 31536000 // refresh once a year
+      revalidate: 60 * 60 * 12 // 12 hours
     })
     export const getStaticPaths = () => ({
       paths: [],
@@ -88,17 +108,17 @@ Note: SSR → SSG: remove getServerSideProps
     // Extended version
 
     // pages/articles/[propNameThatMustBePartOfFolderStructure].js
-    export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue' } }) {
+    export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue', locale = 'en' } }) {
       const article = await getArticle(propNameThatMustBePartOfFolderStructure)
       return {
         props: {
           article
         },
-        revalidate: 60 // Seconds. This refresh time could be longer depending on how often data changes.
+        revalidate: 60 * 60 * 12 // 12 hours. This refresh time could be longer depending on how often data changes.
       }
     }
 
-    export async function getStaticPaths() {
+    export async function getStaticPaths({ locales }) {
       // const paths = (await getPostsList()).map(({ slug }) => ({ params: { slug } }))
       return {
         paths: [
@@ -376,6 +396,10 @@ vercel.json:
     import dynamic from 'next/dynamic'
     const FileUploader = dynamic(() => import('components/content/uploading/FileUploader'), { ssr: false, loading: FileUploaderTemporary })
 
+    // Dynamically load fuse.js
+    const Fuse = (await import('fuse.js')).default
+    const fuse = new Fuse(names)
+
 ### Error page
 
     import ErrorPage from 'next/error'
@@ -431,3 +455,35 @@ Customize /pages/_error.js
     }
 
     export default prepareForJSON
+
+### Markdown in React/Next.js
+
+https://github.com/remarkjs/react-markdown
+
+    import ReactMarkdown from 'react-markdown'
+    <ReactMarkdown>
+      # Hello, *world*!
+    </ReactMarkdown>
+
+MDX:
+
+    yarn add @mdx-js/loader @next/mdx
+
+    const withMDX = require('@next/mdx')({
+      extension: /\.mdx?$/
+    })
+    nextConfig.pageExtensions = ['js', 'jsx', 'mdx']
+    module.exports = withOffline(withMDX(nextConfig))
+
+Page:
+
+    LessonText = require(`../../content/lessons/${query.lesson}/index.mdx`).default
+
+### Locales
+
+    const nextConfig = {
+      i18n: {
+        locales: ['en', 'sv'],
+        defaultLocale: 'en'
+      }
+    }

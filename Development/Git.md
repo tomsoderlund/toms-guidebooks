@@ -207,9 +207,22 @@ Switch branch:
 
 ### Delete branch
 
-To delete a local branch:
+List branches:
 
-	git branch -d the_local_branch
+	git branch
+
+Delete local branch:
+
+	git branch -d my-branch
+	git branch -D my-branch  # force
+
+Delete remote branch:
+
+	git push -d origin my-branch
+
+Delete BOTH branches:
+
+	git branch -d my-branch; git push --delete origin my-branch
 
 ## Raymond Goo
 

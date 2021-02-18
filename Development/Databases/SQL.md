@@ -25,7 +25,7 @@ port 5432 is default
 
 ## Heroku
 
-	DATABASE_URL=postgres://xudd...
+	DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:5432/DATABASENAME
 
 Heroku Admin:
 
@@ -43,9 +43,9 @@ e.g. `WHERE person.company_id = company.id`
 	\connect my_database
 	\list my_database
 
-	\list: lists all the databases in Postgres
-	\connect: connect to a specific database
-	\dt: list the tables in the currently connected database
+	\list: lists all the databases
+	\connect: connect to database
+	\dt: list tables in database
 	\du: list users
 
 ## Rename database
@@ -89,7 +89,7 @@ https://www.npmjs.com/package/pg
 		const { Pool } = require('pg')
 		const pool = new Pool({ connectionString: config.databaseUrl })
 
-		// const results = await runDatabaseFunction(async (pool) => { ... })
+		// const results = await runDatabaseFunction(async (pool) => pool.query(sqlString))
 		module.exports.runDatabaseFunction = async function (functionToRun) {
 		  // Connect db
 		  const client = await pool.connect()
@@ -100,6 +100,15 @@ https://www.npmjs.com/package/pg
 		  await client.release()
 		  return results
 		}
+
+Pool:
+
+	const pool = new Pool({
+	  connectionString: config.databaseUrl,
+	  max: 5,
+	  idleTimeoutMillis: 5000,
+	  connectionTimeoutMillis: 3000
+	})
 
 https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
 
@@ -284,8 +293,8 @@ Multiple values:
 
 	CREATE TABLE company_person (
 	  id SERIAL PRIMARY KEY,
-	  company_id integer REFERENCES company(id) ON DELETE CASCADE,
-	  person_id integer REFERENCES person(id) ON DELETE CASCADE
+	  company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
+	  person_id integer REFERENCES "person"(id) ON DELETE CASCADE
 	);
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);

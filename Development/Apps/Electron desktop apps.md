@@ -37,6 +37,8 @@ create-react-app
 
 ## Main process vs Renderer process (backend/frontend)
 
+NOTE: `console.log` in Main process is output in terminal, not browser console.
+
 Main:
 
     const { app } = require('electron')
@@ -49,23 +51,23 @@ Renderer:
 
     // Renderer
     const { ipcRenderer } = require('electron')
-    ipcRenderer.send('channel-or-event-name', {})
+    ipcRenderer.send('myEvent', {})
 
     // Main
     const { ipcMain } = require('electron')
-    ipcMain.on('channel-or-event-name', (event, args) => {
-      event.reply('asynchronous-reply', 'pong')
+    ipcMain.on('myEvent', (event, args) => {
+      event.reply('myEvent-reply', 'pong')
     })
 
 Remove:
 
-    ipcRenderer.removeListener('channel-or-event-name', myListenerFunction)
+    ipcRenderer.removeListener('myEvent', myListenerFunction)
 
 Synchronous (sendSync, returnValue):
 
-    ipcRenderer.sendSync('channel-or-event-name', 'ping')
+    ipcRenderer.sendSync('myEvent', 'ping')
 
-    ipcMain.on('channel-or-event-name', (event, arg) => {
+    ipcMain.on('myEvent', (event, arg) => {
       event.returnValue = 'pong'
     })
 

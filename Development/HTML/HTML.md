@@ -155,6 +155,11 @@ input[type="range"]::-ms-thumb:hover {
 
 Toggle Switch:
 
+    <span class="toggle-switch">
+      <input id="toggle-switch-1" type="checkbox" />
+      <label for="toggle-switch-1" />
+    </span>
+
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -164,44 +169,44 @@ Toggle Switch:
 }
 .toggle-switch > label {
   display: block;
-  width: 3em;
-  height: 1.5em;
   text-indent: -150%;
   clip: rect(0 0 0 0);
   color: transparent;
   user-select: none;
 }
-.toggle-switch > label:before, .toggle-switch > label:after {
+.toggle-switch > label,
+.toggle-switch > label:before {
+  width: 4em;
+  height: 2.2em;
+}
+.toggle-switch > label:before,
+.toggle-switch > label:after {
   content: "";
   display: block;
   position: absolute;
   cursor: pointer;
 }
+/* Container */
 .toggle-switch > label:before {
-  width: 100%;
-  height: 100%;
-  background-color: gray;
-  border-radius: 1.5em;
+  border-radius: 1.7em;
+  background-color: rgba(0, 0, 0, 0.3);
   transition: background-color 0.1s ease;
 }
+/* Handle */
 .toggle-switch > label:after {
-  top: 0;
-  left: 0;
-  width: 1.5em;
-  height: 1.5em;
-  border-radius: 1.5em;
+  top: 0.1em;
+  left: 0.1em;
+  width: 2em;
+  height: 2em;
+  border-radius: 2em;
   background-color: white;
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
-  transition: left 0.1s ease, box-shadow 0.1s;
-}
-.toggle-switch > label:hover:after {
-  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.5);
+  transition: left 0.1s ease;
 }
 .toggle-switch > input:checked + label:before {
-  background-color: #00CED1;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 .toggle-switch > input:checked + label:after {
-  left: calc(100% - (3em / 2));
+  left: calc(100% - (4em / 2) - 0.1em);
 }
 
 

@@ -46,13 +46,45 @@ http://nodejs.org/download/
 	req.method // 'GET'
 	req.url = '/mypage?query=value'
 	req.headers.host = 'localhost:3206'
-	req.headers.origin = ''http://localhost:3301'
+	req.headers.origin = 'http://localhost:3301'
 	req.headers.referer = 'http://localhost:3301/my-page'
+	req.query (url?key=value)
+	req.body (JSON body)
+
+Express:
+
 	req.originalUrl (Express)
 	req.path (Express)
 	req.params (url/:key)
-	req.query (url?key=value)
-	req.body (JSON body)
+
+Pure Node / Vercel:
+
+	aborted
+	body
+	client
+	complete
+	cookies
+	headers
+	httpVersion
+	httpVersionMajor
+	httpVersionMinor
+	method
+	query
+	rawHeaders
+	rawTrailers
+	socket
+	statusCode
+	statusMessage
+	trailers
+	upgrade
+	url
+
+	_consuming
+	_dumped
+	_events
+	_eventsCount
+	_maxListeners
+	_readableState
 
 #### Error handling
 
@@ -75,8 +107,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 #### Generic request handler
 
-	/** handleRequest(async (req, res) => {...}, { req, res }) */
-	module.exports.handleRequest = async function handleRequest (actionFunction, { req, res }) {
+	/** export default (req, res) => handleRestRequest(async (req, res) => {...}, { req, res }) */
+	module.exports.handleRestRequest = async function handleRestRequest (actionFunction, { req, res }) {
 	  try {
 	    await actionFunction(req, res)
 	  } catch (error) {
@@ -183,6 +215,27 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
+#### html-metadata
+
+	const htmlMetadata = require('html-metadata')
+	const metadata = await htmlMetadata(url)
+
+#### cheerio
+
+	const cheerio = require('cheerio')
+	const $ = cheerio.load(htmlContent)
+
+	$(this).toString()
+	$(this).text()
+	$(this).find('.display-name').text()
+	// $(element) === $(this)
+	$('div').map(function (i, element) { console.log($(element).toString()) })
+	$element.children()
+	$element[0].name
+	$element.attr('class')
+
+	$.root().html()
+
 ### EJS
 
 https://www.npmjs.org/package/ejs
@@ -226,7 +279,7 @@ https://www.npmjs.org/package/ejs
 
 	yarn add dotenv
 
-	require('dotenv').config()
+	require('dotenv').config() // load .env file
 	require('dotenv').config({ path: '.env.local' })
 
 
@@ -280,12 +333,13 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	'use strict'
 	console.log('process.argv', process.argv.length)
 
-	// Get all values
+	// Get all env values
 	Object.keys(process.env)
-    .map((key, i) => ({ key, value: Object.values(process.env)[i] }))
-    .filter(({ key }) => !key.startsWith('npm_'))
-    .sort((a, b) => a.key > b.key ? 1 : (a.key < b.key ? -1 : 0))
-    .map(({ key, value }) => `${key}=${value}`)
+	  .map((key, i) => [key, Object.values(process.env)[i]])
+	  .filter(([key]) => !key.startsWith('rvm_') && !key.startsWith('rvm_') && !key.startsWith('_system'))
+	  .sort((a, b) => a[0] > b[0] ? 1 : (a[0] < b[0] ? -1 : 0))
+	  .map(([key, value]) => `${key}=${value}`)
+	  .join('\n')
 
 	// Check if running from command-line
 	if (process.argv[1].split('/').pop() === 'myJsFilename') {
@@ -368,6 +422,29 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 			}
 		})
 	}
+
+Read/write/delete files:
+
+	const fsReadFileAsync = (filePath) => new Promise((resolve, reject) => {
+	  fs.readFile(filePath, 'utf-8', (err, text) => {
+	    if (err) reject(err)
+	    else resolve(text)
+	  })
+	})
+
+	const fsWriteFileAsync = (filePath, text) => new Promise((resolve, reject) => {
+	  fs.writeFile(filePath, text, 'utf-8', (err) => {
+	    if (err) reject(err)
+	    else resolve(text)
+	  })
+	})
+
+	const fsDeleteFileAsync = (filePath) => new Promise((resolve, reject) => {
+	  fs.unlink(filePath, (err) => {
+	    if (err) reject(err)
+	    else resolve(true)
+	  })
+	})
 
 	// List files in folder
 	const { promises: fs } = require('fs')

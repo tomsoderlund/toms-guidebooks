@@ -106,8 +106,10 @@ To get the last row of a submitted data (e.g. in columns A...Z) is a tiny bit ea
 
 ---------- CONTACT LISTS ----------
 
-Slug:
+Slug/slug:
 =SUBSTITUTE(LOWER($A2), " ", "-")
+Camelcase:
+=REGEXREPLACE(LOWER(LEFT($A3)) & MID(SUBSTITUTE(PROPER($A3)," ",""), 2, LEN($A3)), "[^A-Za-z0-9]+","")
 
 FirstName from full name:
 =REGEXEXTRACT($A2, "(\S*) ")

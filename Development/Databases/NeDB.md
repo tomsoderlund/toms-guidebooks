@@ -11,11 +11,15 @@ https://github.com/louischatriot/nedb
 const { app } = require('electron')
 const Datastore = require('nedb-promises')
 
-const dbFactory = (fileName) => Datastore.create({
-  filename: `${isDevelopment() ? '.' : app.getAppPath('userData')}/data/${fileName}`,
-  autoload: true,
-  // timestampData: true
-})
+const dbFactory = (fileName) => {
+  const filename = `${isDevelopment() ? '.' : app.getAppPath('userData')}/data/${fileName}`
+  console.log(`Loading NEDB database:`, filename)
+  return Datastore.create({
+    filename,
+    autoload: true
+    // timestampData: true
+  })
+}
 
 const database = {
   tags: dbFactory('tags.db')
@@ -31,4 +35,15 @@ module.exports = database
 
     const tag = await database.tags.insert({ name: 'wow', hej: 'ok', _modified: true })
 
+## Update
+
+    database.tags.update(query, update, { returnUpdatedDocs: false })
+
+## Delete
+
+    database.tags.remove([query], [options]) 
+
 Note: fields can start with `_` but not with `$` (exception).
+
+
+

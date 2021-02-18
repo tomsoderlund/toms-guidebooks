@@ -4,7 +4,7 @@
 
 Exclude:
 
--node_modules/,-.tmp/,-build/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
+-node_modules/,-.tmp/,-build/,-builds/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
 
 Note: no initial slash /
 

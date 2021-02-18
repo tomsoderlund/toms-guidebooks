@@ -40,6 +40,12 @@ Example:
 	find . -type d -empty -print
 	find . -type d -empty -delete
 
+### Find node_modules
+
+https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-machine-and-free-up-hd-space-f3954843aeda
+
+	find . -name "node_modules" -type d -prune | xargs du -chs
+
 ## File lists
 
 ### List files with relative path
@@ -112,6 +118,14 @@ List all except a pattern:
 
 	# Only show lines 4 chars
 	awk '{ if (length($0) > 4) print }' yourfile > your_output_file.txt
+
+### Write to text file
+
+	echo '{
+	  "compilerOptions": {
+	    "baseUrl": "."
+	  }
+	}' > jsconfig.json
 
 ### Search/replace:
 

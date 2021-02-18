@@ -163,12 +163,18 @@ https://reactjs.org/docs/hooks-overview.html
 ### Forms with useState
 
     const DEFAULT_INPUTS = { firstName: '', lastName: '' }
+
     const [inputs, setInputs] = useState(DEFAULT_INPUTS)
 
     const handleInputChange = ({ target }) => {
       const value = target.type === 'checkbox' ? target.checked : target.value
       setInputs({ ...inputs, [target.name]: value })
       // setInputs(inputs => ({ ...inputs, [target.name]: value }))
+    }
+
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      doSomethingWithData(inputs)
     }
 
 Form:
@@ -207,40 +213,47 @@ Checkbox (`checked`):
 
 Fieldset:
 
-    const Fieldset = ({ children, fieldName, label, description }) => {
+    const Fieldset = ({ children, id, label, description }) => {
       return (
         <div className='fieldset' title={description}>
-          <label htmlFor={fieldName + 'Field'}>{label}:</label>
+          <label htmlFor={id + 'Field'}>{label}:</label>
           {children}
         </div>
       )
     }
 
-    const InputWithLabel = ({ fieldName, label, placeholder, description, type = 'text', autoComplete = 'off', value, handleInputChange, inProgress, required, disabled }) => (
+    const InputWithLabel = ({ id, label, placeholder, description, type = 'text', autoComplete = 'off', value, onChange, inProgress, required, disabled, className, children }) => (
       <Fieldset
-        fieldName={fieldName}
+        id={id}
         label={label}
         description={description}
       >
         <input
-          id={fieldName + 'Field'}
-          name={fieldName}
+          id={id + 'Field'}
+          name={id}
           type={type}
           autoComplete={autoComplete}
-          placeholder={placeholder || label}
+          placeholder={placeholder || description || label}
           value={value || ''}
-          onChange={handleInputChange}
+          onChange={onChange}
           required={required}
           disabled={disabled || inProgress}
+          className={className}
         />
+        {children}
       </Fieldset>
     )
 
-#### setTimeout in a React Hook
+#### setTimeout/setInterval in a React Hook
 
     useEffect(() => {
       const timer = window.setTimeout(() => console.log('Hello, World!'), 3000)
       return () => window.clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+      const timer = window.setInterval(() => setSeconds(seconds => seconds + 1), 1000)
+      return () => window.clearInterval(timer)
     }, [])
 
 #### useCountdown hook
@@ -253,7 +266,7 @@ Fieldset:
       const [timeLeft, setTimeLeft] = useState(startTimeLeft)
 
       useEffect(() => {
-        const timeoutID = window.setTimeout(() => {
+        const timeoutID = window.setInterval(() => {
           setTimeLeft(timeLeft - INTERVAL)
         }, INTERVAL)
 
@@ -287,6 +300,26 @@ Fieldset:
     // import useSavedState from '../hooks/useSavedState'
     // const [myState, setMyState] = useSavedState(propertyName)
 
+#### makeRestRequest
+
+    const makeRestRequest = async (url, data, options = { method: 'GET' }) => window.fetch(url, {
+      method: options.method,
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: data && JSON.stringify(data)
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const json = await res.json()
+          throw new Error(json.message || res.statusText)
+        }
+        return res.json()
+      })
+
+    export default makeRestRequest
 
 #### SWR Hook
 
@@ -297,14 +330,17 @@ https://github.com/zeit/swr
 #### Dynamic className
 
     <div
+      className={['base-class', ...(className ? [className] : [])].join(' ')}
+    />
+
+    <div
       className={[
         'big-package',
         ...(true ? ['selectable'] : []),
         ...(isActive ? ['selected'] : []),
         ...(false ? ['active'] : [])
       ].join(' ')}
-      onClick={onClick}
-    >
+    />
 
 ### React Context
 
@@ -466,6 +502,8 @@ or:
 
 ##### Custom SVG component
 
+Note: see SVG usage above
+
     import React from 'react'
     import SVGInline from 'react-svg-inline'
 
@@ -477,13 +515,14 @@ or:
           svg={require(`public/images/icons/${type}.svg`).default}
           width={width}
           height={height}
-          fill={color}
+          fill={color ? color : undefined}
+          cleanup={color ? true : undefined}
           style={{
             display: 'inline-block',
+            verticalAlign: 'text-top',
             transition: 'transform 0.3s',
             ...(rotation && { transform: `rotate(${rotation}deg)` })
           }}
-          cleanup
         />
       )
     }
@@ -619,6 +658,8 @@ Install Storybook. Checks if you use React/Angular etc. Works with `yarn` too.
 
 ### React Games (react-game-kit)
 
+Note: OLD maybe not use
+
 - Loop: context.loop.(un)subscribe
 
 
@@ -717,7 +758,7 @@ https://github.com/atlassian/react-beautiful-dnd
 ### Links
 
   <a
-    href='url'
+    href={url}
     target='_blank'
     rel='noopener noreferrer'
   >
@@ -729,3 +770,104 @@ https://github.com/atlassian/react-beautiful-dnd
 react-toastify
 
 https://github.com/trustlinc/trustlinc-app/commit/a798ca1bd6dfb17bd728d9dc84e9b3c8c79aadac
+
+### React Maps with react-map-gl
+
+https://visgl.github.io/react-map-gl/
+
+1. `yarn add react-map-gl`
+2. You need a Mapbox API token: https://account.mapbox.com/
+3. CSS for your mapbox-gl version (`yarn list mapbox-gl`): <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+4. React code:
+
+    import React, { useState } from 'react'
+    import ReactMapGL, { Marker } from 'react-map-gl'
+
+    import { config } from 'config/config'
+
+    function MapPage () {
+      const [viewport, setViewport] = useState({
+        width: '100vw',
+        height: '100vh',
+        latitude: 59.32003624836317,
+        longitude: 18.06499608,
+        zoom: 11 // higher = zoom in
+      })
+
+      return (
+        <>
+          <ReactMapGL
+            {...viewport}
+            onViewportChange={nextViewport => setViewport(nextViewport)}
+            mapStyle='mapbox://styles/mapbox/streets-v9'
+            mapboxApiAccessToken={config.mapboxPublicToken}
+          >
+            <Marker
+              latitude={latitude}
+              longitude={longitude}
+              offsetLeft={-10}
+              offsetTop={-10}
+            >
+              <MapDot />
+            </Marker>
+          </ReactMapGL>
+        </>
+      )
+    }
+
+    export default MapPage
+
+### useLocalStorage
+
+    import { useState, useEffect } from 'react'
+
+    // import useLocalStorage from 'hooks/useLocalStorage'
+    // const [value, setValue] = useLocalStorage(propertyName)
+    export default function useLocalStorage (propertyName, defaultValue) {
+      const [value, setValueInState] = useState(defaultValue)
+
+      const setValueInLocalStorage = (propertyValue) => {
+        setValueInState(propertyValue)
+        const propertyValueObject = typeof propertyValue === 'object'
+          ? JSON.stringify(propertyValue)
+          : propertyValue
+        window.localStorage.setItem(propertyName, propertyValueObject)
+      }
+
+      useEffect(() => {
+        const propertyValue = window.localStorage.getItem(propertyName)
+        const propertyValueObject = (propertyValue.startsWith('{') || propertyValue.startsWith('['))
+          ? JSON.parse(propertyValue)
+          : propertyValue
+        setValueInState(propertyValueObject || defaultValue)
+      }, [propertyName])
+
+      return [value, setValueInLocalStorage]
+    }
+
+### useDebounce
+
+    // E.g. const debouncedSearchTerm = useDebounce(searchTerm, 500, value => console.log(value))
+    // https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
+    import { useState, useEffect } from 'react'
+
+    export default function useDebounce (value, delay, onChange) {
+      const [debouncedValue, setDebouncedValue] = useState(value)
+
+      useEffect(
+        () => {
+          const handler = setTimeout(() => {
+            setDebouncedValue(value)
+            if (onChange) onChange(value)
+          }, delay)
+          return () => clearTimeout(handler)
+        },
+        [value]
+      )
+
+      return debouncedValue
+    }
+
+### Invalid hook call
+
+   yarn list react # OR: npm ls react

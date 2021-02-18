@@ -411,7 +411,7 @@ http://javascript.crockford.com/prototypal.html
 	const round = (value, decimals = 2) => parseFloat(value.toFixed(decimals))
 
 	// Limit value between max and min
-	const limitValue = (value, min, max) => Math.min(Math.max(value, min), max)
+	const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
 	parseInt(StringorNum) // to int
 	parseFloat(StringorNum) // to float
@@ -424,11 +424,9 @@ http://javascript.crockford.com/prototypal.html
 	}
 
 	const interpolate = function (fraction, min, max) {
-		var result = min + (fraction * (max - min))
-		// If min and max are integers, return integer
-		if (min % 1 === 0 && max % 1 === 0)
-			result = Math.round(result)
-		return result
+	  const result = min + (fraction * (max - min))
+	  // If min and max are integers, return integer
+	  return (min % 1 === 0 && max % 1 === 0) ? Math.round(result) : result
 	}
 
 	const wrapPageNumber = (incr = 1) => (incr + pageNumber + numPages - 1) % numPages + 1
@@ -652,6 +650,9 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	fileExtension = filename.substring(filename.lastIndexOf('_')+1, filename.length)
 
+	const stringMaxLength = (str, maxLength = 20) => (str.length > maxLength) ? str.substr(0, maxLength - 1) + '…' : str
+	const getFirstSentence = str => str.replace(/[!?:;–]/g, '.').split('.')[0]
+
 ### Casing
 
 	string.toLowerCase()
@@ -659,14 +660,29 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	// See also _.capitalize and _.upperFirst
 	const titleCase = str => str.replace(/(?:^|\s|[-"'([{])+\S/g, (c) => c.toUpperCase())
-	const titleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+	const titleCaseForced = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 	const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1)
 
-	const toDash = str => replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
-	const toCamelCase = str => replace(/(\-[a-z])/g, function ($1){return $1.toUpperCase().replace('-','')})
+	const toDash = str => str.replace(/([A-Z])/g, function ($1){return "-"+$1.toLowerCase()})
+
+	// https://stackoverflow.com/a/2970667/449227
+	const toCamelCase = (str) => str.replace(
+	  /(?:^\w|[A-Z]|\b\w|\s+)/g,
+	  (match, index) => (+match === 0)
+	    ? '' // or if (/\s+/.test(match)) for white spaces
+	    : (index === 0)
+	      ? match.toLowerCase()
+	      : match.toUpperCase()
+	)
 	const toKebabCase = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
 
-	// Slug
+https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
+
+	const snakeToCamel = str => str.replace(/(_\w)/g, match => match[1].toUpperCase())
+	const camelToSnake = str => str.replace(/[\w]([A-Z])/g, match => match[0] + '_' + match[1]).toLowerCase()
+
+Slugs:
+
 	const toSlug = str => str.trim().replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
 
 	const toSlug = function (str, removeInternationalChars) {
@@ -690,11 +706,6 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	    .replace(/--/g, '-') // fix for the '- ' case
 	  return newStr
 	}
-
-https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
-
-	const snakeToCamel = str => str.replace(/(_\w)/g, match => match[1].toUpperCase())
-	const camelToSnake = str => str.replace(/[\w]([A-Z])/g, match => match[0] + '_' + match[1]).toLowerCase()
 
 ### Search/replace
 
@@ -846,6 +857,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	var myCars = new Array() // regular array (add an optional integer)
 	var justSaabCars = Array(3).fill('Saab') // can't `map` over empty array slots
+	const padding = (count, fill = '0') => Array(count).fill(fill).join('')
 	var justSaabCars = [...Array(6)].map((val, index) => 'Saab')
 	Array(100).fill(1).forEach((nr, index) => console.log(`generateCode(${index}):`, generateCode(index)))
 
@@ -887,6 +899,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	newarray = array.slice().reverse()
 
 ### Randomize/shuffle array
+
+	const nextInArray = ALL_VALUES[(ALL_VALUES.indexOf(currentValue) + 1) % ALL_VALUES.length]
 
 	function shuffleArray (array) {
 	  const shuffledArray = [...array]
@@ -943,6 +957,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	}
 
 	const firstThreeSummary = (array) => array.length ? array.slice(0, 3).map(item => item.name).join(', ') : ''
+	const firstThreeSummaryWithIntro = (array) => array.length ? ', including ' + array.slice(0, 3).map(item => item.title).join(', ') : ''
 
 ## Collections/hashes/objects
 
@@ -1020,11 +1035,12 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	}
 
 	// Compare dates
-	var diffInMillisecs = new Date() - oldDate
+	const diffInMillisecs = (oldDate, newDate = new Date()) => newDate - oldDate
+	const diffInDays = (oldDate, newDate = new Date()) => (newDate - oldDate) / (24 * 60 * 60 * 1000)
 
 	// Add to date
-	futureDate = (startDate, days) => new Date(startDate.getTime() + days*24*60*60*1000)
-	oneYearFromNow = new Date(Date.now() + 365*24*60*60*1000)
+	const futureDate = (startDate, days) => new Date(startDate.getTime() + days * 24 * 60 * 60 * 1000)
+	const oneYearFromNow = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
 
 	// Calculate difference between dates
 	const daysBetweenDates = (date1, date2 = new Date()) => (date2.getTime() - date1.getTime()) / (24*60*60*1000)
@@ -1055,7 +1071,7 @@ Use dayjs instead (smaller):
 		dayjs.extend(relativeTime)
 
 		dayjs(myDate).fromNow()
-		dayjs().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss')
+		dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
 
 Moment.js
 
@@ -1260,11 +1276,11 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 
 ## Pure Javascript (no framework)
 
-	document.getElementById('myButton') // Note: can't be chained
-	document.getElementsByClassName('myClass') // returns array
-	document.getElementsByTagName('div') // returns array
 	document.querySelectorAll('#mylink img') // all
 	document.querySelector('#mylink img') // only FIRST
+	document.getElementsByTagName('div') // returns array
+	document.getElementsByClassName('myClass') // returns array
+	document.getElementById('myButton') // Note: can't be chained
 	document.getElementById('myButton').children[0]
 	document.getElementById('myButton').parentNode
 	// Chained:
@@ -1282,11 +1298,17 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	element.offsetLeft // also offsetTop - both relative to parent
 	element.offsetWidth // offsetHeight
 	element.dispatchEvent(new Event('change'))
+	element.appendChild
+	item.replaceChild(newNode, container.childNodes[0])
+	container.removeChild(container.childNodes[0])
 
-	// toggle class
-	const activeClass = ' inProgress'
-	const element = event.target
-	element.className = element.className.includes(activeClass) ? element.className.replace(activeClass, '') : element.className + activeClass
+	document.querySelectorAll('h3').forEach(e => console.log(e.innerText))
+
+  function toggleClass (event, className) {
+    const { target } = event
+    const classStr = ' ' + className
+     target.className =  target.className.includes(classStr) ?  target.className.replace(classStr, '') :  target.className + classStr
+  }
 
 	var setElementDisabled = function (elementId, setDisabled) {
 		setDisabled
@@ -1314,8 +1336,11 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	}
 
 	document.getElementById('myButton').addEventListener('click', function (event) {
-		console.log('Click!', event)
+		console.log('Click!', event, this)
 	})
+  document.querySelectorAll('.tag').forEach(element => element.addEventListener('click', function (event) {
+    console.log('Click!', event, this)
+  }))
 
 	element.dispatchEvent(new Event('change'))
 	element.addEventListener('change', myFunction)
@@ -1394,10 +1419,6 @@ Tip: event handlers on `document` for move/end:
 
 	const domain = await fetch(url).then(res => res.json()) // or res.text() for HTML
 
-	fetch(url)
-		.then(res => res.json())
-		.then(resJson => setResults(resJson))
-
 	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
@@ -1408,6 +1429,13 @@ Tip: event handlers on `document` for move/end:
 		body: JSON.stringify(data)
 	})
 	.then(res => res.json())
+
+	// JWT Token
+	fetch(`${config.appUrl}api/domains`, {
+		method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+		body: JSON.stringify(data)
+	})
 
 Axios: similar but URL is part of object
 
@@ -1624,8 +1652,10 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 
 Promise.all/race:
 
-  const promiseArray = userIds.map(userId => getUser(userId))
-  const userArray = await Promise.all(promiseArray)
+  const userArray = await Promise.all(userIds.map(userId => getUser(userId)))
+
+  const userArrayPromises = userIds.map(userId => getUser(userId))
+  const userArray = await Promise.all(userArrayPromises)
 
 	Promise.all(promiseArrayOrObject)
 		.then(...)
@@ -1666,7 +1696,13 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// unique
 	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
 
-	// map(object) from Lodash
+	// compact
+	export const removeUndefined = (values) => values.filter(value => value !== undefined)
+
+	// Get keys and values
+	Object.keys(collection).map(key => [key, collection[key]])
+	
+	// mapObject(collection, (object, key) => console.log(key, object))
 	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
 		result[key] = mapFunction(object[key], key)
 		return result

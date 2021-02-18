@@ -1,5 +1,14 @@
 ## MongoDB
 
+Structure:
+
+- Project: Weld Staging
+- Cluster: "whatever", e.g. Users, Domains, Subscriptions, Symbols
+- Database: used in connection string <dbname>, e.g. users, symbols, domains, subscriptions
+- Collection: users, sessions, symbols
+
+    mongodb+srv://username:password@users.5bnb0.mongodb.net/dbname?retryWrites=true&w=majority
+
 Install
 
   brew tap mongodb/brew
@@ -446,7 +455,9 @@ http://stackoverflow.com/questions/7267102/how-do-i-update-upsert-a-document-in-
 
 ### Backups: mongodump / mongorestore
 
-mongorestore --db weld-live-20160113 heroku_app21501008/
+    mongodump --uri mongodb+srv://USERNAME@symbols.XYZ.mongodb.net/
+
+    mongorestore -d NEW_DB_NAME --uri mongodb+srv://USERNAME@users.XYZ.mongodb.net/NEW_DB_NAME dump/OLD_DB_NAME
 
 #### Henrics: Restore one document/project
 

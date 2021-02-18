@@ -18,11 +18,11 @@ body {
   */
   color: darkslategray;
 
-  /* Flexbox: */
   display: flex; /* inline-flex */
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  gap: 1em;
   /* flex-wrap: wrap; */
 }
 
@@ -377,8 +377,9 @@ button.inProgress:after {
 ### last-child
 
     div {
-      margin-right: 1em;
-      margin-bottom: 1em;
+      vertical-align: top;
+      margin-right: 0.5em;
+      margin-bottom: 0.5em;
     }
     div:last-child {
       margin-right: unset;
@@ -394,13 +395,13 @@ https://meyerweb.com/eric/tools/css/reset/
 .flex-parent {
   display: flex;
   flex-direction: row; /* DIRECTION: "row" is default. "column" -> create rows */
-  justify-content: space-between; /* PRIMARY AXIS: flex-start (default) / flex-end / center / space-between / space-around */
+  justify-content: space-between; /* PRIMARY AXIS: flex-start (default) / flex-end / center / space-between / space-around / space-evenly */
   align-items: center; /* SECONDARY AXIS: stretch (default) / flex-start / flex-end / center / baseline */
   flex-wrap: wrap; /* Wrap to columns, set child width e.g. 33.33% */
 
   .flex-child {
     display: flex;
-    flex: 0 1 auto; /* flex-grow (flex-shrink flex-basis), default 0 1 auto */
+    flex: 0 1 auto/2em/20%/content/main-size; /* flex-grow flex-shrink flex-basis, default is 0 1 auto */
     justify-content: center;
     align-items: center;
   }
@@ -510,11 +511,14 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
-Code: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif
+Code:
+
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 
 ### Word wrap and whitespace
 
   white-space: nowrap;
+  white-space: pre-wrap; /* for 'code' */
   word-wrap: break-word; /* break words that overflow their container */
   word-break: break-all; /* breaks all words at the end of a line */
   overflow-wrap: break-word;
@@ -578,55 +582,54 @@ https://codepen.io/tomsoderlund/pen/GRROEGL
 
 https://codepen.io/tomsoderlund/pen/WNvbzXp
 
-  .progress-button {
-    background: linear-gradient(
-      90deg,
-      $color_button_foreground 0%,
-      $color_button_foreground 50%,
-      $color_button_background 50%,
-      $color_button_background 100%
-    );
-    background-size: 400% 100%;
-    background-position: 70% 50%;
-  }
-  .progress-button.in-progress {
-    animation: animation-progress 3s 1 ease-out;
-  }
-  .progress-button.done {
-    background-position-x: 30%;
-    color: $color_button_background;
-  }
-  @keyframes animation-progress {
-    from {
-      background-position-x: 70%;
+    .progress-button {
+      background: linear-gradient(
+        90deg,
+        darkturquoise 0%, darkturquoise 45%,
+        salmon 55%, salmon 100%
+      );
+      background-size: 400% 100%;
+      background-position: 0% 50%;
     }
-    to {
-      background-position-x: 30%;
-      color: $color_button_background;
+    .progress-button.in-progress {
+      animation: animation-progress 4s 0s linear infinite;
     }
-  }
+    @keyframes animation-progress {
+      from {
+        background-position-x: 0%;
+      }
+      to {
+        background-position-x: -35%;
+      }
+    }
+    .progress-button.done {
+      animation: none;
+      background-position-x: -35%;
+    }
 
 ### Filters
 
-    filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-    filter: alpha(opacity=50);
-    filter: blur(20px) grayscale(20%);
-    filter: blur(20px);
-    filter: blur(20px);”. Wouldn’t the effect then work in firefox?
-    filter: blur(<length>)
-    filter: brightness([ <number> | <percentage> ])
-    filter: contrast([ <number> | <percentage> ])
-    filter: drop-shadow(<length>{2,3} <color>?)
-    filter: grayscale([ <number> | <percentage> ])
-    filter: hue-rotate(<angle>deg)
-    filter: invert([ <number> | <percentage> ])
-    filter: opacity([ <number> | <percentage> ])
-    filter: saturate([ <number> | <percentage> ])
-    filter: sepia(0) saturate(2);
-    filter: sepia(0) saturate(2);
-    filter: sepia(1) saturate(8);
-    filter: sepia([ <number> | <percentage> ])
-    filter: url(<url>)
+    /* URL to SVG filter */
+    filter: url("filters.svg#filter-id");
+
+    /* <filter-function> values */
+    filter: brightness(0.4);
+    filter: contrast(200%);
+    filter: grayscale(50%);
+    filter: invert(75%);
+    filter: saturate(30%);
+    filter: sepia(60%);
+    filter: hue-rotate(90deg);
+
+    filter: blur(5px);
+    filter: opacity(25%);
+    filter: drop-shadow(16px 16px 20px blue);
+
+    /* Multiple filters */
+    filter: contrast(175%) brightness(3%);
+
+    /* Use no filter */
+    filter: none;
 
 ### Other
 
@@ -646,7 +649,7 @@ https://codepen.io/tomsoderlund/pen/WNvbzXp
 
 .fx_text_shadow {
   color: #222;
-  text-shadow: 0px 2px 3px #555; /* X Y Blur Color */
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.4); /* X Y Blur Color */
   filter: dropshadow(color=#555, offX=0, offY=2); /* for IE */
 }
 
@@ -894,28 +897,28 @@ Examples:
 ### Keyframes (`animation`)
 
   .pulsate-animation {
-    /*         name              dur delay repetitions */
-    animation: keyframes-pulsate 1s 0s infinite;
+    /*        name    dur delay easing   repetitions */
+    animation: pulsate 2s 0s ease-in-out infinite;
   }
 
-  @keyframes keyframes-pulsate {
-    from {
-      background-color: rgba(255,255,255, 0);
-    }
-    to {
-      background-color: rgba(255,255,255, 0);
-    }
-  }
-
-  @keyframes keyframes-pulsate {
+  @keyframes pulsate {
     0% {
-      background-color: rgba(255,255,255, 0);
+      opacity: 1;
     }
     50% {
-      background-color: rgba(255,255,255, 1);
+      opacity: 0.5;
     }
     100% {
-      background-color: rgba(255,255,255, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
     }
   }
 
@@ -938,36 +941,6 @@ Examples:
 
     .box:nth-child(2) {
       animation-delay: -2s;
-    }
-
-### 3D Flip Animation
-
-### Progress animation
-
-    .progress-button {
-      background: linear-gradient(
-        90deg,
-        darkturquoise 0%,
-        darkturquoise 45%,
-        salmon 55%,
-        salmon 100%
-      );
-      background-size: 400% 100%;
-      background-position: 0% 50%;
-    }
-    .progress-button.in-progress {
-      animation: animation-progress 5s 0s 1;
-    }
-    .progress-button.done {
-      background-position: -50% 50%;
-    }
-    @keyframes animation-progress {
-      from {
-        background-position: 0% 50%;
-      }
-      to {
-        background-position: -50% 50%;
-      }
     }
 
 ## Pseudo classes

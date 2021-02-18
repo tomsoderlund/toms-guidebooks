@@ -1,6 +1,14 @@
 Guide: https://regex101.com/#javascript
 
+with GPT-3: https://regexishard.com/
+
 ## Patterns
+
+### Strings
+
+Remove special characters:
+
+	str.replace(/[^a-zA-Z0-9 ]/g, '')
 
 ### Numbers
 
