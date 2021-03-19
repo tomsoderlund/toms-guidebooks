@@ -9,6 +9,7 @@ with GPT-3: https://regexishard.com/
 Remove special characters:
 
 	str.replace(/[^a-zA-Z0-9 ]/g, '')
+	=REGEX_REPLACE(string, "[^a-zA-Z0-9 ]", "")
 
 ### Numbers
 

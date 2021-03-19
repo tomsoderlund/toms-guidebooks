@@ -218,7 +218,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 #### html-metadata
 
 	const htmlMetadata = require('html-metadata')
-	const metadata = await htmlMetadata(url)
+	const { general, openGraph, twitter, schemaOrg } = await htmlMetadata(url)
+	const { title, description, image } = (openGraph || general) // openGraph not always present
 
 #### cheerio
 
@@ -425,6 +426,8 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 
 Read/write/delete files:
 
+	const fs = require('fs')
+
 	const fsReadFileAsync = (filePath) => new Promise((resolve, reject) => {
 	  fs.readFile(filePath, 'utf-8', (err, text) => {
 	    if (err) reject(err)
@@ -457,6 +460,17 @@ Read/write/delete files:
 	  const parser = parse({ delimiter: ',' }, actionFunction)
 	  fs.createReadStream(require('path').join(__dirname, fileName)).pipe(parser)
 	}
+
+	const printTSV = (array, separator = '\t') => {
+	  const fieldNames = array.reduce((result, row) => unique([...result, ...Object.keys(row)]), [])
+	  const headerRow = fieldNames.join(separator)
+	  console.log(headerRow)
+	  array.forEach(row => {
+	    const dataRow = fieldNames.map(fieldName => row[fieldName]).join(separator)
+	    console.log(dataRow)
+	  })
+	}
+	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
 
 	var fs = require('fs')
 	fs.writeFile('/tmp/test', 'Hey there!', function(err) {

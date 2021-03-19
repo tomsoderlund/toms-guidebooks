@@ -535,6 +535,9 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	string.length
 
+	string.charCodeAt(index)
+	String.fromCharCode(189, 43, 190, 61)
+
 	console.log('String: “%s”, Integer: %d, Float: %f, Boolean: %s', myString, myInteger, myFloat, myBoolean)
 
 ### Make strings
@@ -833,9 +836,12 @@ Slugs:
 	decodeURIComponent('')
 
   // yarn add html-entities
-	const Entities = require('html-entities').XmlEntities
-	const entities = new Entities()
-	entities.decode('&quotKeywords by Site&quot')
+	import { decode } from 'html-entities'
+	decode('&quotKeywords by Site&quot')
+
+	// yarn add string-strip-html
+	const { stripHtml } = require('string-strip-html')
+	stripHtml('Some text <b>and</b> text.').result
 
 ### Hash
 
@@ -976,6 +982,22 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	  name: typeof stringOrObject === 'object' ? stringOrObject.name : stringOrObject,
 	  value: typeof stringOrObject === 'object' ? stringOrObject.value : stringOrObject
 	})
+
+	// Deep search in a collection
+	const findInCollection = (collection, searchString, previousKeys = []) => {
+	  const jsonPath = '$' + previousKeys.map(key => isNaN(key) ? `.${key}` : `[${key}]`).join('')
+	  const allKeys = Object.keys(collection)
+	  for (const key of allKeys) {
+	    const dataValue = collection[key]
+	    const wasFound = dataValue && JSON.stringify(dataValue).includes(searchString)
+	    const dataPath = [...previousKeys, key]
+	    if (wasFound) {
+	      findInCollection(dataValue, searchString, dataPath)
+	    } else if (previousKeys.length) {
+	      console.log(`End of search: “${searchString}”:`, jsonPath)
+	    }
+	  }
+	}
 
 ### JSON
 
@@ -1685,7 +1707,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].filter((n, index, array) => n < 2)
 	[1, 2, 3].find((n, index, array) => n < 2)
 	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
-	const sortBy = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
+	const sortByNumber = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
+	const sortByString = (array, property) => array.sort((a, b) => (a[property] < b[property]) ? -1 : ((a[property] > b[property]) ? 1 : 0))
 
 	Object.keys(obj)
 	Object.values(obj)

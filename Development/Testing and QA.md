@@ -236,6 +236,7 @@ package.json:
     "lint"
   ],
   "standard": {
+    "parser": "babel-eslint",
     "ignore": [
       ".next"
     ],
@@ -250,6 +251,12 @@ package.json:
     ]
   },
 
+For JSX/React parsing:
+
+    "standard": {
+      "parser": "babel-eslint"
+    }
+
 Running with voice feedback:
 
     yarn fix && say Lint OK || say Lint failed
@@ -261,10 +268,19 @@ Ignore line:
 
 ### ESLint
 
-  yarn add eslint --dev
-  npm install eslint --save-dev
+    yarn add eslint --dev
+    npm install eslint --save-dev
 
-Config: `.eslintrc.js`
+Config:
+
+    eslint --init
+
+`.eslintrc.js`
+
+Run:
+
+    yarn eslint src/components/**
+
 
 ### Prettier
 

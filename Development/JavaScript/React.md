@@ -330,7 +330,7 @@ https://github.com/zeit/swr
 #### Dynamic className
 
     <div
-      className={['base-class', ...(className ? [className] : [])].join(' ')}
+      className={['base-class', ...(props.className ? [props.className] : [])].join(' ')}
     />
 
     <div
@@ -603,7 +603,9 @@ setState:
 
 HTML:
 
-  <div dangerouslySetInnerHTML={{ __html: article.content }} />
+    <div
+      dangerouslySetInnerHTML={{ __html: article.content }}
+    />
 
 ### Events
 

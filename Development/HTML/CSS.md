@@ -419,7 +419,7 @@ https://meyerweb.com/eric/tools/css/reset/
     }
 
     .child.two-rows {
-      grid-row: 1 / 3;
+      grid-row: span 2 /* OR: 1 / 3 */;
       grid-column: 2;
     }
 

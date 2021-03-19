@@ -108,6 +108,7 @@ To get the last row of a submitted data (e.g. in columns A...Z) is a tiny bit ea
 
 Slug/slug:
 =SUBSTITUTE(LOWER($A2), " ", "-")
+=REGEXREPLACE(SUBSTITUTE(LOWER(Name), " ", "-"), "[^a-zA-Z0-9\\-]", "")
 Camelcase:
 =REGEXREPLACE(LOWER(LEFT($A3)) & MID(SUBSTITUTE(PROPER($A3)," ",""), 2, LEN($A3)), "[^A-Za-z0-9]+","")
 

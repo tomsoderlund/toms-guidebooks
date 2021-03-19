@@ -34,6 +34,8 @@ Compile:
     enum Color { Red, Green, Blue }
     let c: Color = Color.Green
 
+    enum LetterNumbers { A = 1, B = 2, C = 3 }
+
 ### tuple
 
     let order: [string, number] = ['apple', 2]

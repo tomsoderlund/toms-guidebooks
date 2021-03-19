@@ -40,6 +40,42 @@ Templates:
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
 
+### New React Native project with Next.js
+
+https://docs.expo.io/guides/using-nextjs/
+https://github.com/expo/expo-cli/tree/master/packages/next-adapter
+
+	npx create-next-app -e with-expo PROJECTNAME
+	(Fails:) npx create-react-native-app -t with-nextjs PROJECTNAME
+
+#### Run
+
+	yarn next dev # start the Next.js project
+	expo start # start the Expo project
+
+#### H1, H2
+
+    <Text
+      accessibilityRole='header'
+      aria-level={1}
+    >
+      This is H1
+    </Text>
+
+#### Issues
+
+##### @expo/next-adapter/document.js: Missing class properties transform
+
+yarn add babel-plugin-transform-class-properties --dev
+Babel config
+
+module.exports = {
+  presets: ['@expo/next-adapter/babel'],
+  plugins: ['@babel/plugin-proposal-class-properties']
+}
+
+##### React v17 issues, use v16.9
+
 ### Installing packages
 
 NOTE: use `expo install` primarily (rather than yarn/npm), e.g:
@@ -324,6 +360,11 @@ https://docs.expo.io/versions/latest/sdk/font/
 
 	  return <Text style={{ fontFamily: 'Montserrat' }} />
 	}
+
+### Platform-specific code
+
+	import { Platform } from 'react-native'
+	if (Platform.OS !== 'web') return null
 
 ### Sounds
 

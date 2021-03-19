@@ -1,26 +1,46 @@
 # Wordpress
 
-## Wordpress API
+## WPAPI
 
-    const WORDPRESS_BASE_URL = 'https://public-api.wordpress.com/rest/v1.1/sites/'
-    const WORDPRESS_SITE_ID = 'mysite.wordpress.com'
+How to use WPAPI with Wordpress.com (endpoint)?
+
+https://github.com/WP-API/node-wpapi
+if you need authentication
+
+https://torquemag.io/2019/02/using-express-to-build-a-node-js-server-to-proxy-the-wordpress-rest-api/
+
+    const wpapi = require('wpapi')
+    const site = await wpapi.discover(`https://${WORDPRESS_SITE_DOMAIN}`)
+
+## Wordpress API v2
+
+    https://public-api.wordpress.com/wp/v2/sites/MYSITE.wordpress.com/pages?slug=about
+
+
+## Wordpress API v1
+
     const POSTS_LIMIT = 100
+    const WORDPRESS_BASE_URL = 'https://public-api.wordpress.com/rest/v1.1/sites/'
+    const WORDPRESS_SITE_ID = 'MYSITE.wordpress.com'
+    const getWpEndpointUrl = (resource = 'posts') => `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_SITE_DOMAIN}/${resource}`
 
 ### List posts
 
 https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/
 
-    const getPostsList = function (options = {}) {
-      const { fields = 'ID,slug,title,featured_image,date,excerpt,attachments,categories,tags,sticky' } = options
+    const getPostsList = function ({ category, search, sort = 'date,DESC', fields = 'ID,slug,title,featured_image,date,excerpt,categories,tags,sticky' } = {}) {
+      const [orderBy, order] = sort.split(',')
       const url = [
-        `${WORDPRESS_BASE_URL}${WORDPRESS_SITE_ID}/posts/?`,
+        `${getWpEndpointUrl('posts')}?`,
         `fields=${fields}`,
-        options.order ? `&order_by=${options.order}&order=ASC` : '',
-        options.category ? `&category=${options.category}` : '',
-        options.search ? `&search=${options.search}` : '',
+        order ? `&order_by=${orderBy}&order=${order}` : '',
+        category ? `&category=${category}` : '',
+        search ? `&search=${search}` : '',
         `&number=${POSTS_LIMIT}`
       ].join('')
-      return fetch(url).then(res => res.json()).then(res => res.posts.map(fixWordpressPost)) // eslint-disable-line no-undef
+      return fetch(url) // eslint-disable-line no-undef
+        .then(res => res.json())
+        .then(res => res.posts.map(fixWordpressPost))
     }
 
 ### Get one post
@@ -34,18 +54,18 @@ https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/slug:%24pos
 
 Advanced:
 
-    const Entities = require('html-entities').XmlEntities
-    const entities = new Entities()
+    const { decode } = require('html-entities')
 
     const stripHtmlTags = str => str.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '')
     const stripNewLines = str => str.replace(/\n/g, '')
+    const formatDate = dateObj => `${dateObj.getFullYear()}-${('0' + (dateObj.getMonth()+1)).slice(-2)}-${('0' + dateObj.getDate()).slice(-2)}`
 
     const fixWordpressPost = post => ({
       ...post,
-      title: entities.decode(post.title),
+      title: decode(post.title),
       date: new Date(post.date),
-      dateFormatted: moment(new Date(post.date)).format('YYYY-MM-DD'),
-      excerpt: stripNewLines(stripHtmlTags(entities.decode(post.excerpt))),
+      dateFormatted: formatDate(post.date),
+      excerpt: stripNewLines(stripHtmlTags(decode(post.excerpt))),
       // url: getURL(post),
       thumbnailImageUrl: post.featured_image || getAttachmentImages(post).thumbnail,
       bigImageUrl: post.featured_image || getAttachmentImages(post).large

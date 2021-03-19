@@ -254,16 +254,36 @@ Redirect:
 
 ## Next.js: next/link (built in)
 
-  import Link from 'next/link'
+    import Link from 'next/link'
 
-  <Link
-    href='/people?peopleId=123' // Internal Next.js URL
-    as='/people/123' // Pretty URL visible for users
-  >
-    <a>My link</a>
-  </Link>
+    <Link
+      href='/people/123'
+    >
+      <a>Person</a>
+    </Link>
 
-Push route:
+or:
+
+    <Link
+      href={{
+        pathname: '/people/[personId]',
+        query: { personId: 123 }
+      }}
+    >
+      <a>Person</a>
+    </Link>
+
+### router props
+
+  asPath: '/categories/wellness?wow=true',
+  route: '/categories/[categorySlug]',
+  pathname: '/categories/[categorySlug]',
+  query: {
+    categorySlug: 'wellness',
+    wow: 'true'
+  }
+
+### Push route:
 
     import Router from 'next/router'
     Router.push(url, as, options)
@@ -272,7 +292,7 @@ Push route:
     const router = useRouter()
     router.push(href)
 
-## Next.js: next-routes
+## OLD: Next.js: next-routes
 
   // routes.js
   const routes = require('next-routes')
