@@ -224,6 +224,10 @@ Delete BOTH branches:
 
 	git branch -d my-branch; git push --delete origin my-branch
 
+## Empty commit
+
+    git commit -m 'Empty commit to force new build' --allow-empty
+
 ## Raymond Goo
 
 Here is my workflow:

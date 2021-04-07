@@ -517,7 +517,7 @@ Code:
 
 ### Word wrap and whitespace
 
-  white-space: nowrap;
+  white-space: nowrap; /* never wrap */
   white-space: pre-wrap; /* for 'code' */
   word-wrap: break-word; /* break words that overflow their container */
   word-break: break-all; /* breaks all words at the end of a line */

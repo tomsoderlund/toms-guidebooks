@@ -75,6 +75,7 @@ https://next-code-elimination.now.sh/
 
 ## Inherit another page (export/import)
 
+    export { default } from './OtherPage'
     import { default as OtherPage } from './OtherPage'
     export { getStaticProps, getStaticPaths } from './OtherPage'
 
@@ -201,6 +202,41 @@ Links:
 
     import { Link } from 'react-router-dom'
     <Link to='/users'>Users</Link>
+
+LinkOut - smart internal/external link:
+
+    import Link from 'next/link'
+
+    /** Creates external link if href includes 'http' */
+    const LinkOut = (props) => {
+      const { href, ...otherProps } = props
+      // No link
+      if (!href) {
+        return (
+          <span
+            {...props}
+          />
+        )
+      }
+      // External link
+      if (href.includes('http')) {
+        return (
+          <a
+            {...props}
+            target='_blank'
+            rel='noopener noreferrer'
+          />
+        )
+      }
+      // Internal link
+      return (
+        <Link href={href}>
+          <a {...otherProps} />
+        </Link>
+      )
+    }
+    export default LinkOut
+
 
 Optional link:
 
@@ -475,6 +511,19 @@ Customize /pages/_error.js
     }
 
     export default prepareForJSON
+
+### webpack config
+
+    const nextConfig = {
+      // For font support:
+      webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+        config.module.rules.push({
+          test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+          loader: 'file-loader?name=assets/[name].[hash].[ext]'
+        })
+        return config
+      }
+    }
 
 ### Markdown in React/Next.js
 

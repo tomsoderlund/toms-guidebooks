@@ -873,3 +873,9 @@ https://visgl.github.io/react-map-gl/
 ### Invalid hook call
 
    yarn list react # OR: npm ls react
+
+### Optimize React and Next.js
+
+https://reactjs.org/docs/optimizing-performance.html
+
+https://nextjs.org/docs/advanced-features/measuring-performance

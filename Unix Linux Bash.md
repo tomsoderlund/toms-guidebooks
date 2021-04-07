@@ -44,7 +44,7 @@ Example:
 
 https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-machine-and-free-up-hd-space-f3954843aeda
 
-	find . -name "node_modules" -type d -prune | xargs du -chs
+	find ~/Documents/Development -name "node_modules" -type d -prune | xargs du -chs
 
 ## File lists
 
@@ -274,10 +274,11 @@ http://www.alecjacobson.com/weblog/?p=649
 
 Flush DNS:
 
-	dscacheutil -flushcache
-	sudo killall -HUP mDNSResponder
+sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache
 
 Debug DNS:
+
+	dig immersive.ly ANY +noall +answer # see all
 
 	host savann.tomorroworld.com
 	dig weld.io
@@ -509,7 +510,8 @@ Make long list of images (PPT for instance):
 
 ## Time & Date
 
-	date
+	date  # Wed Apr  7 15:02:25 CEST 2021
+	date +%s.%N  # 1617800539.N
 
 
 ## Sounds & Voice

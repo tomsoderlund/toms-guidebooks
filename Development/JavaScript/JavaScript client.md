@@ -653,7 +653,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 	fileExtension = filename.substring(filename.lastIndexOf('_')+1, filename.length)
 
-	const stringMaxLength = (str, maxLength = 20) => (str.length > maxLength) ? str.substr(0, maxLength - 1) + '…' : str
+	const stringMaxLength = (str, maxLength = 20) => (str && str.length > maxLength) ? str.substr(0, maxLength - 1) + '…' : str
 	const getFirstSentence = str => str.replace(/[!?:;–]/g, '.').split('.')[0]
 
 ### Casing
@@ -675,8 +675,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	    ? '' // or if (/\s+/.test(match)) for white spaces
 	    : (index === 0)
 	      ? match.toLowerCase()
-	      : match.toUpperCase()
-	)
+	      : match.toUpperCase())
 	const toKebabCase = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
 
 https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
@@ -908,7 +907,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	const nextInArray = ALL_VALUES[(ALL_VALUES.indexOf(currentValue) + 1) % ALL_VALUES.length]
 
-	function shuffleArray (array) {
+	const shuffleArray = (array) => {
 	  const shuffledArray = [...array]
 	  let currentIndex = shuffledArray.length; let temporaryValue; let randomIndex
 	  // While there remain elements to shuffle...
@@ -983,7 +982,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	  value: typeof stringOrObject === 'object' ? stringOrObject.value : stringOrObject
 	})
 
-	// Deep search in a collection
+	// Deep search in a collection: see https://jsonpath.curiousconcept.com/
 	const findInCollection = (collection, searchString, previousKeys = []) => {
 	  const jsonPath = '$' + previousKeys.map(key => isNaN(key) ? `.${key}` : `[${key}]`).join('')
 	  const allKeys = Object.keys(collection)
@@ -1706,6 +1705,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].reduce((result, n) => result + n, 0)
 	[1, 2, 3].filter((n, index, array) => n < 2)
 	[1, 2, 3].find((n, index, array) => n < 2)
+	[1, 2, 3].every((n, index, array) => n < 2) // true if all matches
+	[1, 2, 3].some((n, index, array) => n < 2) // true if some matches
 	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
 	const sortByNumber = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
 	const sortByString = (array, property) => array.sort((a, b) => (a[property] < b[property]) ? -1 : ((a[property] > b[property]) ? 1 : 0))
@@ -1716,8 +1717,16 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// Object forEach
 	Object.keys(objects).forEach(objectId => {})
 
+	// empty
+	const empty = (obj) => obj && Object.keys(obj).length === 0 && obj.constructor === Object
+
 	// unique
 	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
+	const uniqueBy = (values, propertyName) => values.reduce((res, item) => {
+	  const exists = res.some((t) => (t[propertyName] === item[propertyName]))
+	  if (!exists) res.push(item)
+	  return res
+	}, [])
 
 	// compact
 	export const removeUndefined = (values) => values.filter(value => value !== undefined)

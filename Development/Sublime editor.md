@@ -4,11 +4,22 @@
 
 Exclude:
 
--node_modules/,-.tmp/,-build/,-builds/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
+https://coderwall.com/p/bk90bw/exclude-a-directory-from-searching-in-sublime-text-2
+
+See file `Packages/User/Preferences.sublime-settings`
+
+    "folder_exclude_patterns": ["folder1", "folder2"],
+    "index_exclude_patterns": ["folder1/*", "folder2/*"]
+
+Old:
+
+    -node_modules/,-.tmp/,-build/,-builds/,-bundle/,-out/,-dist/,-yarn*,-.next/,-__sapper__/,-.sass-cache/
 
 Note: no initial slash /
 
-"irregular whitespace": " "
+Find irregular whitespace:
+
+    "irregular whitespace": " "
 
 
 ### Difference
