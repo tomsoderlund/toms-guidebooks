@@ -513,7 +513,9 @@ none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset;
 
 Code:
 
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    code, pre {
+      font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    }
 
 ### Word wrap and whitespace
 

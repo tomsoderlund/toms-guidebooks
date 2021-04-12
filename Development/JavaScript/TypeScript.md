@@ -5,6 +5,7 @@ https://www.typescriptlang.org/docs/handbook/
     yarn global add typescript
     npm install -g typescript
 
+
 ## Run & Compile
 
     npx ts-node myfile.ts
@@ -13,6 +14,7 @@ https://www.typescriptlang.org/docs/handbook/
 Compile:
 
     tsc greeter.ts
+
 
 ## Types
 
@@ -56,9 +58,22 @@ Compile:
       (source: string, subString: string): boolean
     }
 
+### HTML types
 
-## Standard.js for TypeScript
+- https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#an-exploration-into-the-htmlelement-type
+- https://github.com/microsoft/TypeScript/blob/master/lib/lib.dom.d.ts
+
+
+## Tools
+
+### ESLint for TypeScript
+
+https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/README.md
+
+    yarn add -D eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
+### Standard.js for TypeScript
 
 https://standardjs.com/#can-i-use-a-javascript-language-variant-like-flow-or-typescript
 
-    yarn add ts-standard --save-dev
+    yarn add -D ts-standard

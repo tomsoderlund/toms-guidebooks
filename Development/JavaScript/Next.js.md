@@ -109,13 +109,13 @@ Note: SSR → SSG: remove getServerSideProps
     // Extended version
 
     // pages/articles/[propNameThatMustBePartOfFolderStructure].js
-    export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue', locale = 'en' } }) {
+    export async function getStaticProps({ params: { propNameThatMustBePartOfFolderStructure = 'defaultValue' }, locale = 'en' }) {
       const article = await getArticle(propNameThatMustBePartOfFolderStructure)
       return {
         props: {
           article
         },
-        revalidate: 60 * 60 * 12 // 12 hours. This refresh time could be longer depending on how often data changes.
+        revalidate: 60 // Seconds. This refresh time could be longer depending on how often data changes.
       }
     }
 
@@ -123,9 +123,9 @@ Note: SSR → SSG: remove getServerSideProps
       // const paths = (await getPostsList()).map(({ slug }) => ({ params: { slug } }))
       return {
         paths: [
-          { params: { propNameThatMustBePartOfFolderStructure: 'value' } }
+          { params: { propNameThatMustBePartOfFolderStructure: 'value' }, locale: 'en' }
         ],
-        fallback: true // false -> 404, true: Next tries to generate page
+        fallback: true // true -> build page if missing, false -> serve 404
       }
     }
 
