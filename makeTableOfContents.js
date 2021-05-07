@@ -41,15 +41,37 @@ const scanFolder = function (dir, done) {
   })
 }
 
+function set (object, keys, val) {
+  keys = Array.isArray(keys) ? keys : keys.split('.')
+  if (keys.length > 1) {
+    object[keys[0]] = object[keys[0]] || {}
+    return set(object[keys[0]], keys.slice(1), val)
+  }
+  object[keys[0]] = val
+}
+
+const pad = (count, str = ' ') => Array(count).fill(str).join('')
+
+const formatFileTree = (fileTree, level = 0) => {
+  return Object.keys(fileTree).map(fileName => {
+    const fileValue = fileTree[fileName]
+    const isFolder = typeof fileValue === 'object'
+    const niceName = fileName.replace('.md', '')
+    return isFolder
+      ? pad(level * 2) + `- ${niceName}:\n` + formatFileTree(fileValue, level + 1)
+      : pad(level * 2) + `- [${niceName}](./${fileValue.replace(/ /g, '%20')})`
+  }).join('\n')
+}
+
 async function makeTableOfContents ({ folderName = '.' } = {}) {
   scanFolder(folderName, (err, fileNames) => {
     const relativeFiles = fileNames.map(fileName => fileName.replace(ROOT_FOLDER, ''))
-    const formattedList = relativeFiles.map(fileName => {
-      const niceName = fileName.replace('.md', '')
-      const fileNameFixed = fileName.replace(/ /g, '%20')
-      return `- [${niceName}](./${fileNameFixed})`
-    }).join('\n')
-    console.log(formattedList)
+    const fileTree = relativeFiles.reduce((result, filePath) => {
+      let newResult = { ...result }
+      set(newResult, filePath.split('/'), filePath)
+      return newResult
+    }, {})
+    console.log(formatFileTree(fileTree))
   })
 }
 
