@@ -68,7 +68,7 @@
 
 Update table of contents:
 
-    find . -name '*.md'
+    node makeTableOfContents
 
 Create new file:
 
