@@ -2,6 +2,18 @@
 
 https://atheros.ai/blog/graphql-best-practices-for-graphql-schema-design
 
+## Interactive query tool
+
+http://localhost:4000/graphql
+
+    # Write your query or mutation here
+    query {
+      product (id: 123) {
+        name
+        brand
+      }
+    }
+
 ## Types/Scalars
 
 - Int: Signed 32‐bit integer

@@ -41,6 +41,13 @@ http://nodejs.org/download/
 			return result
 		}, {})
 
+### Express methods
+
+		router.get('/', function (req, res) {})
+		router.post('/', function (req, res) {})
+		router.put('/user', function (req, res) {})
+		router.delete('/user', function (req, res) {})
+
 ### Request object
 
 	req.method // 'GET'

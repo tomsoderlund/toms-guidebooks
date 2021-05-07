@@ -125,6 +125,23 @@ Examples:
   // Only 1 child
   React.cloneElement(child, { myProp1, myProp2 })
 
+### PropTypes
+
+    MyComponent.propTypes = {
+      optionalNumber: PropTypes.number,
+      mandatoryNumber: PropTypes.number.isRequired,
+      isOptional: PropTypes.bool,
+      complexObject: PropTypes.shape({
+        before: PropTypes.string,
+      })
+    }
+
+    MyComponent.defaultProps = {
+      optionalNumber: undefined,
+      isOptional: false,
+      complexObject: {}
+    }
+
 ### React Hooks
 
 https://reactjs.org/docs/hooks-overview.html
@@ -299,27 +316,6 @@ Fieldset:
 
     // import useSavedState from '../hooks/useSavedState'
     // const [myState, setMyState] = useSavedState(propertyName)
-
-#### makeRestRequest
-
-    const makeRestRequest = async (url, data, options = { method: 'GET' }) => window.fetch(url, {
-      method: options.method,
-      mode: 'cors',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: data && JSON.stringify(data)
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const json = await res.json()
-          throw new Error(json.message || res.statusText)
-        }
-        return res.json()
-      })
-
-    export default makeRestRequest
 
 #### SWR Hook
 
@@ -879,3 +875,24 @@ https://visgl.github.io/react-map-gl/
 https://reactjs.org/docs/optimizing-performance.html
 
 https://nextjs.org/docs/advanced-features/measuring-performance
+
+### TypeScript in React
+
+    // React.FunctionComponent alias React.FC
+    import React, { FunctionComponent, ReactElement } from 'react'
+
+    type MyComponentProps = {
+      title: string,
+      paragraph: string
+    }
+
+const MyComponent: FunctionComponent<MyComponentProps> = ({ name, value }): ReactElement => (
+const MyComponent: FunctionComponent = ({ name, value }: MyComponentProps): ReactElement => (
+      <div />
+    )
+
+    const MyComponent = ({} : IMyComponent) => {}
+
+    // JSX.Element | null
+
+    React.SyntheticEvent

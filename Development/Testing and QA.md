@@ -275,7 +275,25 @@ Config:
 
     eslint --init
 
-`.eslintrc.js`
+`.eslintrc`/`.eslintrc.js`: https://eslint.org/docs/user-guide/configuring/
+
+  {
+    plugins: [
+      'thisLib',
+      '@foo/foo'
+    ],
+    extends: [
+      'plugin:react-hooks/recommended'
+    ],
+    rules: {
+      thisLibARule: 'error',
+      fooFooSomeRule: 'error'
+    },
+    env: {
+      jqueryJquery: true,
+      fooFooEnvFoo: true
+    }
+  }
 
 Run:
 

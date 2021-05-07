@@ -4,16 +4,18 @@
 
 Exclude:
 
+https://www.sublimetext.com/docs/3/projects.html
 https://coderwall.com/p/bk90bw/exclude-a-directory-from-searching-in-sublime-text-2
 
 See Browse Packages, file `Packages/User/Preferences.sublime-settings`
 
-Cmd+P
+Cmd+P:
 
     "index_exclude_patterns": ["folder1/*", "folder2/*"]
 
 Left-side folder tree list, Find in all:
     
+    "file_exclude_patterns": ["file1"],
     "folder_exclude_patterns": ["folder1", "folder2"],
 
 Old:

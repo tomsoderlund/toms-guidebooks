@@ -2,10 +2,12 @@
 
     yarn create next-app [my-app]
     cd my-app
-    now dev
-    mkdir components
+    yarn dev
 
 Nice-to-have’s:
+
+    mkdir components
+    rm -rf pages/api; rm styles/Home.module.css
 
 jsconfig.json:
 
@@ -21,7 +23,7 @@ jsconfig.json:
       "dev": "next dev -p 3666",
       "deploy": "vercel --prod",
       "lint": "standard",
-      "fix": "standard --fix",
+      "fix": "standard --fix"
     }
 
 ## Build - blank project
@@ -120,7 +122,7 @@ Note: SSR → SSG: remove getServerSideProps
     }
 
     export async function getStaticPaths({ locales }) {
-      // const paths = (await getPostsList()).map(({ slug }) => ({ params: { slug } }))
+      // const paths = (await getPostsList()).map(({ slug }) => ({ params: { slug }, locale: 'en' }))
       return {
         paths: [
           { params: { propNameThatMustBePartOfFolderStructure: 'value' }, locale: 'en' }

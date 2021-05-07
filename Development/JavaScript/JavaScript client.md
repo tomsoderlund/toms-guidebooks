@@ -860,11 +860,11 @@ Slugs:
 
 http://www.w3schools.com/jsref/jsref_obj_array.asp
 
-	var myCars = new Array() // regular array (add an optional integer)
-	var justSaabCars = Array(3).fill('Saab') // can't `map` over empty array slots
-	const padding = (count, fill = '0') => Array(count).fill(fill).join('')
-	var justSaabCars = [...Array(6)].map((val, index) => 'Saab')
-	Array(100).fill(1).forEach((nr, index) => console.log(`generateCode(${index}):`, generateCode(index)))
+	let myCars = new Array() // regular array (add an optional integer)
+	const justSaab = Array(3).fill('Saab') // can't `map` over empty array slots
+	const itemList = [...Array(6)].map((value, index) => `Item ${index + 1}`)
+
+	const zeroPad = (count, str = '0') => Array(count).fill(str).join('')
 
 	const fillArray = (length, expression) => [...Array(length)].map((empty, index) => expression ? (typeof expression === 'function' ? expression(index) : expression) : undefined)
 	const fillMatrix = (columns, rows, expression) => [...Array(rows)].map((row, y) => [...Array(columns)].map((col, x) => expression ? (typeof expression === 'function' ? expression(x, y) : expression) : undefined))
@@ -1323,6 +1323,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	item.replaceChild(newNode, container.childNodes[0])
 	container.removeChild(container.childNodes[0])
 
+	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
 	document.querySelectorAll('h3').forEach(e => console.log(e.innerText))
 
   function toggleClass (event, className) {
@@ -1438,12 +1439,12 @@ Tip: event handlers on `document` for move/end:
 
 #### Fetch
 
-	const domain = await fetch(url).then(res => res.json()) // or res.text() for HTML
+	const domain = await window.fetch(url).then(res => res.json()) // or res.text() for HTML
 
-	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
+	const userResponse = await window.fetch(`${API_URL}/api/users/${user}`)
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
-	await fetch(`${config.appUrl}api/domains`, {
+	await window.fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
 		mode: 'no-cors', // or Access-Control-Allow-Origin: *
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -1452,13 +1453,34 @@ Tip: event handlers on `document` for move/end:
 	.then(res => res.json())
 
 	// JWT Token
-	fetch(`${config.appUrl}api/domains`, {
+	window.fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
 		body: JSON.stringify(data)
 	})
 
 Axios: similar but URL is part of object
+
+#### makeRestRequest
+
+    const makeRestRequest = async (method = 'GET', url, data) => window.fetch(url, {
+      method,
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: data && JSON.stringify(data)
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const json = await res.json()
+          throw new Error(json.message || res.statusText)
+        }
+        return res.json()
+      })
+
+    export default makeRestRequest
 
 ### DOM / IFrame
 
@@ -1691,9 +1713,9 @@ Promise.all/race:
 	(_Can_ use .then() but shouldn’t)
 
 	let [items, contactlist, itemgroup] = await Promise.all([
-		fetch('http://localhost:3000/items/get'),
-		fetch('http://localhost:3000/contactlist/get'),
-		fetch('http://localhost:3000/itemgroup/get')
+		window.fetch('http://localhost:3000/items/get'),
+		window.fetch('http://localhost:3000/contactlist/get'),
+		window.fetch('http://localhost:3000/itemgroup/get')
 	])
 
 ### Lodash in ES6 ("lodash6")
@@ -1703,8 +1725,8 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].forEach((n, index) => console.log(n))
 	[1, 2, 3].map((n, index) => n * 3)
 	[1, 2, 3].reduce((result, n) => result + n, 0)
-	[1, 2, 3].filter((n, index, array) => n < 2)
-	[1, 2, 3].find((n, index, array) => n < 2)
+	[1, 2, 3].filter((n, index, array) => n < 2) // return all matches
+	[1, 2, 3].find((n, index, array) => n < 2) // return one (first) match
 	[1, 2, 3].every((n, index, array) => n < 2) // true if all matches
 	[1, 2, 3].some((n, index, array) => n < 2) // true if some matches
 	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
@@ -1756,7 +1778,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.assign({}, o1, o2) // safe inheritance
 	const merged = {...obj1, ...obj2}
 
-	// Conditional object elements
+	// Conditional/optional object elements
 	const obj = {
 		a: 1,
 		...(true && { b: 2 }),
