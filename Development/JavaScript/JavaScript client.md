@@ -1979,8 +1979,9 @@ Related:
 
 	// includesSome (NOT pickAny/includesAny/hasAny)
 	// includesSome(url, ['localhost', 'staging'])
-	// incl = includesSome(collection1, collection2).length > 0
-  const includesSome = (collection1, collection2) => collection2.filter(childObj => collection1.includes(childObj))
+	// incl = includesSome(array1, array2).length > 0
+  const includesSome = (array1, array2) => array2.filter(childObj => array1.includes(childObj))
+  const includesSomeString = (longString, stringArray) => stringArray.reduce((result, smallString) => result || longString.includes(smallString), false)
   const startsWithSome = (collection1, collection2) => collection2load(childObj => collection1.startsWith(childObj))
   module.exports.includesSome = (collection1, collection2) => _.filter(collection2, childObj => _.includes(collection1, childObj))
   _.mixin({ 'includesSome': module.exports.includesSome })
