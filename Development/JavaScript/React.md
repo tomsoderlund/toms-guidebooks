@@ -875,24 +875,3 @@ https://visgl.github.io/react-map-gl/
 https://reactjs.org/docs/optimizing-performance.html
 
 https://nextjs.org/docs/advanced-features/measuring-performance
-
-### TypeScript in React
-
-    // React.FunctionComponent alias React.FC
-    import React, { FunctionComponent, ReactElement } from 'react'
-
-    type MyComponentProps = {
-      title: string,
-      paragraph: string
-    }
-
-const MyComponent: FunctionComponent<MyComponentProps> = ({ name, value }): ReactElement => (
-const MyComponent: FunctionComponent = ({ name, value }: MyComponentProps): ReactElement => (
-      <div />
-    )
-
-    const MyComponent = ({} : IMyComponent) => {}
-
-    // JSX.Element | null
-
-    React.SyntheticEvent

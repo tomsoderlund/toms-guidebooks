@@ -116,6 +116,7 @@ Function in interface:
 
     const elementRef = useRef() as React.MutableRefObject<HTMLButtonElement>
     const elementRef = useRef<HTMLButtonElement>();
+    const stringObj = String(myObj)
 
 ### Nested destructuring
 
@@ -148,6 +149,29 @@ With `type`-definition:
     response.items.map(
       ({ id, name, stock: { day: dayStock } }: Item) => dayStock
     );
+
+
+## TypeScript in React
+
+    // React.FunctionComponent alias React.FC
+    import React, { FunctionComponent, ReactElement } from 'react'
+
+    type MyComponentProps = {
+      title: string,
+      paragraph: string
+    }
+
+const MyComponent: FunctionComponent<MyComponentProps> = ({ name, value }): ReactElement => (
+const MyComponent: FunctionComponent = ({ name, value }: MyComponentProps): ReactElement => (
+      <div />
+    )
+
+    const MyComponent = ({} : IMyComponent) => {}
+
+    // JSX.Element | null
+
+    React.SyntheticEvent
+
 
 ## Tools
 
