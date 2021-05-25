@@ -2,9 +2,22 @@ https://github.com/jsoma/tabletop
 
     const tabletop = require('tabletop')
 
+    // const { data, tabletop } = await getGoogleSheet(sheetUrl)
     const getGoogleSheet = (sheetUrl, multipleTabs = true) => new Promise((resolve, reject) => {
       tabletop.init({ key: sheetUrl, simpleSheet: !multipleTabs, callback: (data, tabletop) => resolve({data, tabletop}), error: reject })
     })
+
+    // const { elements, columnNames } = await getGoogleSheetTab(sheetUrl, 'Tab name')
+    const getGoogleSheetTab = async (sheetUrl, tabName) => {
+      const { data } = await getGoogleSheet(sheetUrl, true)
+      return data[tabName]
+    }
+
+    // const element = await getGoogleSheetRow(sheetUrl, 'Tab name', 0)
+    const getGoogleSheetRow = async (sheetUrl = SHEET_URL, tabName, rowIndex) => {
+      const { elements } = await getGoogleSheetTab(sheetUrl, tabName)
+      return elements[rowIndex]
+    }
 
     // if simpleSheet === true, data is an array of row objects
     // if simpleSheet === false, data is a collection of sheet names

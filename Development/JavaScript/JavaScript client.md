@@ -396,6 +396,9 @@ http://javascript.crockford.com/prototypal.html
 	const otherNumber = (allNumbers, notNumber) => shuffleArray(allNumbers).filter(nr => notNumber !== nr)[0]
 
 	Seeded random: https://github.com/davidbau/seedrandom
+	const seedrandom = require('seedrandom')
+	const random = seedrandom('hello.')
+	console.log(random()) // Always 0.9282578795792454
 
 	// Serial e.g. '1464642047155-207'
 	(Date.now() + '-' + Math.floor(Math.random() * 1000))
@@ -687,7 +690,7 @@ Slugs:
 
 	const toSlug = str => str.trim().replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
 
-	const toSlug = function (str, removeInternationalChars) {
+	function toSlug (str, removeInternationalChars = true) {
 	  // Abort if not a proper string value
 	  if (!str || typeof (str) !== 'string') { return str }
 	  // For both
@@ -1142,6 +1145,8 @@ Wait, Sleep etc
 		expression ? setTimeout(func) : func()
 	}
 
+	animationFrameId = requestAnimationFrame(doInNextFrame)
+
 
 ## Drawing
 
@@ -1372,6 +1377,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 
 	event.preventDefault() // prevents the default action the browser makes on that event.
 	event.stopPropagation() // stops the event from bubbling up the event chain.
+	event.stopImmediatePropagation() // plus other event handlers
 
 #### Mouse events
 
@@ -1731,7 +1737,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].some((n, index, array) => n < 2) // true if some matches
 	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
 	const sortByNumber = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
-	const sortByString = (array, property) => array.sort((a, b) => (a[property] < b[property]) ? -1 : ((a[property] > b[property]) ? 1 : 0))
+	const sortByString = (array, property) => array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0))
 
 	Object.keys(obj)
 	Object.values(obj)
@@ -1784,6 +1790,9 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 		...(true && { b: 2 }),
 		...(true ? [1,2,3] : [])
 	}
+
+	// Optional chaining
+	const value = a?.[b]?.c
 
 	// pick
 	const { a, c } = abcObject

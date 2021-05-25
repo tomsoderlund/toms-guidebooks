@@ -233,7 +233,7 @@ Fieldset:
     const Fieldset = ({ children, id, label, description }) => {
       return (
         <div className='fieldset' title={description}>
-          <label htmlFor={id + 'Field'}>{label}:</label>
+          <label htmlFor={id + 'Field'}>{label}: </label>
           {children}
         </div>
       )
@@ -731,6 +731,19 @@ Config:
 - `velocity`: 0
 - `duration`: undefined
 - `easing`: t => t
+
+### Mouse/Touch/Pointer events
+
+onMouseDown/onMouseEnter/onMouseLeave/onMouseMove/onMouseOut/onMouseOver/onMouseUp
+
+    onMouseMove={e => console.log('onMouseMove', [e.clientX, e.clientY], [e.movementX, e.movementY])}
+    onTouchMove={e => console.log('onTouchMove', e.touches[0])}
+
+
+- clientX/Y
+- pageX/Y
+- screenX/Y
+- movementX/Y
 
 ### Drag & Drop
 

@@ -48,9 +48,12 @@ Compile:
 
 ### interface
 
-    interface order {
+    interface Order {
       product: string
       amount: number
+    }
+
+    interface OrderCompleted extends Order {
       completed?: boolean
     }
 
