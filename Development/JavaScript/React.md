@@ -76,54 +76,56 @@ Adding nice extras:
 
 Comparison:
 
-  // 1. Functional component: compact with arrow function - you can remove {return} for even more compact:
-  const MyFunctionalComponent = ({ prop1 }) => {
-    return (
-      <div>
-          <h2>About {prop1}</h2>
-        </div>
-    )
-  }
-  export default MyFunctionalComponent
+1. Functional component: compact with arrow function - you can remove {return} for even more compact:
 
-  // 2. Class component: class/extends with state etc
-  export default class MyClassComponent extends React.Component {
+		const MyFunctionalComponent = ({ prop1 }) => {
+			return (
+			  <div>
+				  <h2>About {prop1}</h2>
+				</div>
+			)
+		}
+		export default MyFunctionalComponent
 
-    constructor(props) {
-      super(props)
-      this.state = { prop1: 'this prop' }
-    }
-
-    render() {
-      console.log(this.props.prop1)
-      return (
-        <div>
-          <h2>About {this.props.prop1}</h2>
-        </div>
-      )
-    }
-
-  }
+2. Class component: class/extends with state etc
+		
+		export default class MyClassComponent extends React.Component {
+		
+		constructor(props) {
+		  super(props)
+		  this.state = { prop1: 'this prop' }
+		}
+		
+		render() {
+		  console.log(this.props.prop1)
+		  return (
+		    <div>
+		      <h2>About {this.props.prop1}</h2>
+		    </div>
+		  )
+		}
+		
+		}
 
 #### Without JSX
 
-  React.createElement(typeFunctionOrString, props, children)
+	React.createElement(typeFunctionOrString, props, children)
 
 Examples:
 
-  React.createElement('div', { styles: 'color: red' }, `Hello ${this.props.toWhat}`)
-  React.createElement(Rectangle, { className: 'apply-styles' }, children)
+	React.createElement('div', { styles: 'color: red' }, `Hello ${this.props.toWhat}`)
+	React.createElement(Rectangle, { className: 'apply-styles' }, children)
 
 #### All props
 
-  <Button {...props} />
+	<Button {...props} />
 
 #### Clone children - add props to children
 
-  const childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, { myProp1, myProp2 }))
-
-  // Only 1 child
-  React.cloneElement(child, { myProp1, myProp2 })
+	const childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, { myProp1, myProp2 }))
+	
+	// Only 1 child
+	React.cloneElement(child, { myProp1, myProp2 })
 
 ### PropTypes
 
@@ -161,9 +163,9 @@ https://reactjs.org/docs/hooks-overview.html
 
 #### useMemo vs. useCallback vs. useEffect
 
-- useMemo: return value
-- useCallback: return function
-- useEffect + useState: if need async/await
+- `useMemo`: return value
+- `useCallback`: return function
+- `useEffect` + `useState`: if need async/await
 
 #### useRef
 
@@ -342,55 +344,55 @@ https://github.com/zeit/swr
 
 Context is another way of sharing state, without using child props.
 https://reactjs.org/docs/context.html
-
-  export const MyContext = React.createContext('defaultValue') // outside hook
+	
+	export const MyContext = React.createContext('defaultValue') // outside hook
 
 Set up Provider:
 
-  <MyContext.Provider value={staticOrStateValue}>
-    {/* provide context value to children further down */}
-  </MyContext.Provider>
+	<MyContext.Provider value={staticOrStateValue}>
+		{/* provide context value to children further down */}
+	</MyContext.Provider>
 
 1) Use with Consumer:
 
-  <MyContext.Consumer>
-    {value => /* use the context value when rendering */}
-  </MyContext.Consumer>
+		<MyContext.Consumer>
+			{value => /* use the context value when rendering */}
+		</MyContext.Consumer>
 
 2) Use with hook:
 
-  const value = React.useContext(MyContext)
+		const value = React.useContext(MyContext)
 
 #### Use Context with State
 
 https://www.codementor.io/@sambhavgore/an-example-use-context-and-hooks-to-share-state-between-different-components-sgop6lnrd
 
-  import React, { createContext, useState, useContext } from 'react'
-
-  export const UserContext = createContext()
-
-  export const UserContextProvider = (props) => {
-    // Use State to keep the values. Initial values are obtained from UserContextProvider’s props.
-    const [user, setUser] = useState(props.user)
-    // Make the context object (or array)
-    const userContext = [user, setUser]
-    // Pass the value in Provider and return
-    return <UserContext.Provider value={userContext}>{props.children}</UserContext.Provider>
-  }
-
-  export const { Consumer: UserContextConsumer } = UserContext
-
-  export const useUser = () => useContext(UserContext)
+	import React, { createContext, useState, useContext } from 'react'
+	
+	export const UserContext = createContext()
+	
+	export const UserContextProvider = (props) => {
+		// Use State to keep the values. Initial values are obtained from UserContextProvider’s props.
+		const [user, setUser] = useState(props.user)
+		// Make the context object (or array)
+		const userContext = [user, setUser]
+		// Pass the value in Provider and return
+		return <UserContext.Provider value={userContext}>{props.children}</UserContext.Provider>
+	}
+	
+	export const { Consumer: UserContextConsumer } = UserContext
+	
+	export const useUser = () => useContext(UserContext)
 
 Wrap your app/page with the Provider.
 NOTE: must be wrapped on higher level than where useUser is used.
 
-  import { UserContextProvider } from './useUser'
-  <UserContextProvider user={1}>...</UserContextProvider>
-
-  // Then to use (“consume”) inside component or hook:
-
-  const [user, setUser] = useUser()
+	import { UserContextProvider } from './useUser'
+	<UserContextProvider user={1}>...</UserContextProvider>
+	
+	// Then to use (“consume”) inside component or hook:
+	
+	const [user, setUser] = useUser()
 
 
 ### Styling React
@@ -401,71 +403,71 @@ NOTE: must be wrapped on higher level than where useUser is used.
 
 #### styled-components
 
-  import styled from 'styled-components'
+	import styled from 'styled-components'
 
-  const MyComponent = styled.div`
-    font-family: ${props => props.theme.fontName};
-    color: ${weldTheme.blue};
-    background-color:  'tomato';
-  `
+	const MyComponent = styled.div`
+		font-family: ${props => props.theme.fontName};
+		color: ${weldTheme.blue};
+		background-color:  'tomato';
+	`
 
 Inheritance:
 
-  const OtherComponent = styled(MyComponent)`
-    color: orange;
-  `
+	const OtherComponent = styled(MyComponent)`
+		color: orange;
+	`
 
 or Theming:
 
-  <MyComponent theme={{ color: 'orange' }}>
-
-  const MyComponent = styled.div`
-    color: ${props => props.theme.color || 'gray'};
-  `
+	<MyComponent theme={{ color: 'orange' }}>
+	
+	const MyComponent = styled.div`
+		color: ${props => props.theme.color || 'gray'};
+	`
 
 Attributes:
 
-  const DivWithAttributes = styled.div.attrs({
-    className: 'bootstrap-button',
-    padding: props => props.size || '1em'
-  })`
-    color: palevioletred;
-    padding: ${props => props.padding};
-  `
+	const DivWithAttributes = styled.div.attrs({
+		className: 'bootstrap-button',
+		padding: props => props.size || '1em'
+	})`
+		color: palevioletred;
+		padding: ${props => props.padding};
+	`
 
 Change element type:
 
-  <PrimaryButton as='a'/>
-  // or, deprecated:
-  const PrimaryLink = PrimaryButton.withComponent('a')
+	<PrimaryButton as='a'/>
+	// or, deprecated:
+	const PrimaryLink = PrimaryButton.withComponent('a')
   
 Refer to ${ChildComponent}:
 
-  const PrimaryButton = styled.button`
-    width: 48px;
-
-    ${Icon}:hover & {
-      fill: rebeccapurple;
-    }
-  `;
+	const PrimaryButton = styled.button`
+	width: 48px;
+	
+	${Icon}:hover & {
+	  fill: rebeccapurple;
+	}
+	`;
 
 #### styled-jsx
 
 https://github.com/zeit/styled-jsx
 
-  <div>My DIV</div>
-  <style jsx>{`
-    div { background-color: ${props.theme.background}; }
-  `}</style>
+	<div>My DIV</div>
+	<style jsx>{`
+		div { background-color: ${props.theme.background}; }
+	`}</style>
 
 Global:
 
-  <style jsx>{`
-    .root :global(button:selected:hover) {
-    }
-  `}</style>
-
-  <style jsx global>
+	<style jsx>{`
+	.root :global(button:selected:hover) {
+	}
+	`}</style>
+	
+	<style jsx global>
 
 #### SVG
 
