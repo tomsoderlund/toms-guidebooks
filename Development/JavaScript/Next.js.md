@@ -103,6 +103,7 @@ Note: SSR → SSG: remove getServerSideProps
       },
       revalidate: 60 * 60 * 12 // 12 hours
     })
+
     export const getStaticPaths = () => ({
       paths: [],
       fallback: true

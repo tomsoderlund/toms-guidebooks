@@ -100,11 +100,11 @@ https://svelte.dev/tutorial/module-exports
 https://github.com/YogliB/svelte-component-template
 
 
-## Sapper
+## SvelteKit (formerly Sapper)
 
-https://sapper.svelte.dev/
+https://kit.svelte.dev/
 
-    npx degit "sveltejs/sapper-template#rollup" MYAPP  # use 'webpack' instead of 'rollup' for Webpack
+    npm init svelte@next MYAPP
     cd MYAPP
     yarn && yarn dev
 

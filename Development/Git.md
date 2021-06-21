@@ -103,9 +103,14 @@ Custom fork in `package.json`:
 
 	git checkout . # this removes all changes marked in red
 
-	git revert HEAD~3 # rollback 3 commits
+	# Setting your branch to exactly match the remote branch can be done in two steps:
+	git fetch origin
+	git reset --hard origin/BRANCHNAME
 
+	git reset 0d1d7fc32e5a947fbd92ee598033d85bfc445a50
 	git reset --hard 0d1d7fc32e5a947fbd92ee598033d85bfc445a50
+
+	git revert HEAD~3 # rollback 3 commits
 
 Reset/rollback to _specific_ commit:
 

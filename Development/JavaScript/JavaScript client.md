@@ -679,7 +679,9 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	    : (index === 0)
 	      ? match.toLowerCase()
 	      : match.toUpperCase())
-	const toKebabCase = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
+
+	const camelToKebab = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
+	const kebabToCamel = str => str.replace(/(-\w)/g, match => match[1].toUpperCase())
 
 https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
 
