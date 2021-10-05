@@ -14,6 +14,8 @@ https://app.supabase.io/
 
 ## Get data
 
+Note: will return empty array if not found.
+
 	const { data, error } = await supabase
 	  .from('geosearch_place')
 	  .select(`
