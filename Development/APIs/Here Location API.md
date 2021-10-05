@@ -1,10 +1,13 @@
-Here Location API
+# Here Location API
 
 https://developer.here.com/projects
 
+
+## Places API
+
 https://places.demo.api.here.com/places/v1/discover/explore?at=52.5310%2C13.3848&cat=eat-drink&app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg
 
-API:
+Code:
 
     const queryObjectToString = queryObject => Object.keys(queryObject).reduce((result, key) => (queryObject[key] === undefined) ? result : result + (result.length ? '&' : '?') + key + '=' + queryObject[key], '')
 

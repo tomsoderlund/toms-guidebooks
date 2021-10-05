@@ -10,6 +10,10 @@
 	gem install cocoapods --user-install
 	gem which cocoapods
 
+	# gemfile
+	bundle install
+	bundle update
+
 /Users/tomsoderlund/.gem/ruby/2.6.0/gems/cocoapods-1.10.0/bin/pod
 
 ## RVM

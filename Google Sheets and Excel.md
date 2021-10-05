@@ -65,6 +65,9 @@ Check if any of multiple strings in cell:
 
 Random string
 =CHOOSE(RANDBETWEEN(1, 2), "choice1", "choice2")
+=CHAR(RANDBETWEEN(65,90)) // large
+=CHAR(RANDBETWEEN(97,122)) // small
+=CHOOSE(RANDBETWEEN(1, 2), CHAR(RANDBETWEEN(65,90)), CHAR(RANDBETWEEN(97,122)))
 
 Join/concatenate cells to string
 =JOIN(";",{1,2,"1 2 3 4"})
@@ -72,6 +75,17 @@ Join/concatenate cells to string
 
 Get string minus two last characters
 =LEFT(B2,LEN(B2)-2)
+
+
+---------- DATE & TIME ----------
+
+=ROUND((NOW()-DATE(1970,1,1))*86400)
+=ROUND((NOW()-DATE(1970,1,1))*86400000-7205600)
+
+
+---------- MONEY ----------
+
+=GOOGLEFINANCE("CadSek")
 
 
 ---------- ARRAYS / TABLES ----------

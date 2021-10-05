@@ -441,7 +441,32 @@ Scrolling grid views: add `min-height: 0;` to parent: https://stackoverflow.com/
 
 ### Viewport units
 
-vw, vh, vmin, vmax - Web Design Weekly
+vw, vh, vmin, vmax
+
+clamp(MIN, VAL, MAX)
+
+font-size: clamp(1.5rem, 2.5vw, 4rem);
+
+### vh fix iOS Safari
+
+Viewport height is tricky on iOS Safari.
+
+Depending on the use case, `-webkit-fill-available` could work ([see article](https://allthingssmitty.com/2020/05/11/css-fix-for-100vh-in-mobile-webkit/)).
+
+I mostly have to use this JavaScript/CSS `var` fix:
+
+    .my-element {
+      height: 25vh;
+      height: calc(25 * var(--vh, 1vh));
+    }
+
+    <script type="application/javascript">
+      function handleResize () { window.document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`); }
+      window.onresize = handleResize
+      handleResize()
+    </script>
+
+Inspiration: https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 
 ### Other
 
@@ -862,7 +887,7 @@ Examples:
       /* 1.5x-specific stuff here */
     }
 
-### CSS to detect screen orientation:
+### CSS to detect screen orientation/rotation:
 
     @media screen and (orientation:portrait) { … }
     @media screen and (orientation:landscape) { … }

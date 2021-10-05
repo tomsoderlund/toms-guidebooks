@@ -408,7 +408,7 @@ NOTE: must be wrapped on higher level than where useUser is used.
 	const MyComponent = styled.div`
 		font-family: ${props => props.theme.fontName};
 		color: ${weldTheme.blue};
-		background-color:  'tomato';
+		background-color: 'tomato';
 	`
 
 Inheritance:

@@ -31,6 +31,7 @@
     - [MongoDB](./Development/Databases/MongoDB.md)
     - [NeDB](./Development/Databases/NeDB.md)
     - [SQL](./Development/Databases/SQL.md)
+    - [Supabase](./Development/Databases/Supabase.md)
   - [Git](./Development/Git.md)
   - HTML:
     - [CSS](./Development/HTML/CSS.md)
@@ -39,6 +40,7 @@
     - [SVG](./Development/HTML/SVG.md)
   - Hosting:
     - [Amazon AWS - S3 etc](./Development/Hosting/Amazon%20AWS%20-%20S3%20etc.md)
+    - [Docker](./Development/Hosting/Docker.md)
     - [Heroku](./Development/Hosting/Heroku.md)
     - [Vercel (Zeit Now)](./Development/Hosting/Vercel%20(Zeit%20Now).md)
   - JavaScript:

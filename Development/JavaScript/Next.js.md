@@ -183,6 +183,11 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 
 ## Routing/multiple pages/views
 
+https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes
+
+    [...slug].js
+    [...id].js // won't catch "no id" so index.js still needed
+
 react-router-dom:
 
 * https://reacttraining.com/react-router/web/guides/quick-start
@@ -329,6 +334,7 @@ or:
 
     import { useRouter } from 'next/router'
     const router = useRouter()
+    const { query, pathname, asPath, locale } = router
     router.push(href)
 
 ## OLD: Next.js: next-routes

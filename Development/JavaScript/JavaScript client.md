@@ -1334,9 +1334,9 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	document.querySelectorAll('h3').forEach(e => console.log(e.innerText))
 
   function toggleClass (event, className) {
-    const { target } = event
+    const { target } = event
     const classStr = ' ' + className
-     target.className =  target.className.includes(classStr) ?  target.className.replace(classStr, '') :  target.className + classStr
+    target.className = target.className.includes(classStr) ? target.className.replace(classStr, '') : target.className + classStr
   }
 
 	var setElementDisabled = function (elementId, setDisabled) {
@@ -2254,6 +2254,7 @@ http://usejsdoc.org
 	 * @constructor
 	 * @param {string} title - The title of the book.
 	 * @param {string} author - The author of the book.
+	 * @return {number} The x value
 	 */
 	function Book(title, author) {
 	}

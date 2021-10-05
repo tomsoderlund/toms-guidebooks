@@ -36,6 +36,7 @@ heroku apps:destroy -a appname
 heroku features:enable preboot # double servers
 
 git push heroku master
+git push heroku production -a 
 
 heroku rename NEWNAME #also renames Heroku-Git remote
 

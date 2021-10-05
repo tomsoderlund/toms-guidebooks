@@ -66,7 +66,7 @@ List all except a pattern:
 ## Finding files
 
 	ls
-	find
+	find .
 
 	find /usr/bin -name 'filename*'
 	find . -type d -name '.svn' -exec rm -rf {} \;
