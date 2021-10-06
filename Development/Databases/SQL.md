@@ -2,37 +2,37 @@
 
 To have launchd start postgresql now and restart at login:
 
-  brew services start postgresql
+	brew services start postgresql
 
 Or, if you don't want/need a background service you can just run:
 
-  pg_ctl -D /usr/local/var/postgres start
+	pg_ctl -D /usr/local/var/postgres start
 
 port 5432 is default
 
 ## PSQL Admin
 
-  psql postgres
-  psql -U myUser
-
-  psql -h <hostname> -p <port_no> -U <db_username> -d <database_name> -W
-  psql -h ec2-54-225-89-156.compute-1.amazonaws.com -p 5432 -U pmhuletkaeiyep -d d59asl859nm30e -W
-
-  \q to quit/exit
-
-  \du
+	psql postgres
+	psql -U myUser
+	
+	psql -h <hostname> -p <port_no> -U <db_username> -d <database_name> -W
+	psql -h ec2-54-225-89-156.compute-1.amazonaws.com -p 5432 -U pmhuletkaeiyep -d d59asl859nm30e -W
+	
+	\q to quit/exit
+	
+	\du
 
 ## URL in config
 
-  postgresql://localhost/my_database
+	postgresql://localhost/my_database
 
 ## Heroku
 
-  DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:5432/DATABASENAME
+	DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:5432/DATABASENAME
 
 Heroku Admin:
 
-  heroku pg:psql postgresql-graceful-74509
+	heroku pg:psql postgresql-graceful-74509
 
 Better to use Postico (MacOS) or similar instead.
 
@@ -41,19 +41,19 @@ Better to use Postico (MacOS) or similar instead.
 Tip: table names as _singular_ (Company, Person) – https://stackoverflow.com/a/5841297/449227  
 e.g. `WHERE person.company_id = company.id`
 
-  CREATE DATABASE my_database;
-  GRANT ALL PRIVILEGES ON DATABASE my_database TO YOUR-USER-NAME;
-  \connect my_database
-  \list my_database
-
-  \list: lists all the databases
-  \connect: connect to database
-  \dt: list tables in database
-  \du: list users
+	CREATE DATABASE my_database;
+	GRANT ALL PRIVILEGES ON DATABASE my_database TO YOUR-USER-NAME;
+	\connect my_database
+	\list my_database
+	
+	\list: lists all the databases
+	\connect: connect to database
+	\dt: list tables in database
+	\du: list users
 
 ## Rename database
 
-  ALTER DATABASE "db" RENAME TO "newdb";
+	ALTER DATABASE "db" RENAME TO "newdb";
 
 ## Data types
 
@@ -82,7 +82,7 @@ e.g. `WHERE person.company_id = company.id`
 
 ## Export data
 
-  COPY domain_update TO '/Users/tomsoderlund/Documents/Projects/Weld.io/Development/weld-extensions/site-activity-index/data/domain_update.csv' DELIMITER ',' CSV HEADER;
+	COPY domain_update TO './data/domain_update.csv' DELIMITER ',' CSV HEADER;
 
 
 ### From JavaScript to SQL
@@ -139,81 +139,81 @@ https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node
 
 Select:
 
-  const getCompany = async function (pool, req, res, next) {
-    const sqlString = `SELECT * FROM company WHERE id = $1;`
-    const { rows } = await pool.query(sqlString, [req.params.id])
-    res.json(rows[0])
-  }
+	  const getCompany = async function (pool, req, res, next) {
+	    const sqlString = `SELECT * FROM company WHERE id = $1;`
+	    const { rows } = await pool.query(sqlString, [req.params.id])
+	    res.json(rows[0])
+	  }
 
 Insert:
 
-  // sqlCreate('person', { person values... })
-  const sqlCreate = (tableName, object) => {
-    const fieldNames = Object.keys(object).join(', ')
-    const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
-    const text = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
-    const values = Object.values(object)
-    return { text, values }
-  }
+	  // sqlCreate('person', { person values... })
+	  const sqlCreate = (tableName, object) => {
+	    const fieldNames = Object.keys(object).join(', ')
+	    const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
+	    const text = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
+	    const values = Object.values(object)
+	    return { text, values }
+	  }
 
 Update:
 
-  // sqlUpdate('person', { id: person.id }, { person values... })
-  const sqlUpdate = (tableName, query, newValues) => {
-    const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
-    const queryFieldName = Object.keys(query)[0]
-    const text = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
-    const values = [Object.values(query)[0], ...Object.values(newValues)]
-    return { text, values }
-  }
+	  // sqlUpdate('person', { id: person.id }, { person values... })
+	  const sqlUpdate = (tableName, query, newValues) => {
+	    const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
+	    const queryFieldName = Object.keys(query)[0]
+	    const text = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
+	    const values = [Object.values(query)[0], ...Object.values(newValues)]
+	    return { text, values }
+	  }
 
 
 # SQL syntax
 
 ## Finding data with SELECT
 
-  SELECT * FROM table WHERE id = 123;
+	SELECT * FROM table WHERE id = 123;
 
 ### Complex example
 
-  const sqlString = `SELECT
-  font.id, font.name,
-  category.name AS category_name,
-  source.name AS source_name,
-  creator.name AS creator_name
-  FROM font
-  LEFT JOIN category_font ON (category_font.font_id = font.id)
-  LEFT JOIN category ON (category.id = category_font.category_id)
-  LEFT JOIN source ON (source.id = font.source_id)
-  LEFT JOIN creator ON (creator.id = font.creator_id)
-  WHERE true
-  ${name ? `AND font.name ILIKE '${name}%'` : ''}
-  ${category ? `AND category.name = '${category}'` : ''}
-  ${weight ? `AND font.variants ILIKE '%${weight}%'` : ''}
-  ${source ? `AND source.name = '${source}'` : ''}
-  LIMIT 100
-  ;`
+	const sqlString = `SELECT
+	font.id, font.name,
+	category.name AS category_name,
+	source.name AS source_name,
+	creator.name AS creator_name
+	FROM font
+	LEFT JOIN category_font ON (category_font.font_id = font.id)
+	LEFT JOIN category ON (category.id = category_font.category_id)
+	LEFT JOIN source ON (source.id = font.source_id)
+	LEFT JOIN creator ON (creator.id = font.creator_id)
+	WHERE true
+	${name ? `AND font.name ILIKE '${name}%'` : ''}
+	${category ? `AND category.name = '${category}'` : ''}
+	${weight ? `AND font.variants ILIKE '%${weight}%'` : ''}
+	${source ? `AND source.name = '${source}'` : ''}
+	LIMIT 100
+	;`
 
 ### Wildcard search
 
-  SELECT * FROM table WHERE columnName ILIKE 'A%';
-  SELECT * FROM company WHERE name ILIKE '%weld%';
-  SELECT * FROM company WHERE website NOT ILIKE 'http%'
-
-  SELECT * FROM person WHERE contact_status_date < '2019-02-09';
-  SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+	  SELECT * FROM table WHERE columnName ILIKE 'A%';
+	  SELECT * FROM company WHERE name ILIKE '%weld%';
+	  SELECT * FROM company WHERE website NOT ILIKE 'http%'
+	
+	  SELECT * FROM person WHERE contact_status_date < '2019-02-09';
+	  SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
 
 ### Multiple values / array
 
-  SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');
+	SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');
 
 ### Pagination
 
-  SELECT * FROM company LIMIT 10 OFFSET 30;
+	SELECT * FROM company LIMIT 10 OFFSET 30;
 
 ### Sorting
 
-  ORDER BY field_name ASC/DESC NULLS FIRST/LAST
+	ORDER BY field_name ASC/DESC NULLS FIRST/LAST
 
 ### Joins in Select
 
@@ -224,157 +224,188 @@ Update:
 
 Examples:
 
-  SELECT * FROM weather
-  LEFT JOIN city ON (weather.city = city.name);
-
-  SELECT company.id, company.name
-  FROM company
-  LEFT JOIN company_person ON (company_person.company_id = company.id)
-  LEFT JOIN person ON (person.id = company_person.person_id)
-  ORDER BY name;
+	SELECT * FROM weather
+	LEFT JOIN city ON (weather.city = city.name);
+	
+	SELECT company.id, company.name
+	FROM company
+	LEFT JOIN company_person ON (company_person.company_id = company.id)
+	LEFT JOIN person ON (person.id = company_person.person_id)
+	ORDER BY name;
 
 Note: `LEFT` refers to the left table in `ON` statement:
 
-  SELECT * FROM weather LEFT OUTER JOIN city ON (weather.city = city.name);
-  SELECT domain.id, name, avg(sai) AS avg_sai FROM domain LEFT OUTER JOIN domain_update ON (domain.id = domain_update.domain_id) GROUP BY domain.id;
+	SELECT * FROM weather LEFT OUTER JOIN city ON (weather.city = city.name);
+	SELECT domain.id, name, avg(sai) AS avg_sai FROM domain LEFT OUTER JOIN domain_update ON (domain.id = domain_update.domain_id) GROUP BY domain.id;
 
 ### Nested SELECT with ()
 
-  SELECT * FROM (
-    SELECT DISTINCT ON (person.id)
-    person.*, title,
-    FROM person
-  ) subquery
-  WHERE title='CEO';
+	SELECT * FROM (
+		SELECT DISTINCT ON (person.id)
+		person.*, title,
+		FROM person
+		) subquery
+	WHERE title='CEO';
 
 ### UNION to combine/concatenate multiple queries
 
-  SELECT * FROM (
-    SELECT
-    font.id, name, slug, category_id
-    FROM
-    similar_font
-    LEFT JOIN font ON (similar_font.font2_id = font.id)
-    WHERE font1_id = 1643
-    
-    UNION
-    
-    SELECT
-    font.id, name, slug, category_id
-    FROM
-    similar_font
-    LEFT JOIN font ON (similar_font.font1_id = font.id)
-    WHERE font2_id = 1643
-
-  ) AS combined
-  ORDER BY name;
+	SELECT * FROM (
+		SELECT font.id, name, slug, category_id
+		FROM similar_font
+		LEFT JOIN font ON (similar_font.font2_id = font.id)
+		WHERE font1_id = 1643
+		
+		UNION
+		
+		SELECT font.id, name, slug, category_id
+		FROM similar_font
+		LEFT JOIN font ON (similar_font.font1_id = font.id)
+		WHERE font2_id = 1643
+	) AS combined
+	ORDER BY name;
 
 ### COUNT
 
-  COUNT(DISTINCT(field))
+	COUNT(DISTINCT(field))
 
 Example:
 
-  SELECT
-  company.*,
-  COUNT(DISTINCT(company_person.person_id)) AS person_count
-  FROM company
-  LEFT JOIN company_person ON (company_person.company_id = company.id)
-  GROUP BY company.id;
+	SELECT
+	company.*,
+	COUNT(DISTINCT(company_person.person_id)) AS person_count
+	FROM company
+	LEFT JOIN company_person ON (company_person.company_id = company.id)
+	GROUP BY company.id;
 
 ## Create - Insert
 
-  INSERT INTO domain (name, site_count) VALUES ('indiska.se', 5) RETURNING id;
+	INSERT INTO domain (name, site_count) VALUES ('indiska.se', 5) RETURNING id;
 
 Multiple values:
 
-  INSERT INTO domain (name) VALUES ('domain1.se'), ('domain2.se');
+	INSERT INTO domain (name) VALUES ('domain1.se'), ('domain2.se');
 
 ## Update
 
-  UPDATE domain SET content_last_update = '2019-01-01 12:00', content_previous_update = null WHERE id=1;
+	UPDATE domain SET content_last_update = '2019-01-01 12:00', content_previous_update = null WHERE id=1;
 
 ## Delete
 
-  DELETE * from domain;
-  DELETE from domain where name = 'formomiljo.se';
+	DELETE * from domain;
+	DELETE from domain where name = 'formomiljo.se';
 
 ## Create a new table
 
-  CREATE TABLE person (
-    id serial,
-    name varchar(128),
-    date_created timestamptz DEFAULT now(),
-    PRIMARY KEY (id),
-    UNIQUE (name)
-  );
+	CREATE TABLE person (
+		id serial,
+		name varchar(128),
+		date_created timestamptz DEFAULT now(),
+		PRIMARY KEY (id),
+		UNIQUE (name)
+	);
 
 ### Create a many-to-many relationship table
 
-  CREATE TABLE company (
-    id SERIAL PRIMARY KEY,
-    name character varying(64) UNIQUE
-  );
+	CREATE TABLE company (
+		id SERIAL PRIMARY KEY,
+		name character varying(64) UNIQUE
+	);
 
-  CREATE TABLE company_person (
-    id SERIAL PRIMARY KEY,
-    company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
-    person_id integer REFERENCES "person"(id) ON DELETE CASCADE
-  );
+	CREATE TABLE company_person (
+		id SERIAL PRIMARY KEY,
+		company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
+		person_id integer REFERENCES "person"(id) ON DELETE CASCADE
+	);
 
-  CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
+	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
 ## Modify table: add columns, remove columns
 
-  ALTER TABLE person
-  ADD COLUMN company_id integer NOT NULL REFERENCES company(id) ON DELETE CASCADE;
+	ALTER TABLE person
+	ADD COLUMN company_id integer NOT NULL REFERENCES company(id) ON DELETE CASCADE;
 
 Remove:
 
-  ALTER TABLE domain
-  DROP COLUMN "change_fraction";
+	ALTER TABLE domain
+	DROP COLUMN "change_fraction";
 
 ## Delete table
 
-  DROP TABLE person;
+	DROP TABLE person;
 
 ### Cascade delete
 
 If delete Company, then delete Person too:
 
-  CREATE TABLE company(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-  );
+	CREATE TABLE company(
+		id SERIAL PRIMARY KEY,
+		name VARCHAR(255) NOT NULL
+	);
 
-  CREATE TABLE person(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-    company_id INT NOT NULL,
-    CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
-  );
+	CREATE TABLE person(
+		id SERIAL PRIMARY KEY,
+		name VARCHAR(255) NOT NULL
+		company_id INT NOT NULL,
+		CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
+	);
 
 Modify existing table:
 
-  ALTER TABLE "domain_update" ADD FOREIGN KEY ("domain_update_domain_id_fkey") REFERENCES "domain"("id") ON DELETE CASCADE;
-  ALTER TABLE person ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
+	ALTER TABLE "domain_update" ADD FOREIGN KEY ("domain_update_domain_id_fkey") REFERENCES "domain"("id") ON DELETE CASCADE;
+	ALTER TABLE person ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
 
 
 ## Indexes
 
-  CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
+	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
 
 ## Transactions
 
-  BEGIN TRANSACTION;
-    CREATE TEMPORARY TABLE t1_backup(a,b);
-    INSERT INTO t1_backup SELECT a,b FROM t1;
-    DROP TABLE t1;
-    CREATE TABLE t1(a,b);
-    INSERT INTO t1 SELECT a,b FROM t1_backup;
-    DROP TABLE t1_backup;
-  COMMIT;
+	BEGIN TRANSACTION;
+		CREATE TEMPORARY TABLE t1_backup(a,b);
+		INSERT INTO t1_backup SELECT a,b FROM t1;
+		DROP TABLE t1;
+		CREATE TABLE t1(a,b);
+		INSERT INTO t1 SELECT a,b FROM t1_backup;
+		DROP TABLE t1_backup;
+	COMMIT;
+
+## Functions (RPC)
+
+	CREATE OR REPLACE FUNCTION app.id_generator(OUT result bigint) RETURNS bigint
+	LANGUAGE plpgsql
+	AS $$
+	  DECLARE
+	      our_epoch bigint := 1111111111111;
+	      seq_id bigint;
+	      now_millis bigint;
+	      -- the id of this DB shard, must be set for each
+	      -- schema shard you have - you could pass this as a parameter too
+	      shard_id int := 1;
+	  BEGIN
+	      SELECT nextval('app.global_id_sequence') % 1024 INTO seq_id;
+	      SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+	      result := (now_millis - our_epoch) << 23;
+	      result := result | (shard_id << 10);
+	      result := result | (seq_id);
+	  END;
+	$$;
+
+Another:
+
+	create or replace function addGeometry (location_name varchar, lon float, lat float) returns SETOF geometries
+	language plpgsql
+	as $
+	  declare
+	    return_record geometries%rowtype;
+	  begin
+	    insert into geometries(location_name, geom) values (location_name, ST_SetSRID(ST_MakePoint(lon, lat), 4326))
+	     returning *
+	     into return_record;
+	    return next return_record;
+	  end
+	$;
 
 
 # MySQL
