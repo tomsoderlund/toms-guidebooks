@@ -14,20 +14,20 @@ https://app.supabase.io/
 
 ## Get data
 
-Note: will return empty array if not found.
-
 	const { data, error } = await supabase
-	  .from('geosearch_place')
+	  .from('company_person')
 	  .select(`
-	    place_id,
-	    place (id, name),
-	    geosearch (reference)
+	    id,
+	    person (id, name, email),
+	    company (name, address)
 	  `)
+
+Note: `data` will contain an empty array if nothing found.
 
 ## Insert new row
 
 	const { data, error } = await supabase
-	  .from('place')
+	  .from('person')
 	  .insert(
       [
 	      { some_column: 'someValue', other_column: 'otherValue' },
@@ -40,14 +40,14 @@ Note: `data` will contain an array of the inserted rows.
 ## Update rows
 
 	const { data, error } = await supabase
-	  .from('place')
+	  .from('person')
 	  .update({ other_column: 'otherValue' })
     .match({ id: 4 })
 
 ## Delete rows
 
 	const { data, error } = await supabase
-	  .from('place')
+	  .from('person')
 	  .delete()
 	  .eq('some_column', 'someValue')
 
