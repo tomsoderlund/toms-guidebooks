@@ -19,7 +19,9 @@ https://app.supabase.io/
 	  .select(`
 	    id,
 	    person (id, name, email),
-	    company (name, address)
+	    company (name, address,
+	    	companytype (id, name)
+	   	)
 	  `)
 
 Note: `data` will contain an empty array if nothing found.
