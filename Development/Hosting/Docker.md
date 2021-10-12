@@ -11,6 +11,7 @@
 - **Image**: a template used to create Container(s)
 - **Registry**: storage for Images
 
+
 ## Commands
 
 	docker run --help
@@ -24,6 +25,7 @@
 ### docker run
 
 	docker run hello-world
+
 
 ## Useful Docker commands from Causality
 
@@ -59,12 +61,22 @@ Running a suite:
 - `-d` Detach, get the console back after run
 - `--build` Forces a rebuild of images
 
-## Vagrant vs Docker
+
+## Comparisons
+
+### Docker vs Vagrant
 
 - **Vagrant** creates and configures lightweight, reproducible, and portable development environments.
 - **Docker** is an open platform for building, shipping, and running distributed applications.
 
 Where Docker relies on the host operating system, Vagrant includes the operating system within itself as part of the package. One big difference between Docker and Vagrant is that Docker containers run on Linux, but Vagrant files can contain any operating system. That said, Docker does work with non-Linux operating systems. It just needs to run within a Linux virtual machine.
+
+### Docker vs Kubernetes
+
+Docker is a containerization platform, and Kubernetes is a container orchestrator for container platforms like Docker.
+
+Kubernetes, Mesos, and Docker Swarm are some of the more popular options for providing an abstraction to make a cluster of machines behave like one big machine, which is vital in a large-scale environment.
+
 
 ## Minikube and Tilt
 
