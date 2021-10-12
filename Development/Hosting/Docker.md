@@ -1,8 +1,8 @@
 # Docker
 
-- Developer machine -> [Docker Desktop](https://www.docker.com/products/docker-desktop) or Docker Engine Community
-- Small server -> Docker Engine Community
-- Critical applications -> Docker Engine Enterprise or Kubernetes
+- Developer machine → [Docker Desktop](https://www.docker.com/products/docker-desktop) or Docker Engine Community
+- Small server → Docker Engine Community
+- Critical applications → Docker Engine Enterprise or Kubernetes
 
 ## Concepts
 
@@ -23,7 +23,7 @@
 
 ### docker run
 
-		docker run hello-world
+	docker run hello-world
 
 ## Useful Docker commands from Causality
 
@@ -61,8 +61,8 @@ Running a suite:
 
 ## Vagrant vs Docker
 
-- Vagrant creates and configures lightweight, reproducible, and portable development environments.
-- Docker is an open platform for building, shipping, and running distributed applications.
+- **Vagrant** creates and configures lightweight, reproducible, and portable development environments.
+- **Docker** is an open platform for building, shipping, and running distributed applications.
 
 Where Docker relies on the host operating system, Vagrant includes the operating system within itself as part of the package. One big difference between Docker and Vagrant is that Docker containers run on Linux, but Vagrant files can contain any operating system. That said, Docker does work with non-Linux operating systems. It just needs to run within a Linux virtual machine.
 
