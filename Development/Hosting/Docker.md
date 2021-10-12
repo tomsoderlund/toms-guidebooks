@@ -25,10 +25,46 @@
 
 		docker run hello-world
 
-## Vagrant
+## Useful Docker commands from Causality
 
-- Vagrant is a tool focused on providing a consistent development environment workflow across multiple operating systems.
-- Docker is a container management that can consistently run software as long as a containerization system exists.
+Pull down images and start services:
+- `docker compose up`
+
+Install laravel dependencies:
+- `docker compose run --rm composer install`
+
+Stopping the local service
+- `docker compose stop`
+
+### Using Composer
+- `docker compose run --rm composer install`
+- `docker compose run --rm composer outdated`
+- `docker compose run --rm composer update`
+
+### Using Laravel Artisan
+- `docker compose run --rm php php artisan`
+
+### Running tests
+- `docker compose run --rm php php artisan test`
+
+### Testing
+Running all tests:
+- `docker compose run --rm php php artisan test`
+
+Running a suite:
+- `docker compose run --rm php php artisan test --testsuite Faeature`
+
+### Useful parameters
+- `--rm` Removes the container after run
+- `-d` Detach, get the console back after run
+- `--build` Forces a rebuild of images
+
+## Vagrant vs Docker
+
+- Vagrant creates and configures lightweight, reproducible, and portable development environments.
+- Docker is an open platform for building, shipping, and running distributed applications.
+
+Where Docker relies on the host operating system, Vagrant includes the operating system within itself as part of the package. One big difference between Docker and Vagrant is that Docker containers run on Linux, but Vagrant files can contain any operating system. That said, Docker does work with non-Linux operating systems. It just needs to run within a Linux virtual machine.
 
 ## Minikube and Tilt
 

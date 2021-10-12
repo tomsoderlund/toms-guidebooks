@@ -382,7 +382,7 @@ http://javascript.crockford.com/prototypal.html
 	const getRandomString = (length = 5) => window.btoa(Math.random()).substr(-length)
 	const withProbability = prob => Math.random() < prob
 	const getRandomFromArray = array => array[getRandomNumber(0, array.length - 1)]
-	// getRandomIndexFromWeightedArray([0.1, 0.3, 0.6]) --> returns 0-2
+	// getRandomIndexFromWeightedArray([0.1, 0.3, 0.6]) --> returns index 0-2
 	const getRandomIndexFromWeightedArray = weightedArray => {
 	  const randomNr = Math.random()
 	  let total = 0
@@ -529,6 +529,17 @@ Bounce and gravity:
 		for (let dim = X; dim <= Z; dim++) {
 			acceleration[dim] = (holePosition[dim] - position[dim]) * gravity
 		}
+	}
+
+Geographic distance:
+
+	// Calculate geographic distance in meters – https://stackoverflow.com/a/21623206/449227
+	export function geoDistance (lat1, lng1, lat2, lng2) {
+	  const p = 0.017453292519943295 // Math.PI / 180
+	  const a = 0.5 - Math.cos((lat2 - lat1) * p) / 2 +
+	    Math.cos(lat1 * p) * Math.cos(lat2 * p) *
+	    (1 - Math.cos((lng2 - lng1) * p)) / 2
+	  return Math.round(1000 * 12742 * Math.asin(Math.sqrt(a))) // 2 * R; R = 6371 km
 	}
 
 

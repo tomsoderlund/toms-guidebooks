@@ -102,8 +102,11 @@ Install useful packages:
 	yarn add standard --dev
 	expo install expo-font
 	yarn add @react-navigation/native
+
 	Managed:
 	expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+	https://docs.expo.dev/ui-programming/react-native-toast/
 
 #### package.json
 
@@ -388,6 +391,37 @@ expo.Audio
 ### Apple Certificates
 
 https://developer.apple.com/account/resources/certificates/list
+
+### Apple ID (with Supabase)
+
+- https://docs.expo.dev/versions/latest/sdk/apple-authentication/
+- https://supabase.io/docs/guides/auth/auth-apple
+
+Steps:
+
+- App ID
+	- https://developer.apple.com/account/resources/identifiers/list
+	- `com.tomorroworld.myappname`
+- Service ID
+	- `com.tomorroworld.myappname.login`
+	- Callback URL: https://lioz*****.supabase.co/auth/v1/callback
+- Key
+	- https://developer.apple.com/account/resources/authkeys/list
+
+### Maps: react-native-maps
+
+https://github.com/react-native-maps/react-native-maps
+
+- [MapView](https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md)
+	- showsUserLocation, followsUserLocation
+- [Marker](https://github.com/react-native-maps/react-native-maps/blob/master/docs/marker.md)
+- [Callout](https://github.com/react-native-maps/react-native-maps/blob/master/docs/callout.md)
+- [Polygon](https://github.com/react-native-maps/react-native-maps/blob/master/docs/polygon.md)
+- [Polyline](https://github.com/react-native-maps/react-native-maps/blob/master/docs/polyline.md)
+- [Circle](https://github.com/react-native-maps/react-native-maps/blob/master/docs/circle.md)
+- [Overlay](https://github.com/react-native-maps/react-native-maps/blob/master/docs/overlay.md)
+- [Heatmap](https://github.com/react-native-maps/react-native-maps/blob/master/docs/heatmap.md)
+- [Geojson](https://github.com/react-native-maps/react-native-maps/blob/master/docs/geojson.md)
 
 ### Styles
 
