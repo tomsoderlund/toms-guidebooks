@@ -9,6 +9,7 @@
     - [Unity3D](./Development/3D/Unity3D.md)
     - [WebXR and WebVR](./Development/3D/WebXR%20and%20WebVR.md)
   - APIs:
+    - [Cron - scheduled tasks - daemons](./Development/APIs/Cron%20-%20scheduled%20tasks%20-%20daemons.md)
     - [Google Places API](./Development/APIs/Google%20Places%20API.md)
     - [Here Location API](./Development/APIs/Here%20Location%20API.md)
   - Apps:
@@ -39,6 +40,7 @@
     - [HTML](./Development/HTML/HTML.md)
     - [SVG](./Development/HTML/SVG.md)
   - Hosting:
+    - [AWS Lambda](./Development/Hosting/AWS%20Lambda.md)
     - [Amazon AWS - S3 etc](./Development/Hosting/Amazon%20AWS%20-%20S3%20etc.md)
     - [Docker](./Development/Hosting/Docker.md)
     - [Heroku](./Development/Hosting/Heroku.md)
