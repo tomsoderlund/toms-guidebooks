@@ -267,3 +267,8 @@ git mv src/temp/* src/common/
 	find * | grep -v -E '.DS_Store|node_modules|build' > ../git-after.txt
 
 Sheet: https://docs.google.com/spreadsheets/d/1E7bQpNLCp_V9yVl1v6Ifxw9Dsn_eA7R_IBTlwj4QS0E/edit
+
+## Licenses
+
+	"license": "UNLICENSED",
+	"license": "ISC",

@@ -322,6 +322,10 @@ Server - verify access:
 		credentialsRequired: false // false = will let users through if auth fails
 	})
 
+### Scopes/Roles
+
+Scopes for access levels, e.g. Admin roles.
+
 
 ## Babel / ES6 on Node
 

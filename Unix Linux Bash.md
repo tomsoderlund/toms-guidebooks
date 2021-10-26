@@ -582,10 +582,6 @@ Say - MacOS:
 
 ## Cron / scheduled tasks / daemons
 
-https://www.easycron.com/ - HTTP
-
-https://cloud.google.com/scheduler/
-
 ### Linux/macOS: crontab or launchd
 
 https://ole.michelsen.dk/blog/schedule-jobs-with-crontab-on-mac-osx/

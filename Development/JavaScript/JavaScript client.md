@@ -851,8 +851,13 @@ Slugs:
 	decodeURIComponent('')
 
   // yarn add html-entities
-	import { decode } from 'html-entities'
-	decode('&quotKeywords by Site&quot')
+	import { decode: decodeHtmlEntities } from 'html-entities'
+	// const { decode: decodeHtmlEntities } = require('html-entities')
+	decodeHtmlEntities('&quotKeywords by Site&quot')
+
+	// yarn add striptags
+	const striptags = require('striptags')
+	striptags('Some text <b>and</b> text.')
 
 	// yarn add string-strip-html
 	const { stripHtml } = require('string-strip-html')
@@ -1805,7 +1810,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	}
 
 	// Optional chaining
-	const value = a?.[b]?.c
+	const value = a?.[b]?.['myKey']?.c
 
 	// pick
 	const { a, c } = abcObject
@@ -1999,7 +2004,7 @@ Related:
 	// applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), obj1) or applyToAllOldAsync(functionWithCb(obj, cb), callback(err, results), [obj1, obj2, ...])
 	module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
 
-	// includesSome (NOT pickAny/includesAny/hasAny)
+	// includesSome (NOT pickAny/includesAny/hasAny/hasSome)
 	// includesSome(url, ['localhost', 'staging'])
 	// incl = includesSome(array1, array2).length > 0
   const includesSome = (array1, array2) => array2.filter(childObj => array1.includes(childObj))

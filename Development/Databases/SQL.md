@@ -89,6 +89,10 @@ e.g. `WHERE person.company_id = company.id`
 
 https://www.npmjs.com/package/pg
 
+**NOTE:** if you have connection timeout issues, try upgrading `pg`:
+
+    yarn remove pg; yarn add pg
+
 Simple client:
 
     const { Client } = require('pg')
