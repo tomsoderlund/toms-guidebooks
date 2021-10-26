@@ -13,6 +13,8 @@ Making functions:
 
     aws lambda create-function --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip --handler index.handler --runtime nodejs14.x --role arn:aws:iam::562328468330:role/lambda-execute
 
+    aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip
+
     aws lambda delete-function --function-name myLambdaFunction
 
     aws lambda list-functions --max-items 10
@@ -20,7 +22,8 @@ Making functions:
 
 ## Yarn
 
-    "lambda-deploy": "cd lambda; rm myLambdaFunction.zip; cd myLambdaFunction && zip -r ../myLambdaFunction.zip * && cd ..; aws lambda delete-function --function-name myLambdaFunction; aws lambda create-function --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip --handler index.handler --runtime nodejs14.x --role arn:aws:iam::562328468330:role/lambda-execute; cd .."
+    "lambda-deploy": "cd lambda; echo Creating ZIP archive...; rm myLambdaFunction.zip; cd myLambdaFunction && zip -r ../myLambdaFunction.zip * && cd ..; echo Uploading to AWS Lambda...; aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip; cd ..",
+
 
 ## Code
 
@@ -33,12 +36,14 @@ Making functions:
         return response;
     };
 
+
 ## Environment variables
 
 Function page -> Configuration -> Environment variables
 
     aws lambda update-function-configuration --function-name myLambdaFunction --environment "Variables={BUCKET=my-bucket,KEY2=value}"
     aws lambda get-function-configuration --function-name myLambdaFunction
+
 
 ## Testing locally
 
@@ -65,9 +70,11 @@ Function page -> Configuration -> Environment variables
       testLambdaFunction(argumentObj)
     }
 
+
 ## Scheduling events with AWS CloudWatch
 
 https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/RunLambdaSchedule.html
 
 - https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#rules:
 - Option: Schedule
+- Add Target: select your Lambda function

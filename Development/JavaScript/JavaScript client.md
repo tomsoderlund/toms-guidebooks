@@ -1742,6 +1742,21 @@ Promise.all/race:
 		window.fetch('http://localhost:3000/itemgroup/get')
 	])
 
+Promise with timeout:
+
+	// https://italonascimento.github.io/applying-a-timeout-to-your-promises/
+	const promiseTimeout = function (milliseconds, promise) {
+	  // Create a promise that rejects in milliseconds
+	  const timeoutPromise = new Promise((resolve, reject) => {
+	    const id = setTimeout(() => {
+	      clearTimeout(id)
+	      reject(new Error(`Timed out in ${milliseconds} milliseconds.`))
+	    }, milliseconds)
+	  })
+	  // Returns a race between our timeout and the passed in promise
+	  return Promise.race([promise, timeoutPromise])
+	}
+
 ### Lodash in ES6 ("lodash6")
 
 https://www.sitepoint.com/lodash-features-replace-es6/
