@@ -7,9 +7,14 @@ https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html
 
     aws iam attach-role-policy --role-name lambda-execute --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
-Making functions:
+
+## Making Lambda functions
+
+Lambda functions are uploaded to AWS as a ZIP file:
 
     cd myLambdaFunction && zip -r ../myLambdaFunction.zip * && cd ..
+
+Using `aws` CLI tool:
 
     aws lambda create-function --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip --handler index.handler --runtime nodejs14.x --role arn:aws:iam::562328468330:role/lambda-execute
 
@@ -20,12 +25,12 @@ Making functions:
     aws lambda list-functions --max-items 10
 
 
-## Yarn
+## Yarn shortcut
 
     "lambda-deploy": "cd lambda; echo Creating ZIP archive...; rm myLambdaFunction.zip; cd myLambdaFunction && zip -r ../myLambdaFunction.zip * && cd ..; echo Uploading to AWS Lambda...; aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip; cd ..",
 
 
-## Code
+## Code example of a Lambda function
 
     exports.handler = async function myLambdaFunction (event, context) {
         // TODO implement
