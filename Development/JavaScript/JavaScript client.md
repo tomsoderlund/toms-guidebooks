@@ -1719,10 +1719,10 @@ https://medium.com/sons-of-javascript/javascript-an-introduction-to-es6-1819d0d8
 
 Promise.all/race:
 
-  const userArray = await Promise.all(userIds.map(userId => getUser(userId)))
+  const users = await Promise.all(userIds.map(userId => getUser(userId)))
 
-  const userArrayPromises = userIds.map(userId => getUser(userId))
-  const userArray = await Promise.all(userArrayPromises)
+  const usersPromises = userIds.map(userId => getUser(userId))
+  const users = await Promise.all(usersPromises)
 
 	Promise.all(promiseArrayOrObject)
 		.then(...)
