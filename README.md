@@ -9,9 +9,12 @@
     - [Unity3D](./Development/3D/Unity3D.md)
     - [WebXR and WebVR](./Development/3D/WebXR%20and%20WebVR.md)
   - APIs:
+    - [Bing search](./Development/APIs/Bing%20search.md)
+    - [Bluetooth](./Development/APIs/Bluetooth.md)
     - [Cron - scheduled tasks - daemons](./Development/APIs/Cron%20-%20scheduled%20tasks%20-%20daemons.md)
     - [Google Places API](./Development/APIs/Google%20Places%20API.md)
     - [Here Location API](./Development/APIs/Here%20Location%20API.md)
+    - [Scraping the web](./Development/APIs/Scraping%20the%20web.md)
   - Apps:
     - [CocoaPods](./Development/Apps/CocoaPods.md)
     - [Cordova - PhoneGap](./Development/Apps/Cordova%20-%20PhoneGap.md)
@@ -20,8 +23,6 @@
     - [iPhone development in Objective-C](./Development/Apps/iPhone%20development%20in%20Objective-C.md)
     - [iPhone usability guidelines](./Development/Apps/iPhone%20usability%20guidelines.md)
     - [iPhone web development](./Development/Apps/iPhone%20web%20development.md)
-  - [Bing search](./Development/Bing%20search.md)
-  - [Bluetooth](./Development/Bluetooth.md)
   - CMS:
     - [LeadPages](./Development/CMS/LeadPages.md)
     - [Wordpress](./Development/CMS/Wordpress.md)
@@ -33,7 +34,6 @@
     - [NeDB](./Development/Databases/NeDB.md)
     - [SQL](./Development/Databases/SQL.md)
     - [Supabase](./Development/Databases/Supabase.md)
-  - [Git](./Development/Git.md)
   - HTML:
     - [CSS](./Development/HTML/CSS.md)
     - [HTML email](./Development/HTML/HTML%20email.md)
@@ -58,26 +58,28 @@
     - [React](./Development/JavaScript/React.md)
     - [Svelte and Sapper](./Development/JavaScript/Svelte%20and%20Sapper.md)
     - [TypeScript](./Development/JavaScript/TypeScript.md)
-  - [Pivotal Tracker](./Development/Pivotal%20Tracker.md)
+  - [Python and Django](./Development/Python%20and%20Django.md)
   - [Regular Expressions](./Development/Regular%20Expressions.md)
-  - Ruby:
-    - [Ruby on Rails and Gem](./Development/Ruby/Ruby%20on%20Rails%20and%20Gem.md)
-  - [Scraping the web](./Development/Scraping%20the%20web.md)
-  - [Slack](./Development/Slack.md)
-  - [Sublime editor](./Development/Sublime%20editor.md)
+  - [Ruby on Rails and Gem](./Development/Ruby%20on%20Rails%20and%20Gem.md)
   - [Testing and QA](./Development/Testing%20and%20QA.md)
-- [Gmail](./Gmail.md)
-- [Google Sheets and Excel](./Google%20Sheets%20and%20Excel.md)
 - Graphics:
   - [Blender 3D](./Graphics/Blender%203D.md)
   - [Figma](./Graphics/Figma.md)
   - [Video and VFX](./Graphics/Video%20and%20VFX.md)
-- [Mac OS X](./Mac%20OS%20X.md)
-- [MailChimp](./MailChimp.md)
-- [Metrics and Analytics](./Metrics%20and%20Analytics.md)
-- [Mind maps](./Mind%20maps.md)
-- [My disk is full](./My%20disk%20is%20full.md)
-- [Unix Linux Bash](./Unix%20Linux%20Bash.md)
+- Operating Systems:
+  - [Mac OS X](./Operating%20Systems/Mac%20OS%20X.md)
+  - [Unix Linux Bash](./Operating%20Systems/Unix%20Linux%20Bash.md)
+- Tools:
+  - [Git](./Tools/Git.md)
+  - [Gmail](./Tools/Gmail.md)
+  - [Google Sheets and Excel](./Tools/Google%20Sheets%20and%20Excel.md)
+  - [MailChimp](./Tools/MailChimp.md)
+  - [Metrics and Analytics](./Tools/Metrics%20and%20Analytics.md)
+  - [Mind maps](./Tools/Mind%20maps.md)
+  - [My disk is full](./Tools/My%20disk%20is%20full.md)
+  - [Pivotal Tracker](./Tools/Pivotal%20Tracker.md)
+  - [Slack](./Tools/Slack.md)
+  - [Sublime editor](./Tools/Sublime%20editor.md)
 
 ## Maintenance
 
