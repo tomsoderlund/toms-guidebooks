@@ -1746,11 +1746,11 @@ Promise with timeout:
 
 	// https://italonascimento.github.io/applying-a-timeout-to-your-promises/
 	const promiseTimeout = function (milliseconds, promise) {
-	  // Create a promise that rejects in milliseconds
+	  // Create a promise that rejects in specified milliseconds
 	  const timeoutPromise = new Promise((resolve, reject) => {
 	    const id = setTimeout(() => {
 	      clearTimeout(id)
-	      reject(new Error(`Timed out in ${milliseconds} milliseconds.`))
+	      reject(new Error(`Timed out after ${milliseconds} milliseconds.`))
 	    }, milliseconds)
 	  })
 	  // Returns a race between our timeout and the passed in promise

@@ -100,7 +100,9 @@ Simple client:
     const postgresOptions = {
       connectionString: config.databaseUrl,
       ssl: { rejectUnauthorized: false },
-      connectionTimeoutMillis: 5000
+      // max: 5,
+      // idleTimeoutMillis: 5000,
+      // connectionTimeoutMillis: 3000
     }
 
     // const results = await runDatabaseFunction(async (client) => client.query(sqlString))
@@ -119,13 +121,7 @@ With connection pooling:
 
     const { Pool } = require('pg')
 
-    const pool = new Pool({
-      connectionString: config.databaseUrl,
-      ssl: { rejectUnauthorized: false },
-      max: 5,
-      idleTimeoutMillis: 5000,
-      connectionTimeoutMillis: 3000
-    })
+    const pool = new Pool(postgresOptions)
 
     // const results = await runDatabaseFunction(async (client) => client.query(sqlString))
     module.exports.runDatabaseFunction = async function (functionToRun) {
@@ -231,11 +227,11 @@ Examples:
 	SELECT * FROM weather
 	LEFT JOIN city ON (weather.city = city.name);
 	
-	SELECT company.id, company.name
+	SELECT company.id, company.name, person.name
 	FROM company
 	LEFT JOIN company_person ON (company_person.company_id = company.id)
 	LEFT JOIN person ON (person.id = company_person.person_id)
-	ORDER BY name;
+	ORDER BY company.name;
 
 Note: `LEFT` refers to the left table in `ON` statement:
 
@@ -280,6 +276,10 @@ Example:
 	FROM company
 	LEFT JOIN company_person ON (company_person.company_id = company.id)
 	GROUP BY company.id;
+
+### String concatenation
+
+	SELECT article.*, STRING_AGG(category.name, ',') AS categories
 
 ## Create - Insert
 

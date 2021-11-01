@@ -71,7 +71,7 @@ Function page -> Configuration -> Environment variables
     }
 
 
-## Scheduling events with AWS CloudWatch
+## Scheduling events with AWS EventBridge (ex CloudWatch Events)
 
 https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/RunLambdaSchedule.html
 
