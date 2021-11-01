@@ -12,9 +12,13 @@ S3: https://console.aws.amazon.com/s3/buckets/backup.YOUR-USER-NAME/
 
     zip -r "./_zips/MYFOLDER.zip" "MYFOLDER/"
 
-# Zip all folders
-. ~/zipAllFolders.sh
+## Zip all folders
 
+Usage:
+
+	. ~/zipAllFolders.sh
+
+Script:
 
     #!/bin/sh
 
