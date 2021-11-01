@@ -46,30 +46,30 @@ HTML 3.44 kB, JS 65.1 kB
 
 ## Folders
 
-* `pages`: Page components
-* `public`: e.g. CSS files, images
-* `components`: React components
-* `lib`: data
+- `pages`: Page components
+- `public`: e.g. CSS files, images
+- `components`: React components
+- `lib`: data
 
 ## Next.js Page written as functional component with React Hooks
 
-  const MyPage = ({ query }) => {
-    const { data, loading, error } = useQuery(personQuery(query.slug))
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
-    if (!data.person) return `Not found`
-    return <main>
-      <h1 className='capitalize'>{data.person.name}</h1>
-    </main>
-  }
-
-  // Now use getServerSideProps instead
-  MyPage.getInitialProps = async ({ req, res, pathname, asPath, query }) => {
-    console.log({ pathname, asPath, query })
-    return { query }
-  }
-
-  export default MyPage
+	  const MyPage = ({ query }) => {
+	    const { data, loading, error } = useQuery(personQuery(query.slug))
+	    if (loading) return 'Loading...'
+	    if (error) return `Error! ${error.message}`
+	    if (!data.person) return `Not found`
+	    return <main>
+	      <h1 className='capitalize'>{data.person.name}</h1>
+	    </main>
+	  }
+	
+	  // Now use getServerSideProps instead
+	  MyPage.getInitialProps = async ({ req, res, pathname, asPath, query }) => {
+	    console.log({ pathname, asPath, query })
+	    return { query }
+	  }
+	
+	  export default MyPage
 
 ## Code optimization
 
@@ -77,21 +77,21 @@ https://next-code-elimination.now.sh/
 
 ## Inherit another page (export/import)
 
-    export { default } from './OtherPage'
-    import { default as OtherPage } from './OtherPage'
-    export { getStaticProps, getStaticPaths } from './OtherPage'
+	export { default } from './OtherPage'
+	import { default as OtherPage } from './OtherPage'
+	export { getStaticProps, getStaticPaths } from './OtherPage'
+	
+	export default OtherPage
 
-    export default OtherPage
-
-## getServerSideProps
+## SSR and SSG
 
 https://nextjs.org/docs/basic-features/data-fetching
 
 Note: SSR → SSG: remove getServerSideProps
 
-- getStaticProps (Static Site Generation): Fetch data at build time.
-- getStaticPaths (Static Site Generation): Specify dynamic routes to pre-render based on data.
-- getServerSideProps (Server-side Rendering): Fetch data on each request.
+- `getStaticProps` (Static Site Generation): Fetch data at build time.
+- `getStaticPaths` (Static Site Generation): Specify dynamic routes to pre-render based on data.
+- `getServerSideProps` (Server-side Rendering): Fetch data on each request.
 
 ### SSG: getStaticProps/-Paths
 
@@ -146,40 +146,27 @@ Note: SSR → SSG: remove getServerSideProps
 
 `package.json`:
 
-  "scripts": {
-    "build": "next build",
-    "export": "next build && next export"
-  }
+	"scripts": {
+		"build": "next build",
+		"export": "next build && next export"
+	}
 
 `next.config.js`:
 
-  module.exports = {
-    exportPathMap: function () {
-      return {
-        '/': { page: '/' },
-        '/about': { page: '/about' }
-      }
-    }
-  }
+	module.exports = {
+		exportPathMap: function () {
+		  return {
+		    '/': { page: '/' },
+		    '/about': { page: '/about' }
+		  }
+		}
+	}
 
 Note: NODE_ENV becomes 'production', all scripts run client-side.
 
 ## Environment
 
-  NEXT_PUBLIC_* for client-side env.
-
-## Directory structure
-
-  /public
-  /src
-    /config
-    /App
-      /Components
-    /Views
-      /StartPage
-        /Components
-
-https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
+`NEXT_PUBLIC_*` for client-side environment.
 
 ## Routing/multiple pages/views
 
@@ -190,21 +177,21 @@ https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes
 
 react-router-dom:
 
-* https://reacttraining.com/react-router/web/guides/quick-start
-* https://github.com/ReactTraining/react-router
+- https://reacttraining.com/react-router/web/guides/quick-start
+- https://github.com/ReactTraining/react-router
 
 Routing setup:
 
-  import React from 'react'
-  import { BrowserRouter as Router, Route } from 'react-router-dom'
-
-  export default () => (
-    <Router>
-      <Route path='/' exact component={Start} />
-      <Route path='/page2' component={Page2} />
-      <Route path='/withProps' render={(props) => <Page3 {...props} isAuthed={true} />} />
-    </Router>
-  )
+	import React from 'react'
+	import { BrowserRouter as Router, Route } from 'react-router-dom'
+	
+	export default () => (
+	<Router>
+	  <Route path='/' exact component={Start} />
+	  <Route path='/page2' component={Page2} />
+	  <Route path='/withProps' render={(props) => <Page3 {...props} isAuthed={true} />} />
+	</Router>
+	)
 
 Links:
 
@@ -245,7 +232,6 @@ LinkOut - smart internal/external link:
     }
     export default LinkOut
 
-
 Optional link:
 
     const OptionalLink = (props) => {
@@ -274,27 +260,27 @@ Optional link:
 
 Push route (hook):
 
-  import { useHistory, useLocation } from 'react-router-dom'
-  const history = useHistory()
-  history.push('/home')
-
-  const location = useLocation()
-  location.pathname
+	import { useHistory, useLocation } from 'react-router-dom'
+	const history = useHistory()
+	history.push('/home')
+	
+	const location = useLocation()
+	location.pathname
 
 Push route (withRouter):
 
-  import { withRouter } from 'react-router-dom'
-
-  console.log(this.props.location.pathname)
-  this.props.history.push(`/path`)
-
-  withRouter(MyComponent)
+	import { withRouter } from 'react-router-dom'
+	
+	console.log(this.props.location.pathname)
+	this.props.history.push(`/path`)
+	
+	withRouter(MyComponent)
 
 Redirect:
 
-  const RouteIfLoggedIn = props => isLoggedIn()
-    ? <Route {...props} />
-    : <Redirect from={props.from} to={ROUTE_LOGIN} />
+	const RouteIfLoggedIn = props => isLoggedIn()
+		? <Route {...props} />
+		: <Redirect from={props.from} to={ROUTE_LOGIN} />
 
 ## Next.js: next/link (built in)
 
@@ -319,13 +305,13 @@ or:
 
 ### router props
 
-  asPath: '/categories/wellness?wow=true',
-  route: '/categories/[categorySlug]',
-  pathname: '/categories/[categorySlug]',
-  query: {
-    categorySlug: 'wellness',
-    wow: 'true'
-  }
+	  asPath: '/categories/wellness?wow=true',
+	  route: '/categories/[categorySlug]',
+	  pathname: '/categories/[categorySlug]',
+	  query: {
+	    categorySlug: 'wellness',
+	    wow: 'true'
+	  }
 
 ### Push route:
 
@@ -339,23 +325,23 @@ or:
 
 ## OLD: Next.js: next-routes
 
-  // routes.js
-  const routes = require('next-routes')
-  const routesImplementation = routes()
-  routesImplementation.add('myIdentifier', '/path/:slug', 'myNextjsPage')
-
-  // Inside a view
-  import { Link } from '../myRoutes'
-  <Link route='/path/slug1'>
-    <a>My link</a>
-  </Link>
-
-  // pushRoute
-  import { Router } from '../myRoutes'
-  // With route URL
-  Router.pushRoute('/blog/hello-world')
-  // With route name and params
-  Router.pushRoute('blog', {slug: 'hello-world'})
+	  // routes.js
+	  const routes = require('next-routes')
+	  const routesImplementation = routes()
+	  routesImplementation.add('myIdentifier', '/path/:slug', 'myNextjsPage')
+	
+	  // Inside a view
+	  import { Link } from '../myRoutes'
+	  <Link route='/path/slug1'>
+	    <a>My link</a>
+	  </Link>
+	
+	  // pushRoute
+	  import { Router } from '../myRoutes'
+	  // With route URL
+	  Router.pushRoute('/blog/hello-world')
+	  // With route name and params
+	  Router.pushRoute('blog', {slug: 'hello-world'})
 
 ## Localization: next-i18next
 
@@ -416,17 +402,17 @@ or:
 
 ### Next.js with/without Express
 
-  // Next.js: without Express - just Node.js
-  const { createServer } = require('http')
-  app.prepare().then(() => {
-    createServer(handler).listen(3000)
-  })
-
-  // Next.js: with Express
-  const express = require('express')
-  app.prepare().then(() => {
-    express().use(handler).listen(3000)
-  })
+	// Next.js: without Express - just Node.js
+	const { createServer } = require('http')
+	app.prepare().then(() => {
+		createServer(handler).listen(3000)
+	})
+	
+	// Next.js: with Express
+	const express = require('express')
+	app.prepare().then(() => {
+		express().use(handler).listen(3000)
+	})
 
 ### Next.js and Firebase
 
@@ -565,3 +551,20 @@ Page:
         defaultLocale: 'en'
       }
     }
+
+
+## Deployment
+
+### Next.js on Amazon AWS
+
+One way is to use [AWS Amplify](https://aws.amazon.com/amplify/) to do this, take a look at the [Deploying a static Next.js app using Amplify](https://aws.amazon.com/blogs/mobile/ssr-support-for-aws-amplify-javascript-libraries/) document, which shows how you can deploy such application on the service.
+
+SSR is just an additional feature which you can simply omit from your configuration when using AWS Amplify.
+
+A good start here is to follow the Amplify tutorial which has an [SSG example](https://docs.amplify.aws/start/getting-started/data-model/q/integration/next/#api-with-incremental-static-site-generation-ssg) too.
+
+Make sure to also follow the [hosting guide for SSG-only apps](https://docs.amplify.aws/guides/hosting/nextjs/q/platform/js/#deploy-and-host-an-ssg-only-app).
+
+Deploy a Next.js application on AWS using CDK & Fargate: https://dev.to/zoun/deploy-a-next-js-application-on-aws-using-cdk-fargate-2dnh
+
+Next.js can be deployed to any hosting provider that supports Docker containers: https://nextjs.org/docs/deployment#docker-image
