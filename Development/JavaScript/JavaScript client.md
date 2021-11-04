@@ -2096,9 +2096,10 @@ then:
 
 	tinycolor(colorStr).toHexString()
 
-	tinycolor.mix(baseColor, mixInColor, amount = 50)
+	tinycolor.mix(colorStr, '#fff', percent).toHexString()
 	lighten(0-100), darken(0-100), (brighten(0-100))
 
+	const isDark = (color) => tinycolor(color).isDark()
 	const contrastColor = (color) => (tinycolor(color).getBrightness() > 128) ? 'black' : 'white'
 
 - isLight
@@ -2123,9 +2124,9 @@ then:
 
 Color Modification
 
+- darken(0-100)
 - lighten(0-100)
 - brighten(0-100)
-- darken(0-100)
 - desaturate(0-100)
 - saturate(0-100)
 - greyscale()

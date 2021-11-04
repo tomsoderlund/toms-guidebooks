@@ -465,11 +465,14 @@ Read/write/delete files:
 	const names = await fs.readdir('path/to/dir')
 
 	// CSV
+  const fs = require('fs')
+  const path = require('path')
+  const parse = require('csv-parse')
+
 	const parseCsvFile = function (fileName, actionFunction) {
-	  const fs = require('fs')
-	  const parse = require('csv-parse')
+	  const filePath = path.join(__dirname, fileName)
 	  const parser = parse({ delimiter: ',' }, actionFunction)
-	  fs.createReadStream(require('path').join(__dirname, fileName)).pipe(parser)
+	  fs.createReadStream(filePath).pipe(parser)
 	}
 
 	const printTSV = (array, separator = '\t') => {
