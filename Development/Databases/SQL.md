@@ -279,7 +279,7 @@ Example:
 
 ### String concatenation
 
-	SELECT article.*, STRING_AGG(category.name, ',') AS categories
+	SELECT article.*, COUNT(DISTINCT(category.id)) AS category_count, STRING_AGG(DISTINCT(category.name), ',') AS category_names
 
 ## Create - Insert
 

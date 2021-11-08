@@ -4,6 +4,7 @@
 - Small server → Docker Engine Community
 - Critical applications → Docker Engine Enterprise or Kubernetes
 
+
 ## Concepts
 
 - **Container**: a virtual machine
@@ -62,6 +63,32 @@ Running a suite:
 - `--build` Forces a rebuild of images
 
 
+## The `Dockerfile`
+
+https://docs.docker.com/engine/reference/builder/
+
+- [FROM](https://docs.docker.com/engine/reference/builder/#from)
+- [RUN](https://docs.docker.com/engine/reference/builder/#run)
+	- RUN echo 'we are running some # of cool things'
+- [CMD](https://docs.docker.com/engine/reference/builder/#cmd)
+- [LABEL](https://docs.docker.com/engine/reference/builder/#label)
+- [EXPOSE](https://docs.docker.com/engine/reference/builder/#expose)
+- [ENV](https://docs.docker.com/engine/reference/builder/#env)
+- [ADD](https://docs.docker.com/engine/reference/builder/#add)
+- [COPY](https://docs.docker.com/engine/reference/builder/#copy)
+- [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint)
+- [VOLUME](https://docs.docker.com/engine/reference/builder/#volume)
+- [USER](https://docs.docker.com/engine/reference/builder/#user)
+- [WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir)
+- [ARG](https://docs.docker.com/engine/reference/builder/#arg)
+- [ONBUILD](https://docs.docker.com/engine/reference/builder/#onbuild)
+- [STOPSIGNAL](https://docs.docker.com/engine/reference/builder/#stopsignal)
+- [HEALTHCHECK](https://docs.docker.com/engine/reference/builder/#healthcheck)
+- [SHELL](https://docs.docker.com/engine/reference/builder/#shell)
+
+ENTRYPOINT + CMD = default container command arguments
+
+
 ## Comparisons
 
 ### Docker vs Vagrant
@@ -90,6 +117,7 @@ local DNS resolver
 192.168.1.247
 
 	sudo nano /etc/resolver/minikube-dev
+
 
 ## Run
 

@@ -462,7 +462,7 @@ Read/write/delete files:
 
 	// List files in folder
 	const { promises: fs } = require('fs')
-	const names = await fs.readdir('path/to/dir')
+	const fileNames = await fs.readdir('path/to/dir')
 
 	// CSV
   const fs = require('fs')

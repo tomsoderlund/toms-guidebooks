@@ -42,7 +42,17 @@ FIND(search_for, text_to_search, starting_at) - case-sensitive
 =right(B2, len(B2)-find(",", B2))
 
 // Split string to array
-split(A2," --> ")
+=SPLIT(A2, " --> ", FALSE)
+
+// INDEX(array, row, column)
+=INDEX(SPLIT("1.23/1.15", "/"), 0, 2)
+
+Join/concatenate cells to string
+=JOIN(";",{1,2,"1 2 3 4"})
+=JOIN(" / ",C2 & " " & D2,M2,N2)
+
+Get string minus two last characters
+=LEFT(B2,LEN(B2)-2)
 
 // Find in cell: true if found
 =NOT(ISERR(SEARCH("keyword", F2)))
@@ -68,13 +78,6 @@ Random string
 =CHAR(RANDBETWEEN(65,90)) // large
 =CHAR(RANDBETWEEN(97,122)) // small
 =CHOOSE(RANDBETWEEN(1, 2), CHAR(RANDBETWEEN(65,90)), CHAR(RANDBETWEEN(97,122)))
-
-Join/concatenate cells to string
-=JOIN(";",{1,2,"1 2 3 4"})
-=JOIN(" / ",C2 & " " & D2,M2,N2)
-
-Get string minus two last characters
-=LEFT(B2,LEN(B2)-2)
 
 
 ---------- DATE & TIME ----------
