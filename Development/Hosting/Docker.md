@@ -17,11 +17,14 @@
 
 	docker run --help
 
-- `docker ps`: lists the containers that are still running. Add the `-a` switch in order to see containers that have stopped
+- `docker ps -a`: lists all containers
+- `docker ps`: lists the containers that are still running.
+- `docker image ls`: lists all images
 - `docker logs [container ID]`: retrieves the logs of a container, even when it has stopped
 - `docker inspect [container ID]`: gets detailed information about a running or stopped container
 - `docker stop`: stops a container that is still running
 - `docker rm`: deletes a container
+- `docker image rm`: remove image
 
 ### docker run
 
