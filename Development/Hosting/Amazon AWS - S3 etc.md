@@ -6,6 +6,7 @@
 - **User groups** (e.g. `Admins`): collection of IAM users. You can use user groups to specify long-term permissions for a collection of users, e.g. an “Admins” group.
 - **Roles** (e.g. `AWSServiceRoleForSupport`): is intended to be assumable by anyone who needs it, is often temporary, has no login credentials.
 - **Policies** (permissions, e.g. `AmazonRDSFullAccess`): a collection of access rights for an identity or resource. Can be attached to Users/User groups/Roles.
+- **Tags**: key-value pairs that you can add to AWS resources to help identify, organize, or search for resources.
 - **ACL**: Access Control List
 
 https://console.aws.amazon.com/iam/
