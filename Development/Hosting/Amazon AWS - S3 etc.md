@@ -2,79 +2,74 @@
 
 ## User management - IAM
 
-- Users: represents a person or service.
-- User groups: collection of IAM users. You can use user groups to specify permissions for a collection of users, e.g. an “Admins” group.
-- Roles: is intended to be assumable by anyone who needs it, is often temporary, has no login credentials.
-- Policies (permissions): a collection of access rights. Defines the permissions of an identity or resource.
+- **Users** (e.g. `tomsoderlund`, `logging-app`): represents a Person or Service.
+- **User groups** (e.g. `Admins`): collection of IAM users. You can use user groups to specify permissions for a collection of users, e.g. an “Admins” group.
+- **Roles** (e.g. `AWSServiceRoleForSupport`): is intended to be assumable by anyone who needs it, is often temporary, has no login credentials.
+- **Policies** (permissions, e.g. `AmazonRDSFullAccess`): a collection of access rights. Defines the permissions of an identity or resource.
+- ACL: Access Control List
 
 https://console.aws.amazon.com/iam/
 
-Users -> Access Keys (multiple)
+- Users → Access Keys (multiple)
+- Simulate permissions: Users → Permissions → arrow on policy
+- Policy simulator: https://policysim.aws.amazon.com/home/index.jsp
 
-Simulate: Users -> Permissions -> arrow on policy
-
-GetFriday
-s3_website
-
-ACL = Access Control List
+### Example: Access an S3 bucket
 
 1. Attach a User Policy: https://console.aws.amazon.com/iam/home
 
-	Name: treat-as-a-variable-name
+	Name: `treat-as-a-variable-name`
 
-	{
-		"Version": "2012-10-17",
-		"Statement": [
-			{
-				"Effect": "Allow",
-				"Action": [
-					"s3:GetObject",
-					"s3:ListBucket",
-					"s3:GetBucketLocation"
-				],
-				"Resource": [
-					"arn:aws:s3:::BUCKETNAME/*",
-					"arn:aws:s3:::BUCKETNAME"
-				]
-			}
-		]
-	}
+		{
+			"Version": "2012-10-17",
+			"Statement": [
+				{
+					"Effect": "Allow",
+					"Action": [
+						"s3:GetObject",
+						"s3:ListBucket",
+						"s3:GetBucketLocation"
+					],
+					"Resource": [
+						"arn:aws:s3:::BUCKETNAME/*",
+						"arn:aws:s3:::BUCKETNAME"
+					]
+				}
+			]
+		}
 
 2. Add a bucket policy on the Bucket in S3:
 
-	{
-		"Version": "2012-10-17",
-		"Statement": [
-			{
-				"Sid": "GetFiles",
-				"Effect": "Allow",
-				"Principal": {
-					"AWS": "*"
+		{
+			"Version": "2012-10-17",
+			"Statement": [
+				{
+					"Sid": "GetFiles",
+					"Effect": "Allow",
+					"Principal": {
+						"AWS": "*"
+					},
+					"Action": [
+						"s3:GetObject",
+						"s3:GetObjectAcl",
+						"s3:PutObject",
+						"s3:PutObjectAcl"
+					],
+					"Resource": "arn:aws:s3:::BUCKETNAME/*"
 				},
-				"Action": [
-					"s3:GetObject",
-					"s3:GetObjectAcl",
-					"s3:PutObject",
-					"s3:PutObjectAcl"
-				],
-				"Resource": "arn:aws:s3:::BUCKETNAME/*"
-			},
-			{
-				"Sid": "ListFiles",
-				"Effect": "Allow",
-				"Principal": {
-					"AWS": "*"
-				},
-				"Action": [
-					"s3:ListBucket"
-				],
-				"Resource": "arn:aws:s3:::BUCKETNAME"
-			}
-		]
-	}
-
-Policy simulator:
-https://policysim.aws.amazon.com/home/index.jsp
+				{
+					"Sid": "ListFiles",
+					"Effect": "Allow",
+					"Principal": {
+						"AWS": "*"
+					},
+					"Action": [
+						"s3:ListBucket"
+					],
+					"Resource": "arn:aws:s3:::BUCKETNAME"
+				}
+			]
+		}
 
 ## DNS: Route 53
 
@@ -91,20 +86,22 @@ https://console.aws.amazon.com/route53
 
 ### s3_website
 
-s3_website cfg create
-s3_website cfg apply
-s3_website push
+	s3_website cfg create
+	s3_website cfg apply
+	s3_website push
 
-### Config (same user for all sites):
-s3_bucket: www.YOURWEBSITE.com
-s3_endpoint: EU
-s3_id: AKIAIKW..
-s3_secret: hEjr8
+### Config (same user for all sites)
+
+	s3_bucket: www.YOURWEBSITE.com
+	s3_endpoint: EU
+	s3_id: AKIAIKW..
+	s3_secret: hEjr8
 
 
 ## CORS
 
 Only set in S3, not CloudFront
+
 
 ## CloudFront
 
