@@ -2,11 +2,11 @@
 
 ## User management - IAM
 
-- **Users** (e.g. `tomsoderlund`, `logging-app`): represents a Person or Service.
-- **User groups** (e.g. `Admins`): collection of IAM users. You can use user groups to specify permissions for a collection of users, e.g. an “Admins” group.
+- **Users** (e.g. `tomsoderlund`, `logging-app`): represents a Person or Service, often with long-term permissions.
+- **User groups** (e.g. `Admins`): collection of IAM users. You can use user groups to specify long-term permissions for a collection of users, e.g. an “Admins” group.
 - **Roles** (e.g. `AWSServiceRoleForSupport`): is intended to be assumable by anyone who needs it, is often temporary, has no login credentials.
-- **Policies** (permissions, e.g. `AmazonRDSFullAccess`): a collection of access rights. Defines the permissions of an identity or resource.
-- ACL: Access Control List
+- **Policies** (permissions, e.g. `AmazonRDSFullAccess`): a collection of access rights for an identity or resource. Can be attached to Users/User groups/Roles.
+- **ACL**: Access Control List
 
 https://console.aws.amazon.com/iam/
 
