@@ -30,8 +30,7 @@
 
 	docker run hello-world
 
-
-## Useful Docker commands from Causality
+### Useful Docker commands from Causality
 
 Pull down images and start services:
 - `docker compose up`
@@ -42,28 +41,96 @@ Install laravel dependencies:
 Stopping the local service
 - `docker compose stop`
 
-### Using Composer
+#### Using Composer
+
 - `docker compose run --rm composer install`
 - `docker compose run --rm composer outdated`
 - `docker compose run --rm composer update`
 
-### Using Laravel Artisan
+#### Using Laravel Artisan
+
 - `docker compose run --rm php php artisan`
 
-### Running tests
+#### Running tests
+
 - `docker compose run --rm php php artisan test`
 
-### Testing
+#### Testing
+
 Running all tests:
 - `docker compose run --rm php php artisan test`
 
-Running a suite:
-- `docker compose run --rm php php artisan test --testsuite Faeature`
+Running a test suite:
+- `docker compose run --rm php php artisan test --testsuite Feature`
 
-### Useful parameters
+#### Useful parameters
+
 - `--rm` Removes the container after run
 - `-d` Detach, get the console back after run
 - `--build` Forces a rebuild of images
+
+### All `docker` commands
+
+- docker app
+- [docker attach](https://docs.docker.com/engine/reference/commandline/attach/)
+- [docker build](https://docs.docker.com/engine/reference/commandline/build/)
+- docker builder
+- docker buildx
+- docker checkpoint
+- [docker commit](https://docs.docker.com/engine/reference/commandline/commit/)
+- docker compose
+- docker config
+- docker container
+- docker context
+- [docker cp](https://docs.docker.com/engine/reference/commandline/cp/)
+- [docker create](https://docs.docker.com/engine/reference/commandline/create/)
+- [docker diff](https://docs.docker.com/engine/reference/commandline/diff/)
+- [docker events](https://docs.docker.com/engine/reference/commandline/events/)
+- [docker exec](https://docs.docker.com/engine/reference/commandline/exec/)
+- [docker export](https://docs.docker.com/engine/reference/commandline/export/)
+- [docker history](https://docs.docker.com/engine/reference/commandline/history/)
+- [docker image](https://docs.docker.com/engine/reference/commandline/image/)
+- [docker images](https://docs.docker.com/engine/reference/commandline/images/)
+- [docker import](https://docs.docker.com/engine/reference/commandline/import/)
+- [docker info](https://docs.docker.com/engine/reference/commandline/info/)
+- [docker inspect](https://docs.docker.com/engine/reference/commandline/inspect/)
+- [docker kill](https://docs.docker.com/engine/reference/commandline/kill/)
+- [docker load](https://docs.docker.com/engine/reference/commandline/load/)
+- [docker login](https://docs.docker.com/engine/reference/commandline/login/)
+- [docker logout](https://docs.docker.com/engine/reference/commandline/logout/)
+- [docker logs](https://docs.docker.com/engine/reference/commandline/logs/)
+- docker manifest
+- docker network
+- docker node
+- [docker pause](https://docs.docker.com/engine/reference/commandline/pause/)
+- docker plugin
+- [docker port](https://docs.docker.com/engine/reference/commandline/port/)
+- [docker ps](https://docs.docker.com/engine/reference/commandline/ps/)
+- [docker pull](https://docs.docker.com/engine/reference/commandline/pull/)
+- [docker push](https://docs.docker.com/engine/reference/commandline/push/)
+- [docker rename](https://docs.docker.com/engine/reference/commandline/rename/)
+- [docker restart](https://docs.docker.com/engine/reference/commandline/restart/)
+- [docker rm](https://docs.docker.com/engine/reference/commandline/rm/)
+- [docker rmi](https://docs.docker.com/engine/reference/commandline/rmi/)
+- [docker run](https://docs.docker.com/engine/reference/commandline/run/)
+- [docker save](https://docs.docker.com/engine/reference/commandline/save/)
+- [docker search](https://docs.docker.com/engine/reference/commandline/search/)
+- docker secret
+- docker service
+- docker stack
+- [docker start](https://docs.docker.com/engine/reference/commandline/start/)
+- [docker stats](https://docs.docker.com/engine/reference/commandline/stats/)
+- [docker stop](https://docs.docker.com/engine/reference/commandline/stop/)
+- docker swarm
+- docker system
+- [docker tag](https://docs.docker.com/engine/reference/commandline/tag/)
+- [docker top](https://docs.docker.com/engine/reference/commandline/top/)
+- docker trust
+- [docker unpause](https://docs.docker.com/engine/reference/commandline/unpause/)
+- [docker update](https://docs.docker.com/engine/reference/commandline/update/)
+- [docker version](https://docs.docker.com/engine/reference/commandline/version/)
+- docker volume
+- [docker wait](https://docs.docker.com/engine/reference/commandline/wait/)
 
 
 ## The `Dockerfile`
