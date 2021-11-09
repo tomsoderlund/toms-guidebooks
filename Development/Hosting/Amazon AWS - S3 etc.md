@@ -2,6 +2,11 @@
 
 ## User management - IAM
 
+- Users: represents a person or service.
+- User groups: collection of IAM users. You can use user groups to specify permissions for a collection of users, e.g. an “Admins” group.
+- Roles: is intended to be assumable by anyone who needs it, is often temporary, has no login credentials.
+- Policies (permissions): a collection of access rights. Defines the permissions of an identity or resource.
+
 https://console.aws.amazon.com/iam/
 
 Users -> Access Keys (multiple)

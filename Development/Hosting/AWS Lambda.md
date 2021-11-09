@@ -18,7 +18,7 @@ Lambda functions are uploaded to AWS as a ZIP file:
 
 Using `aws` CLI tool:
 
-    aws lambda create-function --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip --handler index.handler --runtime nodejs14.x --role arn:aws:iam::562328468330:role/lambda-execute
+    aws lambda create-function --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip --handler index.handler --runtime nodejs14.x --role arn:aws:iam::[AWS Account Number]:role/lambda-execute
 
     aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip
 

@@ -71,6 +71,4 @@ https://golang.org/doc/tutorial/web-service-gin
 
 ## Go on AWS Lambda with Docker
 
-https://hub.docker.com/r/amazon/aws-lambda-go
-
-	docker pull amazon/aws-lambda-go
+https://github.com/Binogi/golang-aws-lambda-docker
