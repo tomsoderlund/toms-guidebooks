@@ -56,3 +56,5 @@ See results:
 Sort list by size, and delete folders:
 
     sudo rm -rf "./My App 1/node_modules"
+
+(Note the surrounding quotes for folder names with spaces)
