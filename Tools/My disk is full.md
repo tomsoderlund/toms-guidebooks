@@ -40,8 +40,19 @@ Script:
     done
 
 
-## To make backup of:
+## Deleting node_modules
 
-Pictures/_To sort
+https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-machine-and-free-up-hd-space-f3954843aeda
 
-Oberon
+Find all folders:
+
+    find . -name "node_modules" -type d -prune | xargs du -chs
+
+See results:
+
+    318M  ./MyApp1/node_modules
+    1000M ./MyApp2/node_modules
+
+Sort list by size, and delete folders:
+
+    rm -rf ./MyApp1/node_modules
