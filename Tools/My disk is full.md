@@ -46,7 +46,7 @@ https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-m
 
 Find all folders:
 
-    sudo find . -name "node_modules" -type d -prune | xargs du -chs
+    sudo find . -name "node_modules" -type d -prune -exec echo \"{}\" \; | xargs du -chs
 
 See results:
 
