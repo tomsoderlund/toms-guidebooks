@@ -50,9 +50,9 @@ Find all folders:
 
 See results:
 
-    318M  ./MyApp1/node_modules
-    1000M ./MyApp2/node_modules
+    318M  ./My App 1/node_modules
+    1000M ./My App 2/node_modules
 
 Sort list by size, and delete folders:
 
-    sudo rm -rf ./MyApp1/node_modules
+    sudo rm -rf "./My App 1/node_modules"
