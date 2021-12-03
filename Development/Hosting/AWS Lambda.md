@@ -18,14 +18,28 @@ Lambda functions are uploaded to AWS as a ZIP file:
 
 Using `aws` CLI tool:
 
-    aws lambda create-function --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip --handler index.handler --runtime nodejs14.x --role arn:aws:iam::[AWS Account Number]:role/lambda-execute
+    aws lambda create-function \
+      --function-name myLambdaFunction \
+      --zip-file fileb://myLambdaFunction.zip \
+      --handler index.handler \
+      --runtime nodejs14.x \
+      --role arn:aws:iam::[AWS Account Number]:role/lambda-execute
 
-    aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip
+    aws lambda update-function-code \
+      --function-name myLambdaFunction \
+      --zip-file fileb://myLambdaFunction.zip
 
-    aws lambda delete-function --function-name myLambdaFunction
+    aws lambda delete-function \
+      --function-name myLambdaFunction
 
     aws lambda list-functions --max-items 10
 
+Test Lambda:
+
+    aws lambda invoke --function-name myLambdaFunction \
+      --cli-binary-format raw-in-base64-out \
+      --payload '{"body":"{\"name\":\"Tom\"}"}' \
+      --invocation-type "RequestResponse" response.txt
 
 ## Yarn shortcut
 

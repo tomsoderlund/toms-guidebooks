@@ -701,7 +701,7 @@ https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascri
 
 Slugs:
 
-	const toSlug = str => str.trim().replace(/ /g, '-').replace(/[^\w-]+/g, '').toLowerCase()
+	const toSlug = str => str.trim().toLowerCase().replace(/ |_/g, '-').replace(/[^\w-]+/g, '')
 
 	function toSlug (str, removeInternationalChars = true) {
 	  // Abort if not a proper string value
@@ -709,8 +709,7 @@ Slugs:
 	  // For both
 	  var newStr = str.trim()
 	    .toLowerCase()
-	    .replace(/ /g, '-') // space to dash
-	    .replace(/_/g, '-') // underscore to dash
+	    .replace(/ |_/g, '-') // space/underscore to dash
 	  // Remove ÅÄÖ etc?
 	  if (removeInternationalChars) {
 	    newStr = newStr.replace(/[åäæâãáà]/g, 'a').replace(/[ëêéè]/g, 'e').replace(/[öøôõóò]/g, 'o').replace(/[üûúù]/g, 'u') // convert ÅÄÖÜ to Latin characters

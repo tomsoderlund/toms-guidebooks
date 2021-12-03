@@ -70,6 +70,7 @@
   - [Mac OS X](./Operating%20Systems/Mac%20OS%20X.md)
   - [Unix Linux Bash](./Operating%20Systems/Unix%20Linux%20Bash.md)
 - Tools:
+  - [Apple Keynote](./Tools/Apple%20Keynote.md)
   - [Git](./Tools/Git.md)
   - [Gmail](./Tools/Gmail.md)
   - [Google Sheets and Excel](./Tools/Google%20Sheets%20and%20Excel.md)

@@ -9,8 +9,6 @@ Nice-to-have’s:
     mkdir components
     rm -rf pages/api; rm styles/Home.module.css
 
-jsconfig.json:
-
     echo '{
       "compilerOptions": {
         "baseUrl": "."
@@ -343,7 +341,28 @@ or:
 	  // With route name and params
 	  Router.pushRoute('blog', {slug: 'hello-world'})
 
-## Localization: next-i18next
+## Localization
+
+`next.config.js`:
+
+    module.exports = {
+      i18n: {
+        locales: ['en', 'sv'],
+        defaultLocale: 'en'
+      }
+    }
+
+Get locale:
+
+    const { locale, locales, defaultLocale } = useRouter()
+
+Switch locale:
+
+    <Link href='/another' locale='fr'>
+      <a>Go to /fr/another</a>
+    </Link>
+
+### next-i18next
 
     mkdir -p public/static/locales/en
     touch public/static/locales/en/common.json

@@ -285,7 +285,8 @@ input[type="radio"] {
 <header>
 <footer>
 
-main, section, article, aside, header, footer, nav, figure, figcaption, time, mark.
+main, section, article, aside, header, footer, nav, table, figure, figcaption, time, mark
+
 http://caniuse.com/#feat=html5semantic
 
 <aside> // content aside from the content it is placed in.
