@@ -108,6 +108,16 @@ Tags: https://medium.com/golangspec/tags-in-golang-3e5db0b8ef3e
 
 	user.Tag.Lookup("json")
 
+### Environment variables
+
+	os.Getenv("FOO")
+	os.Setenv("FOO", "1")
+	os.Environ()
+
+### Command-line arguments: flags
+
+https://gobyexample.com/command-line-flags
+
 ### JSON
 
 `Unmarshal` = Parse
@@ -119,6 +129,23 @@ Tags: https://medium.com/golangspec/tags-in-golang-3e5db0b8ef3e
 
 	data, error := json.Marshal(pigeon)
 	fmt.Println(string(data))
+
+### HTTP server
+
+package main
+
+	import (
+		"fmt"
+		"net/http"
+	)
+
+	func main() {
+	    http.HandleFunc("/hello-world", func(w http.ResponseWriter, r *http.Request){
+	        fmt.Fprintf(w, "Hello world")
+	    })
+
+	    http.ListenAndServe(":80", nil)
+	}
 
 
 ## Building a RESTful API
