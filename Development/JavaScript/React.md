@@ -749,6 +749,8 @@ onMouseDown/onMouseEnter/onMouseLeave/onMouseMove/onMouseOut/onMouseOver/onMouse
 
 ### Drag & Drop
 
+#### Basic drag & drop
+
 https://github.com/STRML/react-draggable
 
 Note: `<Draggable>` must wrap a `<div>`.
@@ -761,7 +763,59 @@ Note: `<Draggable>` must wrap a `<div>`.
 - screenX/Y
 - x/y
 
+#### “Trello-style” drag & drop
+
 https://github.com/atlassian/react-beautiful-dnd
+
+    import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+
+    const reorder = (list, startIndex, endIndex) => {
+      const result = Array.from(list)
+      const [removed] = result.splice(startIndex, 1)
+      result.splice(endIndex, 0, removed)
+      return result
+    }
+
+    function DragDropDemo () {
+      const [items, setItems] = useState(['Apple', 'Banana', 'Cherry', 'Dragonfruit', 'Elderberry'])
+
+      function onDragEnd(result) {
+        if ((!result.destination) || (result.destination.index === result.source.index))
+          return
+        const newItems = reorder(items, result.source.index, result.destination.index)
+        setItems(newItems)
+      }
+
+      return (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId='list'>
+            {provided => (
+              <div className='droppable' ref={provided.innerRef} {...provided.droppableProps}>
+                {items.map((item, index) => (
+                  <Draggable key={item} draggableId={item} index={index}>
+                    {provided => (
+                      <article
+                        className='draggable'
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        {item}
+                      </article>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )
+    }
+
+#### Outline drag & drop
+
+https://github.com/frontend-collective/react-sortable-tree
 
 ### Debounce
 

@@ -1323,7 +1323,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	document.querySelector('#mylink img') // only FIRST
 	document.getElementsByTagName('div') // returns array
 	document.getElementsByClassName('myClass') // returns array
-	document.getElementById('myButton') // Note: can't be chained
+	document.getElementById('myButton')  // returns ONE. Note: can't be chained
 	document.getElementById('myButton').children[0]
 	document.getElementById('myButton').parentNode
 	// Chained:
@@ -2034,7 +2034,7 @@ Related:
 			? failFunc()
 			: expressionFunc()
 				? func()
-				: setTimeout(doWhen.bind(undefined, func, expressionFunc, failFunc, iterations + 1), 10)
+				: window.setTimeout(doWhen.bind(undefined, func, expressionFunc, failFunc, iterations + 1), 10)
 	}
 
 	// [{ reference: foo, .. }, { reference: bar, .. }] -> { foo: .., bar: .. }

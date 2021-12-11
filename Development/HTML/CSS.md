@@ -374,7 +374,7 @@ button.inProgress:after {
   content: '...';
 }
 
-### last-child
+### last-child, -end
 
     div {
       vertical-align: top;

@@ -272,3 +272,10 @@ Sheet: https://docs.google.com/spreadsheets/d/1E7bQpNLCp_V9yVl1v6Ifxw9Dsn_eA7R_I
 
 	"license": "UNLICENSED",
 	"license": "ISC",
+
+## Submodules
+
+	git submodule init
+	git submodule update
+
+https://git-scm.com/book/en/v2/Git-Tools-Submodules#_cloning_submodules

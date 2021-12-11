@@ -22,6 +22,8 @@ R2C2
 
 RANDBETWEEN(1, 2)
 
+// Multiply two columns, e.g. calendar-days * usage%
+=SUM(ARRAYFORMULA($C2:$C12*F2:F12))
 
 ---------- STRINGS ----------
 

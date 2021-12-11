@@ -1,6 +1,6 @@
 # Next.js
 
-    yarn create next-app [my-app]
+    yarn create next-app [my-app]  # you can add --ts or --typescript
     cd my-app
     yarn dev
 
@@ -60,13 +60,6 @@ HTML 3.44 kB, JS 65.1 kB
 	      <h1 className='capitalize'>{data.person.name}</h1>
 	    </main>
 	  }
-	
-	  // Now use getServerSideProps instead
-	  MyPage.getInitialProps = async ({ req, res, pathname, asPath, query }) => {
-	    console.log({ pathname, asPath, query })
-	    return { query }
-	  }
-	
 	  export default MyPage
 
 ## Code optimization
