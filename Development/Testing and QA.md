@@ -302,8 +302,16 @@ Run:
 
 ### Prettier
 
-  yarn add prettier --dev --exact
-  # or globally
-  yarn global add prettier
+    yarn add prettier --dev --exact
+    # or globally
+    yarn global add prettier
 
-Config: `.prettierrc`
+Config: `.prettierrc` and `.prettierignore`
+
+    {
+      "printWidth": 100,
+      "semi": false,
+      "singleQuote": true,
+      "jsxSingleQuote": true,
+      "trailingComma": "none"
+    }
