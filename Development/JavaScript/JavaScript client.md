@@ -1473,7 +1473,13 @@ Tip: event handlers on `document` for move/end:
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 		body: JSON.stringify(data)
 	})
-	.then(res => res.json())
+		.then(async (res) => {
+			if (!res.ok) {
+				const json = await res.json()
+				throw new Error(json.message || res.statusText)
+			}
+			return res.json()
+		})
 
 	// JWT Token
 	window.fetch(`${config.appUrl}api/domains`, {

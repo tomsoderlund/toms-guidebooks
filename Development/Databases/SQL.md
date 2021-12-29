@@ -25,6 +25,7 @@ port 5432 is default
 ## URL in config
 
 	postgresql://localhost/my_database
+	postgresql://localhost/my_database?sslmode=require
 
 ## Heroku
 

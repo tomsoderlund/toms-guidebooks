@@ -44,7 +44,11 @@ Compile:
 
 ### type
 
-`type` vs `interface` vs `class`: https://stackoverflow.com/a/65948871 and https://javascript.plainenglish.io/when-to-best-use-type-class-or-interface-in-typescript-73bf66de19e9
+`type` vs `interface` vs `class`:
+
+Always `interface`, except for: tuples, unions, mapped types, function types, overloading functions.
+
+See https://stackoverflow.com/a/65948871 and https://javascript.plainenglish.io/when-to-best-use-type-class-or-interface-in-typescript-73bf66de19e9
 
 ### interface
 

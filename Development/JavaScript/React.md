@@ -181,6 +181,14 @@ https://reactjs.org/docs/hooks-overview.html
 
 ### Forms with useState
 
+Simple:
+
+    const [inputs, setInputs] = useState({ name: '' })
+
+    const handleInputChange = ({ target }) => setInputs({ ...inputs, [target.name]: target.value })
+
+Advanced:
+
     const DEFAULT_INPUTS = { firstName: '', lastName: '' }
 
     const [inputs, setInputs] = useState(DEFAULT_INPUTS)
@@ -232,6 +240,11 @@ Checkbox (`checked`):
 
 Fieldset:
 
+    /*
+      <FieldSet label='Name'>
+        <MyComponent />
+      </FieldSet>
+    */
     const Fieldset = ({ children, id, label, description }) => {
       return (
         <div className='fieldset' title={description}>
@@ -241,6 +254,14 @@ Fieldset:
       )
     }
 
+    /*
+      <InputWithLabel
+        id='name'
+        label='Name'
+        value={state.name}
+        onChange={setName}
+      />
+    */
     const InputWithLabel = ({ id, label, placeholder, description, type = 'text', autoComplete = 'off', value, onChange, inProgress, required, disabled, className, children }) => (
       <Fieldset
         id={id}
