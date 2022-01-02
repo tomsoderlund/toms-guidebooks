@@ -16,6 +16,11 @@ Compile:
     tsc greeter.ts
 
 
+## Organize your project
+
+    types/global.d.ts
+
+
 ## Types
 
 - boolean
@@ -30,6 +35,9 @@ Compile:
 - any / unknown
 - null / undefined
 - never
+- Date
+- Combined: Human & Customer
+- Or: string | null
 
 ### enum
 
@@ -127,7 +135,7 @@ Function in interface:
 
 ### Nested destructuring
 
-    const { name, age }: { name: string; age: number } = personObject
+    const { name, age }: { name: string, age: number } = personObject
 
 With `type`-definition:
 
@@ -160,25 +168,28 @@ With `type`-definition:
 
 ## TypeScript in React
 
-    // React.FunctionComponent alias React.FC
-    import React, { FunctionComponent, ReactElement } from 'react'
-
-    type MyComponentProps = {
-      title: string,
-      paragraph: string
+    interface MyComponentProps = {
+      name: string
+      value: number
     }
 
-const MyComponent: FunctionComponent<MyComponentProps> = ({ name, value }): ReactElement => (
-const MyComponent: FunctionComponent = ({ name, value }: MyComponentProps): ReactElement => (
-      <div />
-    )
+    // Variants on how to declare types:
+    const MyComponent: React.FunctionComponent<MyComponentProps> = ({ name, value }): React.ReactElement => ()
+    const MyComponent: React.FunctionComponent = ({ name, value }: MyComponentProps): React.ReactElement => ()
+    const MyComponent = ({} : MyComponentProps) => ()
+    const MyComponent = ({ name } : { name: string }) => ()
 
-    const MyComponent = ({} : IMyComponent) => {}
+### Important React types
 
-    // JSX.Element | null
+- element/children: React.ReactNode (not JSX.Element)
+- React.ReactElement
+- React.FunctionComponent alias React.FC
+- event: React.SyntheticEvent
+- event.target: Element or HTMLInputElement
 
-    React.SyntheticEvent
+useState:
 
+    const [productInfo, setProductInfo] = useState<ProductInfo>({ sku: '', name: ''})
 
 ## Tools
 

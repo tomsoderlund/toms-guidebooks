@@ -207,6 +207,10 @@ return hasCorrectColor;
 
     yarn add standard --dev
 
+Use `ts-standard` if you want TypeScript:
+
+    yarn add ts-standard --dev
+
 Use `standardx` if you want eslint (.eslintrc) config:
 
     yarn add standardx --dev
