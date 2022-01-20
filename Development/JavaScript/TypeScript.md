@@ -30,6 +30,7 @@ Compile:
 - enum
 - Array: `Array<string>` same as `string[]`. `let list: number[] = [1, 2, 3]`
 - object: not number, string, boolean, bigint, symbol, null, or undefined.
+- function: `() => void`
 - symbol
 - void
 - any / unknown
@@ -44,7 +45,8 @@ Compile:
     enum Color { Red, Green, Blue }
     let c: Color = Color.Green
 
-    enum LetterNumbers { A = 1, B = 2, C = 3 }
+    enum LetterNumber { A = 1, B = 2, C = 3 }
+    let n: LetterNumber = LetterNumber.B
 
 ### tuple
 
@@ -102,7 +104,7 @@ Function in interface:
 
     interface MenuPopoverProps {
       open: boolean;
-      onClose: () => void;
+      onClose: (event: React.SyntheticEvent) => void;
       anchorEl: HTMLFormElement;
     }
 
@@ -181,11 +183,31 @@ With `type`-definition:
 
 ### Important React types
 
+- component: React.FunctionComponent (alias React.FC)
+- component return value: React.ReactElement
 - element/children: React.ReactNode (not JSX.Element)
-- React.ReactElement
-- React.FunctionComponent alias React.FC
-- event: React.SyntheticEvent
+- event: React.SyntheticEvent, React.ChangeEvent: (event: React.SyntheticEvent) => void
 - event.target: Element or HTMLInputElement
+
+Custom HTMLElementEvent:
+
+    interface HTMLSimpleElementEvent {
+      target: {
+        name: string
+        type?: string
+        value?: string
+        checked?: boolean
+      }
+    }
+
+https://stackoverflow.com/a/42066698
+Usage: `event: HTMLElementEvent<HTMLTextAreaElement>`
+
+    type HTMLElementEvent<T extends HTMLElement> = Event & {
+      target: T; 
+      // probably you might want to add the currentTarget as well
+      // currentTarget: T;
+    }
 
 useState:
 

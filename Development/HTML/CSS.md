@@ -973,6 +973,7 @@ Examples:
 ## Pseudo classes
 
 input:not([type="radio"])
+h1[data-testid="jest-test-product-name"]
 
 :active
 :any-link

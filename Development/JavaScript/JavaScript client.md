@@ -1370,6 +1370,22 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	var html = '<h1 id="title">Some Title</h1><span style="display:inline-block width=100px">Some arbitrary text</span>'
 	appendHtml(document.body, html) // "body" has two more children - h1 and span.
 
+### createElement
+
+	function createElement (elementType, props, children) {
+		const element = document.createElement(elementType)
+		for (const prop in props) {
+			if (prop === 'style') {
+				Object.keys(props.style).forEach(function (styleName) { element.style[styleName] = props.style[styleName] })
+			} else if (props[prop] !== null) {
+				element[prop] = props[prop]
+			}
+		}
+		if (children) {
+			children.forEach(function (node) { element.appendChild(node) })
+		}
+		return element
+	}
 
 ### Events
 
@@ -1389,6 +1405,29 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	element.dispatchEvent(new Event('change'))
 	element.addEventListener('change', myFunction)
 	element.removeEventListener('change', myFunction) // no myFunction = remove all
+
+#### Page events
+
+Loading a page, in order:
+
+1. readystatechange
+2. load
+3. pageshow
+
+Back button:
+
+1. popstate
+
+MutationObserver (for SPA’s):
+
+	const observer = new MutationObserver((mutationsList, observer) => {
+		for (const mutation of mutationsList) {
+			console.log('mutation:', mutation.type, mutation.target)
+		}
+	})
+	observer.observe(document.querySelector('body'), { childList: true, subtree: true, attributes: true })
+	// When done:
+	observer.disconnect()
 
 #### preventDefault vs. stopPropagation
 
