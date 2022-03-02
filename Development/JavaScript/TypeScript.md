@@ -29,16 +29,16 @@ Compile:
 - tuple
 - enum
 - Array: `Array<string>` same as `string[]`. `let list: number[] = [1, 2, 3]`
-- object: not number, string, boolean, bigint, symbol, null, or undefined.
-- function: `() => void`
+- object: see also `Record<string, string>`. Not number, string, boolean, bigint, symbol, null, or undefined.
+- function: `(param: string) => void`
 - symbol
 - void
 - any / unknown
 - null / undefined
 - never
 - Date
-- Combined: Human & Customer
-- Or: string | null
+- AND/Combined: Human & Customer
+- OR: string | null
 
 ### enum
 
@@ -129,6 +129,26 @@ Function in interface:
 
 ## Patterns
 
+### Combining types
+
+    interface RentalInputs extends ProductVariant, Customer, Rental {}
+    type RentalInputs = ProductVariant & Customer & Rental
+
+    interface RentalFieldsProps {
+      inputs: ProductVariant & Customer & Rental
+    }
+
+### Partial/optional
+
+    export const AppContext = React.createContext<Partial<ContextProps>>({})
+
+### Interface as Array
+
+    interface MyArrayInterface {
+      0: number,
+      1: (startValue: number) => void
+    }
+
 ### Cast with 'as'
 
     const elementRef = useRef() as React.MutableRefObject<HTMLButtonElement>
@@ -186,7 +206,10 @@ With `type`-definition:
 - component: React.FunctionComponent (alias React.FC)
 - component return value: React.ReactElement
 - element/children: React.ReactNode (not JSX.Element)
-- event: React.SyntheticEvent, React.ChangeEvent: (event: React.SyntheticEvent) => void
+- event:
+  - React.SyntheticEvent
+  - React.MouseEventHandler<HTMLImageElement>
+  - React.ChangeEvent: (event: React.SyntheticEvent) => void
 - event.target: Element or HTMLInputElement
 
 Custom HTMLElementEvent:

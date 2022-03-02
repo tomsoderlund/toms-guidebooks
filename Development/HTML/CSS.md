@@ -545,7 +545,8 @@ Code:
 ### Word wrap and whitespace
 
   white-space: nowrap; /* never wrap */
-  white-space: pre-wrap; /* for 'code' */
+  white-space: break-spaces;
+  white-space: pre/pre-wrap; /* for 'code' */
   word-wrap: break-word; /* break words that overflow their container */
   word-break: break-all; /* breaks all words at the end of a line */
   overflow-wrap: break-word;
@@ -970,10 +971,21 @@ Examples:
       animation-delay: -2s;
     }
 
+## Children and Siblings
+
+Children:
+
+    .parent > .child
+
+Siblings on same level:
+
+    .first-sibling + .next-sibling
+
 ## Pseudo classes
 
 input:not([type="radio"])
-h1[data-testid="jest-test-product-name"]
+button[data-testid]
+button[data-testid="jest-test-product-name"]
 
 :active
 :any-link

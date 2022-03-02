@@ -278,6 +278,8 @@ input[type="radio"] {
 
 ## HTML5 Semantic Tags
 
+https://www.w3schools.com/tags/
+
 <main>
 <nav>
 <section>

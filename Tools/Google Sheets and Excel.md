@@ -84,6 +84,9 @@ Random string
 
 ---------- DATE & TIME ----------
 
+Format date as text:
+=TEXT(D26+1, "YYYY-MM-DD")
+
 =ROUND((NOW()-DATE(1970,1,1))*86400)
 =ROUND((NOW()-DATE(1970,1,1))*86400000-7205600)
 

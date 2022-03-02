@@ -1108,11 +1108,12 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 Use dayjs instead (smaller):
 
 		import dayjs from 'dayjs'
+		dayjs(myDate).format('YYYY-MM-DD')
+		dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
+
 		import relativeTime from 'dayjs/plugin/relativeTime'
 		dayjs.extend(relativeTime)
-
 		dayjs(myDate).fromNow()
-		dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
 
 Moment.js
 
@@ -1345,8 +1346,9 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	item.replaceChild(newNode, container.childNodes[0])
 	container.removeChild(container.childNodes[0])
 
-	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
+	// Simple scraper:
 	document.querySelectorAll('h3').forEach(e => console.log(e.innerText))
+	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
 
   function toggleClass (event, className) {
     const { target } = event
@@ -1503,8 +1505,8 @@ Tip: event handlers on `document` for move/end:
 
 	const domain = await window.fetch(url).then(res => res.json()) // or res.text() for HTML
 
-	const userResponse = await window.fetch(`${API_URL}/api/users/${user}`)
-	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
+	const userResponse = await window.fetch(userUrl)
+	const userJson = await userResponse.json() // or text(), blob(), arrayBuffer(), formData()
 
 	await window.fetch(`${config.appUrl}api/domains`, {
 		method: 'POST',
@@ -1870,6 +1872,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 
 	// Optional chaining
 	const value = a?.[b]?.['myKey']?.c
+	(event) => handleInputChange?.(event)
 
 	// pick
 	const { a, c } = abcObject

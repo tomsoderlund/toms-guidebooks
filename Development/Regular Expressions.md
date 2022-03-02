@@ -43,8 +43,13 @@ Domain from URL - https://regex101.com/r/MOIFTy/3
 
 	/^(?:https?:)?(?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/igm
 
-Find all links EXCLUDING "screen:"
+Find all links in an HTML file:
 
+	/(?:ht|f)tps?:\/\/[-a-zA-Z0-9.]+\.[a-zA-Z]{2,3}(\/[^"<]*)?/g
+
+Find all HREF links – EXCLUDING "screen:"
+
+	/href="(.*?)"/g
 	/href="((?!screen:).+)"/g
 
 

@@ -71,9 +71,9 @@ You define your `module my_app` in `go.mod`, then you can reference subfolders e
 
 	const earthsGravity = 9.80665
 
-### Structs/Collections
+### Structs/Collections/Interfaces
 
-	type album struct {
+	type Album struct {
 	    ID     string  `json:"id"`
 	    Title  string  `json:"title"`
 	    Artist string  `json:"artist"`
@@ -85,6 +85,13 @@ You define your `module my_app` in `go.mod`, then you can reference subfolders e
 	    {ID: "1", Title: "Blue Train", Artist: "John Coltrane", Price: 56.99},
 	    {ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
 	    {ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
+	}
+
+	type AlbumInterface interface {
+	    ID     string
+	    Title  string
+	    Artist string
+	    Price  float64
 	}
 
 ### Private and public
@@ -132,7 +139,7 @@ https://gobyexample.com/command-line-flags
 
 ### HTTP server
 
-package main
+	package main
 
 	import (
 		"fmt"
@@ -141,9 +148,8 @@ package main
 
 	func main() {
 	    http.HandleFunc("/hello-world", func(w http.ResponseWriter, r *http.Request){
-	        fmt.Fprintf(w, "Hello world")
+	        fmt.Fprintf(w, "Hello world") // or: fmt.Fprint(w, myFunction())
 	    })
-
 	    http.ListenAndServe(":80", nil)
 	}
 

@@ -165,7 +165,11 @@ https://reactjs.org/docs/hooks-overview.html
 
 - `useMemo`: return value
 - `useCallback`: return function
-- `useEffect` + `useState`: if need async/await
+- `useEffect` + `useState`: if need async/await:
+
+    const [stateValue, setStateValue] = useState()
+    const getStateValue = async () => setStateValue(await somethingAsync())
+    useEffect(() => getStateValue(), [])
 
 #### useRef
 

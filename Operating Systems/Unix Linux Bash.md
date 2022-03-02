@@ -95,7 +95,8 @@ List all except a pattern:
 
 ### Download a file
 
-	wget https://server.com/myfile
+	wget https://server.com/myfile.txt
+	curl -o myfile.txt https://server.com/myfile.txt
 
 ### Pretty file tree
 
@@ -612,3 +613,19 @@ Use `d *` to delete all.
 #### launchd
 
 https://www.launchd.info/
+
+## Security
+
+### SSH
+
+Create:
+
+	ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+	ssh-keygen -t ed25519 -C "your_email@example.com"
+
+NOTE: ssh-keygen will ask for a filename, so no risk of overwriting your old key.
+
+Connect:
+
+	ssh -i keyfile target_machine
+	ssh -i ~/.ssh/filnamn
