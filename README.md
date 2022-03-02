@@ -24,6 +24,7 @@
     - [iPhone usability guidelines](./Development/Apps/iPhone%20usability%20guidelines.md)
     - [iPhone web development](./Development/Apps/iPhone%20web%20development.md)
   - CMS:
+    - [Contentful](./Development/CMS/Contentful.md)
     - [LeadPages](./Development/CMS/LeadPages.md)
     - [Wordpress](./Development/CMS/Wordpress.md)
   - Databases:
@@ -34,7 +35,9 @@
     - [NeDB](./Development/Databases/NeDB.md)
     - [SQL](./Development/Databases/SQL.md)
     - [Supabase](./Development/Databases/Supabase.md)
+  - [Go](./Development/Go.md)
   - HTML:
+    - [Browser extensions](./Development/HTML/Browser%20extensions.md)
     - [CSS](./Development/HTML/CSS.md)
     - [HTML email](./Development/HTML/HTML%20email.md)
     - [HTML](./Development/HTML/HTML.md)
@@ -86,7 +89,7 @@
 
 Update table of contents:
 
-    node makeTableOfContents
+    node makeTableOfContents > temp.md
 
 Create new file:
 
