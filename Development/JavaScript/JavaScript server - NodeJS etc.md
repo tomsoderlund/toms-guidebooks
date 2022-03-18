@@ -475,7 +475,24 @@ Read/write/delete files:
 	  fs.createReadStream(filePath).pipe(parser)
 	}
 
-	const printTSV = (array, separator = '\t') => {
+	// parseCSV
+	type CsvDataRow = Record<string, any>
+	type CsvData = CsvDataRow[]
+	export const parseCSV = (text: string, separator = '\t'): CsvData => {
+		const rows = text.split('\n')
+		const headers = rows[0].split(separator)
+		const data = rows.slice(1).map(row => {
+			const values = row.split(separator)
+			const rowResult: CsvDataRow = {}
+			for (let i = 0; i < headers.length; i++) {
+				rowResult[headers[i]] = values[i]
+			}
+			return rowResult
+		})
+		return data
+	}
+
+	const printCSV = (array, separator = '\t') => {
 	  const fieldNames = array.reduce((result, row) => unique([...result, ...Object.keys(row)]), [])
 	  const headerRow = fieldNames.join(separator)
 	  console.log(headerRow)
