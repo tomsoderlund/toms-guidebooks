@@ -501,16 +501,14 @@ Read/write/delete files:
 	    console.log(dataRow)
 	  })
 	}
-	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
 
 	var fs = require('fs')
 	fs.writeFile('/tmp/test', 'Hey there!', function(err) {
-		if(err) {
+		if (err) {
 			return console.log(err)
 		}
-
 		console.log('The file was saved!')
-	});
+	})
 
 
 ## CDN - AWS CloudFront
