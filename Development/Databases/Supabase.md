@@ -2,13 +2,15 @@
 
 https://app.supabase.io/
 
+	yarn add @supabase/supabase-js
 
 ## Init
 
 	import { createClient } from '@supabase/supabase-js'
 	
-	const supabaseUrl = 'https://MYDATABASE.supabase.co'
-	const supabaseKey = process.env.SUPABASE_KEY
+	const supabaseUrl = process.env.SUPABASE_URL
+	const supabaseKey = process.env.SUPABASE_API_KEY
+
 	export const supabase = createClient(supabaseUrl, supabaseKey)
 
 
@@ -25,6 +27,25 @@ https://app.supabase.io/
 	    	companytype (id, name)
 	   	)
 	  `)
+
+#### Filtering
+
+	.eq('column', 'Equal to')
+	.gt('column', 'Greater than')
+	.lt('column', 'Less than')
+	.gte('column', 'Greater than or equal to')
+	.lte('column', 'Less than or equal to')
+	.like('column', '%CaseSensitive%')
+	.ilike('column', '%CaseInsensitive%')
+	.is('column', null)
+	.in('column', ['Array', 'Values'])
+	.neq('column', 'Not equal to')
+	.cs('array_column', ['array', 'contains'])
+	.cd('array_column', ['contained', 'by'])
+
+#### Sorting
+
+	.order('starts_at', { ascending: true })
 
 Note: `data` will contain an empty array if nothing found.
 
@@ -100,3 +121,8 @@ https://postgis.net/docs/manual-dev/using_postgis_query.html
 ## Auth
 
 https://github.com/codingki/react-native-expo-template/tree/master/template-typescript-bottom-tabs-supabase-auth-flow
+
+
+## Export data from Supabase
+
+	pg_dump postgresql://postgres:PASSWORD@db.SUPABASEPROJECT.supabase.co:5432/postgres > MYPROJECT.sql

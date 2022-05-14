@@ -239,6 +239,8 @@ Note: `LEFT` refers to the left table in `ON` statement:
 	SELECT * FROM weather LEFT OUTER JOIN city ON (weather.city = city.name);
 	SELECT domain.id, name, avg(sai) AS avg_sai FROM domain LEFT OUTER JOIN domain_update ON (domain.id = domain_update.domain_id) GROUP BY domain.id;
 
+### COUNT(), AVG() and SUM()
+
 ### Nested SELECT with ()
 
 	SELECT * FROM (
@@ -361,6 +363,8 @@ Modify existing table:
 
 
 ## Indexes
+
+	CREATE UNIQUE INDEX event_unique_uuid ON event (uuid);
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 

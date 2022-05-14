@@ -396,6 +396,7 @@ autocomplete="email"
 - address-level1
 - country
 - country-name
+- locality (= city)
 - postal-code
 - cc-name
 - cc-given-name

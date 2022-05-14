@@ -116,6 +116,18 @@ Examples:
 	React.createElement('div', { styles: 'color: red' }, `Hello ${this.props.toWhat}`)
 	React.createElement(Rectangle, { className: 'apply-styles' }, children)
 
+    React.createElement(
+      onSubmit ? 'form' : 'div',
+      {
+        onSubmit: onSubmit
+      },
+      (
+        <>
+          {...}
+        </>
+      )
+    )
+
 #### All props
 
 	<Button {...props} />

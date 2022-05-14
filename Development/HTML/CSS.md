@@ -557,7 +557,7 @@ Code:
 ### Select text
 
   user-select: none;
-  -webkit-user-select: none;
+  pointer-events: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 

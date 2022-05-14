@@ -9,13 +9,19 @@ Nice-to-have’s:
     mkdir components
     rm -rf pages/api; rm styles/Home.module.css
 
+baseUrl
+
     echo '{
       "compilerOptions": {
         "baseUrl": "."
       }
     }' > jsconfig.json
 
-    yarn add standard --dev
+Standard.js
+
+    yarn add standard --dev  # or ts-standard for TypeScript
+
+package.json: port number etc
 
     "scripts": {
       "dev": "next dev -p 3666",
@@ -120,6 +126,35 @@ Note: SSR → SSG: remove getServerSideProps
           { params: { propNameThatMustBePartOfFolderStructure: 'value' }, locale: 'en' }
         ],
         fallback: true // true -> build page if missing, false -> serve 404
+      }
+    }
+
+#### SSG in TypeScript
+
+    import { GetStaticProps, GetStaticPaths } from 'next'
+    import { ParsedUrlQuery } from 'querystring'
+
+    interface PageInputProps extends ParsedUrlQuery {
+      productName: string
+    }
+
+    interface PageReturnProps {
+      title: string
+    }
+
+    export const getStaticProps: GetStaticProps<PageReturnProps, PageInputProps> = async (context) => {
+      const { productName } = context.params ?? {}
+      return {
+        props: {
+          title: productName ?? ''
+        }
+      }
+    }
+
+    export const getStaticPaths: GetStaticPaths = async () => {
+      return {
+        paths: [{ params: { productName: 'test' } }],
+        fallback: true
       }
     }
 
@@ -436,6 +471,30 @@ https://leerob.io/blog/nextjs-firebase-serverless
 ### Import
 
     import MyComponent from '@/components/MyComponent'
+
+### next/image
+
+    import Image from 'next/image'
+
+    <Image
+      src='/images/MyCompany_logo.svg'
+      alt='MyCompany logo'
+      title='MyCompany'
+
+      width={size}
+      height={size}
+    />
+
+or:
+
+    <Image
+      src='/images/MyCompany_logo.svg'
+      alt='MyCompany logo'
+      title='MyCompany'
+
+      layout='fill'
+    />
+
 
 ### SVG images
 

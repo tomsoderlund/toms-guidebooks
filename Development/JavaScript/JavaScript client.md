@@ -1110,6 +1110,7 @@ Use dayjs instead (smaller):
 		import dayjs from 'dayjs'
 		dayjs(myDate).format('YYYY-MM-DD')
 		dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
+		dayjs().diff('2018-06-05', 'day')
 
 		import relativeTime from 'dayjs/plugin/relativeTime'
 		dayjs.extend(relativeTime)
@@ -1379,6 +1380,8 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 		for (const prop in props) {
 			if (prop === 'style') {
 				Object.keys(props.style).forEach(function (styleName) { element.style[styleName] = props.style[styleName] })
+			} else if (prop.includes('data-')) {
+				element.setAttribute(prop, props[prop])
 			} else if (props[prop] !== null) {
 				element[prop] = props[prop]
 			}
@@ -1827,6 +1830,17 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// empty
 	const empty = (obj) => obj && Object.keys(obj).length === 0 && obj.constructor === Object
 
+	// Conditional/optional object elements
+	const obj = {
+		a: 1,
+		...(true && { b: 2 }),
+		...(true ? [1,2,3] : [])
+	}
+
+	// Optional chaining
+	const value = a?.[b]?.['myKey']?.c
+	(event) => handleInputChange?.(event)
+
 	// unique
 	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
 	const uniqueBy = (values, propertyName) => values.reduce((res, item) => {
@@ -1863,16 +1877,26 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.assign({}, o1, o2) // safe inheritance
 	const merged = {...obj1, ...obj2}
 
-	// Conditional/optional object elements
-	const obj = {
-		a: 1,
-		...(true && { b: 2 }),
-		...(true ? [1,2,3] : [])
+	// mergeEmpty
+	type ValueOrNullOrUndefined = string | number | boolean | object | null | undefined
+	type CollectionOfValueOrNullOrUndefined = Record<string, ValueOrNullOrUndefined>
+	type OptionalCollectionOfValueOrNullOrUndefined = CollectionOfValueOrNullOrUndefined | undefined
+
+	export default function mergeEmpty (...objects: OptionalCollectionOfValueOrNullOrUndefined[]): CollectionOfValueOrNullOrUndefined {
+		const allKeys = unique(
+			objects.reduce((keysResult: string[], object: OptionalCollectionOfValueOrNullOrUndefined) => {
+				return [...keysResult, ...Object.keys(object ?? {})]
+			}, [])
+		)
+		return allKeys.reduce((objectResult, key) => {
+			const lastRealValue = objects.reduce((valueResult: ValueOrNullOrUndefined, object: OptionalCollectionOfValueOrNullOrUndefined) => {
+				return (object?.[key] !== undefined && object?.[key] !== null && object?.[key] !== '') ? object?.[key] : valueResult
+			}, undefined)
+			return { ...objectResult, [key]: lastRealValue }
+		}, {})
 	}
 
-	// Optional chaining
-	const value = a?.[b]?.['myKey']?.c
-	(event) => handleInputChange?.(event)
+	const unique = (values: string[]): string[] => values.filter((value, index, array) => array.indexOf(value) === index)
 
 	// pick
 	const { a, c } = abcObject
@@ -2074,6 +2098,11 @@ Related:
   const startsWithSome = (collection1, collection2) => collection2load(childObj => collection1.startsWith(childObj))
   module.exports.includesSome = (collection1, collection2) => _.filter(collection2, childObj => _.includes(collection1, childObj))
   _.mixin({ 'includesSome': module.exports.includesSome })
+
+	// allHaveValues(array): opposite of isEmpty
+	function allHaveValues (array: any[]): boolean {
+		return array.reduce((result: boolean, value: any) => result && (value !== undefined && value !== null && value !== ''), true)
+	}
 
 	var doWhen = function (func, expressionFunc, failFunc, iterations) {
 		iterations = iterations || 0

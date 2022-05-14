@@ -45,7 +45,11 @@ Compile:
     enum Color { Red, Green, Blue }
     let c: Color = Color.Green
 
-    enum LetterNumber { A = 1, B = 2, C = 3 }
+    enum LetterNumber {
+      A = 1,
+      B = 2,
+      C = 3
+    }
     let n: LetterNumber = LetterNumber.B
 
 ### tuple
@@ -155,6 +159,11 @@ Function in interface:
     const elementRef = useRef<HTMLButtonElement>();
     const stringObj = String(myObj)
 
+### Non-null assertion operator (!)
+
+    // I’m sure 'obj' is not null or undefined:
+    let sampleVar = obj!.field
+
 ### Nested destructuring
 
     const { name, age }: { name: string, age: number } = personObject
@@ -237,6 +246,8 @@ Usage: `event: HTMLElementEvent<HTMLTextAreaElement>`
 useState:
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({ sku: '', name: ''})
+
+## TypeScript in React Native
 
 ## Tools
 

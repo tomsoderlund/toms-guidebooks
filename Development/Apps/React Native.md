@@ -40,6 +40,14 @@ Templates:
 	cd MyReactNativeApp
 	yarn start  # or: npm start, expo start
 
+### Nice-to-have’s after basic setup
+
+		mkdir -p components/common
+		mkdir -p components/navigation
+		mkdir -p components/screens/StartScreen
+		mkdir lib
+		mkdir config
+
 ### New React Native project with Next.js
 
 https://docs.expo.io/guides/using-nextjs/
@@ -55,12 +63,12 @@ https://github.com/expo/expo-cli/tree/master/packages/next-adapter
 
 #### H1, H2
 
-    <Text
-      accessibilityRole='header'
-      aria-level={1}
-    >
-      This is H1
-    </Text>
+		<Text
+			accessibilityRole='header'
+			aria-level={1}
+		>
+			This is H1
+		</Text>
 
 #### Issues
 
@@ -70,8 +78,8 @@ yarn add babel-plugin-transform-class-properties --dev
 Babel config
 
 module.exports = {
-  presets: ['@expo/next-adapter/babel'],
-  plugins: ['@babel/plugin-proposal-class-properties']
+	presets: ['@expo/next-adapter/babel'],
+	plugins: ['@babel/plugin-proposal-class-properties']
 }
 
 ##### React v17 issues, use v16.9
@@ -129,13 +137,13 @@ Install useful packages:
 	const Stack = createStackNavigator()
 
 	function App () {
-	  return (
-	    <NavigationContainer>
-	      <Stack.Navigator>
-	        <Stack.Screen name='My App Title' component={StartScreen} />
-	      </Stack.Navigator>
-	    </NavigationContainer>
-	  )
+		return (
+			<NavigationContainer>
+				<Stack.Navigator>
+					<Stack.Screen name='My App Title' component={StartScreen} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		)
 	}
 
 	export default App
@@ -153,28 +161,27 @@ Get web viewport size:
 
 ### Structure
 
-	import React from 'react'
-	import { StyleSheet, Text, View, Button } from 'react-native'
+		import React from 'react'
+		import { StyleSheet, Text, View, Button } from 'react-native'
+		import logo from './assets/logo.png'
 
-	export default class App extends React.Component {
-	  render () {
-	    return (
-	      <View style={styles.container}>
-	        <Text>Welcome to My App</Text>
-					<Image
-	          source={require('/react-native/img/favicon.png')}
-	        />
-	        <MyCustomComponent />
-	        <Button
-	          onPress={this.handleGenerate.bind(this)}
-	          title='Reshuffle the cards'
-	          color='#841584'
-	          accessibilityLabel='Restart the game'
-	        />
-	      </View>
-	    )
-	  }
-	}
+		export default class App extends React.Component {
+			render () {
+				return (
+					<View style={styles.container}>
+						<Text>Welcome to My App</Text>
+						<Image source={logo} />
+						<MyCustomComponent />
+						<Button
+							onPress={this.handleGenerate.bind(this)}
+							title='Reshuffle the cards'
+							color='#841584'
+							accessibilityLabel='Restart the game'
+						/>
+					</View>
+				)
+			}
+		}
 
 ### Components:
 
@@ -206,12 +213,12 @@ https://reactnativeelements.com/docs/button/
 ### Styling
 
 	const styles = StyleSheet.create({
-	  container: {
-	    flex: 1,
-	    backgroundColor: '#fff',
-	    alignItems: 'center',
-	    justifyContent: 'center'
-	  }
+		container: {
+			flex: 1,
+			backgroundColor: '#fff',
+			alignItems: 'center',
+			justifyContent: 'center'
+		}
 	})
 
 ### Lifecycle methods
@@ -242,11 +249,11 @@ Error handling methods:
 
 ### Touch events
 
-  <View
-    onTouchStart={(e) => console.log('onTouchStart', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
-    onTouchMove={(e) => console.log('onTouchMove', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
-    onTouchEnd={(e) => console.log('onTouchEnd', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
-  />
+	<View
+		onTouchStart={(e) => console.log('onTouchStart', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
+		onTouchMove={(e) => console.log('onTouchMove', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
+		onTouchEnd={(e) => console.log('onTouchEnd', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
+	/>
 
 ## Responsive design
 
@@ -283,19 +290,19 @@ https://reactnavigation.org/docs/en/getting-started.html
 	import { createStackNavigator, createAppContainer } from 'react-navigation'
 
 	const AppNavigator = createStackNavigator({
-	  Screen1: {
-	    screen: Screen1Screen
-	  },
-	  Screen2: {
-	    screen: Screen2Screen
-	  }
+		Screen1: {
+			screen: Screen1Screen
+		},
+		Screen2: {
+			screen: Screen2Screen
+		}
 	},
 	// Optional settings for all screens:
 	{
-	  headerMode: 'none',
-	  navigationOptions: {
-	    headerVisible: false,
-	  }
+		headerMode: 'none',
+		navigationOptions: {
+			headerVisible: false,
+		}
 	})
 
 	export default createAppContainer(AppNavigator)
@@ -308,15 +315,15 @@ https://reactnavigation.org/docs/en/getting-started.html
 #### Screen header config
 
 	static navigationOptions = ({ navigation }) => {
-	  return {
-	    headerTitle: navigation.getParam('someParam', 'Default Title'),
-	    headerRight: (
-	      <Button
-	        title='+1'
-	        color='#fff'
-	      />
-	    )
-	  }
+		return {
+			headerTitle: navigation.getParam('someParam', 'Default Title'),
+			headerRight: (
+				<Button
+					title='+1'
+					color='#fff'
+				/>
+			)
+		}
 	}
 
 #### State management
@@ -348,6 +355,39 @@ Save navigation state:
 
 Animated/LayoutAnimation
 
+### Icons and SVGs
+
+https://docs.expo.dev/ui-programming/using-svgs/
+
+1. `import` SVG file from `assets` folder using https://github.com/kristerkari/react-native-svg-transformer
+2. Inline:
+	- Convert SVGs to React format using https://react-svgr.com/playground/?native=true
+	- Use `react-native-svg`
+
+Example 1:
+
+		import Logo from './assets/logo.svg'
+
+		<Logo width={120} height={40} />
+
+Example 2:
+
+		import Svg, { Path } from 'react-native-svg'
+
+		export default function TriangleDown() {
+			return (
+				<View style={styles.container}>
+					<Svg
+						width={20}
+						height={20}
+						viewBox='0 0 20 20'
+					>
+						<Path d='M16.993 6.667H3.227l6.883 6.883 6.883-6.883z' fill='#000' />
+					</Svg>
+				</View>
+			)
+		}
+
 ### Fonts
 
 https://docs.expo.io/versions/latest/sdk/font/
@@ -355,13 +395,13 @@ https://docs.expo.io/versions/latest/sdk/font/
 	import * as Font from 'expo-font'
 
 	function App() {
-	  const [fontsAreLoaded] = useFonts({
-	    Montserrat: require('./assets/fonts/Montserrat.ttf'),
-	  })
+		const [fontsAreLoaded] = useFonts({
+			Montserrat: require('./assets/fonts/Montserrat.ttf'),
+		})
 
-	  if (!fontsAreLoaded) return null
+		if (!fontsAreLoaded) return null
 
-	  return <Text style={{ fontFamily: 'Montserrat' }} />
+		return <Text style={{ fontFamily: 'Montserrat' }} />
 	}
 
 ### Platform-specific code
@@ -430,11 +470,11 @@ https://reactnative.dev/docs/view-style-props
 backfaceVisibility
 backgroundColor
 borderColor
-  borderBottomColor, borderEndColor, borderLeftColor, borderRightColor, borderStartColor, borderTopColor
+	borderBottomColor, borderEndColor, borderLeftColor, borderRightColor, borderStartColor, borderTopColor
 borderWidth
-  borderBottomWidth, borderEndWidth, borderLeftWidth, borderRightWidth, borderStartWidth, borderTopWidth
+	borderBottomWidth, borderEndWidth, borderLeftWidth, borderRightWidth, borderStartWidth, borderTopWidth
 borderStyle
-  borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
+	borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
 opacity
 flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
 alignContent, justifyContent
