@@ -77,10 +77,12 @@ Check if any of multiple strings in cell:
 
 Random string
 =CHOOSE(RANDBETWEEN(1, 2), "choice1", "choice2")
-=CHAR(RANDBETWEEN(65,90)) // large
-=CHAR(RANDBETWEEN(97,122)) // small
+=RANDBETWEEN(0,9) // a random number
+=CHAR(RANDBETWEEN(65,90)) // an uppercase letter
+=CHAR(RANDBETWEEN(97,122)) // a lowercase letter
+=CHAR(RANDBETWEEN(33,47)) // a special character
 =CHOOSE(RANDBETWEEN(1, 2), CHAR(RANDBETWEEN(65,90)), CHAR(RANDBETWEEN(97,122)))
-
+=CHOOSE(RANDBETWEEN(1, 2), RANDBETWEEN(0,9), CHAR(RANDBETWEEN(97,122)))
 
 ---------- DATE & TIME ----------
 

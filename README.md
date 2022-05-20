@@ -82,6 +82,7 @@
   - [Mind maps](./Tools/Mind%20maps.md)
   - [My disk is full](./Tools/My%20disk%20is%20full.md)
   - [Pivotal Tracker](./Tools/Pivotal%20Tracker.md)
+  - [Retool](./Tools/Retool.md)
   - [Slack](./Tools/Slack.md)
   - [Sublime editor](./Tools/Sublime%20editor.md)
 

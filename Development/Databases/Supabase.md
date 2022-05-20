@@ -126,3 +126,9 @@ https://github.com/codingki/react-native-expo-template/tree/master/template-type
 ## Export data from Supabase
 
 	pg_dump postgresql://postgres:PASSWORD@db.SUPABASEPROJECT.supabase.co:5432/postgres > MYPROJECT.sql
+
+## Supabase and React Native (Expo)
+
+https://supabase.com/docs/guides/with-expo
+
+https://medium.com/@kelvinpompey.me/things-to-look-out-for-using-supabase-with-react-native-9638b23e98c2
