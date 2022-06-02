@@ -218,6 +218,8 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 #### node-fetch
 
+Note: latest version requires `import`, use `yarn add node-fetch@2` if you need `require`.
+
 	const fetch = require('node-fetch')
 	const userResponse = await fetch(`${API_URL}/api/users/${user}`)
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()

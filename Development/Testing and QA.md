@@ -310,6 +310,10 @@ Run:
     # or globally
     yarn global add prettier
 
+Run with:
+
+    prettier --write myfolder
+
 Config: `.prettierrc` and `.prettierignore`
 
     {

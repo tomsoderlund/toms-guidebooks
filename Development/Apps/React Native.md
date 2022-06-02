@@ -359,18 +359,29 @@ Animated/LayoutAnimation
 
 https://docs.expo.dev/ui-programming/using-svgs/
 
-1. `import` SVG file from `assets` folder using https://github.com/kristerkari/react-native-svg-transformer
-2. Inline:
+1. `Image` component
+2. `import` SVG file from `assets` folder using https://github.com/kristerkari/react-native-svg-transformer
+3. Inline:
 	- Convert SVGs to React format using https://react-svgr.com/playground/?native=true
 	- Use `react-native-svg`
 
-Example 1:
+Example 1: Image component
+
+    <Image
+      src='/images/logo.svg'
+      alt='Logo'
+      title='Logo'
+      width={size}
+      height={size}
+    />
+
+Example 2: SVG component
 
 		import Logo from './assets/logo.svg'
 
 		<Logo width={120} height={40} />
 
-Example 2:
+Example 3: Inline
 
 		import Svg, { Path } from 'react-native-svg'
 

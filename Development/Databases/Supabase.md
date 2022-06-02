@@ -18,34 +18,42 @@ https://app.supabase.io/
 
 ### Get data
 
+Note: `JOIN`s are done automatically, no need to specify `category_id` below:
+
 	const { data, error } = await supabase
-	  .from('company_person')
-	  .select(`
-	    id,
-	    person (id, name, email),
-	    company (name, address,
-	    	companytype (id, name)
-	   	)
-	  `)
+    .from('event')
+    .select(`
+      title,
+      starts_at,
+      category_event (
+        category (
+          slug
+        )
+      )
+    `)
 
 #### Filtering
 
 	.eq('column', 'Equal to')
+	.neq('column', 'Not equal to')
+	.is('column', null)
 	.gt('column', 'Greater than')
 	.lt('column', 'Less than')
 	.gte('column', 'Greater than or equal to')
 	.lte('column', 'Less than or equal to')
 	.like('column', '%CaseSensitive%')
 	.ilike('column', '%CaseInsensitive%')
-	.is('column', null)
 	.in('column', ['Array', 'Values'])
-	.neq('column', 'Not equal to')
 	.cs('array_column', ['array', 'contains'])
 	.cd('array_column', ['contained', 'by'])
 
 #### Sorting
 
 	.order('starts_at', { ascending: true })
+
+#### Limit
+
+	.limit(50)
 
 Note: `data` will contain an empty array if nothing found.
 
@@ -126,6 +134,12 @@ https://github.com/codingki/react-native-expo-template/tree/master/template-type
 ## Export data from Supabase
 
 	pg_dump postgresql://postgres:PASSWORD@db.SUPABASEPROJECT.supabase.co:5432/postgres > MYPROJECT.sql
+
+## Supabase and TypeScript
+
+package.json scripts:
+
+	"download-api-types": "eval $(grep '^NEXT_PUBLIC_SUPABASE_URL' .env.local) && eval $(grep '^NEXT_PUBLIC_SUPABASE_API_KEY' .env.local) && npx openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_API_KEY} --output types/supabase.ts"
 
 ## Supabase and React Native (Expo)
 

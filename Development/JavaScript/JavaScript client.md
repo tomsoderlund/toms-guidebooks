@@ -864,6 +864,19 @@ Slugs:
 
 ### Hash
 
+	// https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+	const cyrb53 = function (str, seed = 0) {
+		let h1 = 0xdeadbeef ^ seed; let h2 = 0x41c6ce57 ^ seed
+		for (let i = 0, ch; i < str.length; i++) {
+			ch = str.charCodeAt(i)
+			h1 = Math.imul(h1 ^ ch, 2654435761)
+			h2 = Math.imul(h2 ^ ch, 1597334677)
+		}
+		h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909)
+		h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909)
+		return 4294967296 * (2097151 & h2) + (h1 >>> 0)
+	}
+
 	// https://stackoverflow.com/a/52171480/449227
 	const hashCode = str => Array.from(str).reduce((result, char) => Math.imul(31, result) + char.charCodeAt(0), 0)
 
@@ -1111,6 +1124,9 @@ Use dayjs instead (smaller):
 		dayjs(myDate).format('YYYY-MM-DD')
 		dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
 		dayjs().diff('2018-06-05', 'day')
+
+		dayjs('2019-01-25').unix() // Unix seconds 1548381600
+		dayjs('2019-01-25').valueOf() // Unix milliseconds 1548381600000
 
 		import relativeTime from 'dayjs/plugin/relativeTime'
 		dayjs.extend(relativeTime)
@@ -1506,7 +1522,7 @@ Tip: event handlers on `document` for move/end:
 
 #### Fetch
 
-	const domain = await window.fetch(url).then(res => res.json()) // or res.text() for HTML
+	const domain = await window.fetch(url).then(res => res.json()) // or text(), blob(), arrayBuffer(), formData()
 
 	const userResponse = await window.fetch(userUrl)
 	const userJson = await userResponse.json() // or text(), blob(), arrayBuffer(), formData()

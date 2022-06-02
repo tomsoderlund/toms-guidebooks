@@ -356,7 +356,7 @@ Fieldset:
     // import useSavedState from '../hooks/useSavedState'
     // const [myState, setMyState] = useSavedState(propertyName)
 
-#### SWR Hook
+#### SWR hook
 
 https://github.com/zeit/swr
 
