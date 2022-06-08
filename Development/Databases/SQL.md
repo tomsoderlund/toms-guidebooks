@@ -60,25 +60,25 @@ e.g. `WHERE person.company_id = company.id`
 
 - `serial`: same as `int` (use for relations) except that PostgreSQL will automatically generate and populate values.
 - Text:
-  - `char(n)`: padded
-  - `varchar(n)`
-  - `text`
+	- `char(n)`: padded
+	- `varchar(n)`
+	- `text`
 - Numbers:
-  - `smallint`: 2-byte signed integer that has a range from -32,768 to 32,767.
-  - `int`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
-  - `real` or float8: double-precision (8-byte) floating-point number.
-  - `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
-  - `numeric` or `numeric(p,s)`: real number with p digits with s number after the decimal point. The `numeric(p,s)` is the exact number.
+	- `smallint`: 2-byte signed integer that has a range from -32,768 to 32,767.
+	- `int`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
+	- `real` or float8: double-precision (8-byte) floating-point number.
+	- `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
+	- `numeric` or `numeric(p,s)`: real number with p digits with s number after the decimal point. The `numeric(p,s)` is the exact number.
 - `boolean`: true/false, t/f
 - Time & Date:
-  - `timestamptz`: (`DEFAULT now()`) timezone-aware timestamp data type. It is the abbreviation for timestamp with time zone. PostgreSQL’s extension
-  - `timestamp`: stores both date and time values.
-  - `date`: stores the date values only.
-  - `time`: stores the time of day values.
-  - `interval`: stores periods of time.
+	- `timestamptz`: (`DEFAULT now()`) timezone-aware timestamp data type. It is the abbreviation for timestamp with time zone. PostgreSQL’s extension
+	- `timestamp`: stores both date and time values.
+	- `date`: stores the date values only.
+	- `time`: stores the time of day values.
+	- `interval`: stores periods of time.
 - Binary & JSON:
-  - `bytea`: blob binary
-  - `json`, jsonb
+	- `bytea`: blob binary
+	- `json`, jsonb
 
 
 ## Export data
@@ -92,81 +92,81 @@ https://www.npmjs.com/package/pg
 
 **NOTE:** if you have connection timeout issues, try upgrading `pg`:
 
-    yarn remove pg; yarn add pg
+		yarn remove pg; yarn add pg
 
 Simple client:
 
-    const { Client } = require('pg')
+		const { Client } = require('pg')
 
-    const postgresOptions = {
-      connectionString: config.databaseUrl,
-      ssl: { rejectUnauthorized: false },
-      // max: 5,
-      // idleTimeoutMillis: 5000,
-      // connectionTimeoutMillis: 3000
-    }
+		const postgresOptions = {
+			connectionString: config.databaseUrl,
+			ssl: { rejectUnauthorized: false },
+			// max: 5,
+			// idleTimeoutMillis: 5000,
+			// connectionTimeoutMillis: 3000
+		}
 
-    // const results = await runDatabaseFunction(async (client) => client.query(sqlString))
-    const runDatabaseFunction = async function (functionToRun) {
-      // Connect db
-      const client = new Client(postgresOptions)
-      await client.connect()
-      // Run function
-      const results = await functionToRun(client)
-      // Release db
-      await client.end()
-      return results
-    }
+		// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
+		const runDatabaseFunction = async function (functionToRun) {
+			// Connect db
+			const client = new Client(postgresOptions)
+			await client.connect()
+			// Run function
+			const results = await functionToRun(client)
+			// Release db
+			await client.end()
+			return results
+		}
 
 With connection pooling:
 
-    const { Pool } = require('pg')
+		const { Pool } = require('pg')
 
-    const pool = new Pool(postgresOptions)
+		const pool = new Pool(postgresOptions)
 
-    // const results = await runDatabaseFunction(async (client) => client.query(sqlString))
-    module.exports.runDatabaseFunction = async function (functionToRun) {
-      // Connect db
-      const client = await pool.connect()
-      // Run function
-      const results = await functionToRun(client)
-      // Release db
-      await client.end()
-      await client.release()
-      return results
-    }
+		// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
+		module.exports.runDatabaseFunction = async function (functionToRun) {
+			// Connect db
+			const client = await pool.connect()
+			// Run function
+			const results = await functionToRun(client)
+			// Release db
+			await client.end()
+			await client.release()
+			return results
+		}
 
 https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
 
 Select:
 
-	  const getCompany = async function (pool, req, res, next) {
-	    const sqlString = `SELECT * FROM company WHERE id = $1;`
-	    const { rows } = await pool.query(sqlString, [req.params.id])
-	    res.json(rows[0])
-	  }
+		const getCompany = async function (pool, req, res, next) {
+			const sqlString = `SELECT * FROM company WHERE id = $1;`
+			const { rows } = await pool.query(sqlString, [req.params.id])
+			res.json(rows[0])
+		}
 
 Insert:
 
-	  // sqlCreate('person', { person values... })
-	  const sqlCreate = (tableName, object) => {
-	    const fieldNames = Object.keys(object).join(', ')
-	    const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
-	    const text = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
-	    const values = Object.values(object)
-	    return { text, values }
-	  }
+		// sqlCreate('person', { person values... })
+		const sqlCreate = (tableName, object) => {
+			const fieldNames = Object.keys(object).join(', ')
+			const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
+			const text = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
+			const values = Object.values(object)
+			return { text, values }
+		}
 
 Update:
 
-	  // sqlUpdate('person', { id: person.id }, { person values... })
-	  const sqlUpdate = (tableName, query, newValues) => {
-	    const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
-	    const queryFieldName = Object.keys(query)[0]
-	    const text = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
-	    const values = [Object.values(query)[0], ...Object.values(newValues)]
-	    return { text, values }
-	  }
+		// sqlUpdate('person', { id: person.id }, { person values... })
+		const sqlUpdate = (tableName, query, newValues) => {
+			const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
+			const queryFieldName = Object.keys(query)[0]
+			const text = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
+			const values = [Object.values(query)[0], ...Object.values(newValues)]
+			return { text, values }
+		}
 
 
 # SQL syntax
@@ -197,12 +197,12 @@ Update:
 
 ### Wildcard search
 
-	  SELECT * FROM table WHERE columnName ILIKE 'A%';
-	  SELECT * FROM company WHERE name ILIKE '%weld%';
-	  SELECT * FROM company WHERE website NOT ILIKE 'http%'
+		SELECT * FROM table WHERE columnName ILIKE 'A%';
+		SELECT * FROM company WHERE name ILIKE '%weld%';
+		SELECT * FROM company WHERE website NOT ILIKE 'http%'
 	
-	  SELECT * FROM person WHERE contact_status_date < '2019-02-09';
-	  SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+		SELECT * FROM person WHERE contact_status_date < '2019-02-09';
+		SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
 
 ### Multiple values / array
 
@@ -241,6 +241,18 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 ### COUNT(), AVG() and SUM()
 
+### CASE
+
+	CASE
+			WHEN condition1 THEN result1
+			WHEN conditionN THEN resultN
+			ELSE result
+	END;
+
+as part of `SELECT`:
+
+	(CASE WHEN username IS NOT NULL THEN username ELSE CAST(article.user_id AS varchar) END) AS user
+
 ### Nested SELECT with ()
 
 	SELECT * FROM (
@@ -264,7 +276,7 @@ Note: `LEFT` refers to the left table in `ON` statement:
 		FROM similar_font
 		LEFT JOIN font ON (similar_font.font1_id = font.id)
 		WHERE font2_id = 1643
-	) AS combined
+	) AS combined_query
 	ORDER BY name;
 
 ### COUNT
@@ -368,6 +380,23 @@ Modify existing table:
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
+## Views and Materialized Views
+
+	CREATE [MATERIALIZED] VIEW my_view AS (
+		your query here
+	)
+
+	CREATE OR REPLACE VIEW my_view AS (
+		your query here
+	)
+
+Refresh materialized view (view with stored results):
+
+	REFRESH MATERIALIZED VIEW my_view
+
+Delete view:
+
+	DROP [MATERIALIZED] VIEW IF EXISTS my_view;
 
 ## Transactions
 
@@ -382,47 +411,95 @@ Modify existing table:
 
 ## Functions (RPC)
 
-	CREATE OR REPLACE FUNCTION app.id_generator(OUT result bigint) RETURNS bigint
-	LANGUAGE plpgsql
+- https://supabase.com/docs/guides/database/functions
+
+In SQL:
+
+	CREATE OR REPLACE FUNCTION my_function(name text)
+	RETURNS TEXT
+	LANGUAGE plpgsql -- or 'sql'
 	AS $$
-	  DECLARE
-	      our_epoch bigint := 1111111111111;
-	      seq_id bigint;
-	      now_millis bigint;
-	      -- the id of this DB shard, must be set for each
-	      -- schema shard you have - you could pass this as a parameter too
-	      shard_id int := 1;
-	  BEGIN
-	      SELECT nextval('app.global_id_sequence') % 1024 INTO seq_id;
-	      SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
-	      result := (now_millis - our_epoch) << 23;
-	      result := result | (shard_id << 10);
-	      result := result | (seq_id);
-	  END;
+		SELECT 'Hello World!', name;
 	$$;
 
-Another:
+Executing the function from SQL:
 
-	create or replace function addGeometry (location_name varchar, lon float, lat float) returns SETOF geometries
-	language plpgsql
-	as $
-	  declare
-	    return_record geometries%rowtype;
-	  begin
-	    insert into geometries(location_name, geom) values (location_name, ST_SetSRID(ST_MakePoint(lon, lat), 4326))
-	     returning *
-	     into return_record;
-	    return next return_record;
-	  end
+	SELECT * FROM my_function('Sam Lowry');
+
+Delete the function:
+
+	DROP FUNCTION my_function;
+
+Example: return SETOF
+
+	CREATE OR REPLACE FUNCTION get_planets()
+	RETURNS SETOF planets
+	LANGUAGE plpgsql
+	AS $$
+		SELECT * FROM planets;
+	$$;
+
+Example with custom return table:
+
+	CREATE OR REPLACE FUNCTION all_users(created_from timestamp, created_to timestamp)
+		RETURNS TABLE (
+			f_id uuid,
+			f_email text,
+			f_full_name text
+		)
+		LANGUAGE plpgsql
+		AS $$
+	BEGIN
+		RETURN QUERY
+		SELECT id, email, full_name FROM users BETWEEN created_from AND created_to
+	END
+	$$;
+
+Example: `add_geometry`:
+
+	CREATE OR REPLACE FUNCTION add_geometry (location_name varchar, lon float, lat float)
+	RETURNS SETOF geometries
+	LANGUAGE plpgsql
+	AS $
+		DECLARE
+			return_record geometries%rowtype;
+		BEGIN
+			INSERT INTO geometries(location_name, geom)
+				VALUES (location_name, ST_SETSRID(ST_MAKEPOINT(lon, lat), 4326))
+				RETURNING *
+				INTO return_record;
+			RETURN NEXT return_record;
+		END
 	$;
 
+Example: `app.id_generator`:
+
+	CREATE OR REPLACE FUNCTION app.id_generator(OUT result bigint)
+	RETURNS bigint
+	LANGUAGE plpgsql
+	AS $$
+		DECLARE
+			our_epoch bigint := 1111111111111;
+			seq_id bigint;
+			now_millis bigint;
+			-- the id of this DB shard, must be set for each
+			-- schema shard you have - you could pass this as a parameter too
+			shard_id int := 1;
+		BEGIN
+			SELECT nextval('app.global_id_sequence') % 1024 INTO seq_id;
+			SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+			result := (now_millis - our_epoch) << 23;
+			result := result | (shard_id << 10);
+			result := result | (seq_id);
+		END;
+	$$;
 
 # MySQL
 
 
 # SQLite
 
-  .exit
+	.exit
 
 ## Data/Field Types
 
@@ -438,11 +515,11 @@ Each value stored in an SQLite database (or manipulated by the database engine) 
 
 ## Import/Export
 
-  .schema tracks
+	.schema tracks
 
-  .show
-  .separator , // or \t
-  .import top_30.csv tracks
+	.show
+	.separator , // or \t
+	.import top_30.csv tracks
 
 `.dump ?TABLE? ...`: Dump the database in an SQL text format
 

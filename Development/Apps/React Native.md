@@ -431,13 +431,44 @@ expo.Audio
 	await clickSound.replayAsync()
 
 
-## Deploying an iOS app on App Store
+## Deploying an iOS app on App Store with Expo Application Services (EAS)
+
+https://expo.dev/eas
+
+1. Install EAS: `yarn global add eas-cli && eas login`
+2. Create `eas.json`
+3. Create a new app on https://appstoreconnect.apple.com/apps – note the bundle ID
+4. Set up and build with `eas build` (or `eas build -p ios`)
+5. Submit with `eas submit` (or `eas submit -p ios`)
+
+### `eas.json` – example
+
+https://docs.expo.dev/build/eas-json/
+
+	{
+		"build": {
+			"development": {
+				"developmentClient": true,
+				"distribution": "internal"
+			},
+			"preview": {
+				"distribution": "internal"
+			},
+			"production": {}
+		},
+		"cli": {
+			"version": ">= 0.53.0",
+			"requireCommit": true
+		}
+	}
+
+## Deploying an iOS app on App Store (OLD way with `expo build`)
 
 1. Create your app on https://appstoreconnect.apple.com/
 2. Enter the same app bundle ID in `app.json`
 3. Build with `expo build:ios` (option: `--clear-provisioning-profile`)
 4. Upload IPA file with Application Loader on macOS (might need app-specific password on https://appleid.apple.com/)
-5. App Store Connect takes ~1 hour to process a new build, then you can use Testflight for testing.
+5. App Store Connect takes ~1 hour to process a new build, then you can use TestFlight for testing.
 
 ### Apple Certificates
 

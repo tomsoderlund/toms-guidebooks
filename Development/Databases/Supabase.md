@@ -90,9 +90,16 @@ Note: `data` will contain an array of the inserted rows.
 	  .delete()
 	  .eq('some_column', 'someValue')
 
-### Run RPC
+### Run RPC/custom Postgres function/custom SQL query
 
-	const { data, error } = await supabase.rpc('echo_city', { name: 'The Shire' })
+- https://supabase.com/docs/guides/database/functions
+- https://medium.com/@razvanst/how-to-run-custom-sql-queries-using-functions-in-supabase-f81bfab780a7
+
+Creating functions: see [SQL](SQL.md).
+
+Executing the function from JavaScript:
+
+	const { data, error } = await supabase.rpc('my_function', { name: 'Sam Lowry' })
 
 ### Location/Geo
 
@@ -140,6 +147,11 @@ https://github.com/codingki/react-native-expo-template/tree/master/template-type
 package.json scripts:
 
 	"download-api-types": "eval $(grep '^NEXT_PUBLIC_SUPABASE_URL' .env.local) && eval $(grep '^NEXT_PUBLIC_SUPABASE_API_KEY' .env.local) && npx openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_API_KEY} --output types/supabase.ts"
+
+in `global.d.ts`:
+
+	type SupabaseDefinitions = import('./supabase').definitions
+	type Company = SupabaseDefinitions['company']
 
 ## Supabase and React Native (Expo)
 
