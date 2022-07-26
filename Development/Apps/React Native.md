@@ -262,19 +262,6 @@ Error handling methods:
 		onTouchEnd={(e) => console.log('onTouchEnd', [e.nativeEvent.locationX, e.nativeEvent.locationY])}
 	/>
 
-## Responsive design
-
-https://medium.com/@shanerudolfworktive/7-tips-to-develop-react-native-uis-for-all-screen-sizes-7ec5271be25c
-
-- `aspectRatio` on styles.
-- `flex: X`/`flex: Y` for proportions.
-
-https://github.com/DaniAkash/react-native-responsive-dimensions
-
-	import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions'
-	// in styles:
-	height: responsiveHeight(50), // 50% of screen height
-
 
 ## Development mode
 
@@ -576,66 +563,85 @@ https://medium.com/wix-engineering/the-full-react-native-layout-cheat-sheet-a414
 - `flexDirection`: column*/row
 - `flexWrap`: nowrap*/wrap
 
-flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
-alignContent, justifyContent
-alignItems: flex-start, flex-end, center, stretch, baseline
-alignSelf: auto, flex-start, flex-end, center, stretch, baseline
+On children:
+
+- `flex: 1`
+
+Styles:
+
+	flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
+	alignContent, justifyContent
+	alignItems: flex-start, flex-end, center, stretch, baseline
+	alignSelf: auto, flex-start, flex-end, center, stretch, baseline
+
+#### Responsive design in React Native
+
+https://medium.com/@shanerudolfworktive/7-tips-to-develop-react-native-uis-for-all-screen-sizes-7ec5271be25c
+
+- `aspectRatio` on styles.
+- `flex: X`/`flex: Y` for proportions.
+
+https://github.com/DaniAkash/react-native-responsive-dimensions
+
+	import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions'
+	// in styles:
+	height: responsiveHeight(50), // 50% of screen height
 
 #### Other styles
 
 https://reactnative.dev/docs/view-style-props
 
-backfaceVisibility
-backgroundColor
-borderColor
-	borderBottomColor, borderEndColor, borderLeftColor, borderRightColor, borderStartColor, borderTopColor
-borderWidth
-	borderBottomWidth, borderEndWidth, borderLeftWidth, borderRightWidth, borderStartWidth, borderTopWidth
-borderStyle
-	borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
-opacity
-aspectRatio: number
-direction
-display
-start, end
-left, right
-top, bottom
-width, height
-minWidth, maxWidth
-minHeight, maxHeight
-overflow
-margin, marginBottom, marginEnd, marginHorizontal, marginLeft, marginRight, marginStart, marginTop, marginVertical
-padding, paddingBottom, paddingEnd, paddingHorizontal, paddingLeft, paddingRight, paddingStart, paddingTop, paddingVertical
-position
-zIndex, elevation
+	backfaceVisibility
+	backgroundColor
+	borderColor
+		borderBottomColor, borderEndColor, borderLeftColor, borderRightColor, borderStartColor, borderTopColor
+	borderWidth
+		borderBottomWidth, borderEndWidth, borderLeftWidth, borderRightWidth, borderStartWidth, borderTopWidth
+	borderStyle
+		borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
+	opacity
+	aspectRatio: number
+	direction
+	display
+	start, end
+	left, right
+	top, bottom
+	width, height
+	minWidth, maxWidth
+	minHeight, maxHeight
+	overflow
+	margin, marginBottom, marginEnd, marginHorizontal, marginLeft, marginRight, marginStart, marginTop, marginVertical
+	padding, paddingBottom, paddingEnd, paddingHorizontal, paddingLeft, paddingRight, paddingStart, paddingTop, paddingVertical
+	position
+	zIndex, elevation
 
 -----
 
-color
-fontFamily
-fontSize
-fontStyle: normal, italic
-fontVariant: small-caps, oldstyle-nums, lining-nums, tabular-nums, proportional-nums
-fontWeight
-includeFontPadding: true/false
-letterSpacing
-lineHeight
-textAlign: auto, left, right, center, justify
-textAlignVertical: auto, top, bottom, center
-textDecorationColor
-textDecorationLine
-textDecorationStyle
-textTransform
-writingDirection
+	color
+	fontFamily
+	fontSize
+	fontStyle: normal, italic
+	fontVariant: small-caps, oldstyle-nums, lining-nums, tabular-nums, proportional-nums
+	fontWeight
+	includeFontPadding: true/false
+	letterSpacing
+	lineHeight
+	textAlign: auto, left, right, center, justify
+	textAlignVertical: auto, top, bottom, center
+	textDecorationColor
+	textDecorationLine
+	textDecorationStyle
+	textTransform
+	writingDirection
 
 -----
 
-shadowColor, shadowOffset, shadowRadius, shadowOpacity
-textShadowColor, textShadowOffset, textShadowRadius
+	shadowColor, shadowOffset, shadowRadius, shadowOpacity
+	textShadowColor, textShadowOffset, textShadowRadius
 
 -----
 
-backgroundColor
-overlayColor
-resizeMode
-tintColor
+	backgroundColor
+	overlayColor
+	resizeMode
+	tintColor
