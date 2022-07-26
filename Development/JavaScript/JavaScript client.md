@@ -775,6 +775,10 @@ Slugs:
 	parseFloat(String)
 	valueOf()
 
+### Truncate/shorten string
+
+	const truncate = (str, maxLength = 25) => (str.length > maxLength) ? str.substr(0, maxLength - 1) + '…' : str
+
 ### Sorting letters
 
 	const shuffleString = (str) => shuffleArray(str.split('')).join('')
@@ -1365,6 +1369,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 
 	// Simple scraper:
 	document.querySelectorAll('h3').forEach(e => console.log(e.innerText))
+	// Format multiple
 	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
 
   function toggleClass (event, className) {

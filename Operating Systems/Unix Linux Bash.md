@@ -98,6 +98,10 @@ List all except a pattern:
 	wget https://server.com/myfile.txt
 	curl -o myfile.txt https://server.com/myfile.txt
 
+### REST API
+
+	curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' https://hooks.slack.com/services/XXXX/YYYY
+
 ### Pretty file tree
 
 	find ./ | sed -e 's/[^-][^\/]*\//--/g;s/--/ |-/'  # add '-type d' for directories only

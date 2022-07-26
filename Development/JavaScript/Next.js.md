@@ -406,7 +406,9 @@ Switch locale:
 
 ## Localization: custom lib/i18n.js
 
-    const getLocaleFile = (locale) => require(`../public/static/locales/${locale}/common.json`)
+    const { useRouter } = require('next/router')
+
+    const getLocaleFile = (locale) => require(`public/static/locales/${locale}/common.json`)
 
     const localeFiles = {
       en: getLocaleFile('en'),
@@ -416,7 +418,7 @@ Switch locale:
     // replaceMultipleStrings(['This is $1', 'Sparta']) --> 'This is Sparta'
     const replaceMultipleStrings = (array, str) => (str || array[0]).replace(/(\$\d)/gm, strId => array[parseInt(strId.slice(1))])
 
-    const t = (stringKeyOrArray, locale) => {
+    const getTranslation = (stringKeyOrArray, locale) => {
       const stringKey = Array.isArray(stringKeyOrArray) ? stringKeyOrArray[0] : stringKeyOrArray
       if (!localeFiles[locale] || localeFiles[locale][stringKey] === undefined) return stringKey
       return Array.isArray(stringKeyOrArray)
@@ -425,11 +427,21 @@ Switch locale:
     }
 
     // const t = tForLocale('sv')
-    const tForLocale = (locale) => (stringKeyOrArray) => t(stringKeyOrArray, locale)
+    const tForLocale = (locale) => (stringKeyOrArray) => getTranslation(stringKeyOrArray, locale)
+
+    // import { useI18N } from 'lib/i18n'
+    // const { t } = useI18N()
+    const useI18N = function useI18N () {
+      const { locale } = useRouter()
+      const t = (str) => getTranslation(str, locale)
+      return { t }
+    }
 
     module.exports = {
-      t,
-      tForLocale
+      t: getTranslation,
+      tForLocale,
+
+      useI18N
     }
 
 

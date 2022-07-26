@@ -9,7 +9,7 @@ With Expo (https://expo.io) the steps are easy:
 1. Create a new app (`expo init [project-name]`)
 2. Run it on device or simulator (`expo start`)
 3. Publish it to Expo.io (`expo publish`)
-4. Bundle it as native iOS/Android app (`expo build:ios`/`expo build:android`)
+4. Build it as native iOS/Android app with EAS
 5. Add extra packages (location) with `expo install` NOT npm/yarn.
 
 
@@ -43,7 +43,7 @@ Templates:
 ### Nice-to-have’s after basic setup
 
 		mkdir -p components/common
-		mkdir -p components/navigation
+		mkdir -p components/navigators
 		mkdir -p components/screens/StartScreen
 		mkdir lib
 		mkdir config
@@ -156,6 +156,13 @@ Get web viewport size:
 
 	import { Dimensions } from 'react-native'
 	const { width, height } = Dimensions.get('window')
+
+## Assets
+
+- favicon.png: 48px
+- icon.png: 1024px
+- adaptive-icon.png: 1024px
+- splash.png: 1284×2778px
 
 ## Components
 
@@ -462,6 +469,53 @@ https://docs.expo.dev/build/eas-json/
 		}
 	}
 
+### Using GitHub Actions with Expo/EAS
+
+https://github.com/marketplace/actions/expo-github-action
+
+Note: add `EXPO_TOKEN` in repo settings -> Secrets -> Actions
+
+Example `.github/workflows/production.yml`
+
+	# Commit to `production` branch → build with EAS
+
+	on:
+		push:
+			branches:
+				- production
+
+	jobs:
+		build:
+			runs-on: ubuntu-latest
+			steps:
+				- name: 🏗 Setup repository
+					uses: actions/checkout@v2
+
+				- name: 🏗 Setup Node
+					uses: actions/setup-node@v2
+					with:
+						node-version: 16.x
+						cache: yarn
+
+				- name: 🏗 Setup Expo and EAS
+					uses: expo/expo-github-action@7.2.0
+					with:
+						expo-version: latest
+						eas-version: latest
+						token: ${{ secrets.EXPO_TOKEN }}
+
+				- name: 📦 Install dependencies
+					run: yarn install
+
+				- name: 🚀 Publish app to Expo
+					run: expo publish --non-interactive
+
+				- name: 🛠️ Build app
+					run: eas build --non-interactive --platform ios
+
+				- name: 🚚 Submit app to TestFlight
+					run: eas submit --latest --platform ios
+
 ## Deploying an iOS app on App Store (OLD way with `expo build`)
 
 1. Create your app on https://appstoreconnect.apple.com/
@@ -509,6 +563,28 @@ https://github.com/react-native-maps/react-native-maps
 
 https://reactnative.dev/docs/view-style-props
 
+#### Flexbox
+
+https://reactnative.dev/docs/layout-props
+
+https://medium.com/wix-engineering/the-full-react-native-layout-cheat-sheet-a4147802405c
+
+- `justifyContent`: primary axis
+- `alignItems`: cross (secondary) axis
+	- `alignContent`: bunches children together as if they were one element
+	- `alignSelf`: overwrites parent’s alignItems property
+- `flexDirection`: column*/row
+- `flexWrap`: nowrap*/wrap
+
+flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
+alignContent, justifyContent
+alignItems: flex-start, flex-end, center, stretch, baseline
+alignSelf: auto, flex-start, flex-end, center, stretch, baseline
+
+#### Other styles
+
+https://reactnative.dev/docs/view-style-props
+
 backfaceVisibility
 backgroundColor
 borderColor
@@ -518,10 +594,6 @@ borderWidth
 borderStyle
 	borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
 opacity
-flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
-alignContent, justifyContent
-alignItems: flex-start, flex-end, center, stretch, baseline
-alignSelf: auto, flex-start, flex-end, center, stretch, baseline
 aspectRatio: number
 direction
 display
