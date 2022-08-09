@@ -29,7 +29,6 @@
     - [Wordpress](./Development/CMS/Wordpress.md)
   - Databases:
     - [Firebase](./Development/Databases/Firebase.md)
-    - [Google Sheets](./Development/Databases/Google%20Sheets.md)
     - [GraphQL](./Development/Databases/GraphQL.md)
     - [MongoDB](./Development/Databases/MongoDB.md)
     - [NeDB](./Development/Databases/NeDB.md)
