@@ -543,7 +543,7 @@ Geographic distance:
 	}
 
 
-## Strings/Text
+## Strings/Texts
 
 http://www.w3schools.com/jsref/jsref_obj_string.asp
 
@@ -709,7 +709,7 @@ Slugs:
 	  // For both
 	  var newStr = str.trim()
 	    .toLowerCase()
-	    .replace(/ |_/g, '-') // space/underscore to dash
+	    .replace(/ |_|\//g, '-') // space/underscore/slash to dash
 	  // Remove ÅÄÖ etc?
 	  if (removeInternationalChars) {
 	    newStr = newStr.replace(/[åäæâãáà]/g, 'a').replace(/[ëêéè]/g, 'e').replace(/[öøôõóò]/g, 'o').replace(/[üûúù]/g, 'u') // convert ÅÄÖÜ to Latin characters
@@ -754,6 +754,7 @@ Slugs:
 
 	/** '{variable}' => 'value' */
 	const replaceStrings = (template, stringsObj) => {
+		if (!template) return template
 	  let newString = template
 	  const keys = Object.keys(stringsObj)
 	  for (let k in keys) {
@@ -1070,7 +1071,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	thisYear = new Date().getYear() + 1900
 
-	const formatDate = dateObj => `${dateObj.getFullYear()}-${('0' + (dateObj.getMonth()+1)).slice(-2)}-${('0' + dateObj.getDate()).slice(-2)}`
+	const formatDate = dateObj => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
 	const formatTime = dateObj => `${dateObj.getHours()}:${dateObj.getMinutes()}`
 
 	`[${new Date().getHours()}:${new Date().getMinutes()}]`

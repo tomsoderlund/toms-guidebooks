@@ -412,6 +412,8 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 		return result
 	}
 
+## Read/write/delete files
+
 	// text = await getTextFromFile(filename)
 	const getTextFromFile = (filename) => require('fs').promises.readFile(filename, 'utf8')
 
@@ -437,7 +439,7 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 		})
 	}
 
-Read/write/delete files:
+### Read/write/delete files – async
 
 	const fs = require('fs')
 
@@ -466,10 +468,21 @@ Read/write/delete files:
 	const { promises: fs } = require('fs')
 	const fileNames = await fs.readdir('path/to/dir')
 
-	// CSV
-  const fs = require('fs')
-  const path = require('path')
-  const parse = require('csv-parse')
+### CSV files: `csv-parse`
+
+	import { parse } from 'csv-parse/sync'
+
+	const getCsvDataFromUrl = async function (url) {
+		const dataAsCsv = await fetch(url).then(res => res.text())
+		const dataAsArray = parse(dataAsCsv, { columns: true, skip_empty_lines: true })
+		return dataAsArray
+	}
+
+Older:
+
+	const fs = require('fs')
+	const path = require('path')
+	const parse = require('csv-parse')
 
 	const parseCsvFile = function (fileName, actionFunction) {
 	  const filePath = path.join(__dirname, fileName)
@@ -477,7 +490,7 @@ Read/write/delete files:
 	  fs.createReadStream(filePath).pipe(parser)
 	}
 
-	// parseCSV
+	// parseCSV: own implementation
 	type CsvDataRow = Record<string, any>
 	type CsvData = CsvDataRow[]
 	export const parseCSV = (text: string, separator = '\t'): CsvData => {
@@ -504,15 +517,6 @@ Read/write/delete files:
 	  })
 	}
 
-	var fs = require('fs')
-	fs.writeFile('/tmp/test', 'Hey there!', function(err) {
-		if (err) {
-			return console.log(err)
-		}
-		console.log('The file was saved!')
-	})
-
-
 ## CDN - AWS CloudFront
 
 1. Enable both HTTPS and HTTP, otherwise 301.
@@ -521,14 +525,6 @@ Read/write/delete files:
 ### Headers
 
 - `Cache-Control: public, max-age=120` (seconds)
-
-
-# Desktop App
-
-http://electron.atom.io/docs/tutorial/quick-start/
-
-npm install --save-dev electron
-
 
 ## PassportJS / Authentication
 

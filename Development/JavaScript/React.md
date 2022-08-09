@@ -185,6 +185,13 @@ https://reactjs.org/docs/hooks-overview.html
 
 #### useRef
 
+    import { useRef } from 'react'
+
+    const elementRef = useRef(null)
+    <input ref={elementRef} />
+
+Example: useFocus hook
+
     import { useRef, useEffect } from 'react'
 
     export default function useFocus () {

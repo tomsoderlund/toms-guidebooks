@@ -83,11 +83,17 @@ List all except a pattern:
 
 ### Find text inside files
 
-	grep -r --exclude-dir=node_modules "blabla" *
-	grep "missionmaptext=" *.ini
+https://stackoverflow.com/questions/6153152/find-files-containing-a-given-text
 
-	egrep -lir --include=*.{php,html,js} "(searchtext1|searchtext2)" .   # change -lir to -ir to show more...
-	egrep -lir --include=Gruntfile.js "(livereload)" .
+	egrep -ir --include="*.{php,html,js}" "(document.cookie|setcookie)" .
+
+List files matching "*.js" containing "localStorage" (see also command to see file contents below):
+
+	egrep -lr --exclude-dir={node_modules,bower_components,build,dist,.git,.next,_next,.expo} --include="*.js" "localStorage" ~/Documents/Development
+
+To see file contents too (just `-r`):
+
+	egrep -r --exclude-dir={node_modules,bower_components,build,dist,.git,.next,_next,.expo} --include="*.js" "localStorage" ~/Documents/Development
 
 ### Find text on web pages
 

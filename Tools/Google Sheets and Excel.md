@@ -1,7 +1,11 @@
-https://support.google.com/docs/table/25273?hl=en&ref_topic=3105625
+# Google Sheets and Excel
+
+## Formulas
+
+https://support.google.com/docs/table/25273
 
 
----------- REFERENCES ----------
+### References to cells
 
 INDIRECT("Sheet2!B" & C2)
 
@@ -16,7 +20,7 @@ R2C2
 =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1s7EhvdUNERn7cOHjBovu-L39e6I4T7KPuKsOJlneavg", "'Sheet1'!E$3")
 
 
----------- NUMBERS ----------
+### Numbers
 
 =CEILING(number, 0.5)
 
@@ -25,7 +29,8 @@ RANDBETWEEN(1, 2)
 // Multiply two columns, e.g. calendar-days * usage%
 =SUM(ARRAYFORMULA($C2:$C12*F2:F12))
 
----------- STRINGS ----------
+
+### Strings/Text
 
 char(10)
 
@@ -44,7 +49,7 @@ FIND(search_for, text_to_search, starting_at) - case-sensitive
 =right(B2, len(B2)-find(",", B2))
 
 // Split string to array
-=SPLIT(A2, " --> ", FALSE)
+=SPLIT(A2, ";", FALSE)
 
 // INDEX(array, row, column)
 =INDEX(SPLIT("1.23/1.15", "/"), 0, 2)
@@ -84,7 +89,8 @@ Random string
 =CHOOSE(RANDBETWEEN(1, 2), CHAR(RANDBETWEEN(65,90)), CHAR(RANDBETWEEN(97,122)))
 =CHOOSE(RANDBETWEEN(1, 2), RANDBETWEEN(0,9), CHAR(RANDBETWEEN(97,122)))
 
----------- DATE & TIME ----------
+
+### Date & Time
 
 Format date as text:
 =TEXT(D26+1, "YYYY-MM-DD")
@@ -93,12 +99,12 @@ Format date as text:
 =ROUND((NOW()-DATE(1970,1,1))*86400000-7205600)
 
 
----------- MONEY ----------
+### Money
 
 =GOOGLEFINANCE("CadSek")
 
 
----------- ARRAYS / TABLES ----------
+### Arrays / Tables
 
 // List lookup
 =vlookup(C284,Suppliers!A:D,4,false)
@@ -113,7 +119,7 @@ Format date as text:
 
 
 
-### LAST ROW
+### Last row
 
 In  general the last item of a column can be found like this:
 =INDEX(SORT(A:A;ROW(A:A);FALSE);1)
@@ -128,7 +134,7 @@ To get the last row of a submitted data (e.g. in columns A...Z) is a tiny bit ea
 =INDEX(SORT(A2:Z;1;FALSE);1)
 
 
----------- CONTACT LISTS ----------
+### Contact Lists
 
 Slug/slug:
 =SUBSTITUTE(LOWER($A2), " ", "-")
@@ -176,16 +182,16 @@ Get email domain suffix:
 =RIGHT(A2, LEN(A2)-FIND(".", A2, FIND("@", A2)))
 =RIGHT(E2; LEN(E2)-FIND("."; E2))
 
-Format name + website--> email
+Format name + website → email
 =SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(LOWER(C2 &"." & D2),"ö","o"),"ä","a"),"å","a"),"é","e"),"è","e"),"ü","u"),"ø","o"),"í","i")," ",".") & "@" & REGEXEXTRACT(D2, "https?://w*\.*([^/]+)")
 =SUBSTITUTE(LOWER(C1);" ";".") & "@" & REGEXEXTRACT(A1, "https?://w*\.*([^/]+)")
 (separate names)
 =LOWER(E2 &"."& F2) & "@" & REGEXEXTRACT(D2, "https?://w*\.*([^/]+)")
 
-Format name + company --> email
+Format name + company → email
 =LOWER(SUBSTITUTE(C6;" ";".") & "@" & D6 & ".se")
 
-Format Firstname + Lastname + company --> email
+Format Firstname + Lastname + company → email
 =LOWER(B6 & "." & C6 & "@" & D6 & ".se")
 
 Gmail string formatting
@@ -218,7 +224,8 @@ Split paths by / and get filename:
 
 =INDEX(SPLIT(A2,"/"),1,COUNTA(SPLIT(A2,"/")))
 
----------- FILTERS ----------
+
+### Filters
 
 Remember to us the cell UNDER the filter heading in the formula, so if your filter is on C1, use C2:
 https://webapps.stackexchange.com/questions/67381/is-there-any-way-to-use-a-formula-in-a-google-sheets-filter-view
@@ -229,7 +236,9 @@ https://webapps.stackexchange.com/questions/67381/is-there-any-way-to-use-a-form
 =NOT(OR(ISNUMBER(FIND("ica.se",H2)), ISNUMBER(FIND("vi-butikerna.se",H2))))
 
 ISNUMBER
----------- TRENDS ----------
+
+
+### Trends
 
 Trends
 
@@ -246,3 +255,18 @@ TREND(known_data_y, [known_data_x], [new_data_x], [b])
 
 Exponential:
 GROWTH(known_data_y, [known_data_x], [new_data_x], [b])
+
+
+## Google Sheets as database
+
+https://github.com/jsoma/tabletop is now broken, use:
+
+https://developers.google.com/sheets/api/quickstart/nodejs
+
+or simpler version:
+
+### Google Sheets CSV as source
+
+1. File → Share → Publish to the web
+2. Share each tab as CSV
+3. Use `csv-parse` to parse in Node.js

@@ -42,11 +42,48 @@ Templates:
 
 ### Nice-to-have’s after basic setup
 
+Official TS Tabs template:
+
+		mkdir assets
+		mkdir -p components/__tests__
+		mkdir constants
+		mkdir hooks
+		mkdir navigation
+		mkdir screens
+
+Tom’s:
+
+		mkdir assets
+		mkdir -p components/__tests__
 		mkdir -p components/common
-		mkdir -p components/navigators
-		mkdir -p components/screens/StartScreen
+		mkdir screens
+		mkdir -p screens/StartScreen
+		touch screens/StartScreen/index.js
+		mkdir navigation
+		mkdir hooks
 		mkdir lib
 		mkdir config
+		touch config/config.js
+		mkdir types
+
+#### Install useful packages
+
+	yarn add standard --dev
+	expo install expo-font
+	yarn add @react-navigation/native
+
+### Installing packages
+
+NOTE: use `expo install` primarily (rather than yarn/npm), e.g:
+
+	expo install react-native-maps
+	expo install expo-location
+	expo install react-native-svg
+
+	Managed:
+	expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+	https://docs.expo.dev/ui-programming/react-native-toast/
 
 ### New React Native project with Next.js
 
@@ -84,43 +121,19 @@ module.exports = {
 
 ##### React v17 issues, use v16.9
 
-### Installing packages
-
-NOTE: use `expo install` primarily (rather than yarn/npm), e.g:
-
-	expo install react-native-svg
-	expo install react-native-maps
-	expo install expo-location
-
-### Standard setup
-
-Create standard folders and files:
-
-	mkdir -p screens/StartScreen
-	touch screens/StartScreen/index.js
-	mkdir -p components/screen
-	touch components/screen/Screen.js
-	mkdir lib
-	mkdir hooks
-	mkdir config
-	touch config/config.js
-
-Install useful packages:
-
-	yarn add standard --dev
-	expo install expo-font
-	yarn add @react-navigation/native
-
-	Managed:
-	expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
-
-	https://docs.expo.dev/ui-programming/react-native-toast/
-
 #### package.json
 
-	"lint": "standard",
-	"fix": "standard --fix",
-	"screen": "mkdir -p screens/NewScreen && touch screens/NewScreen/index.js",
+	"dev": "yarn start",
+	"start": "expo start",
+	"eject": "expo eject",
+	"test": "echo 'Running Standard.js and Jest unit tests...\n' && yarn lint && yarn unit",
+	"unit": "jest --watchAll",
+	"lint": "ts-standard",
+	"fix": "ts-standard --fix",
+	"new": "mkdir -p screens/NewScreen; cp screens/PlaceHolderScreen/index.tsx screens/NewScreen; echo \"Now rename folder 'screens/NewScreen' to whatever you want.\"",
+	"pub": "expo publish",
+	"build": "eas build --platform ios",
+	"appstore": "eas submit --latest --platform ios",
 	"v+": "yarn version --patch",
 	"v++": "yarn version --minor"
 
@@ -431,7 +444,7 @@ https://expo.dev/eas
 
 1. Install EAS: `yarn global add eas-cli && eas login`
 2. Create `eas.json`
-3. Create a new app on https://appstoreconnect.apple.com/apps – note the bundle ID
+3. Create a new app on https://appstoreconnect.apple.com/apps – note the bundle ID (just characters, avoid underscore/dash, e.g. `com.mydomain.myappname`)
 4. Set up and build with `eas build` (or `eas build -p ios`)
 5. Submit with `eas submit` (or `eas submit -p ios`)
 
@@ -440,6 +453,10 @@ https://expo.dev/eas
 https://docs.expo.dev/build/eas-json/
 
 	{
+		"cli": {
+			"version": ">= 0.53.0",
+			"requireCommit": true
+		},
 		"build": {
 			"development": {
 				"developmentClient": true,
@@ -448,11 +465,20 @@ https://docs.expo.dev/build/eas-json/
 			"preview": {
 				"distribution": "internal"
 			},
-			"production": {}
+			"production": {
+			}
 		},
-		"cli": {
-			"version": ">= 0.53.0",
-			"requireCommit": true
+		"submit": {
+			"production": {
+				"android": {
+					"serviceAccountKeyPath": "./appstores/googleplay/pc-api-667.json",
+					"track": "internal"
+				},
+				"ios": {
+					"appleId": "[my appleid login-email]",
+					"ascAppId": "[NUMERIC ID FROM appstoreconnect.apple.com]"
+				}
+			}
 		}
 	}
 
@@ -460,9 +486,13 @@ https://docs.expo.dev/build/eas-json/
 
 https://github.com/marketplace/actions/expo-github-action
 
-Note: add `EXPO_TOKEN` in repo settings -> Secrets -> Actions
+1. Verify you have set up `eas.json`
+2. Create a `.github/workflows/production.yml` (see below)
+3. Get a token on https://expo.dev/accounts/[account]/settings/access-tokens and add `EXPO_TOKEN` to repo settings → Secrets → Actions
+4. Run EAS build non-interactive from command line the first time to set up accounts etc: `eas build --platform ios`
+5. For `eas submit`, you need 1) an ASC API key and 2) an Issuer ID from: https://appstoreconnect.apple.com/access/api
 
-Example `.github/workflows/production.yml`
+Example `.github/workflows/production.yml`:
 
 	# Commit to `production` branch → build with EAS
 
@@ -524,9 +554,9 @@ Steps:
 
 - App ID
 	- https://developer.apple.com/account/resources/identifiers/list
-	- `com.tomorroworld.myappname`
+	- `com.mydomain.myappname`
 - Service ID
-	- `com.tomorroworld.myappname.login`
+	- `com.mydomain.myappname.login`
 	- Callback URL: https://lioz*****.supabase.co/auth/v1/callback
 - Key
 	- https://developer.apple.com/account/resources/authkeys/list
@@ -559,7 +589,7 @@ https://medium.com/wix-engineering/the-full-react-native-layout-cheat-sheet-a414
 - `justifyContent`: primary axis
 - `alignItems`: cross (secondary) axis
 	- `alignContent`: bunches children together as if they were one element
-	- `alignSelf`: overwrites parent’s alignItems property
+	- `alignSelf`: overwrites parent’s `alignItems` property
 - `flexDirection`: column*/row
 - `flexWrap`: nowrap*/wrap
 

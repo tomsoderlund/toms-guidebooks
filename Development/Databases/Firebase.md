@@ -172,6 +172,8 @@ Order:
 
     coordinates: new firebase.firestore.GeoPoint(lat, long)
 
+Geo queries: use Geohashes: https://firebase.google.com/docs/firestore/solutions/geoqueries
+
 ### Events/Triggers
 
 https://firebase.google.com/docs/functions/firestore-events
