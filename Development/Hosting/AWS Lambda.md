@@ -9,6 +9,9 @@ https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html
 
     aws iam attach-role-policy --role-name lambda-execute --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
+## See your Lambda functions
+
+https://eu-west-1.console.aws.amazon.com/lambda/home?region=eu-west-1
 
 ## Making Lambda functions
 
@@ -41,9 +44,11 @@ Test Lambda:
       --payload '{"body":"{\"name\":\"Tom\"}"}' \
       --invocation-type "RequestResponse" response.txt
 
-## Yarn shortcut
+## Yarn shortcuts
 
-    "lambda-deploy": "cd lambda; echo Creating ZIP archive...; rm myLambdaFunction.zip; cd myLambdaFunction && zip -r ../myLambdaFunction.zip * && cd ..; echo Uploading to AWS Lambda...; aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip; cd ..",
+    "lambda-sync-code": "rm -rf lambda/myLambdaFunction/{lib,hooks}; mkdir -p lambda/myLambdaFunction/{lib/data/event-sources/categories,hooks}; cp -r lib/ lambda/myLambdaFunction/lib/; cp -r hooks/ lambda/myLambdaFunction/hooks/; cd lambda/myLambdaFunction && yarn && cd ../..",
+    "lambda-test": "yarn lambda-sync-code; node lambda/test.mjs myLambdaFunction",
+    "lambda-deploy": "yarn lambda-sync-code; cd lambda; echo Creating ZIP archive...; rm myLambdaFunction.zip; cd myLambdaFunction && zip -r ../myLambdaFunction.zip * && cd ..; echo Uploading to AWS Lambda...; aws lambda update-function-code --function-name myLambdaFunction --zip-file fileb://myLambdaFunction.zip; cd .."
 
 
 ## Code example of a Lambda function
@@ -96,6 +101,8 @@ Function page -> Configuration -> Environment variables
 
 https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/RunLambdaSchedule.html
 
-- https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#rules:
+- https://eu-west-1.console.aws.amazon.com/events/home?region=eu-west-1#/rules
+- Name: “myLambdaFunction” (because schedule can be modified afterwards, but name cannot be changed)
 - Option: Schedule
-- Add Target: select your Lambda function
+- Select target: “Lambda function”
+- Function: (select your Lambda function)

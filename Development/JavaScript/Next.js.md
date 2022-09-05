@@ -9,7 +9,7 @@ Nice-to-have’s:
     mkdir components
     rm -rf pages/api; rm styles/Home.module.css
 
-baseUrl
+baseUrl:
 
     echo '{
       "compilerOptions": {
@@ -635,6 +635,18 @@ Page:
       }
     }
 
+### Support for MJS modules
+
+    webpack: (config) => {
+      config.module.rules.push({
+        test: /\.m?js$/,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false
+        }
+      })
+      return config
+    }
 
 ## Deployment
 

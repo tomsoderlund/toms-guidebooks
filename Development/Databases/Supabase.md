@@ -36,6 +36,7 @@ Note: `JOIN`s are done automatically, no need to specify `category_id` below:
 
 	.eq('column', 'Equal to')
 	.neq('column', 'Not equal to')
+	.neq('column', null)
 	.is('column', null)
 	.gt('column', 'Greater than')
 	.lt('column', 'Less than')
@@ -86,9 +87,9 @@ Note: `data` will contain an array of the inserted rows.
 ### Delete rows
 
 	const { data, error } = await supabase
-	  .from('person')
+	  .from('event')
 	  .delete()
-	  .eq('some_column', 'someValue')
+	  .lt('starts_at', lastTimeAsISO)
 
 ### Run RPC/custom Postgres function/custom SQL query
 
@@ -137,6 +138,27 @@ https://postgis.net/docs/manual-dev/using_postgis_query.html
 
 https://github.com/codingki/react-native-expo-template/tree/master/template-typescript-bottom-tabs-supabase-auth-flow
 
+### Access token
+
+Client request:
+
+	headers: {
+		Accept: 'application/json',
+		'Content-Type': 'application/json',
+		// Auth token
+		...(session?.access_token !== undefined && {
+			Authorization: `Bearer ${session?.access_token ?? ''}`
+		})
+	},
+
+Server:
+
+	const accessToken = (req.headers.authorization)?.split('Bearer ')[1]
+
+	const userFromAccessToken = async (accessToken: string): Promise<UserProfile> => {
+		const { user } = await supabase.auth.api.getUser(accessToken)
+		return await userProfileObject(user?.id)
+	}
 
 ## Export data from Supabase
 

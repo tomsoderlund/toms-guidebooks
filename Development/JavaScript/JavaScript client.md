@@ -380,10 +380,10 @@ http://javascript.crockford.com/prototypal.html
 	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
 	const getRandomString = (length = 5) => Math.round(Math.random() * Math.pow(10, length)).toString()
 	const getRandomString = (length = 5) => window.btoa(Math.random()).substr(-length)
-	const withProbability = prob => Math.random() < prob
-	const getRandomFromArray = array => array[getRandomNumber(0, array.length - 1)]
+	const withProbability = (prob) => Math.random() < prob
+	const getRandomFromArray = (array) => array[getRandomNumber(0, array.length - 1)]
 	// getRandomIndexFromWeightedArray([0.1, 0.3, 0.6]) --> returns index 0-2
-	const getRandomIndexFromWeightedArray = weightedArray => {
+	const getRandomIndexFromWeightedArray = (weightedArray) => {
 	  const randomNr = Math.random()
 	  let total = 0
 	  for (var i = 0; i < weightedArray.length; i++) {
@@ -783,11 +783,9 @@ Slugs:
 ### Sorting letters
 
 	const shuffleString = (str) => shuffleArray(str.split('')).join('')
-
-	const unique = (values) => values.filter((value, index, array) => array.indexOf(value) === index)
-	const uniqueLetters = (str) => unique(str.toLowerCase().split('')).join('')
-
 	const sortString = (str) => str.split('').sort().join('')
+
+	const uniqueLetters = (str) => unique(str.toLowerCase().split('')).join('')
 	const uniqueSortedLetters = (str) => sortString(uniqueLetters(str))
 
 	const obfuscateString = (str, visible) => {
@@ -899,8 +897,8 @@ Slugs:
 http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	let myCars = new Array() // regular array (add an optional integer)
-	const justSaab = Array(3).fill('Saab') // can't `map` over empty array slots
-	const itemList = [...Array(6)].map((value, index) => `Item ${index + 1}`)
+	const justFloats = Array.from(new Float32Array(5))
+	const itemList = Array.from(new Float32Array(5)).map((value, index) => `Item ${index + 1}`)
 
 	const zeroPad = (count, str = '0') => Array(count).fill(str).join('')
 
@@ -1547,13 +1545,6 @@ Tip: event handlers on `document` for move/end:
 			return res.json()
 		})
 
-	// JWT Token
-	window.fetch(`${config.appUrl}api/domains`, {
-		method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-		body: JSON.stringify(data)
-	})
-
 Axios: similar but URL is part of object
 
 #### makeRestRequest
@@ -1870,7 +1861,14 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	  if (!exists) res.push(item)
 	  return res
 	}, [])
-
+	const uniqueByFunction = (values, selector = (item) => item) => {
+		const map = new Map()
+		values.forEach((item) => {
+			const prop = selector(item)
+			if (!map.has(prop)) map.set(prop, item)
+		})
+		return [...map.values()]
+	}
 	// compact
 	export const removeUndefined = (values) => values.filter(value => value !== undefined)
 
@@ -1878,10 +1876,13 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	Object.keys(collection).map(key => [key, collection[key]])
 	
 	// mapObject(collection, (object, key) => console.log(key, object))
-	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => {
-		result[key] = mapFunction(object[key], key)
-		return result
-	}, {})
+	const mapObject = (object, mapFunction) => Object.keys(object).reduce((result, key) => ({ ...result, [key]: mapFunction(object[key], key) }), {})
+
+	const removeUndefinedKeys = (collection) => Object.keys(collection).reduce((result, key) => (
+		![undefined, null].includes(collection[key])
+			? { ...result, [key]: collection[key] }
+			: result
+	), {})
 
 	// flatten
 	array.flat()
@@ -1917,8 +1918,6 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 			return { ...objectResult, [key]: lastRealValue }
 		}, {})
 	}
-
-	const unique = (values: string[]): string[] => values.filter((value, index, array) => array.indexOf(value) === index)
 
 	// pick
 	const { a, c } = abcObject

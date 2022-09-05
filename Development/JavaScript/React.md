@@ -45,13 +45,16 @@ https://github.com/facebookincubator/create-react-app
 
 Removing non-necessary files:
 
-    rm public/favicon.ico
-    rm public/logo192.png
-    rm public/logo512.png
-    rm src/logo.svg
-    rm src/App.css  # or index.css
     mkdir src/components
     mkdir src/pages
+    mkdir src/hooks
+    mkdir src/lib
+    mkdir src/config
+
+    rm src/logo.svg
+    rm public/logo192.png
+    rm public/logo512.png
+    rm public/favicon.ico
 
     # Optional:
     rm src/App.test.js
@@ -66,11 +69,25 @@ Adding nice extras:
     yarn add react-router-dom
     yarn add styled-components
 
-    "dev": "PORT=3123 react-scripts start",
+Scripts:
+
+    "dev": "yarn start",
+    "new": "touch src/components/NewComponent.js; echo \"import React from 'react'\n\nconst NewComponent = () => {\n  return (\n    <div>\n      NewComponent\n    </div>\n  )\n}\n\nexport default NewComponent\" >> src/components/NewComponent.js; echo Now rename src/components/NewComponent.js to something else",
+    "start": "PORT=3123 react-scripts start",
+    "build": "react-scripts build",
     "test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+    "unit": "react-scripts test",
+    "eject": "react-scripts eject",
     "lint": "standard",
-    "fix": "standard --fix",
-    "unit": "jasmine"
+    "fix": "standard --fix"
+
+baseUrl:
+
+    echo '{
+      "compilerOptions": {
+        "baseUrl": "."
+      }
+    }' > jsconfig.json
 
 ### Components with JSX
 

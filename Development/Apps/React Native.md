@@ -28,7 +28,17 @@ Install https://expo.io client on your device.
 
 ### How to run
 
-	npm install -g expo-cli  # Does not work? yarn global add expo-cli (Upgrade: `yarn global upgrade expo-cli`)
+	# npm install -g expo-cli
+	yarn global add expo-cli
+
+	yarn global add eas-cli
+		
+Upgrade:
+
+	yarn global upgrade expo-cli
+	yarn global upgrade eas-cli
+
+Init app:
 
 	expo init MyReactNativeApp
 
@@ -107,7 +117,7 @@ https://github.com/expo/expo-cli/tree/master/packages/next-adapter
 			This is H1
 		</Text>
 
-#### Issues
+#### Next.js issues
 
 ##### @expo/next-adapter/document.js: Missing class properties transform
 
@@ -160,6 +170,12 @@ module.exports = {
 	}
 
 	export default App
+
+### Troubleshooting/issues
+
+#### Fix Expo dependencies
+
+	expo doctor --fix-dependencies
 
 ### Web development (react-native-web)
 
@@ -240,32 +256,6 @@ https://reactnativeelements.com/docs/button/
 			justifyContent: 'center'
 		}
 	})
-
-### Lifecycle methods
-
-There are 4 types of Lifecycle methods available in React Native:
-
-Mounting methods:
-
-- `constructor`
-- `componentWillMount`
-- `render`
-- `componentDidMount`
-
-Updating methods:
-
-- `componentWillReceiveProps`
-- `shouldComponentUpdate`
-- `componentWillUpdate`
-- `componentDidUpdate`
-
-Unmounting methods:
-
-- `componentWillUnmount`
-
-Error handling methods:
-
-- `componentDidCatch`
 
 ### Touch events
 
@@ -386,7 +376,8 @@ Example 2: SVG component
 
 		import Logo from './assets/logo.svg'
 
-		<Logo width={120} height={40} />
+		// Set fill="currentColor" in the SVG file
+		<Logo width={120} height={40} color='black' />
 
 Example 3: Inline
 
@@ -436,6 +427,14 @@ expo.Audio
 	const clickSound = new Audio.Sound()
 	await clickSound.loadAsync(require('../assets/sounds/click.mp3'))
 	await clickSound.replayAsync()
+
+### Push notifications
+
+- https://docs.expo.dev/push-notifications/overview/
+- https://docs.expo.dev/push-notifications/faq/
+- Old? https://blog.logrocket.com/create-send-push-notifications-react-native/
+
+Test tool: https://expo.dev/notifications
 
 
 ## Deploying an iOS app on App Store with Expo Application Services (EAS)

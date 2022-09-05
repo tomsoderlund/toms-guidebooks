@@ -146,6 +146,10 @@ Function in interface:
 
     export const AppContext = React.createContext<Partial<ContextProps>>({})
 
+Omit:
+
+    type TodoInfo = Omit<Todo, 'completed' | 'createdAt'>
+
 ### Interface as Array
 
     interface MyArrayInterface {

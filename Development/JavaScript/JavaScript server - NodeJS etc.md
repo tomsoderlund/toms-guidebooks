@@ -300,20 +300,28 @@ Client (header):
 	const jwt = await getUserJWT()
 	Object.assign(defaultHeaders, { Authorization: `Bearer ${jwt}` })
 
+	// JWT Token with fetch()
+	window.fetch(`${config.appUrl}api/domains`, {
+		method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+		body: JSON.stringify(data)
+	})
+
 Server - generate token:
 
 	yarn add jsonwebtoken
 
-	const jwt = require('jsonwebtoken')
+	import jwt from 'jsonwebtoken'
 
-	// Sign/generate
-	jwt.sign(payload, secretOrPrivateKey, [options, callback])
+	// Sign/generate JWT
+	jwt.sign(payloadObjectOrString, secretOrPrivateKey, [options])
 
 	// Verify/decode
-	const decoded = jwt.verify(token, secretOrPublicKey, [options, callback])
+	const decoded = jwt.verify(token, secretOrPublicKey, [options])
+
 
 	// Firebase JWT token
-	(new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payload)
+	(new FirebaseTokenGenerator(process.env.MY_SECRET)).createToken(payloadObjectOrString)
 
 Server - verify access:
 
@@ -468,6 +476,14 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 	const { promises: fs } = require('fs')
 	const fileNames = await fs.readdir('path/to/dir')
 
+	// Make folder
+	fs.mkdirSync(dir, { recursive: true })
+
+	// Does file exist
+	if (fs.existsSync('foo.txt')) {
+		// ...
+	}
+
 ### CSV files: `csv-parse`
 
 	import { parse } from 'csv-parse/sync'
@@ -489,6 +505,9 @@ Older:
 	  const parser = parse({ delimiter: ',' }, actionFunction)
 	  fs.createReadStream(filePath).pipe(parser)
 	}
+
+	// Simple CSV parser: [['Name','Age'], ['Tom',45]]
+	const csvRows = csvText.split('\n').map(row => row.split(','))
 
 	// parseCSV: own implementation
 	type CsvDataRow = Record<string, any>

@@ -292,9 +292,13 @@ Example:
 	LEFT JOIN company_person ON (company_person.company_id = company.id)
 	GROUP BY company.id;
 
-### String concatenation
+### String concatenation (STRING_AGG not CONCAT)
 
 	SELECT article.*, COUNT(DISTINCT(category.id)) AS category_count, STRING_AGG(DISTINCT(category.name), ',') AS category_names
+
+Simpler concatenation
+
+	SELECT CONCAT('SQL', ' is', ' fun!' );
 
 ## Create - Insert
 
