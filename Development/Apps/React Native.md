@@ -4,7 +4,7 @@ React Native is an easy way to build native iOS/Android (also Windows, macOS, we
 
 With Expo (https://expo.io) the steps are easy:
 
-(First: update `expo-cli` with `yarn global add expo-cli` or `npm install -g expo-cli`)
+(First: update `expo-cli`, see “Upgrade Expo” below)
 
 1. Create a new app (`expo init [project-name]`)
 2. Run it on device or simulator (`expo start`)
@@ -26,17 +26,20 @@ With Expo (https://expo.io) the steps are easy:
 
 Install https://expo.io client on your device.
 
-### How to run
+### Upgrade Expo
 
 	# npm install -g expo-cli
 	yarn global add expo-cli
 
 	yarn global add eas-cli
-		
-Upgrade:
 
-	yarn global upgrade expo-cli
-	yarn global upgrade eas-cli
+	expo upgrade
+
+package.json:
+
+	"upgrade-expo": "yarn global add expo-cli; yarn global add eas-cli; expo upgrade"
+
+### How to run
 
 Init app:
 
@@ -342,11 +345,20 @@ Set state on another screen:
 
 ### Save state
 
-https://facebook.github.io/react-native/docs/asyncstorage
+https://reactnative.dev/docs/asyncstorage
+-> https://github.com/react-native-async-storage/async-storage
+
+	expo install @react-native-async-storage/async-storage
+
+Code:
+
+	import AsyncStorage from '@react-native-async-storage/async-storage'
+	await AsyncStorage.setItem('@storage_Key', value)
+	const value = await AsyncStorage.getItem('@storage_Key') // null if missing
 
 Save navigation state:
 
-	<AppNavigator persistenceKey={'NavigationPersistenceKey'} />
+https://reactnavigation.org/docs/state-persistence/
 
 ### Animations
 
@@ -559,6 +571,15 @@ Steps:
 	- Callback URL: https://lioz*****.supabase.co/auth/v1/callback
 - Key
 	- https://developer.apple.com/account/resources/authkeys/list
+
+
+## Deploying an Android app on Google Play
+
+- `app.json`: you need `expo.android.versionCode` (integer). Suggestion: version `0.4.3` -> `versionCode: 100043`
+- `eas.json`: `"releaseStatus": "completed"`
+
+
+## Components and Libraries
 
 ### Maps: react-native-maps
 
