@@ -85,6 +85,22 @@ Tom’s:
 	expo install expo-font
 	yarn add @react-navigation/native
 
+#### package.json
+
+	"dev": "yarn start",
+	"start": "expo start",
+	"eject": "expo eject",
+	"test": "echo 'Running Standard.js and Jest unit tests...\n' && yarn lint && yarn unit",
+	"unit": "jest --watchAll",
+	"lint": "ts-standard",
+	"fix": "ts-standard --fix",
+	"new": "mkdir -p screens/NewScreen; cp screens/PlaceHolderScreen/index.tsx screens/NewScreen; echo \"Now rename folder 'screens/NewScreen' to whatever you want.\"",
+	"pub": "expo publish",
+	"build": "eas build --platform ios",
+	"appstore": "eas submit --latest --platform ios",
+	"v+": "yarn version --patch",
+	"v++": "yarn version --minor"
+
 ### Installing packages
 
 NOTE: use `expo install` primarily (rather than yarn/npm), e.g:
@@ -133,22 +149,6 @@ module.exports = {
 }
 
 ##### React v17 issues, use v16.9
-
-#### package.json
-
-	"dev": "yarn start",
-	"start": "expo start",
-	"eject": "expo eject",
-	"test": "echo 'Running Standard.js and Jest unit tests...\n' && yarn lint && yarn unit",
-	"unit": "jest --watchAll",
-	"lint": "ts-standard",
-	"fix": "ts-standard --fix",
-	"new": "mkdir -p screens/NewScreen; cp screens/PlaceHolderScreen/index.tsx screens/NewScreen; echo \"Now rename folder 'screens/NewScreen' to whatever you want.\"",
-	"pub": "expo publish",
-	"build": "eas build --platform ios",
-	"appstore": "eas submit --latest --platform ios",
-	"v+": "yarn version --patch",
-	"v++": "yarn version --minor"
 
 #### App.js
 
