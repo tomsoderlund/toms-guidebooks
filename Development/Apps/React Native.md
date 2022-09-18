@@ -307,24 +307,42 @@ https://reactnavigation.org/docs/en/getting-started.html
 
 	export default createAppContainer(AppNavigator)
 
+#### NavigationRoutes file
+
+Purpose: avoid having unique strings in navigators and `navigate()`.
+
+	enum NavigationRoutes {
+		HomeScreen = 'HomeScreen',
+		UserProfileScreen = 'UserProfileScreen'
+	}
+
 #### Navigate to other screen
 
 	// navigate, push, replace. Also: dismiss, goBack, pop, popToTop, reset, setParams
-	this.props.navigation.navigate('Screen2', { someParam: 'Test' })
+	this.props.navigation.navigate(NavigationRoutes.UserProfileScreen, { someParam: 'Test' })
 
-#### Screen header config
+#### Header bar options and buttons
 
-	static navigationOptions = ({ navigation }) => {
-		return {
-			headerTitle: navigation.getParam('someParam', 'Default Title'),
-			headerRight: (
-				<Button
-					title='+1'
-					color='#fff'
-				/>
-			)
-		}
-	}
+https://reactnavigation.org/docs/header-buttons/
+
+		useLayoutEffect(() => {
+			navigation.setOptions({
+				headerShown: false,
+				title: 'Edit glam',
+				headerBackTitle: 'Back',
+				headerStyle: { backgroundColor: COLOR_BLACK },
+				headerTintColor: COLOR_WHITE,
+				headerShadowVisible: false,
+				headerLeft: null,
+				headerRight: () => (
+					<TextButton
+						onPress={handleSaveGlam}
+						title='Save'
+						isPrimary
+					/>
+				)
+			})
+		}, [navigation])
 
 #### State management
 

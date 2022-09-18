@@ -65,8 +65,7 @@ Note: `data` will contain an empty array if nothing found.
 	  .insert(
       [
 	      { some_column: 'someValue', other_column: 'otherValue' },
-	    ],
-      // { upsert: true }
+	    ]
     )
 
 Note: `data` will contain an array of the inserted rows.
