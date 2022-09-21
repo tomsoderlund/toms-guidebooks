@@ -3,12 +3,17 @@
 - LMB: Select, Shift-RMB extend selection
 - RMB: Context menu
 - Wheel: Zoom, Click+drag to Rotate
+- Pan: Shift-Mousewheel
+- Rotate: Mousewheel
+- Zoom: scroll with Mousewheel
+
+Note: `Z` is up (towards the sky).
 
 More:
 
-- F12 (Mac: `fn` + 🔊): Render image (cancel with `Esc`)
-- Z: Toggle Wireframe/Solid/Rendered
-- Space: Play timeline
+- `F12` (Mac: `fn` + 🔊): Render image (cancel with `Esc`)
+- `Z`: Toggle Wireframe/Solid/Rendered
+- `Space`: Play timeline
 
 ## File management
 
@@ -16,26 +21,11 @@ More:
 - Save default scene template: Ctrl-U (backup Default.blend in 3Dstuff)
 - Reset/New file: Ctrl-X
 
-## Navigation and Viewport
-
-Note: `Z` is up.
-
-- Pan: Shift-Mousewheel
-- Rotate: Mousewheel
-- Zoom: scroll with Mousewheel
-
-Windows: resize with LMB, split/join with RMB
-Ctrl-Up: maximize current window
-
-Top/Front etc: use View menu (in window header)
-
-H: Hide. Shift-H: hide all but selected. Alt-H: unhide all.
-
 ## Transformations (Move/Rotate/Size)
 
-- G: Move, use X/Y/Z to lock dimensions, input numbers with keypad. Or drag arrow on object (if 3D Transform Manipulator "hand" is enabled). Reset position: Alt+G.
-- R: Rotate (options: see Move). Reset rotation: Alt+R.
-- S: Resize (options: see Move). Reset scale: Alt+S.
+- `G`: Move, use X/Y/Z to lock dimensions (Shift-X for _just_ Y and Z), input numbers with keypad. Or drag arrow on object (if 3D Transform Manipulator "hand" is enabled). Reset position: Alt+G.
+- `R`: Rotate (options: see Move). Reset rotation: Alt+R.
+- `S`: Resize (options: see Move). Reset scale: Alt+S.
 - Alt+O: Reset origin
 
 ### Cursor and Grid
@@ -61,12 +51,18 @@ File structure:
 - **Layers:** can be used to render different elements or different groups of elements in your scene separately. A “larger” concept than Collection; and Collections can be included/excluded in a Layer (checkbox).
 - **Collections:** used to just logically organize your scene, or to facilitate one-step appending or linking between files or across scenes.
 
-## Manipulating (Multiple) Objects
+## Creating and Manipulating (Multiple) Objects
 
 - Shift-A: add object
 - X: Delete object
+- H: Hide. Shift-H: hide all but selected. Alt-H: unhide all.
 - Ctrl-P: Parent object 1 to object 2
 - Shift-D: Duplicate, Alt-D Duplicate Linked
+
+### Object types
+
+- Text: `tab` for Edit mode, then edit text
+- Metaballs: add more balls in Object Mode, they will “melt” together
 
 ## Shaping (Individual) Objects
 
@@ -88,8 +84,6 @@ Actions:
 - Ctrl-LMB: Add points
 - C: Close curve
 - Ctrl-J: Join curves
-
-Illustrator: AI v8, use Alt-C in Object Mode to convert curve to mesh
 
 ### Modelling
 
@@ -125,9 +119,9 @@ Bevel along curve (make rails)
 ### UV Editor: Scale Texture
 
 - Enter UV Editor panel
-- A to select all
-- S to scale
-- G to move
+- A: select all
+- S: scale
+- G: to move
 
 ### UV Mapping/Unwrap
 
@@ -138,15 +132,6 @@ Bevel along curve (make rails)
 - U key, then "unwrap".
 - Create texture (square), then Load image.
 - Enable "TexFace" on material before rendering.
-
-### PNG billboard with Alpha channel
-
-- A: 1.0, ZTransp: ON
-- MapTo: Alpha reversed, Spec reversed, DVar = 0.0
-- Texture: UseAlpha ON, Clip ON.
-
-Double Sided: only for 3D view
-No. V.Normal Flip: to enable flipped normals
 
 ## Lighting
 
@@ -159,7 +144,7 @@ http://www.cgsutra.com/blender_tutorials/b0010_lighting_in_blender/lighting_in_b
 
 Select camera, then:
 
-- G: Move. Click mousewheel: move in/out.
+- G: Move. Click mousewheel: dolly, move in/out.
 - R: Rotate
 
 ## Animation
@@ -227,10 +212,50 @@ http://www.katsbits.com/tutorials/blender/metric-imperial-units.php
 	- Need an "escape hole" for leftover material
 	- "Non-manifold edges": open/not water-tight, or shared by
 
-## 3D Scanning and Photogrammetry
+## Importing
+
+### Import 2D PNG Images
+
+PNG billboard with Alpha channel
+
+- Enable the add-on “Images as Planes”
+- File → Import → Images as Planes
+
+### Import 2D Vectors
+
+- SVG: just File → Import
+	- Then either right-click: Convert To → Mesh
+	- Or right-click: Adjust Extrusion
+- Illustrator: AI v8, use Alt-C in Object Mode to convert curve to mesh
+
+### 3D Scanning and Photogrammetry
 
 - iOS apps: Scaniverse (FBX format), Polycam (glTF format is free)
-- Import FBX with textures and all into Blender
+- Import FBX with textures into Blender
+
+### 3D File Formats
+
+Mesh:
+
+- OBJ
+- GLTF
+- DAE
+- FBX
+- USDZ
+- STL
+
+Point cloud:
+
+- PRO
+- DXF
+- PRO
+- PLY
+- PRO
+- XYZ
+- PRO
+- LAS
+- PRO
+- PTS
 
 ## Motion Tracking with Video
 
