@@ -18,8 +18,8 @@ More:
 ## File management
 
 - Save file: Cmd-S
-- Save default scene template: Ctrl-U (backup Default.blend in 3Dstuff)
-- Reset/New file: Ctrl-X
+- Save default scene template: ⌘-U (backup Default.blend in 3Dstuff)
+- Reset/New file: ⌘-X
 
 ## Transformations (Move/Rotate/Size)
 
@@ -31,7 +31,7 @@ More:
 ### Cursor and Grid
 
 - Reset Cursor: Shift-C
-- Ctrl+Drag in transformation handle to snap-to (Magnet button).
+- ⌘+Drag in transformation handle to snap-to (Magnet button).
 - Shift-S: Snap to Cursor/Grid
 - Shift-Tab: Snap to Grid
 
@@ -56,7 +56,7 @@ File structure:
 - Shift-A: add object
 - X: Delete object
 - H: Hide. Shift-H: hide all but selected. Alt-H: unhide all.
-- Ctrl-P: Parent object 1 to object 2
+- ⌘-P: Parent object 1 to object 2
 - Shift-D: Duplicate, Alt-D Duplicate Linked
 
 ### Object types
@@ -64,10 +64,16 @@ File structure:
 - Text: `tab` for Edit mode, then edit text
 - Metaballs: add more balls in Object Mode, they will “melt” together
 
+### Modifiers
+
+- “Modifiers” properties panel
+- Array: copy/clone objects
+- Bevel: bevel edges
+
 ## Shaping (Individual) Objects
 
 - Tab: Toggle Edit/Object mode
-- Ctrl-Tab: Vertex/Edge/Face mode
+- ⌘-Tab: Vertex/Edge/Face mode
 
 Actions:
 
@@ -76,19 +82,23 @@ Actions:
 - X: Delete
 - F: Make face (polygon)
 - E: Extrude
-- Ctrl+B: Bevel
+- ⌘+B: Bevel
 - W: Specials: Remove doubles, Subdivide, Bevel, Flip Normals, etc
 
 ### Curves
 
-- Ctrl-LMB: Add points
+- ⌘-LMB: Add points
 - C: Close curve
-- Ctrl-J: Join curves
+- ⌘-J: Join curves
 
 ### Modelling
 
-Spin (make a cup): Mesh Tools (F9), select viewport for axis to rotate around, Spin.
-Bevel along curve (make rails)
+- Extrude
+- Inset Faces
+- Bevel
+- Loop Cut/Knife
+- Spin (e.g. make a cup of a silhouette): Edit Mode, select a face, then Spin in toolbar
+- Bevel along curve (e.g. make rails)
 
 ## Materials and Texturing
 
@@ -126,7 +136,7 @@ Bevel along curve (make rails)
 ### UV Mapping/Unwrap
 
 - Select vertices.
-- Ctrl+E, then Mark Seam.
+- ⌘+E, then Mark Seam.
 - Change mode to "UV Face Select".
 - Show view "UV/Image Editor".
 - U key, then "unwrap".
@@ -164,7 +174,12 @@ Rigid body:
 - Dynamic off = for walls etc
 - Animated: on = controlled by animation system. Toggle this off to let the physics to take over.
 
-## Render movie
+## Rendering
+
+- Toon render → use a Toon Shader
+- Ambient Occlusion: “Render” properties panel → Ambient Occlusion
+
+### Render movie
 
 1. Blender Output tab: set to “FFmpeg Video”
 2. Set output folder, default is `/tmp`
@@ -182,12 +197,12 @@ Rigid body:
 
 http://www.shapeways.com/tutorials/prepping_blender_files_for_3d_printing
 
-- Check if manifold (watertight): Ctrl-Opt-Shift-M
+- Check if manifold (watertight): ⌘-Opt-Shift-M
 - Hide other: Shift-H
 - Export to .STL for Shapeways etc.
 
 Split part of a mesh into its own object by selecting all the vertices in the mesh and hitting the P key
-Selecting a single vertex and then holding down Ctrl-+ will select all attached vertices.
+Selecting a single vertex and then holding down ⌘-+ will select all attached vertices.
 
 Metric units:
 
@@ -201,7 +216,7 @@ http://www.katsbits.com/tutorials/blender/metric-imperial-units.php
 
 - Set units: Scene → Units: Metric (default: m, Scale: 0.01 = cm). Set grid size in Display → Grid. http://www.katsbits.com/tutorials/blender/metric-imperial-units.php
 - Set sizes in "XYZ Euler" (near Display settings).
-- Object → Apply Transformation (Ctrl+A) to clear scale factors etc.
+- Object → Apply Transformation (⌘+A) to clear scale factors etc.
 - View ortho is helpful.
 - Export as: OBJ, STL format.
 - Modifiers:
