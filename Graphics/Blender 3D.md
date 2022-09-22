@@ -37,15 +37,15 @@ More:
 
 ### Areas, Workspaces, Scenes, Layers, Collections
 
-User interface:
+### User interface
 
 - **Windows:** a floating window in your OS, can contain Areas and Workspaces.
-- **Areas:** viewports/frames
+- **Areas:** viewports/frames inside a Window
 	- Split: by moving cursor to corner, it turns into a `+`
 	- Join: `+` cursor, then drag into other area
-- **Workspaces:** Areas are grouped into Workspaces, with predefined tabs such as Layout, Modeling, etc.
+- **Workspaces:** Areas are grouped into Workspaces, with predefined tabs at top of screen with Layout, Modeling, etc.
 
-File structure:
+### File structure
 
 - **Scenes:** each file can contain multiple scenes, which share other data such as objects and materials.
 - **Layers:** can be used to render different elements or different groups of elements in your scene separately. A “larger” concept than Collection; and Collections can be included/excluded in a Layer (checkbox).
