@@ -1,13 +1,15 @@
 # Blender 3D
 
-- LMB: Select, Shift-RMB extend selection
-- RMB: Context menu
-- Wheel: Zoom, Click+drag to Rotate
+https://www.blender.org/
+
+- Left Mouse Button: Select (Shift-LMB: extend selection)
+- Right Mouse Button: Context menu
+- Mousewheel: Zoom, Click+drag to Rotate
 - Pan: Shift-Mousewheel
 - Rotate: Mousewheel
 - Zoom: scroll with Mousewheel
 
-Note: `Z` is up (towards the sky).
+Note: Z axis is up (towards the sky).
 
 More:
 
@@ -15,17 +17,12 @@ More:
 - `Z`: Toggle Wireframe/Solid/Rendered
 - `Space`: Play timeline
 
-## File management
-
-- Save file: Cmd-S
-- Save default scene template: ⌘-U (backup Default.blend in 3Dstuff)
-- Reset/New file: ⌘-X
-
 ## Transformations (Move/Rotate/Size)
 
-- `G`: Move, use X/Y/Z to lock dimensions (Shift-X for _just_ Y and Z), input numbers with keypad. Or drag arrow on object (if 3D Transform Manipulator "hand" is enabled). Reset position: Alt+G.
+- `G`: Move, use X/Y/Z to lock dimensions (Shift-X to _exclude_ X and just do Y and Z). Or drag arrow on object (if 3D Transform Manipulator “hand” is enabled). Reset position: Alt+G.
 - `R`: Rotate (options: see Move). Reset rotation: Alt+R.
-- `S`: Resize (options: see Move). Reset scale: Alt+S.
+- `S`: Scale/resize (options: see Move). Reset scale: Alt+S.
+- Numeric input: box at bottom-left corner of area.
 - Alt+O: Reset origin
 
 ### Cursor and Grid
@@ -59,7 +56,7 @@ More:
 - ⌘-P: Parent object 1 to object 2
 - Shift-D: Duplicate, Alt-D Duplicate Linked
 
-### Object types
+### Object Types
 
 - Text: `tab` for Edit mode, then edit text
 - Metaballs: add more balls in Object Mode, they will “melt” together
