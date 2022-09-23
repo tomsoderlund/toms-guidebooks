@@ -142,17 +142,28 @@ Actions:
 
 ## Lighting
 
+Types: Point/Sun/Spot/Area
+
 Use Spot lights for more control (halos).
 
-http://wiki.blender.org/index.php/Doc:Tutorials/Lighting/Three_Point_Light
-http://www.cgsutra.com/blender_tutorials/b0010_lighting_in_blender/lighting_in_blender.php
+### Three-point studio style lighting
+
+- Add-on: https://docs.blender.org/manual/en/latest/addons/lighting/trilighting.html
+- https://cgian.com/2022/02/how-to-add-3-point-lighting-setup-in-blender
+- https://archive.blender.org/wiki/index.php/Doc:Tutorials/Lighting/Three_Point_Light/
+
+More info:
+
+- http://www.cgsutra.com/blender_tutorials/b0010_lighting_in_blender/lighting_in_blender.php
 
 ## Camera
 
 Select camera, then:
 
-- G: Move. Click mousewheel: dolly, move in/out.
-- R: Rotate
+- `G`: Move. Click mousewheel: dolly, move in/out.
+- `R`: Rotate
+
+Orthogonal perspective: Select camera, then Object Data properties panel
 
 ## Animation
 
@@ -271,6 +282,26 @@ Point cloud:
 
 ## Motion Tracking with Video
 
+Tutorial by Ian Hubert: https://youtu.be/lY8Ol2n4o4A – summary:
+
+1. Set up your scene:
+	- Activate the Motion Tracking workspace (hidden, so use “+” button)
+	- Open video with “📁 Open” button above video preview window
+	- Match frame rate in the scene with video (30 fps for iPhone)
+	- Click “Set Scene Frames” to match length, and “Prefetch” to load video in memory
+	- Set suitable motion model, e.g. “Perspective”
+2. Track control points:
+	- Go to middle of video, and `⌘-leftmouse` to set control points
+	- Hit `A` to select all, then click the `<--i` track buttons back and forward. **Note:** you need 8 good tracking points, whereof 3 good points for the “floor” (see step 3).
+3. Solve Camera Motion:
+	- Open “Solve” tab, check Keyframe and Refine Focal Length
+	- Press “Solve Camera Motion”, see solve error top-right corner (ideally < 1.00px)
+	- Click on Clip Display (right corner) and turn on Info, that will show what points bring the most error – delete those and “Solve Camera Motion” again
+4. Create the background and floor:
+	- “Solve” tab → Set as Background, then Setup Tracking Scene
+	- Select 1 tracking marker → Set Origin
+	- Select 3 other tracking markers → Floor
+
 https://docs.blender.org/manual/en/latest/movie_clip/tracking/introduction.html
 
 ## Add-ons
@@ -291,3 +322,10 @@ Run `/Applications/Blender.app/Contents/MacOS/Blender` from Terminal to see log 
 - Tutorial: http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro
 - Interface: http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/The_3D_Viewport_Window
 - Modelling Keyboard: http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Hot_Keys
+
+## Ideas to add
+
+- Geometry nodes
+- Cloth simulation
+- Environment texture, HDRI image
+
