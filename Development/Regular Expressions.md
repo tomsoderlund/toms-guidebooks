@@ -42,6 +42,7 @@ HTML find all CLASS and ID
 Domain from URL - https://regex101.com/r/MOIFTy/3
 
 	/^(?:https?:)?(?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/igm
+		.exec(str)?.[1]
 
 Find all links in an HTML file:
 

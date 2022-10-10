@@ -335,7 +335,6 @@ Multiple values:
 	);
 
 	CREATE TABLE company_person (
-		id SERIAL PRIMARY KEY,
 		company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
 		person_id integer REFERENCES "person"(id) ON DELETE CASCADE
 	);

@@ -7,6 +7,8 @@
 Nice-to-have’s:
 
     mkdir components
+    mkdir lib
+    mkdir hooks
     rm -rf pages/api; rm styles/Home.module.css
 
 baseUrl:

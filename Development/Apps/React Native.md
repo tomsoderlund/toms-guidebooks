@@ -35,10 +35,6 @@ Install https://expo.io client on your device.
 
 	expo upgrade
 
-package.json:
-
-	"upgrade-expo": "yarn global add expo-cli; yarn global add eas-cli; expo upgrade"
-
 ### How to run
 
 Init app:
@@ -87,6 +83,7 @@ Tom’s:
 
 #### package.json
 
+	"upgrade-expo": "yarn global add expo-cli; yarn global add eas-cli; expo upgrade",
 	"dev": "yarn start",
 	"start": "expo start",
 	"eject": "expo eject",
@@ -467,15 +464,20 @@ expo.Audio
 Test tool: https://expo.dev/notifications
 
 
-## Deploying an iOS app on App Store with Expo Application Services (EAS)
+## Deploying to app stores
+
+### Deploying an iOS app on App Store with Expo Application Services (EAS)
 
 https://expo.dev/eas
 
 1. Install EAS: `yarn global add eas-cli && eas login`
 2. Create `eas.json`
 3. Create a new app on https://appstoreconnect.apple.com/apps – note the bundle ID (just characters, avoid underscore/dash, e.g. `com.mydomain.myappname`)
-4. Set up and build with `eas build` (or `eas build -p ios`)
-5. Submit with `eas submit` (or `eas submit -p ios`)
+4. Update `app.json` to avoid “Missing Compliance” status in TestFlight: ```      "config": {
+        "usesNonExemptEncryption": false
+      }```
+5. Set up and build with `eas build` (or `eas build -p ios`)
+6. Submit with `eas submit` (or `eas submit -p ios`)
 
 ### `eas.json` – example
 
@@ -511,6 +513,61 @@ https://docs.expo.dev/build/eas-json/
 		}
 	}
 
+### Deploying an iOS app on App Store (OLD way with `expo build`)
+
+1. Create your app on https://appstoreconnect.apple.com/
+2. Enter the same app bundle ID in `app.json`
+3. Build with `expo build:ios` (option: `--clear-provisioning-profile`)
+4. Upload IPA file with Application Loader on macOS (might need app-specific password on https://appleid.apple.com/)
+5. App Store Connect takes ~1 hour to process a new build, then you can use TestFlight for testing.
+
+#### Apple Certificates
+
+https://developer.apple.com/account/resources/certificates/list
+
+#### Apple ID (with Supabase)
+
+- https://docs.expo.dev/versions/latest/sdk/apple-authentication/
+- https://supabase.io/docs/guides/auth/auth-apple
+
+Steps:
+
+- App ID
+	- https://developer.apple.com/account/resources/identifiers/list
+	- `com.mydomain.myappname`
+- Service ID
+	- https://developer.apple.com/account/resources/identifiers/list (select "Service IDs" in top-right dropdown)
+	- `com.mydomain.myappname.login`
+	- Domain: [APP-ID].supabase.co
+	- Return URLs: https://[APP-ID].supabase.co/auth/v1/callback
+	- Callback URL: https://[APP-ID].supabase.co/auth/v1/callback
+- Key
+	- https://developer.apple.com/account/resources/authkeys/list
+
+
+### Deploying an Android app on Google Play
+
+- Docs: https://docs.expo.dev/submit/android/
+- Set up your app on https://play.google.com/console/
+- `app.json`: you need `expo.android.versionCode` (integer). Suggestion: version `0.4.3` -> `versionCode: 100043`
+- Set the Privacy Policy in Policy → App Content
+- First time: upload AAB file manually to Play Console
+- Then: create Service Account: https://expo.fyi/creating-google-service-account
+  - API Access: https://play.google.com/console/developers/[YOUR-ID]/api-access
+	- Set permissions and invite Service Account user
+	- Place JSON key in `mkdir -p appstores/googleplay` folder (optional: `.gitignore` this file)
+	- Update `eas.json`:
+
+		"submit": {
+			"production": {
+				"android": {
+					"serviceAccountKeyPath": "./appstores/googleplay/pc-api-9052926321037412225-601-6bf892805fe0.json",
+					"track": "internal",
+					"releaseStatus": "draft"
+				}
+			}
+		}
+
 ### Using GitHub Actions with Expo/EAS
 
 https://github.com/marketplace/actions/expo-github-action
@@ -520,6 +577,8 @@ https://github.com/marketplace/actions/expo-github-action
 3. Get a token on https://expo.dev/accounts/[account]/settings/access-tokens and add `EXPO_TOKEN` to repo settings → Secrets → Actions
 4. Run EAS build non-interactive from command line the first time to set up accounts etc: `eas build --platform ios`
 5. For `eas submit`, you need 1) an ASC API key and 2) an Issuer ID from: https://appstoreconnect.apple.com/access/api
+
+		mkdir -p .github/workflows; touch mkdir -p .github/workflows/production.yml
 
 Example `.github/workflows/production.yml`:
 
@@ -561,41 +620,6 @@ Example `.github/workflows/production.yml`:
 
 				- name: 🚚 Submit app to TestFlight
 					run: eas submit --latest --platform ios
-
-## Deploying an iOS app on App Store (OLD way with `expo build`)
-
-1. Create your app on https://appstoreconnect.apple.com/
-2. Enter the same app bundle ID in `app.json`
-3. Build with `expo build:ios` (option: `--clear-provisioning-profile`)
-4. Upload IPA file with Application Loader on macOS (might need app-specific password on https://appleid.apple.com/)
-5. App Store Connect takes ~1 hour to process a new build, then you can use TestFlight for testing.
-
-### Apple Certificates
-
-https://developer.apple.com/account/resources/certificates/list
-
-### Apple ID (with Supabase)
-
-- https://docs.expo.dev/versions/latest/sdk/apple-authentication/
-- https://supabase.io/docs/guides/auth/auth-apple
-
-Steps:
-
-- App ID
-	- https://developer.apple.com/account/resources/identifiers/list
-	- `com.mydomain.myappname`
-- Service ID
-	- `com.mydomain.myappname.login`
-	- Callback URL: https://lioz*****.supabase.co/auth/v1/callback
-- Key
-	- https://developer.apple.com/account/resources/authkeys/list
-
-
-## Deploying an Android app on Google Play
-
-- `app.json`: you need `expo.android.versionCode` (integer). Suggestion: version `0.4.3` -> `versionCode: 100043`
-- `eas.json`: `"releaseStatus": "completed"`
-
 
 ## Components and Libraries
 

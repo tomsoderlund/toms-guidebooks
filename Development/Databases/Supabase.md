@@ -1,10 +1,15 @@
 # Supabase
 
-https://app.supabase.io/
+## Set up new project
+
+- Create new project on https://app.supabase.com/
+- Get SQL URL: db.PROJECT.supabase.co, postgres, [password]
+
+## Add to project
 
 	yarn add @supabase/supabase-js
 
-## Init
+## In your code
 
 	import { createClient } from '@supabase/supabase-js'
 	
@@ -90,6 +95,38 @@ Note: `data` will contain an array of the inserted rows.
 	  .delete()
 	  .lt('starts_at', lastTimeAsISO)
 
+### Listen to real-time changes in database
+
+https://supabase.com/docs/guides/realtime/postgres-changes
+
+	begin;
+		-- remove the supabase_realtime publication
+		drop publication if exists supabase_realtime;
+		-- re-create the supabase_realtime publication with no tables
+		create publication supabase_realtime;
+	commit;
+	-- add a table to the publication
+	alter publication supabase_realtime add table messages;
+
+For UPDATE/DELETE (not just INSERT):
+
+	alter table messages replica identity full;
+
+JS code:
+
+	useEffect(() => {
+		console.log('*** user_id=session?.user?.id:', `user_id=${session?.user?.id}`)
+		if (session?.user?.id === null) return
+		const myArticlesChangeSubscription = supabase
+			.from(`articles:user_id=eq.${session?.user?.id}`)
+			.on('UPDATE', (payload) => console.log('Supabase UPDATE', payload))
+			.on('INSERT', (payload) => console.log('Supabase INSERT', payload))
+			.on('DELETE', (payload) => console.log('Supabase DELETE', payload))
+			.subscribe()
+		const cancelSubscription = async () => await supabase.removeSubscription(myArticlesChangeSubscription)
+		return cancelSubscription
+	}, [session?.user?.id])
+
 ### Run RPC/custom Postgres function/custom SQL query
 
 - https://supabase.com/docs/guides/database/functions
@@ -110,13 +147,35 @@ https://geoexamples.com/svelte/2021/07/18/svelte-supabase-maps.html/
 
 		SELECT AddGeometryColumn ('', 'tablename', 'fieldname', 4326, 'POINT', 2);
 
+#### Overview
+
+- ST_MakePoint
+- ST_SetSRID(point, 4326): set the coordinate reference system of your geometry
+- ST_Transform
+- ST_X, ST_Y
+- ST_DistanceSphere
+- ST_Contains: `WHERE ST_Contains(city.geom, superhero.geom)`
+
 #### Set data using SQL
 
-	UPDATE place SET position=ST_SetSRID(ST_MakePoint(59.32045, 18.06914), 4326);
+	INSERT INTO place (name, coordinates) VALUES ('Test', ST_SetSRID(ST_MakePoint(59.32045, 18.06914), 4326));
+
+	UPDATE place SET coordinates=ST_SetSRID(ST_MakePoint(59.32045, 18.06914), 4326);
 
 #### Spatial queries
 
-	SELECT name, ST_X(ST_Transform(position, 4326)) as lat, ST_Y(ST_Transform(position, 4326)) as lng FROM place;
+	SELECT name,
+	ST_X(ST_Transform(coordinates, 4326)) as latitude,
+	ST_Y(ST_Transform(coordinates, 4326)) as longitude
+	FROM place;
+
+	SELECT *
+	FROM place
+	WHERE ST_DistanceSphere(place.coordinates, ST_MakePoint(59.32045, 18.06914)) <= 1000;
+
+	SELECT * FROM place
+	WHERE GeometryType(ST_Centroid(coordinates)) = 'POINT'
+	AND ST_DistanceSphere(ST_Point(ST_X(ST_Centroid(coordinates)), ST_Y(ST_Centroid(coordinates))), (ST_MakePoint(59.32045, 18.06914))) <= 1000;
 
 https://postgis.net/docs/manual-dev/using_postgis_query.html
 

@@ -297,7 +297,7 @@ http://caniuse.com/#feat=html5semantic
 <figcaption>
 
 
-preamble/ingress/subheading: <summary>
+preamble/ingress/subheading/subtitle/subline: <summary>
 
 
 
