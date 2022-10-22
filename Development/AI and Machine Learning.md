@@ -1,6 +1,6 @@
 # AI and Machine Learning
 
-## Courses
+## Learning resources
 
 - Google
 	- https://developers.google.com/machine-learning/crash-course/ml-intro
