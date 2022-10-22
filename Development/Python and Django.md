@@ -1,10 +1,14 @@
 # Python and Django
 
-https://www.python.org/
-
-https://docs.python.org/3/
+- https://www.python.org/
+- https://docs.python.org/3/
+- https://www.w3schools.com/python/
 
 ## Switch versions
+
+## Package management: PIP and Anaconda
+
+	pip3 install torch torchvision
 
 ## Import modules
 
@@ -12,11 +16,33 @@ https://docs.python.org/3/
 
     from math import pi
 
+## Data types
+
+- Text: str
+- Number: int, float, complex
+- Boolean: bool
+- Sequence: list, tuple, range
+- Mapping: dict
+- Set: set, frozenset
+- Binary: bytes, bytearray, memoryview
+- None: NoneType
+
 ## Functions
 
     def my_function():
       print("Hello from a function")
       return 1 # Or 'pass'
+
+Lambda (short) function: `add10 = lambda n : n + 10`
+
+String function: `f'This is dynamic: {expression}'`
+
+## Classes
+
+	class Person:
+	  def __init__(self, name, age):
+	    self.name = name
+	    self.age = age
 
 ## If/else
 
