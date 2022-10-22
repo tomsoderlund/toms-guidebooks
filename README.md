@@ -61,6 +61,7 @@
     - [React](./Development/JavaScript/React.md)
     - [Svelte and Sapper](./Development/JavaScript/Svelte%20and%20Sapper.md)
     - [TypeScript](./Development/JavaScript/TypeScript.md)
+  - [AI and Machine Learning](./Development/AI%20and%20Machine%20Learning.md)
   - [Python and Django](./Development/Python%20and%20Django.md)
   - [Regular Expressions](./Development/Regular%20Expressions.md)
   - [Ruby on Rails and Gem](./Development/Ruby%20on%20Rails%20and%20Gem.md)

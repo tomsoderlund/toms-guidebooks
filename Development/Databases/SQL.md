@@ -329,11 +329,6 @@ Multiple values:
 
 ### Create a many-to-many relationship table
 
-	CREATE TABLE company (
-		id SERIAL PRIMARY KEY,
-		name character varying(64) UNIQUE
-	);
-
 	CREATE TABLE company_person (
 		company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
 		person_id integer REFERENCES "person"(id) ON DELETE CASCADE

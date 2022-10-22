@@ -233,6 +233,23 @@ Delete BOTH branches:
 
     git commit -m 'Empty commit to force new build' --allow-empty
 
+## Tags
+
+- See existing tags: `git tag`
+- Create a new tag: `git tag [TAGNAME]` e.g. `git tag production-v1.xx`
+- Push tags with `git push origin --tags`
+
+## Rename `master` to `main`
+
+Rename on GitHub: https://github.com/tomsoderlund/[REPO]/settings/branches
+
+Then locally:
+
+	git branch -m master main
+	git fetch origin
+	git branch -u origin/main main
+	git remote set-head origin -a
+
 ## Raymond Goo
 
 Here is my workflow:

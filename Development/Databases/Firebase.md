@@ -178,19 +178,23 @@ Geo queries: use Geohashes: https://firebase.google.com/docs/firestore/solutions
 
 https://firebase.google.com/docs/functions/firestore-events
 
+New:
+
 - `onCreate`: Triggered when a document is written to for the first time.
 - `onUpdate`: Triggered when a document already exists and has any value changed.
 - `onDelete`: Triggered when a document with data is deleted.
 - `onWrite`: Triggered when onCreate, onUpdate or onDelete is triggered.
-- `DocumentReference.onSnapshot`/`CollectionReference.onSnapshot`
 
     functions.firestore
       .document('users/{userId}')
-      .onUpdate((change, context) => {})
+      .onUpdate((change, context) => { ... })
 
-    const unsubscribe = db.collection('cities').onSnapshot(function (querySnaphot) {
-      // do something with the data.
-    })
+Old:
+
+- `DocumentReference.onSnapshot`/`CollectionReference.onSnapshot`
+
+    const unsubscribe = db.collection('cities')
+      .onSnapshot((snapshot) => { ... })
 
 ### JSON REST API for Firestore
 

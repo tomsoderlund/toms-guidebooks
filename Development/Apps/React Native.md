@@ -549,7 +549,7 @@ Steps:
 
 - Docs: https://docs.expo.dev/submit/android/
 - Set up your app on https://play.google.com/console/
-- `app.json`: you need `expo.android.versionCode` (integer). Suggestion: version `0.4.3` -> `versionCode: 100043`
+- `app.json`: you need `expo.android.versionCode` (integer). Suggestion: version `0.4.3` -> `"versionCode": 1000004003`
 - Set the Privacy Policy in Policy → App Content
 - First time: upload AAB file manually to Play Console
 - Then: create Service Account: https://expo.fyi/creating-google-service-account
