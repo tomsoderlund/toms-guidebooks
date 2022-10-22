@@ -2,7 +2,7 @@
 
 ## Usecases
 
-Broadly speaking, we today use ML for:
+Broadly speaking, we today use Machine Learning (ML) for:
 
 1. Classification (spam detection etc)
 2. Generation (text, images etc)
@@ -29,35 +29,35 @@ Two great courses for ML beginners: [Google’s (theoretical)](https://developer
 ## Tools
 
 - Python is the common programming language for AI/ML.
-- Notebook software for writing/documenting/sharing ML code:
-	- https://jupyter.org/
-	- https://colab.research.google.com/
-	- https://www.kaggle.com/
+- **Important:** “Notebook software” for writing/documenting/sharing ML code. Uses `.ipynb` files, which are essentially JSON structures containing Python code blocks and Markdown text blocks:
+	- [Jupyter Notebook](https://jupyter.org/): the original
+	- [VS Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) has built in Jupyter support
+	- [Google Colab](https://colab.research.google.com/): work with files on Google Drive and GitHub
+	- [Kaggle](https://www.kaggle.com/)
 - Frameworks & libraries:
-	- https://pytorch.org/ – open source machine learning framework
-	- https://www.tensorflow.org/ – Google
-	- FastAI: https://docs.fast.ai/
-	- https://gradio.app/ for building UI’s inside notebooks
+	- [PyTorch](https://pytorch.org/) – open source machine learning framework
+	- [TensorFlow](https://www.tensorflow.org/) – Google
+	- [FastAI](https://docs.fast.ai/)
+	- [Gradio](https://gradio.app/) for building UI’s inside notebooks
 - Models:
-	- https://huggingface.co/
-	- https://www.eleuther.ai/
+	- [HuggingFace](https://huggingface.co/): “GitHub for AI models”
+	- [EleutherAI](https://www.eleuther.ai/): open source AI models
+	- [OpenAI](https://openai.com/): private/closed source, GPT-3, DALL·E
 
-### Models
+### Jupyter Notebook
 
-- GPT-Neo 1.3B: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
-- GPT-J 6B: a transformer model trained using Ben Wang's Mesh Transformer JAX.
-
-### Jupyter Notebooks
-
-- Jupyter uses `.ipynb` files, which are essentially a JSON structure containing Python code blocks and Markdown text blocks.
-- `.ipynb` can be opened in Google Colab, Kaggle, and VSCode
 - Press Tab to get autocompletion suggestions
 - Inside the parentheses of a function, pressing Shift + Tab will display signature and description of the function
 - `?[function]` to get help on function: `?verify_images`, or `??verify_images` for full source code
 - `doc([function])` to get documentation page
 - `%debug`: inspect every variable
 
-## Notes
+### Models
+
+- GPT-Neo 1.3B: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
+- GPT-J 6B: a transformer model trained using Ben Wang's Mesh Transformer JAX.
+
+## Machine Learning Theory
 
 Machine learning algorithm:
 
