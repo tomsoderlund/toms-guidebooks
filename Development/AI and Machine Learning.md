@@ -1,6 +1,15 @@
 # AI and Machine Learning
 
+## Usecases
+
+Broadly speaking, we today use ML for:
+
+1. Classification (spam detection etc)
+2. Generation (text, images etc)
+
 ## Learning resources
+
+Two great courses for ML beginners: [Google’s (theoretical)](https://developers.google.com/machine-learning/crash-course/ml-intro) and [FastAI’s (practical)](https://course.fast.ai/).
 
 - Google
 	- https://developers.google.com/machine-learning/crash-course/ml-intro
@@ -21,25 +30,27 @@
 
 - Python is the common programming language for AI/ML.
 - Notebook software for writing/documenting/sharing ML code:
+	- https://jupyter.org/
 	- https://colab.research.google.com/
 	- https://www.kaggle.com/
-	- https://jupyter.org/
 - Frameworks & libraries:
 	- https://pytorch.org/ – open source machine learning framework
 	- https://www.tensorflow.org/ – Google
 	- FastAI: https://docs.fast.ai/
-	- https://gradio.app/ for building UI in notebooks
+	- https://gradio.app/ for building UI’s inside notebooks
 - Models:
 	- https://huggingface.co/
 	- https://www.eleuther.ai/
 
 ### Models
 
-- GPT-Neo 1.3B is a transformer model designed using EleutherAI's replication of the GPT-3 architecture.
-- GPT-J 6B is a transformer model trained using Ben Wang's Mesh Transformer JAX.
+- GPT-Neo 1.3B: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
+- GPT-J 6B: a transformer model trained using Ben Wang's Mesh Transformer JAX.
 
 ### Jupyter Notebooks
 
+- Jupyter uses `.ipynb` files, which are essentially a JSON structure containing Python code blocks and Markdown text blocks.
+- `.ipynb` can be opened in Google Colab, Kaggle, and VSCode
 - Press Tab to get autocompletion suggestions
 - Inside the parentheses of a function, pressing Shift + Tab will display signature and description of the function
 - `?[function]` to get help on function: `?verify_images`, or `??verify_images` for full source code
@@ -47,11 +58,6 @@
 - `%debug`: inspect every variable
 
 ## Notes
-
-Broadly speaking, we today use ML for:
-
-1. Classification (spam detection etc)
-2. Generation (GAN etc)
 
 Machine learning algorithm:
 

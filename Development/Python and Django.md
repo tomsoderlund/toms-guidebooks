@@ -8,6 +8,9 @@
 
 ## Package management: PIP and Anaconda
 
+	pip install torch torchvision
+	
+	# To ensure Python 3:
 	pip3 install torch torchvision
 
 ## Import modules
@@ -36,6 +39,8 @@
 Lambda (short) function: `add10 = lambda n : n + 10`
 
 String function: `f'This is dynamic: {expression}'`
+
+Named parameters when calling: `my_function(param1 = 100)`
 
 ## Classes
 
