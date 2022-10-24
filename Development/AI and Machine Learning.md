@@ -1,6 +1,6 @@
 # AI and Machine Learning
 
-> [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
+Tweet: [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
 
 ## Usecases
 
@@ -29,12 +29,12 @@ Broadly speaking, we today use Machine Learning (ML) for:
 
 ## People
 
-- [Tom’s Twitter list](https://twitter.com/i/lists/1577855041150541826)
+- [Tom’s Twitter list “AI & ML”](https://twitter.com/i/lists/1577855041150541826)
 
 ## Tools
 
 - Python is the common programming language for AI/ML.
-- ⚠️ “Notebook software” for writing/documenting/sharing ML code – essentially word processors with embedded (Python) code blocks. Uses `.ipynb` files, which are essentially JSON structures containing Python code blocks and Markdown text blocks:
+- ⚠️ “Notebook software” for writing/documenting/sharing ML code – essentially word processors with embedded (Python) code blocks. Uses `.ipynb` files, which are JSON structures containing Python code blocks and Markdown text blocks:
 	- [Jupyter Notebook](https://jupyter.org/): the original (see below)
 	- [VS Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) has built in Jupyter support
 	- [Google Colab](https://colab.research.google.com/): work with files on Google Drive and GitHub
