@@ -1,5 +1,7 @@
 # AI and Machine Learning
 
+This page: http://SDRLND.ME/ai-ml-github
+
 Tweet: [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
 
 ## Usecases
