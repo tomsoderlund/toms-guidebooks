@@ -1967,11 +1967,9 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 
 	// queryObjectFromString / queryObjectToString
 
-	// Node.js: use querystring
-	const querystring = require('querystring')
-	querystring.stringify({ param: 1 })
-	querystring.parse('param=1')
-	querystring.parse(window.search.substr(1))
+	// Node.js: use URLSearchParams, not querystring
+	new URLSearchParams(searchParams).toString()
+	new URLSearchParams(window.search.substr(1))
 
 	const queryObjectFromString = url => (url.split('?')[1] || url || '')
 		.split('&')

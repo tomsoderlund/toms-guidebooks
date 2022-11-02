@@ -146,9 +146,20 @@ Function in interface:
 
     export const AppContext = React.createContext<Partial<ContextProps>>({})
 
+Pick:
+
+    type TodoInfo = Pick<Todo, 'completed' | 'createdAt'>
+
 Omit:
 
     type TodoInfo = Omit<Todo, 'completed' | 'createdAt'>
+
+Extend:
+
+    type VideoWithUser = Video & {
+      username?: string
+      user_image_url?: string
+    }
 
 ### Interface as Array
 
