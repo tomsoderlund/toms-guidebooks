@@ -118,8 +118,8 @@ Neural network: multiply, add them up, replace negatives with zeroes.
 
 ### Vector search and Semantic search
 
-- **Vector search** matching search key’s vectors’ proximity in vector space with other items.
-- **Semantic search**: NLP for transforming search phrase into vectors, then vector search for matching their proximity in vector space with other items.
-- These vectors are usually called embeddings
+- **Vector search**: matching search key’s vectors’ proximity in vector space with other items.
+- **Semantic search**: NLP for transforming search phrase into vectors, then vector search for matching their proximity in vector space with other items. These vectors are usually called **embeddings**.
 - **Embeddings**: special type of vector that is produced as a result of running an input through an ML model - usually a neural network.
 - **Dense retrieval**: using embeddings to search.
+s
