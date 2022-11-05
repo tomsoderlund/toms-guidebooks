@@ -91,12 +91,10 @@ Tom’s:
 	"unit": "jest --watchAll",
 	"lint": "ts-standard",
 	"fix": "ts-standard --fix",
-	"new": "mkdir -p screens/NewScreen; cp screens/PlaceHolderScreen/index.tsx screens/NewScreen; echo \"Now rename folder 'screens/NewScreen' to whatever you want.\"",
+	"new": "cp screens/PlaceHolderScreen.tsx screens/NewScreen.tsx; echo \"Now rename 'screens/NewScreen.tsx' to whatever you want.\"",
 	"pub": "expo publish",
 	"build": "eas build --platform ios",
-	"appstore": "eas submit --latest --platform ios",
-	"v+": "yarn version --patch",
-	"v++": "yarn version --minor"
+	"submit": "eas submit --platform ios --latest",
 
 ### Installing packages
 
@@ -637,6 +635,18 @@ https://github.com/react-native-maps/react-native-maps
 - [Overlay](https://github.com/react-native-maps/react-native-maps/blob/master/docs/overlay.md)
 - [Heatmap](https://github.com/react-native-maps/react-native-maps/blob/master/docs/heatmap.md)
 - [Geojson](https://github.com/react-native-maps/react-native-maps/blob/master/docs/geojson.md)
+
+### 3D, VR, AR
+
+3D:
+
+- https://github.com/pmndrs/react-three-fiber
+
+AR:
+
+- https://arvrjourney.com/augmented-reality-with-react-native-15219f36e3f2
+- https://github.com/expo/expo-three-ar
+- https://github.com/pmndrs/react-xr → https://github.com/pmndrs/react-xr/discussions/156
 
 ### Styles
 

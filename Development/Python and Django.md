@@ -4,22 +4,28 @@
 - https://docs.python.org/3/
 - https://www.w3schools.com/python/
 
-## Switch versions
+
+## Multiple versions and environments
+
 
 ## Package management: PIP and Anaconda
 
-	pip install torch torchvision
-	
-	# To ensure Python 3:
-	pip3 install torch torchvision
+Find packages: https://pypi.org/
 
-## Import modules
+    pip install torch torchvision
+    
+    # To ensure Python 3:
+    pip3 install torch torchvision
+
+
+## The Python language
+
+### Import modules
 
     import math
-
     from math import pi
 
-## Data types
+### Data types
 
 - Text: str
 - Number: int, float, complex
@@ -30,7 +36,7 @@
 - Binary: bytes, bytearray, memoryview
 - None: NoneType
 
-## Functions
+### Functions
 
     def my_function():
       print("Hello from a function")
@@ -42,14 +48,24 @@ String function: `f'This is dynamic: {expression}'`
 
 Named parameters when calling: `my_function(param1 = 100)`
 
-## Classes
+### Classes
 
-	class Person:
-	  def __init__(self, name, age):
-	    self.name = name
-	    self.age = age
+    # person = Person(name, age).create()
+    class Person:
+      def __init__(self, name, age):
+        self.name = name
+        self.age = age
 
-## If/else
+      # person.an_instance_method(param)
+      def an_instance_method(param):
+        # code...
+
+      # Person.a_static_method()
+      @staticmethod
+      def a_static_method(param):
+        # code...
+
+### If/else
 
     if b > a:
       print("b is greater than a")
@@ -58,14 +74,20 @@ Named parameters when calling: `my_function(param1 = 100)`
     else:
       print("a is greater than b")
 
-## Try/catch
+### Try/catch
 
-		try:
-		  await my_function()
-		except Exception as error:
-		  return json({ error: error })
+    try:
+      await my_function()
+    except Exception as error:
+      return json({ error: error })
 
-## Promises and Async/Await
+### Promises and Async/Await
 
     async def ping_local():
       return await ping_server('192.168.1.1')
+
+
+## Web frameworks
+
+- [Django REST Framework](https://www.django-rest-framework.org/): big and complete
+- [Flask](https://flask.palletsprojects.com/): smaller

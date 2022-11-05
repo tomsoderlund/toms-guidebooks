@@ -122,4 +122,13 @@ Neural network: multiply, add them up, replace negatives with zeroes.
 - **Semantic search**: NLP for transforming search phrase into vectors, then vector search for matching their proximity in vector space with other items. These vectors are usually called **embeddings**.
 - **Embeddings**: special type of vector that is produced as a result of running an input through an ML model - usually a neural network.
 - **Dense retrieval**: using embeddings to search.
-s
+
+## Deployment
+
+There are two main use cases for deploying ML code: **training** and **inference**.
+
+For inference, there are three options:
+
+1. Use your own cloud compute/GPU and have your backend use that.
+2. SageMaker Inference service and ping that from your backend.
+3. GCP’s ML Inference service and ping that from your backend.
