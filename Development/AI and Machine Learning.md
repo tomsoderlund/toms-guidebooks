@@ -99,9 +99,9 @@ Libraries:
 
 Collections of models:
 
-- [HuggingFace](https://huggingface.co/): “GitHub for AI models”
-- [EleutherAI](https://www.eleuther.ai/): open source AI models
-- [OpenAI](https://openai.com/): private/closed source – GPT-3, DALL·E
+- [HuggingFace](https://huggingface.co/models): collection of models, “GitHub for AI models”
+- [EleutherAI](https://www.eleuther.ai/): creator of open source AI models
+- [OpenAI](https://openai.com/): creator of private/closed source – GPT-3, DALL·E
 
 Some models:
 
