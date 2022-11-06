@@ -35,40 +35,30 @@ Broadly speaking, we today use Machine Learning (ML) for:
 
 ## Tools
 
-- Python is the common programming language for AI/ML.
-- ⚠️ “Notebook software” for writing/documenting/sharing ML code – essentially word processors with embedded (Python) code blocks. Uses `.ipynb` files, which are JSON structures containing Python code blocks and Markdown text blocks:
-	- [Jupyter Notebook](https://jupyter.org/): the original (see below)
-	- [VS Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) has built in Jupyter support
-	- [Google Colab](https://colab.research.google.com/): work with files on Google Drive and GitHub
-	- [Kaggle](https://www.kaggle.com/)
-	- [Gradio](https://gradio.app/) for building UI’s inside notebooks
-	- IPython: interactive Python and Jupiter.
-	- REPL: interactive Python session. Read, Evaluate, Print and Loop.
-- ⚠️ ML code examples:
-	- [HuggingFace Spaces](https://huggingface.co/spaces): discover ML apps
-	- [Kaggle Code](https://www.kaggle.com/code): explore, run, share ML code
-- Frameworks & libraries:
-	- [PyTorch](https://pytorch.org/) – open source machine learning framework
-	- [TensorFlow](https://www.tensorflow.org/) – Google
-	- [JAX](https://jax.readthedocs.io/en/latest/)
-	- [FastAI](https://docs.fast.ai/)
-- Models:
-	- [HuggingFace](https://huggingface.co/): “GitHub for AI models”
-	- [EleutherAI](https://www.eleuther.ai/): open source AI models
-	- [OpenAI](https://openai.com/): private/closed source – GPT-3, DALL·E
-- Datasets:
-	- [Kaggle Datasets](https://www.kaggle.com/datasets)
-	- [Google Dataset Search](https://toolbox.google.com/datasetsearch)
-	- [Google Scholar](https://scholar.google.com/)
-	- [UCI Machine Learning Repository](http://mlr.cs.umass.edu/ml/)
-	- [VisualData](https://www.visualdata.io/)
-	- [CMU Libraries](https://guides.library.cmu.edu/machine-learning/datasets)
-	- [The Big Bad NLP Database](https://datasets.quantumstat.com/)
-  - Lists of datasets:
-	  - [TowardsAI](https://pub.towardsai.net/best-datasets-for-machine-learning-data-science-computer-vision-nlp-ai-c9541058cf4f)
-	  - [Image/video/3D datasets (Yulan Guo)](http://yulanguo.me/dataset.html)
+- [Programming language](#programming-language)
+- [⚠️ Notebook software](#⚠️-notebook-software)
+- [ML code examples](#ml-code-examples)
+- [Frameworks & libraries](#frameworks-&-libraries)
+- [Models](#models)
+- [Datasets](#datasets)
+
+### Programming language
+
+Python is the main programming language for AI/ML.
+
+### ⚠️ Notebook software
+
+For writing/documenting/sharing ML code – essentially word processors with embedded (Python) code blocks. Uses `.ipynb` files, which are JSON structures containing Python code blocks and Markdown text blocks:
+
+- [Jupyter Notebook](https://jupyter.org/): the original (see below)
+- [VS Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) has built in Jupyter support
+- [Google Colab](https://colab.research.google.com/): work with files on Google Drive and GitHub
+- [Kaggle](https://www.kaggle.com/)
+- [Gradio](https://gradio.app/) for building UI’s inside notebooks
+- IPython: interactive Python and Jupiter.
+- REPL: interactive Python session. Read, Evaluate, Print and Loop.
 		
-### Jupyter Notebook
+#### Jupyter Notebook
 
 - Press Tab to get autocompletion suggestions
 - Inside the parentheses of a function, pressing Shift + Tab will display signature and description of the function
@@ -76,7 +66,19 @@ Broadly speaking, we today use Machine Learning (ML) for:
 - `doc([function])` to get documentation page
 - `%debug`: inspect every variable
 
-### PyTorch
+### ML code examples
+
+- [HuggingFace Spaces](https://huggingface.co/spaces): discover ML apps
+- [Kaggle Code](https://www.kaggle.com/code): explore, run, share ML code
+
+### Frameworks & libraries
+
+- [PyTorch](https://pytorch.org/) – open source machine learning framework
+- [TensorFlow](https://www.tensorflow.org/) – Google
+- [JAX](https://jax.readthedocs.io/en/latest/)
+- [FastAI](https://docs.fast.ai/)
+
+#### PyTorch
 
 Libraries:
 
@@ -93,8 +95,30 @@ Libraries:
 
 ### Models
 
+Collections of models:
+
+- [HuggingFace](https://huggingface.co/): “GitHub for AI models”
+- [EleutherAI](https://www.eleuther.ai/): open source AI models
+- [OpenAI](https://openai.com/): private/closed source – GPT-3, DALL·E
+
+Some models:
+
 - **GPT-Neo 1.3B**: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
 - **GPT-J 6B**: a transformer model trained using Ben Wang's Mesh Transformer JAX.
+
+### Datasets
+
+- [Kaggle Datasets](https://www.kaggle.com/datasets)
+- [Google Dataset Search](https://toolbox.google.com/datasetsearch)
+- [Google Scholar](https://scholar.google.com/)
+- [UCI Machine Learning Repository](http://mlr.cs.umass.edu/ml/)
+- [VisualData](https://www.visualdata.io/)
+- [CMU Libraries](https://guides.library.cmu.edu/machine-learning/datasets)
+- [The Big Bad NLP Database](https://datasets.quantumstat.com/)
+- Lists of datasets:
+  - [TowardsAI](https://pub.towardsai.net/best-datasets-for-machine-learning-data-science-computer-vision-nlp-ai-c9541058cf4f)
+  - [Image/video/3D datasets (Yulan Guo)](http://yulanguo.me/dataset.html)
+
 
 ## Machine Learning Theory
 
