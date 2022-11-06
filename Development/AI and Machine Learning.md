@@ -36,9 +36,9 @@ Broadly speaking, we today use Machine Learning (ML) for:
 ## Tools
 
 - [Programming language](#programming-language)
-- [⚠️ Notebook software](#⚠️-notebook-software)
+- [⚠️ Notebook software](#%EF%B8%8F-notebook-software)
 - [ML code examples](#ml-code-examples)
-- [Frameworks & libraries](#frameworks-&-libraries)
+- [Frameworks & libraries](#frameworks--libraries)
 - [Models](#models)
 - [Datasets](#datasets)
 
