@@ -57,7 +57,7 @@ For writing/documenting/sharing ML code – essentially word processors with emb
 - [Google Colab](https://colab.research.google.com/): work with files on Google Drive and GitHub
 - [Kaggle](https://www.kaggle.com/)
 - [Gradio](https://gradio.app/) for building UI’s inside notebooks
-- IPython: interactive Python and Jupiter.
+- IPython: interactive Python and Jupyter.
 - REPL: interactive Python session. Read, Evaluate, Print and Loop.
 		
 #### Jupyter Notebook
