@@ -1,5 +1,7 @@
 # AI and Machine Learning
 
+⚠️ = extra important resources.
+
 This page: http://SDRLND.ME/ai-ml-github
 
 Tweet: [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
@@ -37,7 +39,7 @@ Broadly speaking, we today use Machine Learning (ML) for:
 
 - [Programming language](#programming-language)
 - [⚠️ Notebook software](#%EF%B8%8F-notebook-software)
-- [ML code examples](#ml-code-examples)
+- [⚠️ ML code examples](#%EF%B8%8F-ml-code-examples)
 - [Frameworks & libraries](#frameworks--libraries)
 - [Models](#models)
 - [Datasets](#datasets)
@@ -66,7 +68,7 @@ For writing/documenting/sharing ML code – essentially word processors with emb
 - `doc([function])` to get documentation page
 - `%debug`: inspect every variable
 
-### ML code examples
+### ⚠️ ML code examples
 
 - [HuggingFace Spaces](https://huggingface.co/spaces): discover ML apps
 - [Kaggle Code](https://www.kaggle.com/code): explore, run, share ML code
