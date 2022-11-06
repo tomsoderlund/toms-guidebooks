@@ -1,6 +1,6 @@
 # AI and Machine Learning
 
-⚠️ = extra important resources.
+⚠️ = extra important resources for beginners.
 
 This page: http://SDRLND.ME/ai-ml-github
 
@@ -105,8 +105,20 @@ Collections of models:
 
 Some models:
 
-- **GPT-Neo 1.3B**: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
-- **GPT-J 6B**: a transformer model trained using Ben Wang's Mesh Transformer JAX.
+- Text-to-Text:
+	- GPT-3: OpenAI
+	- GPT-Neo 1.3B: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
+	- GPT-J 6B: a transformer model trained using Ben Wang's Mesh Transformer JAX.
+- Text-to-Image:
+	- DALL·E: OpenAI
+	- Midjourney
+	- Stable Diffusion: Stability AI
+	- Imagen: Google
+	- Parti: Google
+- Text-to-Video:
+	- Imagen Video: Google
+	- Phenaki: Google
+	- Make-a-Video: Meta
 
 ### Datasets
 
