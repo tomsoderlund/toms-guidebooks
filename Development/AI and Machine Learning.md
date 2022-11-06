@@ -42,6 +42,8 @@ Broadly speaking, we today use Machine Learning (ML) for:
 	- [Google Colab](https://colab.research.google.com/): work with files on Google Drive and GitHub
 	- [Kaggle](https://www.kaggle.com/)
 	- [Gradio](https://gradio.app/) for building UI’s inside notebooks
+	- IPython: interactive Python and Jupiter.
+	- REPL: interactive Python session. Read, Evaluate, Print and Loop.
 - ⚠️ ML code examples:
 	- [HuggingFace Spaces](https://huggingface.co/spaces): discover ML apps
 	- [Kaggle Code](https://www.kaggle.com/code): explore, run, share ML code
@@ -54,7 +56,18 @@ Broadly speaking, we today use Machine Learning (ML) for:
 	- [HuggingFace](https://huggingface.co/): “GitHub for AI models”
 	- [EleutherAI](https://www.eleuther.ai/): open source AI models
 	- [OpenAI](https://openai.com/): private/closed source – GPT-3, DALL·E
-
+- Datasets:
+	- [Kaggle Datasets](https://www.kaggle.com/datasets)
+	- [Google Dataset Search](https://toolbox.google.com/datasetsearch)
+	- [Google Scholar](https://scholar.google.com/)
+	- [UCI Machine Learning Repository](http://mlr.cs.umass.edu/ml/)
+	- [VisualData](https://www.visualdata.io/)
+	- [CMU Libraries](https://guides.library.cmu.edu/machine-learning/datasets)
+	- [The Big Bad NLP Database](https://datasets.quantumstat.com/)
+  - Lists of datasets:
+	  - [TowardsAI](https://pub.towardsai.net/best-datasets-for-machine-learning-data-science-computer-vision-nlp-ai-c9541058cf4f)
+	  - [Image/video/3D datasets (Yulan Guo)](http://yulanguo.me/dataset.html)
+		
 ### Jupyter Notebook
 
 - Press Tab to get autocompletion suggestions
@@ -63,10 +76,25 @@ Broadly speaking, we today use Machine Learning (ML) for:
 - `doc([function])` to get documentation page
 - `%debug`: inspect every variable
 
+### PyTorch
+
+Libraries:
+
+- **torch**: main library
+	- [Introductory neural network tutorial](https://pytorch.org/tutorials/beginner/basics/intro.html)
+- **torchaudio**: sound
+- **torchtext**: text/NLP
+- **torchvision**: images and video
+- **torcharrow**: data preprocessing in deep learning
+- **TorchData**: data loading primitives for easily constructing flexible and performant data pipelines
+- **TorchRec**: recommendations
+- **TorchServe**: server
+- **TorchX**: job launcher for PyTorch applications
+
 ### Models
 
-- GPT-Neo 1.3B: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
-- GPT-J 6B: a transformer model trained using Ben Wang's Mesh Transformer JAX.
+- **GPT-Neo 1.3B**: a transformer model designed using EleutherAI’s replication of the GPT-3 architecture.
+- **GPT-J 6B**: a transformer model trained using Ben Wang's Mesh Transformer JAX.
 
 ## Machine Learning Theory
 
@@ -79,26 +107,33 @@ Machine learning algorithm:
 
 ### Terminology
 
-- **Matrix**: rows × columns, e.g. 150×4
-- **Features**: inputs, `x₁`, `x₂`, etc
-- **Label**: `y`, what we want to predict
-- **Example**: one piece of data (features, labeled or unlabeled)
-- **Model**: what does the predicting
-- **Slope**: `m`
-- **Weight**: `w`
-- **Bias**: `b`
-- **Loss**: mismatch with model, *mean square error*
-- **Learning rate**: granularity when training model
-- **Batch**: the set of examples used in one training iteration
-- **Epoch**: number of passes of the entire training dataset the machine learning algorithm has completed
-- **Gradient Descent**: algorithm for finding minima
-- **Hyperparameters**: the knobs that programmers tweak in machine learning algorithms
-- **Deep learning**: artificial neural networks with representation learning
+- **Model**: what does the actual predicting; a file that has been trained to recognize certain types of patterns.
+- **Features**: model inputs, `x₁`, `x₂`, etc.
+- **Label**: model output, `y`, what we want to predict.
+- **Example**: one piece of data (features, labeled or unlabeled).
+- **Dataset**: a whole collection of examples.
+- **Batch**: the set of examples used in one training iteration.
+- **Epoch**: number of passes of the entire training dataset the machine learning algorithm has completed.
+- **Vector**: an array of numbers.
+- **Matrix**: a 2D array of numbers, rows × columns, e.g. 150×4.
+- **Tensor**: a specialized data structure that are very similar to arrays and matrices. A tensor interacts with other entities in a system and changes its values when other values change.
+- **Slope**: `m`, angle of the line in linear regression.
+- **Weight**: `w`, the importance of a feature
+- **Bias**: `b`, how well a model matches the training set.
+- **Loss**: mismatch with model, *mean square error*.
+- **Learning rate**: granularity when training a model
+- **Gradient descent**: algorithm for finding minima.
+- **Hyperparameters**: the “knobs” that programmers tweak in machine learning algorithms.
+- **Deep learning**: artificial neural networks with representation learning.
 - **Data augmentation**: creating random variations of our input data so they appear different, but do not actually change the meaning of the data. E.g. image rotation and flipping.
 - **Generalization**: a model’s ability to adapt properly to new, previously unseen data.
 - **Feature engineering**: transform inputs so they can be used in model.
-- **IPython**: 
-- **REPL**: 
+- **One-hot encoding**: as 1 or 0.
+- **Binning**: put category values into “buckets”.
+- **Feature crosses**: combine features to create synthetic features.
+- **Decision boundaries**: a surface that separates data points belonging to different class labels.
+- **Regularization**: reducing complexity of model (e.g. L2).
+- **Logistic regression**: output is a *probability* (0.0-1.0).
 
 ### Learning types
 
@@ -110,7 +145,9 @@ Also: feature learning/representation learning
 
 ### Neural networks
 
-Neural network: multiply, add them up, replace negatives with zeroes.
+Neural networks definitely shine where you have data that is not easily transformable into features – for example images used to be hard to transform into good features.
+
+NN math, simplified: multiply, add them up, replace negatives with zeroes.
 
 - **CNN: Convolutional Neural Network**, a deep learning neural network sketched for processing structured arrays of data such as portrayals.
 - **RNN: Recurrent Neural Network**, a class of artificial neural networks where connections between nodes can create a cycle, allowing output from some nodes to affect subsequent input to the same nodes.

@@ -7,6 +7,14 @@
 
 ## Multiple versions and environments
 
+    # Create a virtual environment to isolate our package dependencies locally:
+    python3 - mvenv my-new-env
+
+    # Activate it
+    source my-new-env/bin/activate  # On Windows use `my-new-env\Scripts\activate`
+
+    # Deactivate when you’re done:
+    deactivate
 
 ## Package management: PIP and Anaconda
 
@@ -17,6 +25,11 @@ Find packages: https://pypi.org/
     # To ensure Python 3:
     pip3 install torch torchvision
 
+## Interactive environment
+
+    python
+
+Press Ctrl+D to quit (Windows: Ctrl+Z)
 
 ## The Python language
 
@@ -65,7 +78,19 @@ Named parameters when calling: `my_function(param1 = 100)`
       def a_static_method(param):
         # code...
 
-### If/else
+Subclassing:
+
+    class Person(species.Human):
+
+### Printing to console
+
+    print("Hello World!")
+
+### Formatting strings
+
+    vat=f"{round(0.20 * total_amount, 2):2f}"
+
+### Conditionals: If/else
 
     if b > a:
       print("b is greater than a")
@@ -73,6 +98,10 @@ Named parameters when calling: `my_function(param1 = 100)`
       print("a and b are equal")
     else:
       print("a is greater than b")
+
+Variables:
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 
 ### Try/catch
 

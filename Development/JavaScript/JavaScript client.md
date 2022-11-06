@@ -1367,7 +1367,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	container.removeChild(container.childNodes[0])
 
 	// Simple scraper:
-	document.querySelectorAll('h3').forEach(e => console.log(e.innerText))
+	document.querySelectorAll('.my-class > a').forEach(e => console.log(`${e.innerText}: ${e.getAttribute('href')}`))
 	// Format multiple
 	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
 
