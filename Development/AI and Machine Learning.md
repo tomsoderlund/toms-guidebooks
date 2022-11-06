@@ -6,12 +6,15 @@ This page: http://SDRLND.ME/ai-ml-github
 
 Tweet: [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
 
+Thank you to [@spimescape](https://twitter.com/spimescape) for mentoring me!
+
 ## Usecases
 
 Broadly speaking, we today use Machine Learning (ML) for:
 
 1. Classification (spam detection etc)
 2. Generation (text, images etc)
+3. Search
 
 ## Learning resources
 
