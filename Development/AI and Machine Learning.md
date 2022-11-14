@@ -12,27 +12,30 @@ Thank you to [@spimescape](https://twitter.com/spimescape) for mentoring me!
 
 Broadly speaking, we today use Machine Learning (ML) for:
 
-1. Classification (spam detection etc)
+1. Classification (e.g. spam detection, objects in images)
 2. Generation (text, images etc)
 3. Search
+4. Recommendations (e.g. music, film, products)
 
 ## Learning resources
 
-⚠️ Two great courses for ML beginners: [Google’s (theoretical)](https://developers.google.com/machine-learning/crash-course/ml-intro) and [FastAI’s (practical)](https://course.fast.ai/).
+⚠️ Two great free courses for ML beginners: [Google’s (theoretical)](https://developers.google.com/machine-learning/crash-course/ml-intro) and [FastAI’s (practical)](https://course.fast.ai/).
 
-- Google:
-	- https://developers.google.com/machine-learning/crash-course/ml-intro
-	- https://developers.google.com/machine-learning/problem-framing/problem
-	- Playground: https://playground.tensorflow.org/
-- [FastAI](https://course.fast.ai/)
-- [Kaggle](https://www.kaggle.com/learn/intro-to-machine-learning)
+- [Google ML Foundational Courses](https://developers.google.com/machine-learning)
+	- ⚠️ [ML Crash Course with TensorFlow APIs](https://developers.google.com/machine-learning/crash-course/ml-intro)
+	- [Problem Framing](https://developers.google.com/machine-learning/problem-framing/problem)
+	- [TensorFlow Playground](https://playground.tensorflow.org/)
+- ⚠️ [FastAI: “Practical Deep Learning for Coders”](https://course.fast.ai/)
+	- [YouTube video lessons](https://www.youtube.com/playlist?list=PLfYUBJiXbdtSvpQjSnJJ_PmDQB_VyT5iU)
+	- Book: “Deep Learning for Coders with Fastai and PyTorch: AI Applications Without a PhD”: [free on GitHub](https://github.com/fastai/fastbook) or [on Amazon](https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527)
+- [Kaggle course “Intro to Machine Learning”](https://www.kaggle.com/learn/intro-to-machine-learning)
 - O’Reilly:
-	- https://learning.oreilly.com/playlists/907fa947-4eba-4c1c-bcbd-9cc5167568d7/
-	- https://learning.oreilly.com/courses/dataml-engineer/
-	- https://learning.oreilly.com/library/view/python-machine-learning/9781789955750/Text/Chapter_1.xhtml#_idParaDest-23
-- [VS Code](https://code.visualstudio.com/docs/datascience/data-science-tutorial)
-- W3schools Python: https://www.w3schools.com/python/python_ml_getting_started.asp
-- https://twitter.com/1littlecoder/status/1580555066791972866
+	- Courses: [Data/ML engineer](https://learning.oreilly.com/courses/dataml-engineer/)
+	- Book: [“Python Machine Learning”](https://learning.oreilly.com/library/view/python-machine-learning/9781789955750/Text/Chapter_1.xhtml#_idParaDest-23)
+	- [Playlist](https://learning.oreilly.com/playlists/907fa947-4eba-4c1c-bcbd-9cc5167568d7/)
+- [VS Code: “Data Science in VS Code tutorial”](https://code.visualstudio.com/docs/datascience/data-science-tutorial)
+- [W3schools Python course](https://www.w3schools.com/python/python_ml_getting_started.asp)
+- [“Build your AI Product MVP in less than 24 hours”](https://twitter.com/1littlecoder/status/1580555066791972866)
 
 ## People
 

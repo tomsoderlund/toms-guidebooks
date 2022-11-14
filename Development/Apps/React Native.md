@@ -266,7 +266,7 @@ https://reactnativeelements.com/docs/button/
 
 ## Development mode
 
-`__DEV__` variable
+`__DEV__` variable: true/false
 
 
 ## Modules

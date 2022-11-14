@@ -42,3 +42,21 @@ https://www.fundedbyme.com/en/campaign/2988/invest-in-fundedbyme/?utm_source=Tom
 Youtube links - specific time:
 
 http://www.youtube.com/watch?v=d5ZNKwAp9ww&t=0m45s
+
+## Mixpanel
+
+### Reserved Properties for User Profiles
+
+- $distinct_id: unique user ID
+- $first_name, $last_name, $name
+- Avatar ($avatar)
+- Email ($email)
+- Phone ($phone)
+- $transactions
+- Created ($created)
+- City ($city)
+- Region ($region)
+- Country ($country_code)
+- Timezone ($timezone)
+- Unsubscribed ($unsubscribed)
+- Bucket ($bucket and bucket)
