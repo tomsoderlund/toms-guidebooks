@@ -208,8 +208,20 @@ NN math, simplified: multiply, add them up, replace negatives with zeroes.
 
 There are two main use cases for deploying ML code: **training** and **inference**.
 
-For inference, there are three options:
+For inference, there are several options:
 
 1. Use your own cloud compute/GPU and have your backend use that.
-2. SageMaker Inference service and ping that from your backend.
-3. GCP’s ML Inference service and ping that from your backend.
+2. AWS SageMaker Inference service and ping that from your backend.
+3. GCP’s ML Inference service (Vertex AI) and ping that from your backend.
+4. HuggingFace Inference Endpoints: https://huggingface.co/inference-endpoints
+
+### Deploying on GCP AppEngine
+
+- Create `app.yaml`
+
+		gcloud config set project [app-slug]
+		gcloud app deploy app.yaml
+		gcloud config set project makamap
+		gcloud app browse
+		pip freeze > requirements.txt
+	

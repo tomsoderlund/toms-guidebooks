@@ -1,3 +1,18 @@
+# Google Cloud Platform (GCP)
+
+## App Engine
+
+Create `app.yaml`:
+
+    runtime: python39
+    entrypoint: gunicorn -b main:app
+
+CLI:
+
+    gcloud config set project [app-slug]
+    gcloud app deploy app.yaml
+    gcloud app browse
+
 ## Google Cloud Translation API
 
     gcloud iam service-accounts create \
