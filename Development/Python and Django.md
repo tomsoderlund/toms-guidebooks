@@ -57,8 +57,8 @@ Type `quit()` or press Ctrl+D to quit (Windows: Ctrl+Z)
 - Boolean: `bool`
 - Sequence:
   - `list` (“array”)
-  - `tuple` e.g. ("apple", "banana", "cherry")
-  - `range` e.g. `range(6)` or `range(3, 6)`
+  - `tuple` e.g. `("apple", "banana", "cherry")`
+  - `range` e.g. `range(6)` or `range(0, 10, 2)`
 - Mapping: `dict` e.g. `{"name": "value"}`
 - Set: `set` e.g. `{"string", 123, true}`, `frozenset`
 - Binary: `bytes` e.g. `b"Hello"`, `bytearray`, `memoryview`
