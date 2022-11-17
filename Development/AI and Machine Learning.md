@@ -52,7 +52,7 @@ Broadly speaking, we today use Machine Learning (ML) for:
 
 ### Programming language
 
-Python is the main programming language for AI/ML.
+[Python](./Python%20and%20Django.md) is the main programming language for AI/ML.
 
 ### ⚠️ Notebook software
 
