@@ -52,17 +52,22 @@ Type `quit()` or press Ctrl+D to quit (Windows: Ctrl+Z)
 
 ### Data types
 
-- Text: `str`
-- Number: `int`, `float`, `complex`
-- Boolean: `bool`
-- Sequence:
-  - `list` (“array”)
-  - `tuple` e.g. `("apple", "banana", "cherry")`
-  - `range` e.g. `range(6)` or `range(0, 10, 2)`
-- Mapping: `dict` e.g. `{"name": "value"}`
-- Set: `set` e.g. `{"string", 123, true}`, `frozenset`
-- Binary: `bytes` e.g. `b"Hello"`, `bytearray`, `memoryview`
-- NoneType: `None`
+- Text: **str**
+- Number: **int**, **float**, **complex**
+- Boolean: **bool**
+- Collections:
+  - **list** (“array”) e.g. `["apple", "banana", "cherry"]` (ordered, changeable)
+  - **tuple** e.g. `("apple", "banana", "cherry")` (ordered, unchangeable)
+  - **dict** (“object/collection”) e.g. `{"name": "value"}` (ordered from v3.7, changeable)
+    - Merge dicts with `new_dict = old_dict | new_values`
+  - **set** e.g. `{"string", 123, true}` (unordered, unindexed, can add/remove but not change items)
+  - **frozenset**
+  - **range** e.g. `range(6)` or `range(0, 10, 2)`
+- Binary:
+  - **bytes** e.g. `b"Hello"`
+  - **bytearray**
+  - **memoryview**
+- NoneType: **None**
 
 Check type with `type(variable)`
 
@@ -143,6 +148,10 @@ Ternary expression:
     while i < 6:
       print(i)
       i += 1
+
+### Map/reduce
+
+    new_list = map(lambda n: n + 10, my_list)
 
 ### Error handling
 
