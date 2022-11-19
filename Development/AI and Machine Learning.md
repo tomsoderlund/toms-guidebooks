@@ -2,9 +2,9 @@
 
 ⚠️ = extra important resources for beginners.
 
-This page: http://SDRLND.ME/ai-ml-github
-
-Tweet: [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
+- This page: http://SDRLND.ME/ai-ml-github
+- My own AI/ML resources: https://www.tomsoderlund.com/ai/ai-resources
+- Tweet: [_“Ok, I feel I need to learn AI/ML now.”_](https://twitter.com/tomsoderlund/status/1583894481408905216)
 
 Thank you to [@spimescape](https://twitter.com/spimescape) for mentoring me!
 
