@@ -659,6 +659,10 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	lastChars = bigString.substr(bigString.length - n) // or bigString.slice(n)
 
 	upUntilString = bigString.substring(0, bigString.indexOf('_')) // up until '_'
+	const upUntilStrings = (str, arrayOfStoppers, maxLength = 200) => str.substring(0, arrayOfStoppers.reduce((result, stopStr) => {
+		const stopStrPos = Math.min(result, str.indexOf(stopStr))
+		return stopStrPos > 0 ? stopStrPos : result
+	}, maxLength))
 	upUntilStringOrAll = (bigString.indexOf('_') !== -1) ? bigString.substring(0,bigString.indexOf('_')) : bigString
 	upUntilLastString = bigString.substring(0, bigString.lastIndexOf('/'))
 	fromStringToEnd1 = bigString.substring(bigString.indexOf('_')+1, bigString.length) // Note: first index of, can use lastIndexOf too
@@ -1831,9 +1835,12 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	[1, 2, 3].every((n, index, array) => n < 2) // true if all matches
 	[1, 2, 3].some((n, index, array) => n < 2) // true if some matches
 	array.sort((a, b) => parseFloat(a.property) - parseFloat(b.property))
-	const sortByNumber = (array, property, descending = false) => array.sort((a, b) => parseFloat(a[property]) + (descending ? 1 : -1) * parseFloat(b[property]))
 	const sortByNumberAscending = (array, property) => array.sort((a, b) => parseFloat(a[property]) - parseFloat(b[property]))
-	const sortByString = (array, property) => array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0))
+	const sortByNumberDescending = (array, property) => array.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]))
+	const sortByString = (array, property, descending = false) => descending
+		? array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? 1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? -1 : 0))
+		: array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0))
+	const sortByStringAscending = (array, property) => array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0))
 
 	Object.keys(obj)
 	Object.values(obj)

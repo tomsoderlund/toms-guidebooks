@@ -614,6 +614,32 @@ https://github.com/remarkjs/react-markdown
       # Hello, *world*!
     </ReactMarkdown>
 
+Parse Markdown:
+
+    import { marked } from 'marked'
+    import matter from 'gray-matter'
+
+    export const getPostDetails = async function (slug) {
+      const fullPath = path.join(BLOG_FOLDER, `${slug}.md`)
+      const fileContents = fs.readFileSync(fullPath, 'utf8')
+      // Use gray-matter to parse the post metadata section
+      const article = matter(fileContents)
+      // Use marked to convert markdown into HTML string
+      const contentHtml = marked.parse(article.content)
+      // Combine the data with the slug and contentHtml
+      return {
+        slug,
+        contentHtml,
+        ...article.data,
+        ID: slug,
+        titleOrExcerpt: article.data.title,
+        category: article.data.categories?.[0] || 'articles',
+        dateFormatted: article.data.date
+        // excerpt
+        // thumbnailImageUrl
+      }
+    }
+
 MDX:
 
     yarn add @mdx-js/loader @next/mdx
