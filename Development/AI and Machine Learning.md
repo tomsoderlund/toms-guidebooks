@@ -83,6 +83,7 @@ For writing/documenting/sharing ML code – essentially word processors with emb
 
 - [PyTorch](https://pytorch.org/) – open source machine learning framework
 - [TensorFlow](https://www.tensorflow.org/) – Google
+  - [Keras](https://keras.io/) for deep learning
 - [JAX](https://jax.readthedocs.io/en/latest/)
 - [FastAI](https://docs.fast.ai/)
 
