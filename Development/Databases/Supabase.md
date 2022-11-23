@@ -81,19 +81,21 @@ Note: `data` will contain an array of the inserted rows.
 	  .from('person')
 	  .update({ other_column: 'otherValue' })
     .match({ id: 4 })
+		.select()
 
 ### “Upsert“ (update or insert) rows
 
 	const { data, error } = await supabase
 	  .from('users')
 	  .upsert({ username: 'supabot' }, { onConflict: 'username' })
+		.select()
 
 ### Delete rows
 
 	const { data, error } = await supabase
 	  .from('event')
 	  .delete()
-	  .lt('starts_at', lastTimeAsISO)
+	  .eq('id', eventId)
 
 ### Listen to real-time changes in database
 

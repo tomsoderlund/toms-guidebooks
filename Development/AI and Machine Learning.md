@@ -8,11 +8,11 @@
 
 Thank you to [@spimescape](https://twitter.com/spimescape) for mentoring me!
 
-## Usecases
+## Use cases
 
 Broadly speaking, we today use Machine Learning (ML) for:
 
-1. Classification (e.g. spam detection, objects/people in images)
+1. Classification (e.g. spam detection, find objects/people in images)
 2. Generation/conversion (e.g. text, images, video, audio etc)
 3. Search
 4. Recommendations (e.g. music, film, products)

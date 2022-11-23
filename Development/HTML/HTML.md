@@ -430,6 +430,12 @@ autocomplete="email"
 - url
 - photo
 
+### enterkeyhint (mobile/phone action button)
+
+    enterkeyhint="send"
+
+Options: enter, done, go, next, previous, search, send
+
 ## FORM FIELDS
 
 http://www.w3schools.com/html/html_forms.asp

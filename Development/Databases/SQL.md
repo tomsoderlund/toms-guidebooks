@@ -298,7 +298,7 @@ Example:
 
 Simpler concatenation
 
-	SELECT CONCAT('SQL', ' is', ' fun!' );
+	SELECT CONCAT('SQL', ' is', ' fun!' ) as longer_string;
 
 ## Create - Insert
 
