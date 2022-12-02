@@ -691,3 +691,17 @@ Make sure to also follow the [hosting guide for SSG-only apps](https://docs.ampl
 Deploy a Next.js application on AWS using CDK & Fargate: https://dev.to/zoun/deploy-a-next-js-application-on-aws-using-cdk-fargate-2dnh
 
 Next.js can be deployed to any hosting provider that supports Docker containers: https://nextjs.org/docs/deployment#docker-image
+
+
+## Migrate from Create-React-App (CRA)
+
+- CRA: https://nextjs.org/docs/migrating/from-create-react-app
+- react-router: https://nextjs.org/docs/migrating/from-react-router
+
+Commands:
+
+    yarn remove react-scripts react-router-dom react react-dom; yarn add next react react-dom
+    echo '{\n  "framework": "nextjs"\n}' > vercel.json
+    echo '{\n  "compilerOptions": {\n    "baseUrl": "."\n  }\n}' > jsconfig.json
+    mkdir pages
+    git mv src/App.js pages/_app.js

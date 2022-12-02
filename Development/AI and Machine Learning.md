@@ -198,6 +198,10 @@ NN math, simplified: multiply, add them up, replace negatives with zeroes.
 - **RNN: Recurrent Neural Network**, a class of artificial neural networks where connections between nodes can create a cycle, allowing output from some nodes to affect subsequent input to the same nodes.
 - **Transformer**: is a deep learning model that adopts the mechanism of self-attention, differentially weighting the significance of each part of the input data. It is used primarily in the fields of natural language processing (NLP) and computer vision (CV).
 
+### Text processing with Large Language Models (LLM’s)
+
+- **NER:** Named Entity Recognition
+
 ### Vector search and Semantic search
 
 - **Vector search**: matching search key’s vectors’ proximity in vector space with other items.

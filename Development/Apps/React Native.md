@@ -621,6 +621,59 @@ Example `.github/workflows/production.yml`:
 
 ## Components and Libraries
 
+### Open web links
+
+	import * as WebBrowser from 'expo-web-browser'
+
+	await WebBrowser.openBrowserAsync(url)
+
+### Animations
+
+React Native provides two complementary animation systems:
+
+1. `Animated` for granular and interactive control of specific values
+2. `LayoutAnimation` for animated global layout transactions
+
+`Animated` example:
+
+	// From: https://reactnative.dev/docs/animations
+	import React, { useRef, useEffect } from 'react'
+	import { Animated } from 'react-native'
+	
+	interface AnimationFadeInProps {
+	  duration?: number
+	  children: React.ReactNode
+	  style?: any
+	}
+	
+	const AnimationFadeIn = ({ duration = 2500, children, style }: AnimationFadeInProps): React.ReactElement => {
+	  const fadeAnim = useRef(new Animated.Value(0)).current // Initial value for opacity: 0
+	
+	  useEffect(() => {
+	    Animated.timing(
+	      fadeAnim,
+	      {
+	        toValue: 1,
+	        duration
+	      }
+	    ).start()
+	  }, [fadeAnim])
+	
+	  return (
+	    <Animated.View // Special animatable View
+	      style={{
+	        ...style,
+	        opacity: fadeAnim // Bind opacity to animated value
+	      }}
+	    >
+	      {children}
+	    </Animated.View>
+	  )
+	}
+	
+	export default AnimationFadeIn
+
+
 ### Maps: react-native-maps
 
 https://github.com/react-native-maps/react-native-maps

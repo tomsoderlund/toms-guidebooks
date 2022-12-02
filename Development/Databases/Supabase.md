@@ -50,8 +50,8 @@ Note: `JOIN`s are done automatically, no need to specify `category_id` below:
 	.like('column', '%CaseSensitive%')
 	.ilike('column', '%CaseInsensitive%')
 	.in('column', ['Array', 'Values'])
-	.cs('array_column', ['array', 'contains'])
-	.cd('array_column', ['contained', 'by'])
+
+More filters: https://supabase.com/docs/reference/javascript/using-filters
 
 #### Sorting
 
@@ -162,7 +162,7 @@ https://geoexamples.com/svelte/2021/07/18/svelte-supabase-maps.html/
 
 	INSERT INTO place (name, coordinates) VALUES ('Test', ST_SetSRID(ST_MakePoint(59.32045, 18.06914), 4326));
 
-	UPDATE place SET coordinates=ST_SetSRID(ST_MakePoint(59.32045, 18.06914), 4326);
+	UPDATE place SET coordinates=ST_SetSRID(ST_MakePoint(59.32045, 18.06914), 4326) WHERE id = 123;
 
 #### Spatial queries
 
