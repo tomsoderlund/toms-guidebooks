@@ -1,4 +1,4 @@
-# Python and Django
+# Python
 
 - https://www.python.org/
 - https://docs.python.org/3/
