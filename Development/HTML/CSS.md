@@ -561,6 +561,11 @@ Code:
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 
+Select all text on click:
+
+  user-select: all;
+  cursor: text;
+
 ### Images
 
 .photo {

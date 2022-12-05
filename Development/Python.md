@@ -21,7 +21,7 @@
 
 Find packages: https://pypi.org/
 
-    pip install torch torchvision
+    pip3 install torch torchvision
     
     # To ensure Python 3:
     pip3 install torch torchvision
@@ -30,15 +30,15 @@ Find packages: https://pypi.org/
 
 Save:
 
-    pip freeze > requirements.txt
+    pip3 freeze > requirements.txt
 
 Install:
 
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
 
 ## Interactive environment
 
-    python
+    python3
 
 Type `quit()` or press Ctrl+D to quit (Windows: Ctrl+Z)
 
@@ -202,7 +202,7 @@ Unit testing libraries in Python such as PyUnit and PyTest
 
 ## Linting and Prettifying Python Code
 
-    pip install black
+    pip3 install black
 
 https://betterprogramming.pub/simple-hacks-to-automate-python-code-beautification-5ad934cf5a29
 
@@ -230,7 +230,7 @@ Create a `app.py`:
 
 Install Flask:
 
-    pip install Flask
+    pip3 install Flask
 
 then run:
 
