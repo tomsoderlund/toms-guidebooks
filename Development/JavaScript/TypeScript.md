@@ -18,51 +18,30 @@ Compile:
 
 ## Organize your project
 
+Example:
+
     types/global.d.ts
+    types/supabase.ts
+
+`yarn api` with `openapi-typescript`:
+
+    "api": "eval $(grep '^NEXT_PUBLIC_SUPABASE_URL' .env.local) && eval $(grep '^NEXT_PUBLIC_SUPABASE_API_KEY' .env.local) && npx openapi-typescript ${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/?apikey=${NEXT_PUBLIC_SUPABASE_API_KEY} --output types/supabase.ts",
 
 
-## Types
-
-- boolean
-- number / bigint
-- string
-- tuple
-- enum
-- Array: `Array<string>` same as `string[]`. `let list: number[] = [1, 2, 3]`
-- object: see also `Record<string, string>`. Not number, string, boolean, bigint, symbol, null, or undefined.
-- function: `(param: string) => void`
-- symbol
-- void
-- any / unknown
-- null / undefined
-- never
-- Date
-- AND/Combined: Human & Customer
-- OR: string | null
-
-### enum
-
-    enum Color { Red, Green, Blue }
-    let c: Color = Color.Green
-
-    enum LetterNumber {
-      A = 1,
-      B = 2,
-      C = 3
-    }
-    let n: LetterNumber = LetterNumber.B
-
-### tuple
-
-    let order: [string, number] = ['apple', 2]
-
-### type
+## Types and interfaces
 
 `type` vs `interface` vs `class`:
 
 Always `interface`, except for: tuples, unions, mapped types, function types, overloading functions.
 
 See https://stackoverflow.com/a/65948871 and https://javascript.plainenglish.io/when-to-best-use-type-class-or-interface-in-typescript-73bf66de19e9
+
+### type
+
+    type Order = {
+      product: string
+      amount: number
+    }
 
 ### interface
 
@@ -106,7 +85,7 @@ Interface as Array:
 
 #### Partial/optional
 
-    export const AppContext = React.createContext<Partial<ContextProps>>({})
+    export const AppContext = `React.createContext`<Partial<ContextProps>>({})
 
 Pick:
 
@@ -122,6 +101,42 @@ Extend:
       username?: string
       user_image_url?: string
     }
+
+
+## Data types
+
+- boolean
+- number / bigint
+- string
+- tuple
+- enum
+- Array: `Array<string>` same as `string[]`. `let list: number[] = [1, 2, 3]`
+- object: see also `Record<string, string>`. Not number, string, boolean, bigint, symbol, null, or undefined.
+- function: `(param: string) => void`
+- symbol
+- void
+- any / unknown
+- null / undefined
+- never
+- Date
+- AND/Combined: Human & Customer
+- OR: string | null
+
+### enum
+
+    enum Color { Red, Green, Blue }
+    let c: Color = Color.Green
+
+    enum LetterNumber {
+      A = 1,
+      B = 2,
+      C = 3
+    }
+    let n: LetterNumber = LetterNumber.B
+
+### tuple
+
+    let order: [string, number] = ['apple', 2]
 
 ### Functions
 
@@ -143,7 +158,7 @@ Function in interface:
 
     interface MenuPopoverProps {
       open: boolean;
-      onClose: (event: React.SyntheticEvent) => void;
+      onClose: (event: `React.SyntheticEvent`) => void;
       anchorEl: HTMLFormElement;
     }
 
@@ -269,7 +284,7 @@ Elements:
 
 ### Cast with 'as'
 
-    const elementRef = useRef() as React.MutableRefObject<HTMLButtonElement>
+    const elementRef = useRef() as `React.MutableRefObject`<HTMLButtonElement>
     const elementRef = useRef<HTMLButtonElement>();
     const stringObj = String(myObj)
 
@@ -319,23 +334,23 @@ With `type`-definition:
     }
 
     // Variants on how to declare types:
-    const MyComponent: React.FunctionComponent<MyComponentProps> = ({ name, value }): React.ReactElement => ()
-    const MyComponent: React.FunctionComponent = ({ name, value }: MyComponentProps): React.ReactElement => ()
+    const MyComponent: `React.FunctionComponent`<MyComponentProps> = ({ name, value }): `React.ReactElement` => ()
+    const MyComponent: `React.FunctionComponent` = ({ name, value }: MyComponentProps): `React.ReactElement` => ()
     const MyComponent = ({} : MyComponentProps) => ()
     const MyComponent = ({ name } : { name: string }) => ()
 
 ### Important React types
 
-- component: React.FunctionComponent (alias React.FC)
-- component return value: React.ReactElement
-- element/children: React.ReactNode (not JSX.Element)
+- component: `React.FunctionComponent` (alias `React.FC`)
+- component return value: `React.ReactElement`
+- element/children: `React.ReactNode` (not `JSX.Element`)
 - event:
-  - React.SyntheticEvent
-  - React.MouseEventHandler<HTMLImageElement>
-  - React.ChangeEvent: (event: React.SyntheticEvent) => void
-- event.target: Element or HTMLInputElement
+  - `React.SyntheticEvent`
+  - `React.MouseEventHandler<HTMLImageElement>`
+  - `React.ChangeEvent`: (event: `React.SyntheticEvent`) => void
+- event.target: `Element` or `HTMLInputElement`
 
-Custom HTMLElementEvent:
+Custom `HTMLElementEvent`:
 
     interface HTMLSimpleElementEvent {
       target: {
@@ -346,9 +361,11 @@ Custom HTMLElementEvent:
       }
     }
 
-`React.FormEvent` (form submit): https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
+``React.FormEvent`` (form submit):
 
-https://stackoverflow.com/a/42066698
+- https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
+- https://stackoverflow.com/a/42066698
+
 Usage: `event: HTMLElementEvent<HTMLTextAreaElement>`
 
     type HTMLElementEvent<T extends HTMLElement> = Event & {
@@ -357,7 +374,7 @@ Usage: `event: HTMLElementEvent<HTMLTextAreaElement>`
       // currentTarget: T;
     }
 
-useState:
+`useState`:
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({ sku: '', name: ''})
 
@@ -376,7 +393,7 @@ useState:
       slug?: string | null
     }
 
-    function MyPage ({ title, slug }: MyPageProps): React.ReactElement {
+    function MyPage ({ title, slug }: MyPageProps): `React.ReactElement` {
       return (
         ...
       )
@@ -405,6 +422,7 @@ useState:
     }
 
 ### TypeScript in React Native
+
 
 ## Tools
 
