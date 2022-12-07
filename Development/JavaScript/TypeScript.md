@@ -71,10 +71,6 @@ See https://stackoverflow.com/a/65948871 and https://javascript.plainenglish.io/
       amount: number
     }
 
-    interface OrderCompleted extends Order {
-      completed?: boolean
-    }
-
     const myOrder = { product: 'apple', amount: 2 }
 
     interface CartProps {
@@ -86,6 +82,45 @@ See https://stackoverflow.com/a/65948871 and https://javascript.plainenglish.io/
         before: string | null;
         after: string | null;
       };
+    }
+
+Interface as Array:
+
+    interface MyArrayInterface {
+      0: number,
+      1: (startValue: number) => void
+    }
+
+#### Combining types/interfaces
+
+    interface RentalInputs extends ProductVariant, Customer, Rental {}
+    type RentalInputs = ProductVariant & Customer & Rental
+
+    interface OrderCompleted extends Order {
+      completed?: boolean
+    }
+
+    interface RentalFieldsProps {
+      inputs: ProductVariant & Customer & Rental
+    }
+
+#### Partial/optional
+
+    export const AppContext = React.createContext<Partial<ContextProps>>({})
+
+Pick:
+
+    type TodoInfo = Pick<Todo, 'completed' | 'createdAt'>
+
+Omit:
+
+    type TodoInfo = Omit<Todo, 'completed' | 'createdAt'>
+
+Extend:
+
+    type VideoWithUser = Video & {
+      username?: string
+      user_image_url?: string
     }
 
 ### Functions
@@ -129,44 +164,108 @@ Function in interface:
 - https://www.typescriptlang.org/docs/handbook/dom-manipulation.html#an-exploration-into-the-htmlelement-type
 - https://github.com/microsoft/TypeScript/blob/master/lib/lib.dom.d.ts
 
-    HTMLAllCollection, HTMLAnchorElement, HTMLAppletElement, HTMLAreaElement, HTMLAudioElement, HTMLBaseElement, HTMLBaseFontElement, HTMLBlockElement, HTMLBodyElement, HTMLBodyElementEventMap, HTMLBRElement, HTMLButtonElement, HTMLCanvasElement, HTMLCollection, HTMLCollectionBase, HTMLCollectionOf, HTMLDataElement, HTMLDataListElement, HTMLDetailsElement, HTMLDialogElement, HTMLDirectoryElement, HTMLDivElement, HTMLDListElement, HTMLDocument, HTMLElement, HTMLElementDeprecatedTagNameMap, HTMLElementEventMap, HTMLElementTagNameMap, HTMLEmbedElement, HTMLFieldSetElement, HTMLFontElement, HTMLFormControlsCollection, HTMLFormElement, HTMLFrameElement, HTMLFrameSetElement, HTMLFrameSetElementEventMap, HTMLHeadElement, HTMLHeadingElement, HTMLHRElement, HTMLHtmlElement, HTMLHyperlinkElementUtils, HTMLIframeElement, HTMLIFrameElement, HTMLImageElement, HTMLInputElement, HTMLLabelElement, HTMLLegendElement, HTMLLIElement, HTMLLinkElement, HTMLMapElement, HTMLMarqueeElement, HTMLMarqueeElementEventMap, HTMLMediaElement, HTMLMediaElementEventMap, HTMLMenuElement, HTMLMetaElement, HTMLMeterElement, HTMLModElement, HTMLObjectElement, HTMLOListElement, HTMLOptGroupElement, HTMLOptionElement, HTMLOptionsCollection, HTMLOrSVGElement, HTMLOrSVGImageElement, HTMLOrSVGScriptElement, HTMLOutputElement, HTMLParagraphElement, HTMLParamElement, HTMLPictureElement, HTMLPreElement, HTMLProgressElement, HTMLQuoteElement, HTMLScriptElement, HTMLSelectElement, HTMLSlotElement, HTMLSourceElement, HTMLSpanElement, HTMLStyleElement, HTMLTableCaptionElement, HTMLTableCellElement, HTMLTableColElement, HTMLTableDataCellElement, HTMLTableElement, HTMLTableHeaderCellElement, HTMLTableRowElement, HTMLTableSectionElement, HTMLTemplateElement, HTMLTextAreaElement, HTMLTimeElement, HTMLTitleElement, HTMLTrackElement, HTMLUListElement, HTMLUnknownElement, HTMLVideoElement
+Collections:
+
+- `HTMLAllCollection`
+- `HTMLCollection`
+- `HTMLCollectionBase`
+- `HTMLCollectionOf`
+- `HTMLFormControlsCollection`
+- `HTMLOptionsCollection`
+
+Elements:
+
+- `HTMLAnchorElement`
+- `HTMLAppletElement`
+- `HTMLAreaElement`
+- `HTMLAudioElement`
+- `HTMLBaseElement`
+- `HTMLBaseFontElement`
+- `HTMLBlockElement`
+- `HTMLBodyElement`
+- `HTMLBodyElementEventMap`
+- `HTMLBRElement`
+- `HTMLButtonElement`
+- `HTMLCanvasElement`
+- `HTMLDataElement`
+- `HTMLDataListElement`
+- `HTMLDetailsElement`
+- `HTMLDialogElement`
+- `HTMLDirectoryElement`
+- `HTMLDivElement`
+- `HTMLDListElement`
+- `HTMLDocument`
+- `HTMLElement`
+- `HTMLElementDeprecatedTagNameMap`
+- `HTMLElementEventMap`
+- `HTMLElementTagNameMap`
+- `HTMLEmbedElement`
+- `HTMLFieldSetElement`
+- `HTMLFontElement`
+- `HTMLFormElement`
+- `HTMLFrameElement`
+- `HTMLFrameSetElement`
+- `HTMLFrameSetElementEventMap`
+- `HTMLHeadElement`
+- `HTMLHeadingElement`
+- `HTMLHRElement`
+- `HTMLHtmlElement`
+- `HTMLHyperlinkElementUtils`
+- `HTMLIframeElement`
+- `HTMLIFrameElement`
+- `HTMLImageElement`
+- `HTMLInputElement`
+- `HTMLLabelElement`
+- `HTMLLegendElement`
+- `HTMLLIElement`
+- `HTMLLinkElement`
+- `HTMLMapElement`
+- `HTMLMarqueeElement`
+- `HTMLMarqueeElementEventMap`
+- `HTMLMediaElement`
+- `HTMLMediaElementEventMap`
+- `HTMLMenuElement`
+- `HTMLMetaElement`
+- `HTMLMeterElement`
+- `HTMLModElement`
+- `HTMLObjectElement`
+- `HTMLOListElement`
+- `HTMLOptGroupElement`
+- `HTMLOptionElement`
+- `HTMLOrSVGElement`
+- `HTMLOrSVGImageElement`
+- `HTMLOrSVGScriptElement`
+- `HTMLOutputElement`
+- `HTMLParagraphElement`
+- `HTMLParamElement`
+- `HTMLPictureElement`
+- `HTMLPreElement`
+- `HTMLProgressElement`
+- `HTMLQuoteElement`
+- `HTMLScriptElement`
+- `HTMLSelectElement`
+- `HTMLSlotElement`
+- `HTMLSourceElement`
+- `HTMLSpanElement`
+- `HTMLStyleElement`
+- `HTMLTableCaptionElement`
+- `HTMLTableCellElement`
+- `HTMLTableColElement`
+- `HTMLTableDataCellElement`
+- `HTMLTableElement`
+- `HTMLTableHeaderCellElement`
+- `HTMLTableRowElement`
+- `HTMLTableSectionElement`
+- `HTMLTemplateElement`
+- `HTMLTextAreaElement`
+- `HTMLTimeElement`
+- `HTMLTitleElement`
+- `HTMLTrackElement`
+- `HTMLUListElement`
+- `HTMLUnknownElement`
+- `HTMLVideoElement`
 
 ## Patterns
-
-### Combining types
-
-    interface RentalInputs extends ProductVariant, Customer, Rental {}
-    type RentalInputs = ProductVariant & Customer & Rental
-
-    interface RentalFieldsProps {
-      inputs: ProductVariant & Customer & Rental
-    }
-
-### Partial/optional
-
-    export const AppContext = React.createContext<Partial<ContextProps>>({})
-
-Pick:
-
-    type TodoInfo = Pick<Todo, 'completed' | 'createdAt'>
-
-Omit:
-
-    type TodoInfo = Omit<Todo, 'completed' | 'createdAt'>
-
-Extend:
-
-    type VideoWithUser = Video & {
-      username?: string
-      user_image_url?: string
-    }
-
-### Interface as Array
-
-    interface MyArrayInterface {
-      0: number,
-      1: (startValue: number) => void
-    }
 
 ### Cast with 'as'
 
