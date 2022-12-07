@@ -262,7 +262,50 @@ useState:
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({ sku: '', name: ''})
 
-## TypeScript in React Native
+### TypeScript in Next.js
+
+    import React from 'react'
+    import type { GetStaticPropsContext, GetStaticPropsResult, GetStaticPathsContext, GetStaticPathsResult } from 'next'
+    import { ParsedUrlQuery } from 'querystring'
+
+    interface MyPageParams extends ParsedUrlQuery {
+      slug: string
+    }
+
+    interface MyPageProps {
+      title: string
+      slug?: string | null
+    }
+
+    function MyPage ({ title, slug }: MyPageProps): React.ReactElement {
+      return (
+        ...
+      )
+    }
+    export default MyPage
+
+    export async function getStaticProps (context: GetStaticPropsContext<MyPageParams>): Promise<GetStaticPropsResult<MyPageProps>> {
+      const slug = context.params?.slug ?? null
+      return {
+        props: {
+          title: 'My page',
+          slug
+        },
+        revalidate: 30 * 60 // 30 minutes
+      }
+    }
+
+    export async function getStaticPaths (context: GetStaticPathsContext): Promise<GetStaticPathsResult<MyPageParams>> {
+      const locales = context.locales ?? ['en']
+      return {
+        paths: [
+          // { params: { slug: 'value' } }
+        ],
+        fallback: true // false -> 404, true: Next.js tries to generate page
+      }
+    }
+
+### TypeScript in React Native
 
 ## Tools
 
