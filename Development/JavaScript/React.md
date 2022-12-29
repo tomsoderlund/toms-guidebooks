@@ -386,6 +386,10 @@ https://github.com/zeit/swr
 
     const { data, error } = useSWR('/api/user', fetcher)
 
+`useSWRInfinite`
+
+https://github.com/vercel/swr/blob/main/examples/infinite-scroll/pages/index.js
+
 #### Dynamic className
 
     <div
@@ -662,9 +666,7 @@ setState:
 
 HTML:
 
-    <div
-      dangerouslySetInnerHTML={{ __html: article.content }}
-    />
+    <div dangerouslySetInnerHTML={{ __html: article.content }} />
 
 ### Events
 
@@ -764,15 +766,24 @@ https://popmotion.io/pose/
 
 ### React Spring
 
-  import { useSpring, animated } from 'react-spring'
+https://react-spring.dev/
 
-  const [show, setShow] = useState(false)
-  const props = useSpring({ opacity: show ? 1 : 0 }) // values can also be Arrays
-  // Advanced: const [props, set, stop] = useSpring(() => ({ opacity: 1 }))
-  return <animated.div style={props} onClick={() => setShow(!show)}>I will fade when clicked</animated.div>
+    import { useSpring, animated } from 'react-spring'
 
-  // styled-components
-  const AnimatedBox = styled(animated.div)`/* CSS here */`
+    const [show, setShow] = useState(false)
+    const props = useSpring({ opacity: show ? 1 : 0 }) // values can also be Arrays
+    // Advanced: const [props, set, stop] = useSpring(() => ({ opacity: 1 }))
+    return (
+      <animated.div
+        style={props}
+        onClick={() => setShow(!show)}
+      >
+        I will fade when clicked
+      </animated.div>
+    )
+
+    // styled-components
+    const AnimatedBox = styled(animated.div)`/* CSS here */`
 
 Methods:
 
@@ -784,7 +795,7 @@ Methods:
 
 Config:
 
-  useSpring({ config: { mass: 1.5 }, ... })
+    useSpring({ config: { mass: 1.5 }, ... })
 
 - `mass`: 1
 - `tension`: 170

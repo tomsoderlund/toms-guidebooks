@@ -7,8 +7,7 @@ Most of this page has moved to: https://www.tomsoderlund.com/ai/ai-introduction
 Set up Python, Gradio, etc:
 
 	# Create and activate a “safe” virtual Python environment (exit with command “deactivate”)
-	python3 -m venv env
-	source env/bin/activate
+	python3 -m venv env && source env/bin/activate
 	
 	# Create a .gitignore file to exclude the packages in `env` folder
 	echo "env/" >> .gitignore

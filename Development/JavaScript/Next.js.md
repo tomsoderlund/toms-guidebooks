@@ -479,9 +479,6 @@ Switch locale:
 
 https://leerob.io/blog/nextjs-firebase-serverless
 
-- useSWR
-
-
 ### Import
 
     import MyComponent from '@/components/MyComponent'
@@ -616,11 +613,19 @@ https://github.com/remarkjs/react-markdown
 
 Parse Markdown:
 
+Install with `yarn add marked gray-matter`, then:
+
     import { marked } from 'marked'
     import matter from 'gray-matter'
+    import path from 'path'
+    import fs from 'fs'
 
-    export const getPostDetails = async function (slug) {
-      const fullPath = path.join(BLOG_FOLDER, `${slug}.md`)
+    const MARKDOWN_FOLDER = 'content/blog'
+
+    const getMarkdownFirstLine = (markdown: string): string | undefined => markdown.split('\n')[0]?.split('# ').pop()?.split('\n')?.[0]
+
+    export const getMarkdownContent = async function (slug: string): Promise<any> {
+      const fullPath = path.join(MARKDOWN_FOLDER, `${slug}.md`)
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       // Use gray-matter to parse the post metadata section
       const article = matter(fileContents)
@@ -628,16 +633,25 @@ Parse Markdown:
       const contentHtml = marked.parse(article.content)
       // Combine the data with the slug and contentHtml
       return {
+        ...article.data,
         slug,
         contentHtml,
-        ...article.data,
-        ID: slug,
-        titleOrExcerpt: article.data.title,
-        category: article.data.categories?.[0] || 'articles',
-        dateFormatted: article.data.date
-        // excerpt
-        // thumbnailImageUrl
+        title: article.data.title ?? getMarkdownFirstLine(fileContents) ?? 'Untitled',
+        description: article.data.description ?? null
+        // dateFormatted: article.data.date ?? null,
+        // category: article.data.categories?.[0] ?? 'articles',
+        // excerpt,
+        // coverImage,
       }
+    }
+
+    export const getMarkdownSlugList = async function (): Promise<string[]> {
+      const postsFolder = path.join(process.cwd(), MARKDOWN_FOLDER)
+      const slugs = (await fsPromise.readdir(postsFolder, { withFileTypes: true }))
+        .filter((file: any) => file.isFile())
+        .filter((file: any) => file.name.startsWith('.') === false)
+        .map((file: any) => file.name.replace(/\.md$/, ''))
+      return slugs
     }
 
 MDX:

@@ -83,7 +83,7 @@ Tom’s:
 
 #### package.json
 
-	"upgrade-expo": "yarn global add expo-cli; yarn global add eas-cli; expo upgrade",
+	"upgrade-expo": "yarn global add expo-cli; yarn global add eas-cli; expo-cli upgrade; expo doctor --fix-dependencies",
 	"dev": "yarn start",
 	"start": "expo start",
 	"eject": "expo eject",
@@ -559,9 +559,9 @@ Steps:
 		"submit": {
 			"production": {
 				"android": {
-					"serviceAccountKeyPath": "./appstores/googleplay/pc-api-9052926321037412225-601-6bf892805fe0.json",
 					"track": "internal",
-					"releaseStatus": "draft"
+					"releaseStatus": "draft",
+					"serviceAccountKeyPath": "./appstores/googleplay/pc-api-9052926321037412225-601-6bf892805fe0.json"
 				}
 			}
 		}

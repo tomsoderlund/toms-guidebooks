@@ -21,11 +21,15 @@
 
 https://docs.retool.com/docs/working-with-tables#editing-table-values-making-data-editable
 
-- New Query (GUI mode, Bulk update/upsert via a primary key)
-- Array of records: `{{ table_name.recordUpdates }}`
-	- Selected fields: `{{ table_name.recordUpdates.map( row => _.pick(row, ["id", "title", "glam_rating_id"]) ) }}`
-- Table component: Interactions: Save
-- Refresh list/table: update_query.success
+- New Query
+	- GUI mode
+	- Bulk update/upsert via a primary key
+	- Primary key: `id`
+	- Array of records:
+		- All (not used?): `{{ table_name.recordUpdates }}`
+		- Selected fields: `{{ table_name.recordUpdates.map( row => _.pick(row, ["id", "title", "glam_rating_id"]) ) }}`
+- Table component: Interactions: add Save event handler
+- Refresh list/table: UPDATE_QUERY.success event -> trigger LIST_QUERY
 
 #### Tag/Dropdown
 

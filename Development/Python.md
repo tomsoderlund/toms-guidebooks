@@ -36,6 +36,21 @@ Install:
 
     pip3 install -r requirements.txt
 
+### Pipfile
+
+https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python#python-version
+
+    [[source]]
+    url = "https://pypi.org/simple"
+    verify_ssl = true
+    name = "pypi"
+
+    [packages]
+    flask = "*"
+
+    [requires]
+    python_version = "3.9"
+
 ## Interactive environment
 
     python3
@@ -50,28 +65,53 @@ Type `quit()` or press Ctrl+D to quit (Windows: Ctrl+Z)
     import math
     from math import pi
 
+#### Importing from other local files
+
+Method 1: Import a specific function you want from `my_lib.py`:
+
+    from my_lib import my_function
+
+Method 2: Import the entire file:
+
+    import my_lib as my_lib
+    my_lib.my_function(a, b)
+
 ### Data types
 
-- Text: **str**
-- Number: **int**, **float**, **complex**
-- Boolean: **bool**
+- Text string: **`str`**, multiline with 3 quotes (single `"` or double `'`)
+- Number: **`int`**, **`float`**, **`complex`**
+- Boolean: **`bool`**
 - Collections:
-  - **list** (“array”) e.g. `["apple", "banana", "cherry"]` (ordered, changeable)
-  - **tuple** e.g. `("apple", "banana", "cherry")` (ordered, unchangeable)
-  - **dict** (“object/collection”) e.g. `{"name": "value"}` (ordered from v3.7, changeable)
+  - **`list`** (“array”) e.g. `["apple", "banana", "cherry"]`, get value with `my_array[0]` (ordered, changeable)
+  - **`tuple`** e.g. `("apple", "banana", "cherry")` (ordered, unchangeable)
+  - **`dict`** (“object/collection”) e.g. `{"name": "value"}`, get `value` with `my_dict["name"]` (ordered from v3.7, changeable)
     - Merge dicts with `new_dict = old_dict | new_values`
-  - **set** e.g. `{"string", 123, true}` (unordered, unindexed, can add/remove but not change items)
-  - **frozenset**
-  - **range** e.g. `range(6)` or `range(0, 10, 2)`
+  - **`set`** e.g. `{"string", 123, true}` (unordered, unindexed, can add/remove but not change items)
+  - **`frozenset`**
+  - **`range`** e.g. `range(6)` or `range(0, 10, 2)`
 - Binary:
-  - **bytes** e.g. `b"Hello"`
-  - **bytearray**
-  - **memoryview**
-- NoneType: **None**
+  - **`bytes`** e.g. `b"Hello"`
+  - **`bytearray`**
+  - **`memoryview`**
+- NoneType: **`None`**
 
 Check type with `type(variable)`
 
 Cast with e.g. `str(123)`
+
+#### `str`
+
+		sub_string = string[0:5]
+
+#### `list` (“arrays”)
+
+    my_list.get(0, "default value")
+
+    len(my_list)
+
+#### `dict` (“collections”)
+
+    my_dict.get("listKey", "default value")
 
 ### Functions
 
@@ -186,6 +226,22 @@ https://realpython.com/primer-on-python-decorators/
     def say_whee():
         print("Whee!")
 
+### System arguments (CLI)
+
+    # If no command line arguments
+    if len(sys.argv) == 1:
+      print('No command line arguments')
+      sys.exit()
+    else:
+      get_files_in_folder(sys.argv[1])
+
+### Files and folders
+
+    def get_files_in_folder(folder):
+      files = os.listdir(folder)
+      for file in files:
+        file_path = os.path.join(folder, file)
+        print(file_path)
 
 ## More
 

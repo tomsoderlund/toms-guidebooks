@@ -200,9 +200,12 @@ Update:
 		SELECT * FROM table WHERE columnName ILIKE 'A%';
 		SELECT * FROM company WHERE name ILIKE '%weld%';
 		SELECT * FROM company WHERE website NOT ILIKE 'http%'
-	
+
+### Date search:
+
 		SELECT * FROM person WHERE contact_status_date < '2019-02-09';
 		SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+		SELECT * FROM books WHERE returned_date > (CURRENT_DATE - INTERVAL '7 days');
 
 ### Multiple values / array
 
@@ -241,7 +244,7 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 ### COUNT(), AVG() and SUM()
 
-### CASE
+### CASE (conditional, like IF)
 
 	CASE
 			WHEN condition1 THEN result1
@@ -252,6 +255,7 @@ Note: `LEFT` refers to the left table in `ON` statement:
 as part of `SELECT`:
 
 	(CASE WHEN username IS NOT NULL THEN username ELSE CAST(article.user_id AS varchar) END) AS user
+	INITCAP(CASE WHEN product.name ILIKE brand.name || '%' THEN product.name ELSE CONCAT(brand.name, ' ', product.name) END) AS product_name
 
 ### Nested SELECT with ()
 
@@ -294,7 +298,7 @@ Example:
 
 ### String concatenation (STRING_AGG not CONCAT)
 
-	SELECT article.*, COUNT(DISTINCT(category.id)) AS category_count, STRING_AGG(DISTINCT(category.name), ',') AS category_names
+	STRING_AGG(DISTINCT(category.name), ',') AS category_names
 
 Simpler concatenation
 

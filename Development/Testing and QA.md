@@ -19,35 +19,6 @@ http://jrsinclair.com/articles/2016/gentle-introduction-to-javascript-tdd-intro/
 https://www.smashingmagazine.com/2014/10/introduction-to-unit-testing-in-angularjs/
 
 
-## Karma / Jasmine
-
-describe('Test Suite Name', function () {
-
-  beforeAll(func)
-  afterAll(func)
-
-	it('should do something', function () {
-		expect(receivedValue).toEqual('expected value')
-	})
-
-})
-
-beforeAll/beforeEach
-afterAll/afterEach
-
-spyOn(obj, 'method') // assumes obj.method is a function // How to spy on a method?
-spyOn(obj, 'method').andCallThrough() // (and.callThrough() in Jasmine 2) How to have spied method also calls through to the real function?
-spyOn(obj, 'method').andReturn('Pow!') // and.returnValue(value) // How do I fix the return value of a spy?
-expect(obj.method).toHaveBeenCalled() // How to verify it was called?
-expect(obj.method).toHaveBeenCalledWith('foo', 'bar') // How to verify it was called with specific arguments?
-obj.method.callCount // How many times was it called?
-obj.method.mostRecentCall.args // What were the arguments to the last call?
-obj.method.reset() // How to reset all the calls made to the spy so far?
-obj.method.argsForCall // How to get all arguments for all calls that have been made to the spy? (this is an array)
-
-var dummy = jasmine.createSpy('dummy') // How to make a standalone spy function?
-$('button#mybutton').click(dummy)
-
 ## Jasmine
 
 https://jasmine.github.io/2.0/introduction.html
@@ -74,6 +45,33 @@ package.json:
     "scripts": {
       "unit": "jasmine"
     }
+
+### Jasmine / Karma test cases
+
+    describe('moduleName', function () {
+      // beforeAll(func)
+      // afterAll(func)
+
+      it('should [do something]', function () {
+        expect(receivedValue).toEqual('expected value')
+      })
+    })
+
+    beforeAll/beforeEach
+    afterAll/afterEach
+
+    spyOn(obj, 'method') // assumes obj.method is a function // How to spy on a method?
+    spyOn(obj, 'method').andCallThrough() // (and.callThrough() in Jasmine 2) How to have spied method also calls through to the real function?
+    spyOn(obj, 'method').andReturn('Pow!') // and.returnValue(value) // How do I fix the return value of a spy?
+    expect(obj.method).toHaveBeenCalled() // How to verify it was called?
+    expect(obj.method).toHaveBeenCalledWith('foo', 'bar') // How to verify it was called with specific arguments?
+    obj.method.callCount // How many times was it called?
+    obj.method.mostRecentCall.args // What were the arguments to the last call?
+    obj.method.reset() // How to reset all the calls made to the spy so far?
+    obj.method.argsForCall // How to get all arguments for all calls that have been made to the spy? (this is an array)
+
+    var dummy = jasmine.createSpy('dummy') // How to make a standalone spy function?
+    $('button#mybutton').click(dummy)
 
 ### Jasmine with ES2015
 
