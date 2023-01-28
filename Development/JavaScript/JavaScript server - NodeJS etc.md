@@ -58,6 +58,8 @@ http://nodejs.org/download/
 	req.query (url?key=value)
 	req.body (JSON body)
 
+	const { host, origin, referer } = req.headers
+
 Express:
 
 	req.originalUrl (Express)
@@ -225,6 +227,14 @@ Note: latest version requires `import`, use `yarn add node-fetch@2` if you need 
 	const userJson = await userResponse.json() // or text(), arrayBuffer(), blob(), formData()
 
 #### html-metadata
+
+NEWER:
+
+	yarn add html-metadata-parser
+
+	import { parser as htmlMetadataParser } from 'html-metadata-parser'
+
+Old:
 
 	const htmlMetadata = require('html-metadata')
 	const { general, openGraph, twitter, schemaOrg } = await htmlMetadata(url)

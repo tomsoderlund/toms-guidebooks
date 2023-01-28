@@ -302,7 +302,7 @@ Fieldset:
         onChange={setName}
       />
     */
-    const InputWithLabel = ({ id, label, placeholder, description, type = 'text', autoComplete = 'off', value, onChange, inProgress, required, disabled, className, children }) => (
+    const InputWithLabel = ({ id, label, description, placeholder, type = 'text', autoComplete = 'off', autoCapitalize = 'sentences', value, onChange, inProgress, required, disabled, className, children }) => (
       <Fieldset
         id={id}
         label={label}
@@ -313,6 +313,7 @@ Fieldset:
           name={id}
           type={type}
           autoComplete={autoComplete}
+          autoCapitalize={autoCapitalize}
           placeholder={placeholder || description || label}
           value={value || ''}
           onChange={onChange}
@@ -360,7 +361,7 @@ Fieldset:
     // import useCountdown from '../hooks/useCountdown'
     // const [timeLeft, setTimeLeft] = useCountdown(startTimeLeft)
 
-#### useSavedState hook
+#### useSavedState hook (simple-browser-session)
 
     import { useState } from 'react'
     import { getSessionValue, setSessionValue } from 'simple-browser-session'
@@ -379,6 +380,60 @@ Fieldset:
 
     // import useSavedState from '../hooks/useSavedState'
     // const [myState, setMyState] = useSavedState(propertyName)
+
+#### useLocalStorage
+
+    /*
+      import useLocalStorage from 'hooks/useLocalStorage'
+      const [value, setValue] = useLocalStorage(propertyName, defaultValue)
+    */
+
+    import { useState, useEffect } from 'react'
+
+    export default function useLocalStorage (propertyName, defaultValue) {
+      const [value, setValueInState] = useState(defaultValue)
+
+      const setValueInLocalStorage = (propertyValue) => {
+        setValueInState(propertyValue)
+        const propertyValueObject = typeof propertyValue === 'object'
+          ? JSON.stringify(propertyValue)
+          : propertyValue
+        window.localStorage.setItem(propertyName, propertyValueObject)
+      }
+
+      useEffect(() => {
+        const propertyValue = window.localStorage.getItem(propertyName)
+        const propertyValueObject = (propertyValue?.startsWith('{') || propertyValue?.startsWith('['))
+          ? JSON.parse(propertyValue)
+          : propertyValue
+        setValueInState(propertyValueObject || defaultValue)
+      }, [propertyName])
+
+      return [value, setValueInLocalStorage]
+    }
+
+#### useDebounce
+
+    // E.g. const debouncedSearchTerm = useDebounce(searchTerm, 500, value => console.log(value))
+    // https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
+    import { useState, useEffect } from 'react'
+
+    export default function useDebounce (value, delay, onChange) {
+      const [debouncedValue, setDebouncedValue] = useState(value)
+
+      useEffect(
+        () => {
+          const handler = setTimeout(() => {
+            setDebouncedValue(value)
+            if (onChange) onChange(value)
+          }, delay)
+          return () => clearTimeout(handler)
+        },
+        [value]
+      )
+
+      return debouncedValue
+    }
 
 #### SWR hook
 
@@ -891,8 +946,9 @@ https://github.com/frontend-collective/react-sortable-tree
 
 ### Debounce
 
-    import { useDebouncedCallback } from 'use-debounce'
-    const [onChangeTextDebounced] = useDebouncedCallback(onChangeText, 1000)
+    import { useDebounce, useDebouncedCallback } from 'use-debounce'
+    const [valueDebounced] = useDebounce(value, 1000)
+    const onChangeTextDebounced = useDebouncedCallback(value => onChangeText(value), 1000)
 
 ### Links
 
@@ -955,57 +1011,6 @@ https://visgl.github.io/react-map-gl/
     }
 
     export default MapPage
-
-### useLocalStorage
-
-    import { useState, useEffect } from 'react'
-
-    // import useLocalStorage from 'hooks/useLocalStorage'
-    // const [value, setValue] = useLocalStorage(propertyName)
-    export default function useLocalStorage (propertyName, defaultValue) {
-      const [value, setValueInState] = useState(defaultValue)
-
-      const setValueInLocalStorage = (propertyValue) => {
-        setValueInState(propertyValue)
-        const propertyValueObject = typeof propertyValue === 'object'
-          ? JSON.stringify(propertyValue)
-          : propertyValue
-        window.localStorage.setItem(propertyName, propertyValueObject)
-      }
-
-      useEffect(() => {
-        const propertyValue = window.localStorage.getItem(propertyName)
-        const propertyValueObject = (propertyValue.startsWith('{') || propertyValue.startsWith('['))
-          ? JSON.parse(propertyValue)
-          : propertyValue
-        setValueInState(propertyValueObject || defaultValue)
-      }, [propertyName])
-
-      return [value, setValueInLocalStorage]
-    }
-
-### useDebounce
-
-    // E.g. const debouncedSearchTerm = useDebounce(searchTerm, 500, value => console.log(value))
-    // https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
-    import { useState, useEffect } from 'react'
-
-    export default function useDebounce (value, delay, onChange) {
-      const [debouncedValue, setDebouncedValue] = useState(value)
-
-      useEffect(
-        () => {
-          const handler = setTimeout(() => {
-            setDebouncedValue(value)
-            if (onChange) onChange(value)
-          }, delay)
-          return () => clearTimeout(handler)
-        },
-        [value]
-      )
-
-      return debouncedValue
-    }
 
 ### Invalid hook call
 

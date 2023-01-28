@@ -72,6 +72,11 @@ Interface as Array:
 
 #### Combining types/interfaces
 
+- AND/Combined: `Human & Customer`
+- OR: `string | null`
+
+`extends`:
+
     interface RentalInputs extends ProductVariant, Customer, Rental {}
     type RentalInputs = ProductVariant & Customer & Rental
 
@@ -119,8 +124,6 @@ Extend:
 - null / undefined
 - never
 - Date
-- AND/Combined: Human & Customer
-- OR: string | null
 
 ### enum
 

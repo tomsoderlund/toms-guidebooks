@@ -923,7 +923,7 @@ Examples:
   div {
     transition-property: opacity, left, top, height; /* all */
     transition-duration: 3s, 5s;
-    transition-delay: 1s
+    transition-delay: 1s;
     transition-timing-function: linear|ease|ease-in|ease-out|ease-in-out|step-start|step-end|steps(int,start|end)|cubic-bezier(n,n,n,n)|initial|inherit;
   }
 
@@ -963,7 +963,7 @@ Examples:
     animation-iteration-count: infinite;
     animation-direction: normal|reverse|alternate|alternate-reverse;
     animation-play-state: running|paused;
-    animation-fill-mode: (specifies a style for the element when the animation is not playing);
+    animation-fill-mode: forwards|backwards (specifies a style for the element when the animation is not playing);
   }
 
   .animated2 {

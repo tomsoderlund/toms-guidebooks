@@ -32,7 +32,8 @@ RANDBETWEEN(1, 2)
 
 ### Strings/Text
 
-char(10)
+CHAR(65)
+CODE("A")
 
 
 =IF(C2<>""; "OK"; "")

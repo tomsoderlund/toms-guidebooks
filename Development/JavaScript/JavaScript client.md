@@ -292,6 +292,7 @@ http://javascript.crockford.com/prototypal.html
 		if (null == obj || "object" != typeof obj) return obj
 		var copy = obj.constructor()
 		for (var attr in obj) {
+			// or Object.prototype.hasOwnProperty.call(obj, attr)
 			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr]
 		}
 		return copy
@@ -531,7 +532,7 @@ Bounce and gravity:
 		}
 	}
 
-Geographic distance:
+Geographic distance (latitude/longitude to distance):
 
 	// Calculate geographic distance in meters – https://stackoverflow.com/a/21623206/449227
 	export function geoDistance (lat1, lng1, lat2, lng2) {
@@ -707,7 +708,7 @@ Slugs:
 
 	const toSlug = str => str.trim().toLowerCase().replace(/ |_/g, '-').replace(/[^\w-]+/g, '')
 
-	function toSlug (str, removeInternationalChars = true) {
+	function toSlug (str, replaceInternationalChars = true) {
 	  // Abort if not a proper string value
 	  if (!str || typeof (str) !== 'string') { return str }
 	  // For both
@@ -715,7 +716,7 @@ Slugs:
 	    .toLowerCase()
 	    .replace(/ |_|\//g, '-') // space/underscore/slash to dash
 	  // Remove ÅÄÖ etc?
-	  if (removeInternationalChars) {
+	  if (replaceInternationalChars) {
 	    newStr = newStr.replace(/[åäæâãáà]/g, 'a').replace(/[ëêéè]/g, 'e').replace(/[öøôõóò]/g, 'o').replace(/[üûúù]/g, 'u') // convert ÅÄÖÜ to Latin characters
 	    newStr = newStr.replace(/[^\w-]+/g, '') // remove all other characters
 	  } else {
@@ -1011,6 +1012,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	Object.size = function (obj) {
 		var size = 0, key
 		for (key in obj) {
+			// or Object.prototype.hasOwnProperty.call(obj, key)
 			if (obj.hasOwnProperty(key)) size++
 		}
 		return size

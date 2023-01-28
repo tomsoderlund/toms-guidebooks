@@ -201,7 +201,7 @@ Update:
 		SELECT * FROM company WHERE name ILIKE '%weld%';
 		SELECT * FROM company WHERE website NOT ILIKE 'http%'
 
-### Date search:
+### Date search
 
 		SELECT * FROM person WHERE contact_status_date < '2019-02-09';
 		SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
@@ -268,18 +268,22 @@ as part of `SELECT`:
 
 ### UNION to combine/concatenate multiple queries
 
+Note: column types must match in the same order.
+
 	SELECT * FROM (
-		SELECT font.id, name, slug, category_id
-		FROM similar_font
-		LEFT JOIN font ON (similar_font.font2_id = font.id)
-		WHERE font1_id = 1643
-		
+		(
+			SELECT font.id, name, slug, category_id
+			FROM similar_font
+			LEFT JOIN font ON (similar_font.font2_id = font.id)
+			WHERE font1_id = 1643
+		)
 		UNION
-		
-		SELECT font.id, name, slug, category_id
-		FROM similar_font
-		LEFT JOIN font ON (similar_font.font1_id = font.id)
-		WHERE font2_id = 1643
+		(
+			SELECT font.id, name, slug, category_id
+			FROM similar_font
+			LEFT JOIN font ON (similar_font.font1_id = font.id)
+			WHERE font2_id = 1643
+		)		
 	) AS combined_query
 	ORDER BY name;
 
