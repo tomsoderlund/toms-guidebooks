@@ -409,7 +409,7 @@ Switch locale:
 ## NEW: hooks/useI18N.ts
 
     /*
-      import { useI18N } from '../hooks/useI18N'
+      import useI18N from 'hooks/useI18N'
       const { t } = useI18N()
       <h1>{t('My string')}</h1>
     */

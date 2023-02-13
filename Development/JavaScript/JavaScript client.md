@@ -515,9 +515,16 @@ Graph circle:
 		y: Math.round(Math.sin(angle * Math.PI / 180) * distance + y)
 	})
 
-Bounce and gravity:
+Speed, Bounce and Gravity:
 
-	const applyRuleBounce = (position, speed, acceleration) => {
+	const applyAcceleration = (position, speed, acceleration) => {
+		for (let dim = 0; dim < position.length; dim++) {
+			speed[dim] += acceleration[dim]
+			position[dim] += speed[dim]
+		}
+	}
+
+	const applyBounce = (position, speed, acceleration) => {
 		if (position[Y] > 200) {
 			speed[Y] = -speed[Y] * 0.9
 			speed[ROTATION] = -speed[ROTATION] * 0.9
@@ -526,8 +533,8 @@ Bounce and gravity:
 		}
 	}
 
-	const applyRuleBlackHole = (gravity = 0.01, holePosition = [150, 150], position, speed, acceleration) => {
-		for (let dim = X; dim <= Z; dim++) {
+	const applyBlackHole = (position, acceleration, holePosition = [150, 150], gravity = 0.01) => {
+		for (let dim = 0; dim < position.length; dim++) {
 			acceleration[dim] = (holePosition[dim] - position[dim]) * gravity
 		}
 	}
@@ -1075,8 +1082,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	thisYear = new Date().getYear() + 1900
 
-	const formatDate = dateObj => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
-	const formatTime = dateObj => `${dateObj.getHours()}:${dateObj.getMinutes()}`
+	const formatDate = (dateObj) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
+	const formatTime = (dateObj) => `${dateObj.getHours()}:${dateObj.getMinutes()}`
 
 	`[${new Date().getHours()}:${new Date().getMinutes()}]`
 
@@ -1125,23 +1132,30 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 - 1 day in seconds: 24 * 60 * 60 = 86400
 - 1 hour in seconds: 60 * 60 = 3600
 
-### Date & Time: Moment.js
+### dayjs
 
 Use dayjs instead (smaller):
 
-		import dayjs from 'dayjs'
-		dayjs(myDate).format('YYYY-MM-DD')
-		dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
-		dayjs().diff('2018-06-05', 'day')
+	import dayjs from 'dayjs'
+	dayjs(myDate).format('YYYY-MM-DD')
+	dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
+	dayjs().diff('2018-06-05', 'day')
 
-		dayjs('2019-01-25').unix() // Unix seconds 1548381600
-		dayjs('2019-01-25').valueOf() // Unix milliseconds 1548381600000
+	dayjs('2019-01-25').unix() // Unix seconds 1548381600
+	dayjs('2019-01-25').valueOf() // Unix milliseconds 1548381600000
 
-		import relativeTime from 'dayjs/plugin/relativeTime'
-		dayjs.extend(relativeTime)
-		dayjs(myDate).fromNow()
+Relative date:
 
-Moment.js
+	import dayjs from 'dayjs'
+	import relativeTime from 'dayjs/plugin/relativeTime'
+	dayjs.extend(relativeTime)
+	dayjs(myDate).fromNow()
+
+Helper functions:
+
+	const formatReadableDate = (dateObj) => dayjs(dateObj).format('MMM D')
+
+### Moment.js
 
 	import moment from 'moment'
 

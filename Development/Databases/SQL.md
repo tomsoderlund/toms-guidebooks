@@ -306,7 +306,7 @@ Example:
 
 Simpler concatenation
 
-	SELECT CONCAT('SQL', ' is', ' fun!' ) as longer_string;
+	SELECT CONCAT('SQL', ' is', ' fun!') as longer_string;
 
 ## Create - Insert
 

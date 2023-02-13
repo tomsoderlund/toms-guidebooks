@@ -235,6 +235,51 @@ https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)
     updated: "2020-10-06T12:56:26.266Z"
     ref: 
 
+#### useFileUpload hook
+
+    /*
+      import useFileUpload from 'hooks/useFileUpload'
+      const { file, fileUrl, handleChangeFile, handleUploadFile } = useFileUpload(`/user-uploads/${user?.uid}`)
+    */
+
+    import { useState, useEffect } from 'react'
+
+    import { firebaseStorage } from 'lib/data/firebase'
+
+    export default function useFileUpload (folderName = '/images', autoUpload = false, onFileUploaded) {
+      const [file, setFile] = useState()
+      const [fileUrl, setFileUrl] = useState()
+
+      async function handleChangeFile (e) {
+        const fileObj = e.target?.files?.[0]
+        if (fileObj) {
+          setFile(fileObj)
+          if (autoUpload) {
+            await handleUploadFile(e, fileObj)
+          }
+        }
+      }
+
+      async function handleUploadFile (e, fileObj) {
+        e.preventDefault()
+        const fileRef = firebaseStorage.ref(`${folderName}/${(fileObj ?? file).name}`)
+        await fileRef.put(fileObj ?? file)
+        setFileUrl(await fileRef.getDownloadURL())
+        setFile()
+      }
+
+      useEffect(
+        () => {
+          if (fileUrl && onFileUploaded) {
+            onFileUploaded(fileUrl)
+          }
+        },
+        [fileUrl]
+      )
+
+      return { file, fileUrl, handleChangeFile, handleUploadFile }
+    }
+
 #### CORS issues
 
     gsutil cors set firebaseCors.json gs://myapp.appspot.com
@@ -250,6 +295,19 @@ Setup:
 
 - Set server token: https://console.firebase.google.com/project/_/settings/cloudmessaging/web
 - Send message from console: https://console.firebase.google.com/project/_/notification
+
+### User profile
+
+    user.updateProfile({ displayName: emailToName(user.email) })
+
+    user?.providerData?.[0]: {
+      displayName: 'Tom',
+      email: 'tom@tomsoderlund.com',
+      phoneNumber: null,
+      photoURL: null,
+      providerId: 'password',
+      uid: 'tom@tomsoderlund.com'
+    }
 
 ### Security and User Rights
 
@@ -452,6 +510,21 @@ Firebase + Redux: https://github.com/prescottprue/react-redux-firebase
   if (isClientSide()) firebase.analytics()
 
   module.exports = firebaseApp
+
+## Migrating database structure
+
+    const updateAllArticles = async () => {
+      const allArticles = await articlesCollection()
+      allArticles.forEach(async (article) => {
+        const newArticle = {
+          ...article,
+          creatorUserId: 'cfoDbxjXH8ZjutWKLw5jhn36Bex1'
+        }
+        await updateArticle(newArticle)
+      })
+    }
+
+    updateAllArticles()
 
 ## Importing data from JSON
 

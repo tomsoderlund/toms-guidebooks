@@ -55,7 +55,7 @@ More filters: https://supabase.com/docs/reference/javascript/using-filters
 
 #### Sorting
 
-	.order('starts_at', { ascending: true })
+	.order('created_at', { ascending: false })
 
 #### Limit
 
@@ -139,6 +139,23 @@ Creating functions: see [SQL](SQL.md).
 Executing the function from JavaScript:
 
 	const { data, error } = await supabase.rpc('my_function', { name: 'Sam Lowry' })
+
+### How to validate my users token on the backend with Supabase
+
+https://github.com/supabase/supabase/issues/491#issuecomment-871863896
+
+1. Frontend sends `session.access_token` (from `supabase.auth.session()`) to backend
+2. On the backend you call `const { user } = await supabase.auth.api.getUser(accessToken)` and check that `user !== null`
+
+Example:
+
+	const userFromAccessToken = async (req: NextApiRequest): Promise<UserProfile | undefined> => {
+		const accessToken = req.headers?.authorization?.replace('Bearer ', '')
+		const { user } = await supabase.auth.api.getUser(accessToken ?? '')
+		if (user === null) throw new CustomError('User not authorized', 401)
+		if (user?.id !== undefined) return await userProfileObject(user?.id)
+		return undefined
+	}
 
 ### Location/Geo
 
