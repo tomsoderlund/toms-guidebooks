@@ -15,6 +15,10 @@
 
 ## Sample a loop
 
+_**Note:** read up on [the legal aspects of sampling](https://diymusician.cdbaby.com/music-rights/clear-samples-to-copyrighted-music/) before you release tracks with samples publicly._
+
+**Sampling songs in GarageBand for iOS and macOS:**
+
 - Record sound from Spotify etc:
 	- Start screen recording in iOS
 	- Play song
