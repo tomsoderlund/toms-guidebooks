@@ -257,3 +257,7 @@ in `global.d.ts`:
 https://supabase.com/docs/guides/with-expo
 
 https://medium.com/@kelvinpompey.me/things-to-look-out-for-using-supabase-with-react-native-9638b23e98c2
+
+## Performance queries
+
+	SELECT ROUND(mean_exec_time + stddev_exec_time) AS time, query FROM pg_stat_statements ORDER BY time DESC;

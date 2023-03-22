@@ -17,24 +17,28 @@
 
 ### Data tables
 
-#### Update data row
+#### Edit/Update data row
 
 https://docs.retool.com/docs/working-with-tables#editing-table-values-making-data-editable
 
-- New Query
+- New Query e.g. `article_update`
 	- GUI mode
 	- Bulk update/upsert via a primary key
 	- Primary key: `id`
 	- Array of records:
-		- All (not used?): `{{ table_name.recordUpdates }}`
-		- Selected fields: `{{ table_name.recordUpdates.map( row => _.pick(row, ["id", "title", "glam_rating_id"]) ) }}`
-- Table component: Interactions: add Save event handler
-- Refresh list/table: UPDATE_QUERY.success event -> trigger LIST_QUERY
+		- All (not used?): `{{ TABLE_NAME.recordUpdates }}`
+		- Selected fields (note: need the Primary Key): `{{ TABLE_NAME.recordUpdates.map( row => _.pick(row, ["id", "title", "glam_rating_id"]) ) }}`
+	- Refresh list/table: UPDATE_QUERY.success event → LIST_QUERY.trigger()
+- Table component:
+  - Toggle “Editable” on selected columns
+	- Interaction → Event handlers
+	- “+Add” button
+	- “Save changes” event handler
 
 ##### Tag/Dropdown
 
 - Create query/resource for lookup
-- Table field -> Data source
+- Table field → Data source
 
 #### Create new row
 

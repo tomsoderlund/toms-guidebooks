@@ -206,6 +206,7 @@ Update:
 		SELECT * FROM person WHERE contact_status_date < '2019-02-09';
 		SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
 		SELECT * FROM books WHERE returned_date > (CURRENT_DATE - INTERVAL '7 days');
+		SELECT * FROM users WHERE created_at < (CURRENT_DATE - INTERVAL '7 days');
 
 ### Multiple values / array
 
@@ -241,6 +242,17 @@ Note: `LEFT` refers to the left table in `ON` statement:
 
 	SELECT * FROM weather LEFT OUTER JOIN city ON (weather.city = city.name);
 	SELECT domain.id, name, avg(sai) AS avg_sai FROM domain LEFT OUTER JOIN domain_update ON (domain.id = domain_update.domain_id) GROUP BY domain.id;
+
+Lateral join:
+
+	SELECT company.id, company.name, person.id, person.name
+	FROM company
+	LEFT JOIN LATERAL (
+		SELECT id, name
+		FROM person
+		WHERE company_id=company.id
+		LIMIT 1
+	) person ON TRUE;
 
 ### COUNT(), AVG() and SUM()
 
@@ -307,6 +319,10 @@ Example:
 Simpler concatenation
 
 	SELECT CONCAT('SQL', ' is', ' fun!') as longer_string;
+
+### Array concatenation (ARRAY_AGG)
+
+	ARRAY_AGG(DISTINCT(category.name)) AS category_names
 
 ## Create - Insert
 

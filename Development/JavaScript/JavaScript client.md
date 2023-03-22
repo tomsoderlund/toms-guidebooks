@@ -1138,6 +1138,7 @@ Use dayjs instead (smaller):
 
 	import dayjs from 'dayjs'
 	dayjs(myDate).format('YYYY-MM-DD')
+	dayjs(myDate).format('HH:mm')
 	dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
 	dayjs().diff('2018-06-05', 'day')
 
@@ -1857,6 +1858,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 		? array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? 1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? -1 : 0))
 		: array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0))
 	const sortByStringAscending = (array, property) => array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? -1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? 1 : 0))
+	const sortByStringDescending = (array, property) => array.sort((a, b) => (a[property].toLowerCase() < b[property].toLowerCase()) ? 1 : ((a[property].toLowerCase() > b[property].toLowerCase()) ? -1 : 0))
 
 	Object.keys(obj)
 	Object.values(obj)

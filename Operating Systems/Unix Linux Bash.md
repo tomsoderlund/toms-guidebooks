@@ -281,7 +281,7 @@ http://www.alecjacobson.com/weblog/?p=649
 	export PATH=$PATH:/path/to/my/stuff
 	echo $PATHSS domain
 
-### DNS (dns)
+### DNS (dns) and Domains
 
 Flush DNS:
 

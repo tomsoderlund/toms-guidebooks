@@ -351,7 +351,7 @@ With `type`-definition:
   - `React.SyntheticEvent`
   - `React.MouseEventHandler<HTMLImageElement>`
   - `React.ChangeEvent`: (event: `React.SyntheticEvent`) => void
-- event.target: `Element` or `HTMLInputElement`
+- event.target: `HTMLInputElement`
 
 Custom `HTMLElementEvent`:
 
