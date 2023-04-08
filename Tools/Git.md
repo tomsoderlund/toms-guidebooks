@@ -296,3 +296,14 @@ Sheet: https://docs.google.com/spreadsheets/d/1E7bQpNLCp_V9yVl1v6Ifxw9Dsn_eA7R_I
 	git submodule update
 
 https://git-scm.com/book/en/v2/Git-Tools-Submodules#_cloning_submodules
+
+
+## GitHub
+
+	mkdir .github
+	touch .github/pull_request_template.md
+
+### GitHub Actions
+
+	mkdir -p .github/workflows
+	touch .github/workflows/main.yml

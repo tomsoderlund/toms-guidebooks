@@ -1082,8 +1082,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	thisYear = new Date().getYear() + 1900
 
-	const formatDate = (dateObj) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
-	const formatTime = (dateObj) => `${dateObj.getHours()}:${dateObj.getMinutes()}`
+	const formatDate = (dateObj = new Date()) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
+	const formatTime = (dateObj = new Date()) => `${dateObj.getHours()}:${dateObj.getMinutes()}`
 
 	`[${new Date().getHours()}:${new Date().getMinutes()}]`
 
@@ -1388,7 +1388,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	container.removeChild(container.childNodes[0])
 
 	// Simple scraper:
-	document.querySelectorAll('.my-class > a').forEach(e => console.log(`${e.innerText}: ${e.getAttribute('href')}`))
+	document.querySelectorAll('.my-class > a').forEach(e => console.log(e.getAttribute('href')))
 	// Format multiple
 	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
 

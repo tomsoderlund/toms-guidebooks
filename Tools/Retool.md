@@ -52,6 +52,7 @@ https://docs.retool.com/docs/working-with-tables#editing-table-values-making-dat
 - Create new Query (GUI mode, Delete a record)
 	- Use magic variable `i` after field name: `{{ product_table.data.id[i] }}`
 	- Advanced: Confirmation Modal
+- Refresh list/table: UPDATE_QUERY.success event → LIST_QUERY.trigger()
 - Table: Add new column: Action Button type
 
 ### Menu

@@ -266,6 +266,7 @@ Lateral join:
 
 as part of `SELECT`:
 
+	(CASE WHEN user.id IS NOT NULL THEN user_profile.name ELSE null END) AS user_name
 	(CASE WHEN username IS NOT NULL THEN username ELSE CAST(article.user_id AS varchar) END) AS user
 	INITCAP(CASE WHEN product.name ILIKE brand.name || '%' THEN product.name ELSE CONCAT(brand.name, ' ', product.name) END) AS product_name
 

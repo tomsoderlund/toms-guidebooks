@@ -180,7 +180,7 @@ https://reactjs.org/docs/hooks-overview.html
 - `useEffect(() => {}, [deps])`: instead of componentDidMount. Empty deps = fire once, otherwise when deps change.
 - `useCallback(() => {}, [deps])`: returns a memoized version of the callback that only changes if one of the dependencies has changed. Use to prevent this passing a new function each render.
 - `useMemo(() => computeExpensiveValue(a, b), [a, b])`: Returns a memoized value.
-- `useState(initialState)`: e.g. `const [active, setActive] = useState(false)`.
+- `useState(initialState)`: e.g. `const [active, setActive] = useState(false)`. Can use an _updater function_ e.g. `setActive(a => !a)` (instead of `setActive(!a)`).
 - `useReducer(reducer, initialArg, init)` - returns `[state, dispatch]`. An alternative to useState.
 - `useContext`: see below.
 - `useRef(initialValue)`: returns a mutable ref object. See below.

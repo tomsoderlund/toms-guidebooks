@@ -21,6 +21,10 @@ Set up Python, Gradio, etc:
 	# Create a blank app.py file:
 	touch app.py
 
+### Run
+
+	python3 app.py
+
 ## Deploying on GCP AppEngine
 
 - Create `app.yaml`
