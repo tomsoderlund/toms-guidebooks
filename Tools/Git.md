@@ -51,6 +51,12 @@ Quick:
 
 	git cherry-pick commitID
 
+## Delete old branches
+
+	git branch > branches.txt
+
+	git branch --delete [branchname]
+
 ## Heroku
 
 	heroku create myappname
@@ -114,7 +120,7 @@ Custom fork in `package.json`:
 
 Reset/rollback to _specific_ commit:
 
-- Empty the working tree: `git rm -r --cached . && git clean -f -d`
+- Clean the working tree: `git rm -r --cached . && git clean -f -d`
 - Bring the working tree to the state we want: `git checkout c366a0de9fe00309a3427c25903e876bfd42fd35 .`
 - Create the revert commit: `git add --all && git commit -m "revert to c366a0de9fe00309a3427c25903e876bfd42fd35"`
 
@@ -231,7 +237,7 @@ Delete BOTH branches:
 
 ## Empty commit
 
-    git commit -m 'Empty commit to force new build' --allow-empty
+	git commit -m 'Empty commit to force new build' --allow-empty
 
 ## Tags
 
