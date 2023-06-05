@@ -201,6 +201,8 @@ Update:
 		SELECT * FROM company WHERE name ILIKE '%weld%';
 		SELECT * FROM company WHERE website NOT ILIKE 'http%'
 
+Tip: you can use `LOWER()` for lowercase formatting.
+
 ### Date search
 
 		SELECT * FROM person WHERE contact_status_date < '2019-02-09';
@@ -211,6 +213,8 @@ Update:
 ### Multiple values / array
 
 	SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');
+
+	SELECT * FROM document WHERE accessing_user_ids @> ARRAY['4601ab73-d742-429e-b8e3-ba349725e5f5']::uuid[]
 
 ### Pagination
 

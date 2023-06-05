@@ -1,3 +1,14 @@
+# NPM and Yarn
+
+| Command               | npm                                  | yarn                         |
+|-----------------------|--------------------------------------|------------------------------|
+| Update itself         | `npm update npm -g`                  | `npm install yarn@latest -g` |
+| Get listed packages   | `npm install`                        | `yarn`                       |
+| Install package       | `npm install [package]`              | `yarn add [package]`         |
+| Install dev package   | `npm install --save-dev [package]`   | `yarn add --dev [package]`   |
+| Uninstall package     | `npm uninstall [package]`            | `yarn remove [package]`      |
+| Uninstall dev package | `npm uninstall --save-dev [package]` | `yarn remove [package]`      |
+
 ## NPM
 
 ### Update NPM

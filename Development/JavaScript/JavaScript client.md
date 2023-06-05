@@ -493,6 +493,13 @@ X/Y distances:
 	  return segments
 	}
 
+Vector to X/Y:
+
+	const xySpeed = (speed, rotationDegrees) => ({
+		x: Math.sin(rotationDegrees/180 * Math.PI) * speed,
+		y: -Math.cos(rotationDegrees/180 * Math.PI) * speed,
+	})
+
 Get angle:
 
 	const getAngle = function (x, y) {
@@ -500,13 +507,6 @@ Get angle:
 		const degrees = 180 * angle / Math.PI // degrees
 		return (360 + Math.round(degrees)) % 360 // round number, avoid decimal fragments
 	}
-
-Vector to X/Y:
-
-	const xySpeed = (speed, rotationDegrees) => ({
-		x: Math.sin(rotationDegrees/180 * Math.PI) * speed,
-		y: -Math.cos(rotationDegrees/180 * Math.PI) * speed,
-	})
 
 Graph circle:
 
@@ -876,6 +876,10 @@ Slugs:
 	// yarn add string-strip-html
 	const { stripHtml } = require('string-strip-html')
 	stripHtml('Some text <b>and</b> text.').result
+
+### Generate secret key
+
+	require('crypto').randomBytes(48, function(err, buffer) { var token = buffer.toString('hex'); console.log(token); });
 
 ### Hash
 
@@ -1388,7 +1392,7 @@ sessionStorage vs localStorage: sessionStorage is cleared when the page session 
 	container.removeChild(container.childNodes[0])
 
 	// Simple scraper:
-	document.querySelectorAll('.my-class > a').forEach(e => console.log(e.getAttribute('href')))
+	document.querySelectorAll('.my-class > a').forEach(e => console.log(e.innerText, e.getAttribute('href')))
 	// Format multiple
 	document.querySelectorAll('.my-class img').forEach(e => e.style.border = '1px solid red')
 

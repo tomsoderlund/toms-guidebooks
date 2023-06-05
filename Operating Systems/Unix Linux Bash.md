@@ -62,6 +62,7 @@ List `./folder/subfolder/file.ext`:
 List all except a pattern:
 
 	find * | grep -v -E '.DS_Store|node_modules|build'
+	find * -type d -name node_modules -prune -false -o -type f
 
 ## Finding files
 

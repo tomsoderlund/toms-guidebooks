@@ -536,14 +536,34 @@ https://leerob.io/blog/nextjs-firebase-serverless
 
     import Image from 'next/image'
 
-    <Image
-      src='/images/MyCompany_logo.svg'
-      alt='MyCompany logo'
-      title='MyCompany'
+    <>
+      <div className='next-image'>
+        <Image
+          src='/favicon_large.png'
+          alt='Tomorroworld'
+          layout='fill'
+          objectFit='cover'
+        />
+      </div>
+      <style jsx>{`
+        .next-image {
+          width: 400px;
+          height: 400px;
+        }
+        .next-image :global(img) {
+        }
 
-      width={size}
-      height={size}
-    />
+        @media (max-width: 600px) {
+          .next-image {
+            width: 200px;
+            height: 200px;
+            top: -10px;
+            right: -30px;
+          }
+        }
+      `}
+      </style>
+    </>
 
 or:
 
@@ -551,10 +571,11 @@ or:
       src='/images/MyCompany_logo.svg'
       alt='MyCompany logo'
       title='MyCompany'
+      className='next-image'
 
-      layout='fill'
+      width={size}
+      height={size}
     />
-
 
 ### SVG images
 
