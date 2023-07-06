@@ -313,3 +313,18 @@ https://git-scm.com/book/en/v2/Git-Tools-Submodules#_cloning_submodules
 
 	mkdir -p .github/workflows
 	touch .github/workflows/main.yml
+
+### Mermaid graphs/diagrams in GitHub pages
+
+- https://mermaid.live/
+- https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/
+
+Example:
+
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```

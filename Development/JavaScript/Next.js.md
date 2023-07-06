@@ -392,6 +392,9 @@ Switch locale:
       <a>Go to /fr/another</a>
     </Link>
 
+		// change just the locale and maintain all other route information including href's query
+		router.push({ pathname, query }, asPath, { locale: _lang });
+    
 ### next-i18next
 
     mkdir -p public/static/locales/en

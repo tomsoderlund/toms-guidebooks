@@ -46,6 +46,14 @@ https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-m
 
 	find ~/Documents/Development -name "node_modules" -type d -prune | xargs du -chs
 
+For Python "env":
+
+	find ~/Documents/Development -name "env" -type d -prune | xargs du -chs
+
+Huggingface models:
+
+	find ~/.cache/huggingface/hub -type d | xargs du -chs | grep -v "0B" | grep -v "K   "
+
 ## File lists
 
 ### List files with relative path

@@ -1,6 +1,6 @@
 # My Disk is Full!
 
-Storage Management on Mac
+Storage settings on Mac
 
 Start JDiskReport
 Steam and check usage

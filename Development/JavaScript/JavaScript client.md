@@ -684,6 +684,11 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 
 ### Casing
 
+- snake_case
+- kebab-case
+- camelCase
+- PascalCase
+
 	string.toLowerCase()
 	string.toUpperCase()
 
@@ -1113,7 +1118,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	const diffInDays = (oldDate, newDate = new Date()) => (newDate - oldDate) / (24 * 60 * 60 * 1000)
 
 	// Add to date
-	const futureDate = (startDate, days) => new Date(startDate.getTime() + days * 24 * 60 * 60 * 1000)
+	const futureDate = (days = 7, startDate = new Date()) => new Date(startDate.getTime() + days * 24 * 60 * 60 * 1000)
 	const oneYearFromNow = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
 
 	// Calculate difference between dates
@@ -1124,8 +1129,10 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	var dateFromMillisecs = new Date(milliseconds)
 
 	// UTC Timestamp
-	Math.round(new Date().getTime() / 1000)
+	Math.round((new Date()).getTime() / 1000)
 
+	// Date where hours/minutes/seconds are removed
+	const todaysDateNoTime = new Date(Math.round((new Date()).getTime() / (1000 * 60 * 60 * 24)) * (1000 * 60 * 60 * 24))
 
 ### Times in seconds/milliseconds
 
@@ -1917,7 +1924,12 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// flatten
 	array.flat()
 
-	const isEmpty = obj => Object.keys(obj).length === 0
+	const isEmpty = (value: any): boolean => (
+		value === null
+		|| value === undefined
+		|| (typeof value === 'object' && Object.keys(value).length === 0)
+		|| (typeof value === 'string' && value.trim().length === 0)
+	)
 
 	// head/tail
 	const [head, ...tail] = [1, 2, 3]
@@ -2409,11 +2421,11 @@ http://usejsdoc.org
 	/**
 	 * Represents a book.
 	 * @constructor
-	 * @param {string} title - The title of the book.
-	 * @param {string} author - The author of the book.
-	 * @return {number} The x value
+	 * @param {string} title The title of the book.
+	 * @returns {number} The x value
+	 * @throws NullPointerException
 	 */
-	function Book(title, author) {
+	function Book(title) {
 	}
 
 Module:

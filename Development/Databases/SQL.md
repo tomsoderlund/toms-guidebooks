@@ -13,7 +13,7 @@ port 5432 is default
 ## PSQL Admin
 
 	psql postgres
-	psql -U myUser
+	psql -d <database_name> -U myUser -W
 	
 	psql -h <hostname> -p <port_no> -U <db_username> -d <database_name> -W
 	psql -h ec2-54-225-89-156.compute-1.amazonaws.com -p 5432 -U pmhuletkaeiyep -d d59asl859nm30e -W
@@ -49,8 +49,24 @@ e.g. `WHERE person.company_id = company.id`
 	
 	\list: lists all the databases
 	\connect: connect to database
+
+## List tables:
+
 	\dt: list tables in database
-	\du: list users
+
+List all:
+
+	\dt *.*
+
+## See database users
+
+List users:
+
+	\du
+
+Current user:
+
+	SELECT current_user;
 
 ## Rename database
 
@@ -327,24 +343,30 @@ Simpler concatenation
 
 ### Array concatenation (ARRAY_AGG)
 
-	ARRAY_AGG(DISTINCT(category.name)) AS category_names
+	ARRAY_AGG(category.name) AS category_names
+	ARRAY_AGG(DISTINCT(category.name)) AS unique_category_names
 
 ## Create - Insert
 
-	INSERT INTO domain (name, site_count) VALUES ('indiska.se', 5) RETURNING id;
+	INSERT INTO domain (name, site_count)
+	VALUES ('indiska.se', 5) RETURNING id;
 
 Multiple values:
 
-	INSERT INTO domain (name) VALUES ('domain1.se'), ('domain2.se');
+	INSERT INTO domain (name, count)
+	VALUES ('domain1.se', 2), ('domain2.se', 3);
 
 ## Update
 
-	UPDATE domain SET content_last_update = '2019-01-01 12:00', content_previous_update = null WHERE id=1;
+	UPDATE domain
+	SET
+		content_last_update = '2019-01-01 12:00',
+		content_previous_update = null
+	WHERE id = 1;
 
 ## Delete
 
-	DELETE * from domain;
-	DELETE from domain where name = 'formomiljo.se';
+	DELETE FROM domain WHERE name = 'formomiljo.se';
 
 ## Create a new table
 
@@ -453,6 +475,24 @@ Executing the function from SQL:
 
 	SELECT * FROM my_function('Sam Lowry');
 
+View the function:
+
+	SELECT pg_get_functiondef('my_function'::regproc);
+
+	\df+ my_function
+
+List all functions
+
+	SELECT 
+		routines.routine_name AS name,
+		routines.data_type AS return_type,
+		ARRAY_AGG(parameter_name) AS parameter_names
+	FROM information_schema.routines
+	LEFT JOIN information_schema.parameters ON (routines.specific_name = parameters.specific_name)
+	WHERE routine_type = 'FUNCTION' AND routine_schema = 'public'
+	GROUP BY routines.routine_name, routines.data_type
+	ORDER BY routines.routine_name;
+
 Delete the function:
 
 	DROP FUNCTION my_function;
@@ -469,17 +509,17 @@ Example: return SETOF
 Example with custom return table:
 
 	CREATE OR REPLACE FUNCTION all_users(created_from timestamp, created_to timestamp)
-		RETURNS TABLE (
-			f_id uuid,
-			f_email text,
-			f_full_name text
-		)
-		LANGUAGE plpgsql
-		AS $$
-	BEGIN
-		RETURN QUERY
-		SELECT id, email, full_name FROM users BETWEEN created_from AND created_to
-	END
+	RETURNS TABLE (
+		f_id uuid,
+		f_email text,
+		f_full_name text
+	)
+	LANGUAGE plpgsql
+	AS $$
+		BEGIN
+			RETURN QUERY
+			SELECT id, email, full_name FROM users BETWEEN created_from AND created_to
+		END
 	$$;
 
 Example: `add_geometry`:
@@ -492,9 +532,10 @@ Example: `add_geometry`:
 			return_record geometries%rowtype;
 		BEGIN
 			INSERT INTO geometries(location_name, geom)
-				VALUES (location_name, ST_SETSRID(ST_MAKEPOINT(lon, lat), 4326))
-				RETURNING *
-				INTO return_record;
+			VALUES (location_name, ST_SETSRID(ST_MAKEPOINT(lon, lat), 4326))
+			RETURNING *
+			INTO return_record;
+
 			RETURN NEXT return_record;
 		END
 	$;

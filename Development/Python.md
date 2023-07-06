@@ -4,6 +4,20 @@
 - https://docs.python.org/3/
 - https://www.w3schools.com/python/
 
+## From JavaScript to Python
+
+Here are a few key skills and concepts you should learn when transitioning from JavaScript to Python:
+
+1. **Syntax**: Python syntax is quite different from JavaScript. For example, Python uses indentation for blocks instead of `{}`. Also, Python uses `None` instead of `null`, and there is no `undefined` in Python. Understanding the syntax will be key in learning Python effectively.
+2. **Typing**: Python is dynamically typed like JavaScript, but Python 3.5 introduced optional type hints. You can declare the expected types of function parameters and return values. This feature is not often used in JavaScript.
+3. **Data Structures**: Python includes a number of robust built-in data types that you'll want to be familiar with, such as lists (similar to JavaScript arrays), dictionaries (similar to JavaScript objects), sets, and tuples.
+4. **List Comprehensions**: Python offers a powerful construct called "list comprehension" that allows you to create lists in a very concise way.
+5. **Functions and Decorators**: Python has first-class functions like JavaScript. You should understand how Python treats functions and how to use decorators to modify the behavior of functions and classes.
+6. **Error Handling**: Python's `try`/`except` blocks are similar to JavaScript's `try`/`catch`, but there are subtle differences. Python also uses the `else` and `finally` clauses in error handling.
+7. **Libraries and Frameworks**: Familiarize yourself with the Python standard library, and also with external libraries and frameworks that are most relevant to your work, like Flask or Django for web development, NumPy and pandas for data analysis, etc.
+8. **Object-Oriented Programming**: While JavaScript has prototype-based inheritance, Python has a more traditional class-based inheritance system. You should understand classes in Python, how inheritance works, and how to use special "dunder" methods to control how your classes behave.
+9. **Iterators and Generators**: These are advanced concepts that can be very useful in Python. While JavaScript has similar concepts (for example, generators introduced in ES6), the Python approach could feel different.
+10. **Concurrency and Parallelism**: Python's approach to concurrency is different from JavaScript. Python has threads, a Global Interpreter Lock (GIL), and also features like async IO (Python coroutines) which may be similar to JavaScript's Promises and async/await.
 
 ## Multiple versions and environments
 
@@ -83,7 +97,7 @@ Method 2: Import the entire file:
 - Boolean: **`bool`**
 - Collections:
   - **`list`** (“array”) e.g. `["apple", "banana", "cherry"]`, get value with `my_array[0]` (ordered, changeable)
-  - **`tuple`** e.g. `("apple", "banana", "cherry")` (ordered, unchangeable)
+  - **`tuple`** e.g. `("apple", "banana", "cherry")` (ordered, unmutable)
   - **`dict`** (“object/collection”) e.g. `{"name": "value"}`, get `value` with `my_dict["name"]` (ordered from v3.7, changeable)
     - Merge dicts with `new_dict = old_dict | new_values`
   - **`set`** e.g. `{"string", 123, true}` (unordered, unindexed, can add/remove but not change items)
@@ -132,6 +146,46 @@ Named parameters when calling: `my_function(param1 = 100)`
     def greet(name: str = "Joan") -> str:
       return "Hello, " + name
 
+### Error handling
+
+Try/catch:
+
+    try:
+      await my_function()
+    except Exception as error:
+      return json({ error: error })
+
+Throw error:
+
+    raise TypeError('Argument should be an integer or a float value')
+
+Error types:
+
+`TypeError`, `ValueError`, `KeyError`, `IndexError`, `RuntimeError`, `NotImplementedError`
+
+Custom error type:
+
+    class MyCustomError(Exception):
+        pass
+
+    raise MyCustomError("This is a custom error")
+
+### Types and error handling
+
+    def divide(numerator: float, denominator: float) -> float:
+        if not isinstance(numerator, (int, float)):
+            raise TypeError('Numerator must be a number')
+        if not isinstance(denominator, (int, float)):
+            raise TypeError('Denominator must be a number')
+        if denominator == 0:
+            raise ValueError('Cannot divide by zero')
+        return numerator / denominator
+
+Multiple types:
+
+    def greet(name: Optional[str] = None):
+    def greet(name: Union[str, None] = None):
+
 ### Classes
 
     # person = Person(name, age).create()
@@ -178,6 +232,11 @@ Ternary expression:
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
+Includes:
+
+    if person in employees:
+        print("You’re an employee")
+
 ### Loops
 
     for i in range(1, 5):
@@ -193,19 +252,6 @@ Ternary expression:
 
     new_list = map(lambda n: n + 10, my_list)
 
-### Error handling
-
-Try/catch:
-
-    try:
-      await my_function()
-    except Exception as error:
-      return json({ error: error })
-
-Throw error:
-
-    raise TypeError('Argument should be an integer or a float value')
-
 ### Promises and Async/Await
 
     async def ping_local():
@@ -215,14 +261,13 @@ Throw error:
 
 https://realpython.com/primer-on-python-decorators/
 
-    def my_decorator(func):
-        def wrapper():
-            print("Something is happening before the function is called.")
-            func()
-            print("Something is happening after the function is called.")
+    def print_function_name(func):
+        def wrapper(*args, **kwargs):
+            print(f"\n◆ Calling '{func.__name__}'...\n", args[1:])
+            return func(*args, **kwargs)
         return wrapper
 
-    @my_decorator
+    @print_function_name
     def say_whee():
         print("Whee!")
 
@@ -234,6 +279,11 @@ https://realpython.com/primer-on-python-decorators/
       sys.exit()
     else:
       get_files_in_folder(sys.argv[1])
+
+### Reading environment variables
+
+    import os
+    my_variable = os.environ['MY_VARIABLE']
 
 ### Files and folders
 
@@ -257,6 +307,12 @@ Unit testing libraries in Python such as PyUnit and PyTest
 
 
 ## Linting and Prettifying Python Code
+
+Linting: Flake8
+
+    pip install flake8
+
+Formatting: Black:
 
     pip3 install black
 

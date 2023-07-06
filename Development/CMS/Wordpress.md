@@ -247,14 +247,43 @@ https://public-api.wordpress.com/rest/v1.1/sites/amazingstartupguide.wordpress.c
 
 ## Installing Wordpress (Mac)
 
-1. Download MAMP for Apache/MySQL: https://www.mamp.info/en/mac/
-2. Run MAMP in Applications. Dashboard on http://localhost:8888/MAMP/
-3. Set up database: http://localhost:8888/phpMyAdmin/
-2. Download WordPress: https://wordpress.org/download/
-3. Unzip to `/Applications/MAMP/htdocs/wordpress`
-4. Login as root/root
+1. Download MAMP: https://www.mamp.info/en/mac
+2. Start MAMP (not MAMP PRO) from your Applications folder. You can configure MAMP so it automatically starts/stops Apache/MySQL when MAMP starts/stops. Dashboard on http://localhost:8888/MAMP/
+3. Create a new MySQL database called `wordpress` on http://localhost:8888/phpMyAdmin/
+4. Download WordPress: https://wordpress.org/download/
+5. Unzip to `/Applications/MAMP/htdocs/wordpress` (this is the default folder, you can configure Apache to have files somewhere else, and have multiple sites)
+6. Go to http://localhost:8888/wordpress/ and create your new site and WordPress admin user. Username and password are both "root".
+7. Manage your WordPress site on http://localhost:8888/wordpress/wp-admin/
+8. The WordPress site is now running on http://localhost:8888/wordpress/
 
-https://www.elegantthemes.com/blog/tips-tricks/how-to-create-a-local-wordpress-installation-on-a-mac
+More info: https://www.elegantthemes.com/blog/tips-tricks/how-to-create-a-local-wordpress-installation-on-a-mac
+
+## Multiple sites on same machine
+
+1. Go to MAMP > Preferences > Ports and set Apache Port to be 80
+2. Add host to `sudo pico /etc/hosts` and add a row `127.0.0.1    local.MYSITE.COM`
+3. Edit `/Applications/MAMP/conf/apache/httpd.con` and add:
+
+		NameVirtualHost *
+		
+		<VirtualHost *>
+		DocumentRoot "/Applications/MAMP/htdocs"
+		ServerName localhost
+		</VirtualHost>
+		
+		<VirtualHost *>
+		DocumentRoot "/path/to/MYSITE"
+		ServerName local.MYSITE.COM
+		</VirtualHost>
+
+4. Change MySQL settings in `wordpress/wp-config.php`
+
+https://serverfault.com/questions/146550/how-to-set-up-multiple-websites-virtual-hosts-on-mamp
+
+## Add a custom theme
+
+1. Clone the custom theme `wp-theme` into `/Applications/MAMP/htdocs/wordpress/wp-content/themes/wp-theme`
+2. Activate the theme under http://localhost:8888/wordpress/wp-admin/themes.php
 
 ## Adding a plugin manually
 
@@ -265,3 +294,7 @@ https://www.elegantthemes.com/blog/tips-tricks/how-to-create-a-local-wordpress-i
 ## Making a plug-in
 
 https://codex.wordpress.org/Writing_a_Plugin
+
+# WooCommerce
+
+- Install in http://localhost:8888/wordpress/wp-admin/plugin-install.php?s=woocommerce&tab=search
