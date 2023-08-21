@@ -83,18 +83,24 @@ Tom’s:
 
 #### package.json
 
-	"upgrade-expo": "yarn global add expo-cli; yarn global add eas-cli; expo-cli upgrade; expo doctor --fix-dependencies",
+	"upgrade-expo": "npx expo-doctor; yarn; yarn api",
 	"dev": "yarn start",
 	"start": "expo start",
 	"eject": "expo eject",
-	"test": "echo 'Running Standard.js and Jest unit tests...\n' && yarn lint && yarn unit",
-	"unit": "jest --watchAll",
+	"test": "echo 'Running Standard.js and Jasmine unit tests...\n' && yarn lint && yarn unit",
+	"unit": "babel-node spec/run.js",
 	"lint": "ts-standard",
 	"fix": "ts-standard --fix",
-	"new": "cp screens/PlaceHolderScreen.tsx screens/NewScreen.tsx; echo \"Now rename 'screens/NewScreen.tsx' to whatever you want.\"",
+	"news": "mkdir -p components/screens/New; cp components/screens/PlaceHolder.tsx components/screens/New.tsx; echo \"Now rename file 'components/screens/New.tsx' to whatever you want.\"",
+	"newc": "cp components/common/Centered.tsx components/common/New.tsx; echo \"Now rename/move 'components/common/New.tsx' to whatever you want.\"",
+	"newn": "cp components/navigators/OnboardingStackNavigator.tsx components/navigators/NewStackNavigator.tsx; echo \"Now rename/move 'components/navigators/NewStackNavigator.tsx' to whatever you want.\"",
 	"pub": "expo publish",
-	"build": "eas build --platform ios",
-	"submit": "eas submit --platform ios --latest",
+	"build:ios": "eas build --platform ios",
+	"build:android": "eas build --platform android",
+	"submit:ios": "eas submit --platform ios --latest",
+	"submit:android": "eas submit --platform android --latest",
+	"submit:hotfix": "eas update",
+	"api": "eval $(grep '^SUPABASE_URL' .env.local) && eval $(grep '^SUPABASE_API_KEY' .env.local) && npx openapi-typescript@5.4.0 ${SUPABASE_URL}/rest/v1/?apikey=${SUPABASE_API_KEY} --output types/supabase.ts"
 
 ### Installing packages
 

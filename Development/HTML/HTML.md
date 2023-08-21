@@ -374,6 +374,7 @@ object-size: cover;
 ### autocapitalize
 
     autocapitalize="none"
+    autocapitalize="words"
 
 ### autocomplete
 

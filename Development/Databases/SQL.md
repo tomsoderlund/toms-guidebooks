@@ -47,18 +47,29 @@ e.g. `WHERE person.company_id = company.id`
 	\connect my_database
 	\list my_database
 	
-	\list: lists all the databases
 	\connect: connect to database
+
+List databases
+
+	\list
+
+Delete database
+
+	DROP DATABASE my_database;
+
+### Rename database
+
+	ALTER DATABASE "db" RENAME TO "newdb";
 
 ## List tables:
 
-	\dt: list tables in database
+	\dt
 
 List all:
 
 	\dt *.*
 
-## See database users
+## See users
 
 List users:
 
@@ -68,9 +79,9 @@ Current user:
 
 	SELECT current_user;
 
-## Rename database
+Create user
 
-	ALTER DATABASE "db" RENAME TO "newdb";
+	CREATE USER username [WITH PASSWORD 'password'];
 
 ## Data types
 
@@ -561,6 +572,17 @@ Example: `app.id_generator`:
 			result := result | (seq_id);
 		END;
 	$$;
+
+## Schemas (namespaces)
+
+	SELECT table_name
+	FROM information_schema.tables
+	WHERE table_schema = 'public';
+
+Move to another schema:
+
+	ALTER TABLE public.my_table
+	SET SCHEMA company.departments;
 
 # MySQL
 

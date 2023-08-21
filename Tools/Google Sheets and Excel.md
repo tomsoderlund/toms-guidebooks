@@ -10,7 +10,7 @@ https://support.google.com/docs/table/25273
 INDIRECT("Sheet2!B" & C2)
 
 // Dynamically get row/column from another sheet
-=INDIRECT($A$2 & "!r"&row($A2) & "c"&column(B$1)-1, false)
+=INDIRECT("Sheet name!r" & ROW($A2) & "c" & (COLUMN(B$1)-1), false)
 
 R2C2
 

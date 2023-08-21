@@ -1646,6 +1646,19 @@ Open window:
 		return false
 	}
 
+Get all field values from form, 1 line:
+
+	let form = document.forms[0]; let formValues = {}; for (let i = 0; i < form.elements.length; i++) { let element = form.elements[i]; if (element.name) formValues[element.name] = element.value; }; console.log(formValues);
+
+Full version:
+
+	let form = document.forms[0];
+	let formValues = {};
+	for (let i = 0; i < form.elements.length; i++) {
+		let element = form.elements[i];
+		if (element.name) formValues[element.name] = element.value;
+	}
+	console.log(formValues);
 
 ## Web Workers / Service Workers
 

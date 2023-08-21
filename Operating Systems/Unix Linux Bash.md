@@ -52,7 +52,7 @@ For Python "env":
 
 Huggingface models:
 
-	find ~/.cache/huggingface/hub -type d | xargs du -chs | grep -v "0B" | grep -v "K   "
+	find ~/.cache/huggingface/hub -type d | xargs du -chs | grep -v "0B" | grep -v "K	"
 
 ## File lists
 
@@ -142,9 +142,9 @@ To see file contents too (just `-r`):
 ### Write to text file
 
 	echo '{
-	  "compilerOptions": {
-	    "baseUrl": "."
-	  }
+		"compilerOptions": {
+			"baseUrl": "."
+		}
 	}' > jsconfig.json
 
 ### Search/replace:

@@ -553,8 +553,6 @@ https://leerob.io/blog/nextjs-firebase-serverless
           width: 400px;
           height: 400px;
         }
-        .next-image :global(img) {
-        }
 
         @media (max-width: 600px) {
           .next-image {

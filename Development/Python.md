@@ -90,13 +90,17 @@ Method 2: Import the entire file:
     import my_lib as my_lib
     my_lib.my_function(a, b)
 
+Local file in same folder:
+
+    from .my_lib import MyLib
+
 ### Data types
 
 - Text string: **`str`**, multiline with 3 quotes (single `"` or double `'`)
 - Number: **`int`**, **`float`**, **`complex`**
 - Boolean: **`bool`**
 - Collections:
-  - **`list`** (“array”) e.g. `["apple", "banana", "cherry"]`, get value with `my_array[0]` (ordered, changeable)
+  - **`list`** (“array”) e.g. `["apple", "banana", "cherry"]`, get value with `my_list[0]`, length `len(my_list)` (ordered, changeable)
   - **`tuple`** e.g. `("apple", "banana", "cherry")` (ordered, unmutable)
   - **`dict`** (“object/collection”) e.g. `{"name": "value"}`, get `value` with `my_dict["name"]` (ordered from v3.7, changeable)
     - Merge dicts with `new_dict = old_dict | new_values`
@@ -123,6 +127,11 @@ Cast with e.g. `str(123)`
 
     len(my_list)
 
+Filter:
+
+    filtered_big_list = [item for item in big_list if item.get('name') == 'X']
+    filtered_big_list = list(filter(lambda item: item.get('name') == 'X', big_list))
+
 #### `dict` (“collections”)
 
     my_dict.get("listKey", "default value")
@@ -133,7 +142,7 @@ Cast with e.g. `str(123)`
       print("Hello from a function")
       return 1 # Or 'pass'
 
-Lambda (short) function: `add10 = lambda n: n + 10`
+Lambda (short) function (like JavaScript arrow function): `add10 = lambda n: n + 10`
 
 String function: `f'This is dynamic: {expression}'`
 
