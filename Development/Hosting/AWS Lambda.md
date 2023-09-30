@@ -55,9 +55,10 @@ Test Lambda:
 
     exports.handler = async function myLambdaFunction (event, context) {
         // TODO implement
+        const { name } = typeof event.body === 'string' ? JSON.parse(event.body) : event.body
         const response = {
             statusCode: 200,
-            body: JSON.stringify('Hello from Lambda!'),
+            body: JSON.stringify(`Hello ${name} from Lambda!`),
         };
         return response;
     };

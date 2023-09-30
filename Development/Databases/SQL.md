@@ -301,6 +301,10 @@ as part of `SELECT`:
 	(CASE WHEN username IS NOT NULL THEN username ELSE CAST(article.user_id AS varchar) END) AS user
 	INITCAP(CASE WHEN product.name ILIKE brand.name || '%' THEN product.name ELSE CONCAT(brand.name, ' ', product.name) END) AS product_name
 
+Update with `RANDOM()`:
+
+	UPDATE "order" SET goodsowner_id = (CASE WHEN RANDOM() < 0.5 THEN 21 ELSE 12 END);
+
 ### Nested SELECT with ()
 
 	SELECT * FROM (
@@ -517,21 +521,27 @@ Example: return SETOF
 		SELECT * FROM planets;
 	$$;
 
-Example with custom return table:
+Example with custom `RETURNS table` definition:
 
-	CREATE OR REPLACE FUNCTION all_users(created_from timestamp, created_to timestamp)
-	RETURNS TABLE (
-		f_id uuid,
-		f_email text,
-		f_full_name text
+	CREATE OR REPLACE FUNCTION public.get_order(_orderid integer)
+	RETURNS table (
+		orderid integer,
+		transportername text,
+		orderednumberofitems decimal
 	)
 	LANGUAGE plpgsql
 	AS $$
-		BEGIN
-			RETURN QUERY
-			SELECT id, email, full_name FROM users BETWEEN created_from AND created_to
-		END
+	BEGIN
+		RETURN query
+		SELECT
+			orderid,
+			transportername,
+			orderednumberofitems
+		FROM orders
+		WHERE orderid = _orderid;
+	END;
 	$$;
+
 
 Example: `add_geometry`:
 

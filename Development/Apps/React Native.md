@@ -520,7 +520,7 @@ https://docs.expo.dev/build/eas-json/
 ### Deploying an iOS app on App Store (OLD way with `expo build`)
 
 1. Create your app on https://appstoreconnect.apple.com/
-2. Enter the same app bundle ID in `app.json`
+2. Enter the same app Bundle ID (also SKU) in `app.json`
 3. Build with `expo build:ios` (option: `--clear-provisioning-profile`)
 4. Upload IPA file with Application Loader on macOS (might need app-specific password on https://appleid.apple.com/)
 5. App Store Connect takes ~1 hour to process a new build, then you can use TestFlight for testing.

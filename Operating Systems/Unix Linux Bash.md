@@ -104,6 +104,10 @@ To see file contents too (just `-r`):
 
 	egrep -r --exclude-dir={node_modules,bower_components,build,dist,.git,.next,_next,.expo} --include="*.js" "localStorage" ~/Documents/Development
 
+Find component names inside TSX files:
+
+	find dashboard/src/components/shared -type f -name "*.tsx" -exec grep -Hn "^export default" {} +
+
 ### Find text on web pages
 
 	curl -v --silent https://server.com/project.json 2>&1 | tr '{' '\n{' | grep 'searchstring' >> output.txt

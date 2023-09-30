@@ -117,6 +117,7 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 	process.stdout.write('no line')
 
 	console.time('myFunction')
+	console.timeLog('myFunction', 'current state...')
 	console.timeEnd('myFunction')
 	myFunction: 3465.123ms
 
@@ -273,13 +274,19 @@ http://javascript.crockford.com/prototypal.html
 
 ### Custom classes
 
-	/* Custom class: var myMyClass = new MyClass('foo') */
-	function MyClass (property) {
+	/**
+	 * A custom class: const myMyClass = new MyClass('foo')
+	 *
+	 * @constructor
+	 * @param {number} myProperty A number for...
+	 * @returns {MyClass} The new MyClass object
+	 */
+	function MyClass (myProperty) {
 		// Private
-		const privateVariable = property * 2
+		const privateVariable = myProperty * 2
 		const privateMethod = function () {}
 		// Public
-		this.publicProperty = property * 3
+		this.publicProperty = myProperty * 3
 		this.publicPrivilegedMethodOnInstance = function () {}
 		this.getPrivateVariable = function () { return privateVariable }
 	}
@@ -708,6 +715,14 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 	      ? match.toLowerCase()
 	      : match.toUpperCase())
 
+	const snakeToCamel = str =>
+		str.toLowerCase().replace(/([-_][a-z])/g, group =>
+			group
+				.toUpperCase()
+				.replace('-', '')
+				.replace('_', '')
+		);
+
 	const camelToKebab = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
 	const kebabToCamel = str => str.replace(/(-\w)/g, match => match[1].toUpperCase())
 
@@ -1092,7 +1107,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	thisYear = new Date().getYear() + 1900
 
 	const formatDate = (dateObj = new Date()) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
-	const formatTime = (dateObj = new Date()) => `${dateObj.getHours()}:${dateObj.getMinutes()}`
+	const formatTime = (dateObj = new Date()) => `${`0${dateObj.getHours()}`.slice(-2)}:${`0${dateObj.getMinutes()}`.slice(-2)}`
+	const formatDateTime = (dateObj = new Date()) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)} ${`0${dateObj.getHours()}`.slice(-2)}:${`0${dateObj.getMinutes()}`.slice(-2)}`
 
 	`[${new Date().getHours()}:${new Date().getMinutes()}]`
 
@@ -1112,6 +1128,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 			+ ":" + dateObj.getSeconds()
 		)
 	}
+
+	const formatSqlDate = (new Date(date)).toISOString().slice(0, 19).replace('T', ' ')
 
 	// Compare dates
 	const diffInMillisecs = (oldDate, newDate = new Date()) => newDate - oldDate
@@ -1201,7 +1219,7 @@ Wait, Sleep etc
 	setTimeout(() => console.log('setTimeout'), 1000)
 
 	// async
-	const timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+	const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds))
 
 	// Repeat
 	setInterval(doEverySecond, 1000)
@@ -1893,7 +1911,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// empty
 	const empty = (obj) => obj && Object.keys(obj).length === 0 && obj.constructor === Object
 
-	// Conditional/optional object elements
+	// Conditional/optional destructure/unpack object/array elements
 	const obj = {
 		a: 1,
 		...(true && { b: 2 }),
@@ -2432,13 +2450,14 @@ http://usejsdoc.org
 	}
 
 	/**
-	 * Represents a book.
+	 * A class representing a book.
 	 * @constructor
 	 * @param {string} title The title of the book.
-	 * @returns {number} The x value
-	 * @throws NullPointerException
+	 * @param {Array<string>|Array<number>} authors A list of authors or author ID’s.
+	 * @returns {Object<string, any>} The new Book object
+	 * @throws {DivideByZero} Argument authors can’t be an empty list.
 	 */
-	function Book(title) {
+	function Book(title, authors) {
 	}
 
 Module:

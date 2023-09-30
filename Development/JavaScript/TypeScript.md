@@ -63,14 +63,27 @@ See https://stackoverflow.com/a/65948871 and https://javascript.plainenglish.io/
       };
     }
 
-Interface as Array:
+Type as Array:
 
-    interface MyArrayInterface {
-      0: number,
-      1: (startValue: number) => void
+    type MyArrayInterface = [
+      number,
+      (startValue: number) => void
+    ]
+
+### class
+
+    class Message {
+      sender: string;
+      text: string;
+
+      constructor(sender: string, text: string) {
+        this.sender = sender;
+        this.text = text;
+      }
     }
 
-#### Combining types/interfaces
+
+## Combining and extending types/interfaces
 
 - AND/Combined: `Human & Customer`
 - OR: `string | null`
@@ -80,6 +93,11 @@ Interface as Array:
     interface RentalInputs extends ProductVariant, Customer, Rental {}
     type RentalInputs = ProductVariant & Customer & Rental
 
+    type VideoWithUser = Video & {
+      username?: string
+      user_image_url?: string
+    }
+
     interface OrderCompleted extends Order {
       completed?: boolean
     }
@@ -88,7 +106,8 @@ Interface as Array:
       inputs: ProductVariant & Customer & Rental
     }
 
-#### Partial/optional
+
+## Partial/optional
 
     export const AppContext = `React.createContext`<Partial<ContextProps>>({})
 
@@ -99,13 +118,6 @@ Pick:
 Omit:
 
     type TodoInfo = Omit<Todo, 'completed' | 'createdAt'>
-
-Extend:
-
-    type VideoWithUser = Video & {
-      username?: string
-      user_image_url?: string
-    }
 
 
 ## Data types
@@ -161,7 +173,7 @@ Function in interface:
 
     interface MenuPopoverProps {
       open: boolean;
-      onClose: (event: `React.SyntheticEvent`) => void;
+      onClose: (event: React.SyntheticEvent) => void;
       anchorEl: HTMLFormElement;
     }
 
@@ -380,6 +392,51 @@ Usage: `event: HTMLElementEvent<HTMLTextAreaElement>`
 `useState`:
 
     const [productInfo, setProductInfo] = useState<ProductInfo>({ sku: '', name: ''})
+
+### Components with generic types
+
+You can create higher-order components that take a type argument and return a component configured for that type.
+
+    import React from 'react';
+
+    interface MyComponentProps<T> {
+      data: T;
+      render: (data: T) => JSX.Element;
+    }
+
+    const MyComponent = <T extends {}>({ data, render }: MyComponentProps<T>) => {
+      return <div>{render(data)}</div>;
+    };
+
+    export default MyComponent;
+
+#### Factory method
+
+1. **Define a Function that Takes a Type Argument**:
+   ```typescript
+   function createMyComponent<T>() {
+     type MyComponentProps = {
+       data: T;
+       // Other props if needed
+     };
+
+     return function MyComponent (props: MyComponentProps) {
+       // You can use props.data inside the component, and TypeScript will know it's of type T
+       return (
+         <div>
+           {/* Render props.data or other content here */}
+         </div>
+       );
+     };
+   }
+   ```
+
+2. **Use the Function to Create Components for Specific Types**:
+   ```typescript
+   const MyComponentForMyDataType = createMyComponent<MyDataType>();
+
+   <MyComponentForMyDataType data={myData} />
+   ```
 
 ### TypeScript in Next.js
 

@@ -155,6 +155,13 @@ Named parameters when calling: `my_function(param1 = 100)`
     def greet(name: str = "Joan") -> str:
       return "Hello, " + name
 
+For multiple return values, use `Tuple`:
+
+    from typing import List, Tuple
+
+    class Calculator:
+        def other_costs_specification(costs_for_owner) -> Tuple[List[List], List[List]]:
+
 ### Error handling
 
 Try/catch:

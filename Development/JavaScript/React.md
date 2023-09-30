@@ -5,7 +5,7 @@
 
 ## React
 
-- React is just the View layer. **Flux** (incl. **Redux**) is the Model layer.
+- React is just the View layer. **Flux** (incl. **Redux**) is the Model layer.
 - **Relay** is an alternative data layer using GraphQL.
 - React is more than front-end web; can be used to generate all sorts of views: DOM, HTML, native apps etc.
 - React Native generates real native code.
@@ -267,16 +267,18 @@ Form:
 
 Checkbox (`checked`):
 
-    <span className='checkbox-wrapper'>
-      <input
-        type='checkbox'
-        name='doSendNotification'
-        id='doSendNotification'
-        checked={inputs.doSendNotification}
-        onChange={handleInputChange}
-      />
-      <label htmlFor='doSendNotification'>Send notification</label>
-    </span>
+    const Checkbox = ({ name = 'checkbox', label, value, onChange }: { name: string, label: string, value: boolean, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }): React.ReactElement => (
+      <span className='checkbox-wrapper'>
+        <input
+          type='checkbox'
+          name={name}
+          id={name}
+          checked={value}
+          onChange={onChange}
+        />
+        <label htmlFor={name}>{label}</label>
+      </span>
+    )
 
 Fieldset:
 
@@ -381,7 +383,7 @@ Fieldset:
     // import useSavedState from '../hooks/useSavedState'
     // const [myState, setMyState] = useSavedState(propertyName)
 
-#### useLocalStorage
+#### useLocalStorage / useStoredState
 
     /*
       import useLocalStorage from 'hooks/useLocalStorage'
@@ -414,18 +416,20 @@ Fieldset:
 
 #### useDebounce
 
-    // E.g. const debouncedSearchTerm = useDebounce(searchTerm, 500, value => console.log(value))
+    // E.g. const debouncedSearchTerm = useDebounce(searchTerm, 500)
     // https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
     import { useState, useEffect } from 'react'
 
-    export default function useDebounce (value, delay, onChange) {
+    type DebounceValue = string | number
+
+    export default function useDebounce (value: DebounceValue, delay: number, onChange?: (value: DebounceValue) => void): DebounceValue {
       const [debouncedValue, setDebouncedValue] = useState(value)
 
       useEffect(
         () => {
           const handler = setTimeout(() => {
             setDebouncedValue(value)
-            if (onChange) onChange(value)
+            onChange?.(value)
           }, delay)
           return () => clearTimeout(handler)
         },
@@ -1021,3 +1025,31 @@ https://visgl.github.io/react-map-gl/
 https://reactjs.org/docs/optimizing-performance.html
 
 https://nextjs.org/docs/advanced-features/measuring-performance
+
+### Material UI (MUI, @mui/material)
+
+- Basic:
+  - **Box**: Basic wrapper for styling (i.e. a `div`).
+  - **Container**: Centers content, limits width.
+- Layouts:
+  - **Stack**: For simple stacking of elements.
+  - **Grid**: For complex, responsive 2D layouts.
+- Elevated (“3D”):
+  - **Paper**: Adds elevation to UI sections.
+  - **Card**: like **Paper** but with sections for headers, content, actions.
+
+Properties:
+
+- `xs` (e.g. `<Grid item xs={4}>`): “X size”, where 12 is full width.
+
+#### MUI `Typography`
+
+- `h1`-`h5`: Headings
+- `body1`: Default body text
+- `body2`: Smaller body text
+- `subtitle1`: Slightly larger than body text, often used for subheadings
+- `subtitle2`: Smaller than `subtitle1`, also used for subheadings
+- `caption`: Small text, often used for annotations or metadata
+- `overline`: Small, often uppercase text, used for categories or metadata
+- `button`: Text for buttons
+- `inherit`: Inherits the styling from the parent component
