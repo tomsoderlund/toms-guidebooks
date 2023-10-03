@@ -76,8 +76,8 @@ https://next-code-elimination.now.sh/
 
 ## Inherit another page (export/import)
 
-	export { default } from './OtherPage'
-	import { default as OtherPage } from './OtherPage'
+	// import { default as OtherPage } from './OtherPage'
+	import OtherPage from './OtherPage'
 	export { getStaticProps, getStaticPaths } from './OtherPage'
 	
 	export default OtherPage

@@ -554,23 +554,45 @@ Steps:
 - Docs: https://docs.expo.dev/submit/android/
 - Set up your app on https://play.google.com/console/
 - `app.json`: you need `expo.android.versionCode` (integer). Suggestion: version `0.4.3` -> `"versionCode": 1000004003`
-- Set the Privacy Policy in Policy → App Content
+- Set the Privacy Policy in Dashboard → Privacy Policy (old: Policy → App Content)
 - First time: upload AAB file manually to Play Console
-- Then: create Service Account: https://expo.fyi/creating-google-service-account
-  - API Access: https://play.google.com/console/developers/[YOUR-ID]/api-access
-	- Set permissions and invite Service Account user
-	- Place JSON key in `mkdir -p appstores/googleplay` folder (optional: `.gitignore` this file)
-	- Update `eas.json`:
 
-		"submit": {
-			"production": {
-				"android": {
-					"track": "internal",
-					"releaseStatus": "draft",
-					"serviceAccountKeyPath": "./appstores/googleplay/pc-api-9052926321037412225-601-6bf892805fe0.json"
-				}
-			}
+#### Service Account for EAS submissions
+
+**Note:** You can use a **shared** service account for all your apps
+
+- Create Service Account: https://expo.fyi/creating-google-service-account
+- API Access: https://play.google.com/console/developers/[YOUR-ID]/api-access
+- Set permissions and invite Service Account user
+- Place JSON key in `mkdir -p appstores/googleplay` folder (optional: `.gitignore` this file)
+- Update `eas.json`:
+
+```"submit": {
+	"production": {
+		"android": {
+			"track": "internal",
+			"releaseStatus": "draft",
+			"serviceAccountKeyPath": "./appstores/googleplay/pc-api-9052926321037412225-601-6bf892805fe0.json"
 		}
+	}
+}
+```
+
+### Running native libraries outside of Expo Go
+
+Build Xcode project etc:
+
+	npx expo prebuild --platform ios
+
+#### On Simulator
+
+	npx expo run:ios
+
+#### On device
+
+Start server:
+
+	npx expo run:ios --device
 
 ### Using GitHub Actions with Expo/EAS
 
@@ -748,61 +770,11 @@ https://github.com/DaniAkash/react-native-responsive-dimensions
 	// in styles:
 	height: responsiveHeight(50), // 50% of screen height
 
-#### Other styles
+### Payments with RevenueCat
 
-https://reactnative.dev/docs/view-style-props
-
-	backfaceVisibility
-	backgroundColor
-	borderColor
-		borderBottomColor, borderEndColor, borderLeftColor, borderRightColor, borderStartColor, borderTopColor
-	borderWidth
-		borderBottomWidth, borderEndWidth, borderLeftWidth, borderRightWidth, borderStartWidth, borderTopWidth
-	borderStyle
-		borderRadius, borderBottomEndRadius, borderBottomLeftRadius, borderBottomRightRadius, borderBottomStartRadius, borderTopEndRadius, borderTopLeftRadius, borderTopRightRadius, borderTopStartRadius
-	opacity
-	aspectRatio: number
-	direction
-	display
-	start, end
-	left, right
-	top, bottom
-	width, height
-	minWidth, maxWidth
-	minHeight, maxHeight
-	overflow
-	margin, marginBottom, marginEnd, marginHorizontal, marginLeft, marginRight, marginStart, marginTop, marginVertical
-	padding, paddingBottom, paddingEnd, paddingHorizontal, paddingLeft, paddingRight, paddingStart, paddingTop, paddingVertical
-	position
-	zIndex, elevation
-
------
-
-	color
-	fontFamily
-	fontSize
-	fontStyle: normal, italic
-	fontVariant: small-caps, oldstyle-nums, lining-nums, tabular-nums, proportional-nums
-	fontWeight
-	includeFontPadding: true/false
-	letterSpacing
-	lineHeight
-	textAlign: auto, left, right, center, justify
-	textAlignVertical: auto, top, bottom, center
-	textDecorationColor
-	textDecorationLine
-	textDecorationStyle
-	textTransform
-	writingDirection
-
------
-
-	shadowColor, shadowOffset, shadowRadius, shadowOpacity
-	textShadowColor, textShadowOffset, textShadowRadius
-
------
-
-	backgroundColor
-	overlayColor
-	resizeMode
-	tintColor
+- Set up IAP products first in App Center, with Product ID e.g. “credits50”.
+	- Make sure to fill out all fields including testing fields, so the status is “Ready for Review”.
+- Then import into “Products” in RevenueCat
+- Then create Offering with a shared identifier e.g. “credits”
+	- Create new packages (e.g. “credits-50”) inside the Offering, and attach the Product
+- “Entitlements” is used for subscriptions
