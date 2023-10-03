@@ -264,17 +264,19 @@ More info: https://www.elegantthemes.com/blog/tips-tricks/how-to-create-a-local-
 2. Add host to `sudo pico /etc/hosts` and add a row `127.0.0.1    local.MYSITE.COM`
 3. Edit `/Applications/MAMP/conf/apache/httpd.con` and add:
 
-		NameVirtualHost *
-		
-		<VirtualHost *>
-		DocumentRoot "/Applications/MAMP/htdocs"
-		ServerName localhost
-		</VirtualHost>
-		
-		<VirtualHost *>
-		DocumentRoot "/path/to/MYSITE"
-		ServerName local.MYSITE.COM
-		</VirtualHost>
+```
+	NameVirtualHost *
+	
+	<VirtualHost *>
+	DocumentRoot "/Applications/MAMP/htdocs"
+	ServerName localhost
+	</VirtualHost>
+	
+	<VirtualHost *>
+	DocumentRoot "/path/to/MYSITE"
+	ServerName local.MYSITE.COM
+	</VirtualHost>
+```
 
 4. Change MySQL settings in `wordpress/wp-config.php`
 

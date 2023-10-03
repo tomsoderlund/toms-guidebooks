@@ -569,7 +569,8 @@ Steps:
 - Place JSON key in `mkdir -p appstores/googleplay` folder (optional: `.gitignore` this file)
 - Update `eas.json`:
 
-```"submit": {
+```
+"submit": {
 	"production": {
 		"android": {
 			"track": "internal",
