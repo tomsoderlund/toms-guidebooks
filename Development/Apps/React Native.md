@@ -190,12 +190,14 @@ Get web viewport size:
 	import { Dimensions } from 'react-native'
 	const { width, height } = Dimensions.get('window')
 
+
 ## Assets
 
 - favicon.png: 48px
 - icon.png: 1024px
 - adaptive-icon.png: 1024px
 - splash.png: 1284×2778px
+
 
 ## Components
 
@@ -578,21 +580,11 @@ Steps:
 }
 ```
 
-### Running native libraries outside of Expo Go
+#### Google Play: “No deobfuscation file”
 
-Build Xcode project etc:
+> There is no deobfuscation file associated with this App Bundle. If you use obfuscated code (R8/proguard), uploading a deobfuscation file will make crashes and ANRs easier to analyze and debug. Using R8/proguard can help reduce app size.
 
-	npx expo prebuild --platform ios
-
-#### On Simulator
-
-	npx expo run:ios
-
-#### On device
-
-Start server:
-
-	npx expo run:ios --device
+https://stackoverflow.com/questions/73193134/obfuscate-an-expo-file
 
 ### Using GitHub Actions with Expo/EAS
 
@@ -646,6 +638,65 @@ Example `.github/workflows/production.yml`:
 
 				- name: 🚚 Submit app to TestFlight
 					run: eas submit --latest --platform ios
+
+
+## Running native libraries outside of Expo Go
+
+Build Xcode project etc:
+
+	npx expo prebuild --platform ios
+
+### On Simulator
+
+	npx expo run:ios
+
+### On device
+
+Start server:
+
+	npx expo run:ios --device
+
+## Styles
+
+https://reactnative.dev/docs/view-style-props
+
+### Flexbox
+
+https://reactnative.dev/docs/layout-props
+
+https://medium.com/wix-engineering/the-full-react-native-layout-cheat-sheet-a4147802405c
+
+- `justifyContent`: primary axis
+- `alignItems`: cross (secondary) axis
+	- `alignContent`: bunches children together as if they were one element
+	- `alignSelf`: overwrites parent’s `alignItems` property
+- `flexDirection`: column*/row
+- `flexWrap`: nowrap*/wrap
+
+On children:
+
+- `flex: 1`
+
+Styles:
+
+	flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
+	alignContent, justifyContent
+	alignItems: flex-start, flex-end, center, stretch, baseline
+	alignSelf: auto, flex-start, flex-end, center, stretch, baseline
+
+### Responsive design in React Native
+
+https://medium.com/@shanerudolfworktive/7-tips-to-develop-react-native-uis-for-all-screen-sizes-7ec5271be25c
+
+- `aspectRatio` on styles.
+- `flex: X`/`flex: Y` for proportions.
+
+https://github.com/DaniAkash/react-native-responsive-dimensions
+
+	import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions'
+	// in styles:
+	height: responsiveHeight(50), // 50% of screen height
+
 
 ## Components and Libraries
 
@@ -701,7 +752,6 @@ React Native provides two complementary animation systems:
 	
 	export default AnimationFadeIn
 
-
 ### Maps: react-native-maps
 
 https://github.com/react-native-maps/react-native-maps
@@ -728,47 +778,6 @@ AR:
 - https://arvrjourney.com/augmented-reality-with-react-native-15219f36e3f2
 - https://github.com/expo/expo-three-ar
 - https://github.com/pmndrs/react-xr → https://github.com/pmndrs/react-xr/discussions/156
-
-### Styles
-
-https://reactnative.dev/docs/view-style-props
-
-#### Flexbox
-
-https://reactnative.dev/docs/layout-props
-
-https://medium.com/wix-engineering/the-full-react-native-layout-cheat-sheet-a4147802405c
-
-- `justifyContent`: primary axis
-- `alignItems`: cross (secondary) axis
-	- `alignContent`: bunches children together as if they were one element
-	- `alignSelf`: overwrites parent’s `alignItems` property
-- `flexDirection`: column*/row
-- `flexWrap`: nowrap*/wrap
-
-On children:
-
-- `flex: 1`
-
-Styles:
-
-	flex, flexBasis, flexDirection, flexGrow, flexShrink, flexWrap
-	alignContent, justifyContent
-	alignItems: flex-start, flex-end, center, stretch, baseline
-	alignSelf: auto, flex-start, flex-end, center, stretch, baseline
-
-#### Responsive design in React Native
-
-https://medium.com/@shanerudolfworktive/7-tips-to-develop-react-native-uis-for-all-screen-sizes-7ec5271be25c
-
-- `aspectRatio` on styles.
-- `flex: X`/`flex: Y` for proportions.
-
-https://github.com/DaniAkash/react-native-responsive-dimensions
-
-	import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions'
-	// in styles:
-	height: responsiveHeight(50), // 50% of screen height
 
 ### Payments with RevenueCat
 
