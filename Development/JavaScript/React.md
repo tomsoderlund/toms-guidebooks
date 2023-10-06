@@ -219,114 +219,6 @@ Example: useFocus hook
 
     // <input ref={focusRef} />
 
-### Forms with useState
-
-Simple:
-
-    const [inputs, setInputs] = useState({ name: '' })
-
-    const handleInputChange = ({ target }) => setInputs({ ...inputs, [target.name]: target.value })
-
-Advanced:
-
-    const DEFAULT_INPUTS = { firstName: '', lastName: '' }
-
-    const [inputs, setInputs] = useState(DEFAULT_INPUTS)
-
-    const handleInputChange = ({ target }) => {
-      const value = target.type === 'checkbox' ? target.checked : target.value
-      setInputs({ ...inputs, [target.name]: value })
-      // setInputs(inputs => ({ ...inputs, [target.name]: value }))
-    }
-
-    const handleSubmit = (event) => {
-      event.preventDefault()
-      doSomethingWithData(inputs)
-    }
-
-Form:
-
-    <form onSubmit={handleSubmit}>
-      <div className='fieldset'>
-        <label htmlFor='emailField'>Email:</label>
-        <input
-          id='emailField'
-          name='email'
-          type='email'
-          autoComplete='email'
-          placeholder='Email'
-          required
-          value={inputs.email}
-          onChange={handleInputChange}
-          disabled={inProgress}
-        />
-      </div>
-
-      <button type='submit'>Submit</button>
-    </form>
-
-Checkbox (`checked`):
-
-    const Checkbox = ({ name = 'checkbox', label, value, onChange }: { name: string, label: string, value: boolean, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }): React.ReactElement => (
-      <span className='checkbox-wrapper'>
-        <input
-          type='checkbox'
-          name={name}
-          id={name}
-          checked={value}
-          onChange={onChange}
-        />
-        <label htmlFor={name}>{label}</label>
-      </span>
-    )
-
-Fieldset:
-
-    /*
-      <FieldSet label='Name'>
-        <MyComponent />
-      </FieldSet>
-    */
-    const Fieldset = ({ children, id, label, description }) => {
-      return (
-        <div className='fieldset' title={description}>
-          <label htmlFor={id + 'Field'}>{label}: </label>
-          {children}
-        </div>
-      )
-    }
-
-    /*
-      <InputWithLabel
-        id='name'
-        label='Name'
-        value={state.name}
-        onChange={setName}
-      />
-    */
-    const InputWithLabel = ({ id, label, description, placeholder, type = 'text', autoComplete = 'off', autoCapitalize = 'sentences', value, onChange, inProgress, required, disabled, className, children }) => (
-      <Fieldset
-        id={id}
-        label={label}
-        description={description}
-      >
-        <input
-          id={id + 'Field'}
-          name={id}
-          type={type}
-          autoComplete={autoComplete}
-          autoCapitalize={autoCapitalize}
-          placeholder={placeholder || description || label}
-          value={value || ''}
-          onChange={onChange}
-          required={required}
-          disabled={disabled || inProgress}
-          className={className}
-        />
-        {children}
-      </Fieldset>
-    )
-
 #### setTimeout/setInterval in a React Hook
 
     useEffect(() => {
@@ -449,7 +341,124 @@ https://github.com/zeit/swr
 
 https://github.com/vercel/swr/blob/main/examples/infinite-scroll/pages/index.js
 
-#### Dynamic className
+### Forms with useState
+
+Simple:
+
+    const [inputs, setInputs] = useState({ name: '' })
+
+    const handleInputChange = ({ target }) => setInputs({ ...inputs, [target.name]: target.value })
+
+Advanced:
+
+    const DEFAULT_INPUTS = { firstName: '', lastName: '' }
+
+    const [inputs, setInputs] = useState(DEFAULT_INPUTS)
+
+    const handleInputChange = ({ target }) => {
+      const value = target.type === 'checkbox' ? target.checked : target.value
+      setInputs({ ...inputs, [target.name]: value })
+      // setInputs(inputs => ({ ...inputs, [target.name]: value }))
+    }
+
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      doSomethingWithData(inputs)
+    }
+
+Form:
+
+    <form onSubmit={handleSubmit}>
+      <div className='fieldset'>
+        <label htmlFor='emailField'>Email:</label>
+        <input
+          id='emailField'
+          name='email'
+          type='email'
+          autoComplete='email'
+          placeholder='Email'
+          required
+          value={inputs.email}
+          onChange={handleInputChange}
+          disabled={inProgress}
+        />
+      </div>
+
+      <button type='submit'>Submit</button>
+    </form>
+
+Checkbox (`checked`):
+
+    const Checkbox = ({ name = 'checkbox', label, value, onChange }: { name: string, label: string, value: boolean, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }): React.ReactElement => (
+      <span className='checkbox-wrapper'>
+        <input
+          type='checkbox'
+          name={name}
+          id={name}
+          checked={value}
+          onChange={onChange}
+        />
+        <label htmlFor={name}>{label}</label>
+      </span>
+    )
+
+Fieldset:
+
+    /*
+      <FieldSet label='Name'>
+        <MyComponent />
+      </FieldSet>
+    */
+    const Fieldset = ({ children, id, label, description }) => {
+      return (
+        <div className='fieldset' title={description}>
+          <label htmlFor={id + 'Field'}>{label}: </label>
+          {children}
+        </div>
+      )
+    }
+
+    /*
+      <InputWithLabel
+        id='name'
+        label='Name'
+        value={state.name}
+        onChange={setName}
+      />
+    */
+    const InputWithLabel = ({ id, label, description, placeholder, type = 'text', autoComplete = 'off', autoCapitalize = 'sentences', value, onChange, inProgress, required, disabled, className, children }) => (
+      <Fieldset
+        id={id}
+        label={label}
+        description={description}
+      >
+        <input
+          id={id + 'Field'}
+          name={id}
+          type={type}
+          autoComplete={autoComplete}
+          autoCapitalize={autoCapitalize}
+          placeholder={placeholder || description || label}
+          value={value || ''}
+          onChange={onChange}
+          required={required}
+          disabled={disabled || inProgress}
+          className={className}
+        />
+        {children}
+      </Fieldset>
+    )
+
+#### Input: type, autoComplete, autoCapitalize
+
+    <input name='name' type='text' autoComplete='name' autoCapitalize='words' />
+    <input name='email' type='email' autoComplete='email' />
+    <input name='phone' type='tel' autoComplete='tel' />
+    <input name='streetAddress' type='text' autoComplete='street-address' autoCapitalize='words' />
+    <input name='postalCode' type='text' autoComplete='postal-code' autoCapitalize='characters' />
+    <input name='city' type='text' autoComplete='address-level2' autoCapitalize='words' />
+
+### Dynamic className
 
     <div
       className={['base-class', ...(props.className ? [props.className] : [])].join(' ')}

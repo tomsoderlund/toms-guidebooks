@@ -346,6 +346,15 @@ object-size: cover;
       </fieldset>
     </form>
 
+### Input: type, auto-complete, auto-capitalize
+
+    <input name="name" type="text" auto-complete="name" auto-capitalize="words" />
+    <input name="email" type="email" auto-complete="email" />
+    <input name="phone" type="tel" auto-complete="tel" />
+    <input name="streetAddress" type="text" auto-complete="street-address" auto-capitalize="words" />
+    <input name="postalCode" type="text" auto-complete="postal-code" auto-capitalize="characters" />
+    <input name="city" type="text" auto-complete="address-level2" auto-capitalize="words" />
+
 ### input type
 
 - button

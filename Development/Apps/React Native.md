@@ -782,9 +782,11 @@ AR:
 
 ### Payments with RevenueCat
 
-- Set up IAP products first in App Center, with Product ID e.g. “credits50”.
-	- Make sure to fill out all fields including testing fields, so the status is “Ready for Review”.
+- **iOS:**
+	- Set up IAP products first in App Center, with Product ID e.g. “credits50”.
+		- Make sure to fill out all fields including testing fields, so the status is “Ready for Review”.
+- **Android:** Monetize → Products
 - Then import into “Products” in RevenueCat
-- Then create Offering with a shared identifier e.g. “credits”
-	- Create new packages (e.g. “credits-50”) inside the Offering, and attach the Product
+- Then create Offering with a **shared identifier** e.g. “credits”
+	- Create new packages (e.g. “credits-50”) inside the Offering, and _attach_ the two Products for iOS/Android
 - “Entitlements” is used for subscriptions
