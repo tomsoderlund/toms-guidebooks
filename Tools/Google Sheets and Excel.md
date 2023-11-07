@@ -7,63 +7,79 @@ https://support.google.com/docs/table/25273
 
 ### References to cells
 
-INDIRECT("Sheet2!B" & C2)
+	INDIRECT("Sheet2!B" & C2)
 
-// Dynamically get row/column from another sheet
-=INDIRECT("Sheet name!r" & ROW($A2) & "c" & (COLUMN(B$1)-1), false)
+Dynamically get row/column from another sheet
+
+	=INDIRECT("Sheet name!r" & ROW($A2) & "c" & (COLUMN(B$1)-1), false)
 
 R2C2
 
-// Import another workbook
-=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1W2nFTQxcJ7DSNMKPEaY6IcFBbrlFjWl6pSccK6xBzs0", "'Countries'!D:H")
-// Import one value/cell
-=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1s7EhvdUNERn7cOHjBovu-L39e6I4T7KPuKsOJlneavg", "'Sheet1'!E$3")
+
+Import another workbook
+
+	=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1W2nFTQxcJ7DSNMKPEaY6IcFBbrlFjWl6pSccK6xBzs0", "'Countries'!D:H")
+
+Import one value/cell
+
+	=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1s7EhvdUNERn7cOHjBovu-L39e6I4T7KPuKsOJlneavg", "'Sheet1'!E$3")
 
 
 ### Numbers
 
-=CEILING(number, 0.5)
+	=CEILING(number, 0.5)
 
-RANDBETWEEN(1, 2)
+	RANDBETWEEN(1, 2)
 
-// Multiply two columns, e.g. calendar-days * usage%
-=SUM(ARRAYFORMULA($C2:$C12*F2:F12))
+Multiply two columns, e.g. `calendar-days * usage%`
+
+	=SUM(ARRAYFORMULA($C2:$C12*F2:F12))
 
 
 ### Strings/Text
 
-CHAR(65)
-CODE("A")
+	CHAR(65)
+	CODE("A")
 
-
-=IF(C2<>""; "OK"; "")
+	=IF(C2<>""; "OK"; "")
 
 capitalize/title
-=PROPER("tom")
 
-SEARCH(search_for, text_to_search, starting_at) - not case-sensitive
-FIND(search_for, text_to_search, starting_at) - case-sensitive
+	=PROPER("tom")
 
-// Left of comma
-=left(B2, find(",", B2)-1)
-// Right of comma
-=right(B2, len(B2)-find(",", B2))
+Search:
 
-// Split string to array
-=SPLIT(A2, ";", FALSE)
+	SEARCH(search_for, text_to_search, starting_at) - not case-sensitive
+	FIND(search_for, text_to_search, starting_at) - case-sensitive
 
-// INDEX(array, row, column)
-=INDEX(SPLIT("1.23/1.15", "/"), 0, 2)
+Left of comma
+
+	=left(B2, find(",", B2)-1)
+
+Right of comma
+
+	=right(B2, len(B2)-find(",", B2))
+
+Split string to array
+
+	=SPLIT(A2, ";", FALSE)
+
+INDEX(array, row, column)
+
+	=INDEX(SPLIT("1.23/1.15", "/"), 0, 2)
 
 Join/concatenate cells to string
-=JOIN(";",{1,2,"1 2 3 4"})
-=JOIN(" / ",C2 & " " & D2,M2,N2)
+
+	=JOIN(";",{1,2,"1 2 3 4"})
+	=JOIN(" / ",C2 & " " & D2,M2,N2)
 
 Get string minus two last characters
-=LEFT(B2,LEN(B2)-2)
+
+	=LEFT(B2,LEN(B2)-2)
 
 // Find in cell: true if found
 =NOT(ISERR(SEARCH("keyword", F2)))
+
 // Find in cell: 1 if found, otherwise 0
 =IF(ISERR(SEARCH("keyword", F2)),0,1)
 
