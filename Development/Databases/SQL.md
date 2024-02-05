@@ -127,10 +127,10 @@ Simple client:
 
 		const postgresOptions = {
 			connectionString: config.databaseUrl,
-			ssl: { rejectUnauthorized: false },
-			// max: 5,
-			// idleTimeoutMillis: 5000,
-			// connectionTimeoutMillis: 3000
+			// max: 10, // default 10
+			// connectionTimeoutMillis: 1000, // default 0 = no timeout
+			// idleTimeoutMillis: 1000, // default 10000 ms
+			// ssl: { rejectUnauthorized: false },
 		}
 
 		// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
@@ -139,7 +139,8 @@ Simple client:
 			const client = new Client(postgresOptions)
 			await client.connect()
 			// Run function
-			const results = await functionToRun(client)
+	    const { rows } = await client.query(sqlString)
+			// OR: const results = await functionToRun(client)
 			// Release db
 			await client.end()
 			return results
@@ -156,9 +157,10 @@ With connection pooling:
 			// Connect db
 			const client = await pool.connect()
 			// Run function
-			const results = await functionToRun(client)
+	    const { rows } = await client.query(sqlString)
+			// OR: const results = await functionToRun(client)
 			// Release db
-			await client.end()
+			await client.end() // used?
 			await client.release()
 			return results
 		}
@@ -251,6 +253,10 @@ Tip: you can use `LOWER()` for lowercase formatting.
 
 	ORDER BY field_name ASC/DESC NULLS FIRST/LAST
 
+### Replace NULL with something else
+
+	SELECT COALESCE(phone_number, 'No Phone') AS phone_number FROM employees;
+
 ### Joins in Select
 
 * `INNER JOIN` (default/just `JOIN`): only show records common to both tables.
@@ -303,7 +309,7 @@ as part of `SELECT`:
 
 Update with `RANDOM()`:
 
-	UPDATE "order" SET goodsowner_id = (CASE WHEN RANDOM() < 0.5 THEN 21 ELSE 12 END);
+	UPDATE "order" SET owner_id = (CASE WHEN RANDOM() < 0.5 THEN 21 ELSE 12 END);
 
 ### Nested SELECT with ()
 
@@ -360,6 +366,22 @@ Simpler concatenation
 
 	ARRAY_AGG(category.name) AS category_names
 	ARRAY_AGG(DISTINCT(category.name)) AS unique_category_names
+
+### Analytics/Statistics query
+
+	SELECT
+		TO_CHAR(created_date, 'IW') AS period_name,
+		COUNT(*) AS total_orders
+	FROM
+		"order"
+	WHERE
+		(selected_owner_id IS NULL OR selected_owner_id = "order".owner_id)
+		AND created_date >= start_date
+		AND created_date <= end_date
+	GROUP BY
+		period_name
+	ORDER BY
+		period_name;
 
 ## Create - Insert
 
@@ -490,25 +512,28 @@ Executing the function from SQL:
 
 	SELECT * FROM my_function('Sam Lowry');
 
-View the function:
+View a function:
 
 	SELECT pg_get_functiondef('my_function'::regproc);
 
-	\df+ my_function
+In `psql`: \df+ my_function
 
-List all functions
+List all functions:
 
 	SELECT 
 		routines.routine_name AS name,
-		routines.data_type AS return_type,
-		ARRAY_AGG(parameter_name) AS parameter_names
+		ARRAY_AGG(parameters.parameter_name) AS parameter_names,
+		ARRAY_AGG(parameters.data_type) AS parameter_types,
+		routines.data_type AS return_type
 	FROM information_schema.routines
 	LEFT JOIN information_schema.parameters ON (routines.specific_name = parameters.specific_name)
 	WHERE routine_type = 'FUNCTION' AND routine_schema = 'public'
+		-- AND routines.routine_name ILIKE '%order%'
+		AND parameters.parameter_mode = 'IN'
 	GROUP BY routines.routine_name, routines.data_type
 	ORDER BY routines.routine_name;
 
-Delete the function:
+Delete a function:
 
 	DROP FUNCTION my_function;
 
@@ -593,6 +618,15 @@ Move to another schema:
 
 	ALTER TABLE public.my_table
 	SET SCHEMA company.departments;
+
+## Export/dump data
+
+	pg_dump -U postgres -h localhost -p 5432 mydatabase > mydatabase_dump.sql
+
+Restore:
+
+	psql -U [username] -h [hostname] -p [port] -d [destination_database] < [dumpfile.sql]
+
 
 # MySQL
 

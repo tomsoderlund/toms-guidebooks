@@ -6,7 +6,7 @@ With Expo (https://expo.io) the steps are easy:
 
 (First: update `expo-cli`, see “Upgrade Expo” below)
 
-1. Create a new app (`expo init [project-name]`)
+1. Create a new app (`npx create-expo-app --template`)
 2. Run it on device or simulator (`expo start`)
 3. Publish it to Expo.io (`expo publish`)
 4. Build it as native iOS/Android app with EAS

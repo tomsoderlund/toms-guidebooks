@@ -36,17 +36,12 @@ Here are a few key skills and concepts you should learn when transitioning from 
 Find packages: https://pypi.org/
 
     pip3 install torch torchvision
-    
-    # To ensure Python 3:
-    pip3 install torch torchvision
 
-### Requirements file
-
-Save:
+Save requirements file:
 
     pip3 freeze > requirements.txt
 
-Install:
+Install from requirements:
 
     pip3 install -r requirements.txt
 

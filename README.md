@@ -70,12 +70,14 @@
   - [Blender 3D](./Graphics/Blender%203D.md)
   - [Figma](./Graphics/Figma.md)
   - [Video and VFX](./Graphics/Video%20and%20VFX.md)
+  - [Apple Keynote](./Tools/Apple%20Keynote.md)
+- Music:
+  - [GarageBand](./Tools/GarageBand.md)
+  - [Teenage Engineering OP-1](./Music/Teenage%20Engineering%20OP-1.md)
 - Operating Systems:
   - [Mac OS X](./Operating%20Systems/Mac%20OS%20X.md)
   - [Unix Linux Bash](./Operating%20Systems/Unix%20Linux%20Bash.md)
 - Tools:
-  - [Apple Keynote](./Tools/Apple%20Keynote.md)
-  - [GarageBand](./Tools/GarageBand.md)
   - [Git](./Tools/Git.md)
   - [Gmail](./Tools/Gmail.md)
   - [Google Sheets and Excel](./Tools/Google%20Sheets%20and%20Excel.md)

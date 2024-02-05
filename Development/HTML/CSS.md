@@ -542,6 +542,14 @@ Code:
       font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
     }
 
+#### font-weight
+
+- thin (100)
+- normal (400)
+- medium (500)
+- bold (700)
+- heavy (900)
+
 ### Word wrap and whitespace
 
   white-space: nowrap; /* never wrap */

@@ -82,6 +82,19 @@ Type as Array:
       }
     }
 
+Abstract classes:
+
+    abstract class GameObject {
+      ctx: Expo2DContext
+
+      constructor (ctx: Expo2DContext) {
+        this.ctx = ctx
+      }
+
+      abstract setup (): void
+      abstract update (time: number): void
+      abstract draw (frameNr: number): void
+    }
 
 ## Combining and extending types/interfaces
 

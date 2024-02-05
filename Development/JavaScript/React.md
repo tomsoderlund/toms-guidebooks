@@ -405,9 +405,9 @@ Checkbox (`checked`):
 Fieldset:
 
     /*
-      <FieldSet label='Name'>
+      <Fieldset label='Name'>
         <MyComponent />
-      </FieldSet>
+      </Fieldset>
     */
     const Fieldset = ({ children, id, label, description }) => {
       return (
@@ -452,7 +452,8 @@ Fieldset:
 #### Input: type, autoComplete, autoCapitalize
 
     <input name='name' type='text' autoComplete='name' autoCapitalize='words' />
-    <input name='email' type='email' autoComplete='email' />
+    <input name='email' type='email' autoComplete='email' autoCapitalize='none' />
+    <input name='website' type='url' autoComplete='url' autoCapitalize='none' />
     <input name='phone' type='tel' autoComplete='tel' />
     <input name='streetAddress' type='text' autoComplete='street-address' autoCapitalize='words' />
     <input name='postalCode' type='text' autoComplete='postal-code' autoCapitalize='characters' />

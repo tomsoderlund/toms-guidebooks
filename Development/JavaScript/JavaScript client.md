@@ -386,9 +386,8 @@ http://javascript.crockford.com/prototypal.html
 	Math.random() // 0.0 to 1.0
 
 	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
-	const getRandomString = (length = 5) => Math.round(Math.random() * Math.pow(10, length)).toString()
-	const getRandomString = (length = 5) => window.btoa(Math.random()).substr(-length)
-	const withProbability = (prob) => Math.random() < prob
+	const getRandomNumericString = (length = 5) => Math.round(Math.random() * Math.pow(10, length)).toString()
+	const getRandomString = (length = 5) => window.btoa(Math.random().toString()).substring(-length).replace(/[^a-zA-Z]/g, '').split('').reverse().join('')
 	const getRandomFromArray = (array) => array[getRandomNumber(0, array.length - 1)]
 	// getRandomIndexFromWeightedArray([0.1, 0.3, 0.6]) --> returns index 0-2
 	const getRandomIndexFromWeightedArray = (weightedArray) => {
@@ -402,6 +401,9 @@ http://javascript.crockford.com/prototypal.html
 	const getRandomFromWeightedArray = (array, weightedArray) => array[getRandomIndexFromWeightedArray(weightedArray)]
 	const getSerialFromArray = (array, index) => array[index % array.length]
 	const otherNumber = (allNumbers, notNumber) => shuffleArray(allNumbers).filter(nr => notNumber !== nr)[0]
+
+	// if (withProbability(0.33)) { ...then }
+	const withProbability = (p) => Math.random() < p
 
 	Seeded random: https://github.com/davidbau/seedrandom
 	const seedrandom = require('seedrandom')
@@ -722,7 +724,11 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 				.replace('-', '')
 				.replace('_', '')
 		);
-
+	const snakeToPascal = (str: string): string => str
+    .split('_')
+    .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
+    .join('')
+	const snakeToKebab = (str: string): string => str.replace(/_/g, '-').toLowerCase()
 	const camelToKebab = str => str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
 	const kebabToCamel = str => str.replace(/(-\w)/g, match => match[1].toUpperCase())
 
@@ -1168,7 +1174,8 @@ Use dayjs instead (smaller):
 	import dayjs from 'dayjs'
 	dayjs(myDate).format('YYYY-MM-DD')
 	dayjs(myDate).format('HH:mm')
-	dayjs().subtract(2, 'day').format('ddd, YYYY-MM-DD HH:mm:ss')
+	dayjs(myDate).format('ddd, YYYY-MM-DD HH:mm:ss')
+	dayjs().subtract(2, 'day').getDate()
 	dayjs().diff('2018-06-05', 'day')
 
 	dayjs('2019-01-25').unix() // Unix seconds 1548381600
@@ -1951,6 +1958,35 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 			? { ...result, [key]: collection[key] }
 			: result
 	), {})
+
+	function removeUndefinedProps<T> (obj: T): Partial<T> {
+		const result: Partial<T> = {} // Create a new object to hold the result
+		for (const key in obj) {
+			if (Object.prototype.hasOwnProperty.call(obj, key)) {
+				// Check if the property exists in the original object
+				const value = obj[key]
+				if (value !== undefined) {
+					result[key] = value
+				}
+			}
+		}
+		return result
+	}
+
+	function removeUndefinedOrNullProps<T> (obj: T): Partial<T> {
+		const result: Partial<T> = {} // Create a new object to hold the result
+		for (const key in obj) {
+			if (Object.prototype.hasOwnProperty.call(obj, key)) {
+				// Check if the property exists in the original object
+				const value = obj[key]
+				if (value !== undefined && value !== null) {
+					result[key] = value
+				}
+			}
+		}
+		return result
+	}
+
 
 	// flatten
 	array.flat()
