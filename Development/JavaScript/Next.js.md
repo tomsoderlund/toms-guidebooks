@@ -583,6 +583,11 @@ or:
 See React doc (`react-svg-inline`).
 
 
+## API
+
+    req.query
+    req.body
+
 ### API timeout
 
 vercel.json:

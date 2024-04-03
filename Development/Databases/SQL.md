@@ -354,6 +354,10 @@ Example:
 	LEFT JOIN company_person ON (company_person.company_id = company.id)
 	GROUP BY company.id;
 
+### String replacement
+
+	SELECT REPLACE(column_name, 'search_string', 'replace_string') FROM table_name;
+
 ### String concatenation (STRING_AGG not CONCAT)
 
 	STRING_AGG(DISTINCT(category.name), ',') AS category_names
@@ -392,6 +396,13 @@ Multiple values:
 
 	INSERT INTO domain (name, count)
 	VALUES ('domain1.se', 2), ('domain2.se', 3);
+
+## Upsert
+
+	INSERT INTO "${tableName}" (${keyFieldNames}, ${otherFieldNames.join(', ')})
+	VALUES (${allFieldValues.join(', ')})
+	ON CONFLICT (${keyFieldNames})
+	DO UPDATE SET ${otherFieldNames.map(fieldName => `${fieldName} = EXCLUDED.${fieldName}`).join(', ')};
 
 ## Update
 

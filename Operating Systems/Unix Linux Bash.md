@@ -540,8 +540,12 @@ Make long list of images (PPT for instance):
 
 ## Sounds & Voice
 
+	echo '\a'
+	echo '\a\a\a'
+
+	tput bel && sleep 0.33 && tput bel
+
 	osascript -e 'beep'
-	tput bel && sleep 0.33s && tput bel
 
 Say - MacOS:
 

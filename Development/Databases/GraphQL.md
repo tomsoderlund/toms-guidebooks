@@ -17,7 +17,7 @@ http://localhost:4000/graphql
 ## Types/Scalars
 
 - Int: Signed 32‐bit integer
-- Float: Signed double-precision floating-point value
+- Float, BigFloat: Signed double-precision floating-point value
 - String: UTF‐8 character sequence
 - Boolean: true or false
 - ID (serialized as String)

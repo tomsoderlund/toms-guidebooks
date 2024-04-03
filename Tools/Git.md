@@ -315,8 +315,8 @@ Example:
 
 	### What this PR includes
 
-	- [e.g. Added a new component that does...]
-	- [Mark PR as 🚧 DRAFT if you don’t want it to be merged]
+	- [e.g. Added a new component that does... (tip: copy from the commit list below)]
+	- [Mark PR as “🚧 DRAFT” if you don’t want it to be merged]
 
 	### Checklist
 

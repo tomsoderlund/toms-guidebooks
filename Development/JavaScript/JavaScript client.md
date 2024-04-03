@@ -735,7 +735,7 @@ http://www.w3schools.com/jsref/jsref_obj_string.asp
 https://vladimir-ivanov.net/camelcase-to-snake_case-and-vice-versa-with-javascript/
 
 	const snakeToCamel = str => str.replace(/(_\w)/g, match => match[1].toUpperCase())
-	const camelToSnake = str => str.replace(/[\w]([A-Z])/g, match => match[0] + '_' + match[1]).toLowerCase()
+	const camelToSnake = str => str.replace(/[\w]([A-Z0-9])/g, match => match[0] + '_' + match[1]).toLowerCase()
 
 Slugs:
 
@@ -1111,6 +1111,16 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	getTime() // Get the time (milliseconds since January 1, 1970)
 
 	thisYear = new Date().getYear() + 1900
+
+	// YYYYMMDD-HHMM
+	const getDateTimeString = (date = new Date()) => {
+		const year = date.getFullYear()
+		const month = (`0${date.getMonth() + 1}`).slice(-2)
+		const day = (`0${date.getDate()}`).slice(-2)
+		const hours = (`0${date.getHours()}`).slice(-2)
+		const minutes = (`0${date.getMinutes()}`).slice(-2)
+		return `${year}${month}${day}-${hours}${minutes}`
+	}
 
 	const formatDate = (dateObj = new Date()) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)}`
 	const formatTime = (dateObj = new Date()) => `${`0${dateObj.getHours()}`.slice(-2)}:${`0${dateObj.getMinutes()}`.slice(-2)}`

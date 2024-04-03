@@ -164,7 +164,7 @@ https://geoexamples.com/svelte/2021/07/18/svelte-supabase-maps.html/
 1. Activate the PostGIS extension at the database → extensions menu
 2. Run SQL:
 
-		SELECT AddGeometryColumn ('', 'tablename', 'fieldname', 4326, 'POINT', 2);
+		SELECT AddGeometryColumn ('', 'tablename', 'fieldname_maybe_coordinates', 4326, 'POINT', 2);
 
 #### Overview
 
