@@ -435,6 +435,16 @@ Multiple values:
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
+### Create table with flexible dates
+
+	CREATE TABLE flexi_date (
+		id SERIAL PRIMARY KEY,
+		year SMALLINT NOT NULL CHECK (year >= 1970 AND year <= 2300),
+		month SMALLINT CHECK (month >= 1 AND month <= 12),
+		day SMALLINT CHECK (day >= 1 AND day <= 31),
+		quarter SMALLINT CHECK (quarter >= 1 AND quarter <= 4)
+	);
+
 ## Modify table: add columns, remove columns
 
 	ALTER TABLE person

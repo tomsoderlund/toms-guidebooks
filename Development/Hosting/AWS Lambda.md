@@ -102,8 +102,36 @@ Function page -> Configuration -> Environment variables
 
 https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/RunLambdaSchedule.html
 
-- https://eu-west-1.console.aws.amazon.com/events/home?region=eu-west-1#/rules
+- https://eu-west-1.console.aws.amazon.com/scheduler/home?region=eu-west-1
 - Name: “myLambdaFunction” (because schedule can be modified afterwards, but name cannot be changed)
 - Option: Schedule
 - Select target: “Lambda function”
 - Function: (select your Lambda function)
+
+## AWS Lambda with Python
+
+Folder structure:
+
+- lambda/
+  - my_function.zip
+  - my_function/
+    - main.py
+    - test.py
+    - requirements.txt
+    - lambda_zip/
+
+Create function:
+
+    aws lambda create-function \
+      --function-name my_function \
+      --zip-file fileb://my_function.zip \
+      --runtime python3.8 \
+      --role arn:aws:iam::[AWS Account Number]:role/lambda-execute \
+      --handler main.lambda_handler \
+      --timeout 15 \
+      --memory-size 128
+
+`package.json`:
+
+    "lambda-test": "eval $(grep '^POSTGRES_URL' .env.local) && export POSTGRES_URL=${POSTGRES_URL} && cd lambda/my_function && python test.py",
+    "lambda-deploy": "cd lambda; echo Creating ZIP archive...; rm my_function.zip; cd my_function && rm -rf lambda_zip && mkdir lambda_zip && pip install -r requirements.txt -t lambda_zip/ && cp main.py lambda_zip/ && cd lambda_zip && zip -r ../../my_function.zip * && cd ../..; echo Uploading to AWS Lambda...; aws lambda update-function-code --function-name my_function --zip-file fileb://my_function.zip; cd .."
