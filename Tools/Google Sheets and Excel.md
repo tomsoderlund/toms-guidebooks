@@ -296,6 +296,9 @@ GROWTH(known_data_y, [known_data_x], [new_data_x], [b])
 https://github.com/jsoma/tabletop is now broken, use:
 
 https://developers.google.com/sheets/api/quickstart/nodejs
+https://github.com/googleapis/google-api-nodejs-client
+
+https://www.npmjs.com/package/google-spreadsheet
 
 or simpler version:
 

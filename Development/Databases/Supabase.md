@@ -5,6 +5,36 @@
 - Create new project on https://app.supabase.com/
 - Get SQL URL: db.PROJECT.supabase.co, postgres, [password]
 
+
+## Set up local development
+
+	cd ./supabase
+
+	npx supabase db pull  # Sync local db from cloud db
+
+	npx supabase start
+
+Take note of `API URL` and `anon key`. You can also use this to get API keys and URLs:
+
+	npx supabase status
+
+### Development environment
+
+Supabase web admin: http://127.0.0.1:54323/
+
+Postgres connection string for TablePlus/Postico: `postgresql://postgres:postgres@localhost:54322/postgres`
+
+### Creating migration of database changes from local machine to server
+
+Edit your local database, then run:
+
+	npx supabase db diff -f [migration-name]
+
+Running a migration locally:
+
+	npx supabase migration up
+
+
 ## Add to project
 
 	yarn add @supabase/supabase-js

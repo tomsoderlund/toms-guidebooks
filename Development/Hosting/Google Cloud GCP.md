@@ -1,5 +1,25 @@
 # Google Cloud Platform (GCP)
 
+## Cloud Function in Python
+
+    gcloud init
+
+    gcloud functions deploy my_function
+      --runtime python38 \
+      --memory 512MB \
+      --trigger-http \
+      --allow-unauthenticated \
+      --gen2 \
+      --set-env-vars VAR1=VALUE1
+
+`package.json`:
+
+    "gcp-deploy": "eval $(grep '^POSTGRES_URL' .env.local) && cd lambda/stock_predict && gcloud functions deploy stock_predict --runtime python38 --trigger-http --allow-unauthenticated --gen2 --set-env-vars POSTGRES_URL=${POSTGRES_URL}"
+
+## Cron / Scheduler
+
+https://console.cloud.google.com/cloudscheduler
+
 ## App Engine
 
 Create `app.yaml`:

@@ -461,6 +461,16 @@ expo.Audio
 	await clickSound.loadAsync(require('../assets/sounds/click.mp3'))
 	await clickSound.replayAsync()
 
+### Haptics/Vibrations
+
+	npx expo install expo-haptics
+
+	import * as Haptics from 'expo-haptics'
+
+	Haptics.selectionAsync()
+	Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success) // Warning, Error
+	Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light) // Light, Medium, Heavy
+
 ### Push notifications
 
 - https://docs.expo.dev/push-notifications/overview/
@@ -593,7 +603,7 @@ https://github.com/marketplace/actions/expo-github-action
 
 1. Verify you have set up `eas.json`
 2. Create a `.github/workflows/production.yml` (see below)
-3. Get a token on https://expo.dev/accounts/[account]/settings/access-tokens and add `EXPO_TOKEN` to repo settings → Secrets → Actions
+3. Get a token on https://expo.dev/accounts/ACCOUNT/settings/access-tokens and add a secret `EXPO_TOKEN` to https://github.com/ACCOUNT/REPOSITORY/settings/secrets/actions
 4. Run EAS build non-interactive from command line the first time to set up accounts etc: `eas build --platform ios`
 5. For `eas submit`, you need 1) an ASC API key and 2) an Issuer ID from: https://appstoreconnect.apple.com/access/api
 

@@ -34,6 +34,13 @@ Example:
 
 	ls -R
 
+### List folders
+
+	ls -d1 */
+
+### List folders with sizes
+
+	du -sh * | sort -h
 
 ### Find and delete empty folders
 

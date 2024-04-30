@@ -39,11 +39,17 @@ Better to use Postico (MacOS) or similar instead.
 
 ## Create database
 
+### Design tips
+
 Tip: table names as _singular_ (Company, Person) – https://stackoverflow.com/a/5841297/449227  
 e.g. `WHERE person.company_id = company.id`
 
+### How to create database
+
+First `psql postgres`, then:
+
 	CREATE DATABASE my_database;
-	GRANT ALL PRIVILEGES ON DATABASE my_database TO YOUR-USER-NAME;
+	GRANT ALL PRIVILEGES ON DATABASE my_database TO yourusername;
 	\connect my_database
 	\list my_database
 	

@@ -2087,7 +2087,7 @@ https://www.sitepoint.com/lodash-features-replace-es6/
 	// queryObjectFromString / queryObjectToString
 
 	// Node.js: use URLSearchParams, not querystring
-	(new URLSearchParams(searchParams)).toString()
+	(new URLSearchParams(searchParams)).toString() // param1=A&param2=B
 	new URLSearchParams(window.search.substr(1))
 
 	const queryObjectFromString = url => (url.split('?')[1] || url || '')

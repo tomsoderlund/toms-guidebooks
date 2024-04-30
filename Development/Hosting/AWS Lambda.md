@@ -135,3 +135,12 @@ Create function:
 
     "lambda-test": "eval $(grep '^POSTGRES_URL' .env.local) && export POSTGRES_URL=${POSTGRES_URL} && cd lambda/my_function && python test.py",
     "lambda-deploy": "cd lambda; echo Creating ZIP archive...; rm my_function.zip; cd my_function && rm -rf lambda_zip && mkdir lambda_zip && pip install -r requirements.txt -t lambda_zip/ && cp main.py lambda_zip/ && cd lambda_zip && zip -r ../../my_function.zip * && cd ../..; echo Uploading to AWS Lambda...; aws lambda update-function-code --function-name my_function --zip-file fileb://my_function.zip; cd .."
+
+### Lambda layers (shared code)
+
+    aws lambda publish-layer-version \
+      --layer-name "layer_numpy_pandas_prophet" \
+      --zip-file fileb://layer_numpy_pandas_prophet.zip \
+      --description "Layer with numpy, pandas, and prophet" \
+      --compatible-runtimes python3.8 \
+      --license-info "MIT"
