@@ -24,7 +24,10 @@ Postgres connection string for TablePlus/Postico: `postgresql://postgres:postgre
 
 ### Get schema and data from cloud database
 
-	npx supabase db pull  # Sync local db from cloud db
+	npx supabase db pull  # Pull down local db schema from cloud db
+	npx supabase db push  # Push up your local db schema to cloud db
+
+Get data:
 
 	npx supabase db dump --data-only -f db_data.sql
 	psql --single-transaction --file db_data.sql --dbname 'postgresql://postgres:postgres@localhost:54322/postgres'
