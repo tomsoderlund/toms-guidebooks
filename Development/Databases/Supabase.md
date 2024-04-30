@@ -10,8 +10,6 @@
 
 	cd ./supabase
 
-	npx supabase db pull  # Sync local db from cloud db
-
 	npx supabase start
 
 Take note of `API URL` and `anon key`. You can also use this to get API keys and URLs:
@@ -24,6 +22,13 @@ Supabase web admin: http://127.0.0.1:54323/
 
 Postgres connection string for TablePlus/Postico: `postgresql://postgres:postgres@localhost:54322/postgres`
 
+### Get schema and data from cloud database
+
+	npx supabase db pull  # Sync local db from cloud db
+
+	npx supabase db dump --data-only -f db_data.sql
+	psql --single-transaction --file db_data.sql --dbname 'postgresql://postgres:postgres@localhost:54322/postgres'
+
 ### Creating migration of database changes from local machine to server
 
 Edit your local database, then run:
@@ -34,6 +39,9 @@ Running a migration locally:
 
 	npx supabase migration up
 
+Reset database and apply current migrations:
+
+	npx supabase db reset
 
 ## Add to project
 
