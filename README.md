@@ -65,7 +65,7 @@
     - [React](./Development/JavaScript/React.md)
     - [Remix](./Development/JavaScript/Remix.md)
     - [SolidJS](./Development/JavaScript/SolidJS.md)
-    - [Svelte and Sapper](./Development/JavaScript/Svelte%20and%20Sapper.md)
+    - [Svelte](./Development/JavaScript/Svelte.md)
     - [TypeScript](./Development/JavaScript/TypeScript.md)
   - [Python](./Development/Python.md)
   - [Regular Expressions](./Development/Regular%20Expressions.md)

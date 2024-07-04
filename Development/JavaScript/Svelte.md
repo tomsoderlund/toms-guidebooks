@@ -1,9 +1,9 @@
-# Svelte
+# Svelte and SvelteKit
 
 https://www.svelte.dev/
 
-    npx degit sveltejs/template MYAPP
-    cd MYAPP
+    npm create svelte@latest [my-app]
+    cd my-app
     yarn && yarn dev
 
 ## Reactive declarations
