@@ -8,6 +8,7 @@
   - 3D:
     - [Unity3D](./Development/3D/Unity3D.md)
     - [WebXR and WebVR](./Development/3D/WebXR%20and%20WebVR.md)
+  - [AI and Machine Learning](./Development/AI%20and%20Machine%20Learning.md)
   - APIs:
     - [Bing search](./Development/APIs/Bing%20search.md)
     - [Bluetooth](./Development/APIs/Bluetooth.md)
@@ -15,6 +16,7 @@
     - [Google Places API](./Development/APIs/Google%20Places%20API.md)
     - [Here Location API](./Development/APIs/Here%20Location%20API.md)
     - [Scraping the web](./Development/APIs/Scraping%20the%20web.md)
+    - [Search engines](./Development/APIs/Search%20engines.md)
   - Apps:
     - [CocoaPods](./Development/Apps/CocoaPods.md)
     - [Cordova - PhoneGap](./Development/Apps/Cordova%20-%20PhoneGap.md)
@@ -34,6 +36,8 @@
     - [NeDB](./Development/Databases/NeDB.md)
     - [SQL](./Development/Databases/SQL.md)
     - [Supabase](./Development/Databases/Supabase.md)
+  - E-commerce:
+    - [Shopify](./Development/E-commerce/Shopify.md)
   - [Go](./Development/Go.md)
   - HTML:
     - [Browser extensions](./Development/HTML/Browser%20extensions.md)
@@ -59,25 +63,28 @@
     - [Preact](./Development/JavaScript/Preact.md)
     - [React-Three-Fiber](./Development/JavaScript/React-Three-Fiber.md)
     - [React](./Development/JavaScript/React.md)
+    - [Remix](./Development/JavaScript/Remix.md)
+    - [SolidJS](./Development/JavaScript/SolidJS.md)
     - [Svelte and Sapper](./Development/JavaScript/Svelte%20and%20Sapper.md)
     - [TypeScript](./Development/JavaScript/TypeScript.md)
-  - [AI and Machine Learning](./Development/AI%20and%20Machine%20Learning.md)
   - [Python](./Development/Python.md)
   - [Regular Expressions](./Development/Regular%20Expressions.md)
   - [Ruby on Rails and Gem](./Development/Ruby%20on%20Rails%20and%20Gem.md)
   - [Testing and QA](./Development/Testing%20and%20QA.md)
+  - UI Frameworks:
+    - [Material UI](./Development/UI%20Frameworks/Material%20UI.md)
 - Graphics:
   - [Blender 3D](./Graphics/Blender%203D.md)
   - [Figma](./Graphics/Figma.md)
   - [Video and VFX](./Graphics/Video%20and%20VFX.md)
-  - [Apple Keynote](./Tools/Apple%20Keynote.md)
 - Music:
-  - [GarageBand](./Tools/GarageBand.md)
   - [Teenage Engineering OP-1](./Music/Teenage%20Engineering%20OP-1.md)
 - Operating Systems:
   - [Mac OS X](./Operating%20Systems/Mac%20OS%20X.md)
   - [Unix Linux Bash](./Operating%20Systems/Unix%20Linux%20Bash.md)
 - Tools:
+  - [Apple Keynote](./Tools/Apple%20Keynote.md)
+  - [GarageBand](./Tools/GarageBand.md)
   - [Git](./Tools/Git.md)
   - [Gmail](./Tools/Gmail.md)
   - [Google Sheets and Excel](./Tools/Google%20Sheets%20and%20Excel.md)

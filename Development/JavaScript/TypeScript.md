@@ -354,6 +354,18 @@ With `type`-definition:
     );
 
 
+## TypeScript in Node.js on Vercel
+
+    import type { VercelRequest, VercelResponse } from '@vercel/node'
+
+    export default function (req: VercelRequest, res: VercelResponse): void {
+      const { name = 'World' } = req.query
+      const nameStr = Array.isArray(name) ? name[0] : name
+      // res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json')
+      res.json({ message: `Hello ${nameStr}!` })
+    }
+
 ## TypeScript in React
 
     interface MyComponentProps = {

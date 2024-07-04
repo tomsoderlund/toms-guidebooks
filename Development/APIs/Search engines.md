@@ -1,5 +1,16 @@
 # Search Engines
 
+- Google
+- [[Bing search]]
+
+### Google Programmable Search Engine
+
+https://developers.google.com/custom-search/v1/overview
+
+	GET https://www.googleapis.com/customsearch/v1?key=INSERT_YOUR_API_KEY&cx=96db4e91f6e2d4269&q=Tomorroworld
+
+Params: https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list
+
 ## Text Search
 
 - Elastic Search (open source)
@@ -19,3 +30,4 @@
 	- Vision API: https://cloud.google.com/vision
 	- Vertex AI Search: https://cloud.google.com/vertex-ai
 - **Microsoft Azure**: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/concept-tagging-images
+- **OpenAI**

@@ -944,7 +944,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	const zeroPad = (count, str = '0') => Array(count).fill(str).join('')
 
-	const fillArray = (length, expression) => [...Array(length)].map((empty, index) => expression ? (typeof expression === 'function' ? expression(index) : expression) : undefined)
+	// TypeScript: const fillArray = (length: number, expression: (index: number) => any): any[] => [...Array(length)].map((_, index) => expression(index))
+	const fillArray = (length, expression) => [...Array(length)].map((_, index) => expression?.(index))
 	const fillMatrix = (columns, rows, expression) => [...Array(rows)].map((row, y) => [...Array(columns)].map((col, x) => expression ? (typeof expression === 'function' ? expression(x, y) : expression) : undefined))
 	// fillMatrix previously called mapGrid
 	const mapMatrix = (matrix, expression) => matrix.map((row, y) => row.map((value, x) => expression ? (typeof expression === 'function' ? expression(value, x, y) : expression) : undefined))

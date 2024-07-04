@@ -1,0 +1,3 @@
+# SolidJS
+
+	yarn create solid

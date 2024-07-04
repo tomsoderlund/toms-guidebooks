@@ -22,7 +22,7 @@ Here are a few key skills and concepts you should learn when transitioning from 
 ## Multiple versions and environments
 
     # Create a virtual environment to isolate our package dependencies locally:
-    python3 -m venv env  ## you can replace `env` with whatever
+    python -m venv env  ## you can replace `env` with whatever
 
     # Activate it
     source env/bin/activate

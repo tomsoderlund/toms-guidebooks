@@ -16,14 +16,19 @@ Dynamically get row/column from another sheet
 R2C2
 
 
-Import another workbook
+Import another workbook:
+
+**Note: only with Google Sheets not imported XLS**
 
 	=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1W2nFTQxcJ7DSNMKPEaY6IcFBbrlFjWl6pSccK6xBzs0", "'Countries'!D:H")
 
-Import one value/cell
+Import one value/cell:
 
 	=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1s7EhvdUNERn7cOHjBovu-L39e6I4T7KPuKsOJlneavg", "'Sheet1'!E$3")
 
+Use with VLOOKUP
+
+	=VLOOKUP($A2, IMPORTRANGE("https://docs.google.com/spreadsheets/d/1zUPGRKzcLKr7C18KwWsMfeGf3uIarXLUR58Tu0S9Ccg", "Worksheet!B:J"), COLUMN(B$1), false)
 
 ### Numbers
 

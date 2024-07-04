@@ -37,6 +37,7 @@ Get data:
 Edit your local database, then run:
 
 	npx supabase db diff -f [migration-name]
+	# Then normally run: npx supabase db push
 
 Running a migration locally:
 

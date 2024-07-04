@@ -49,6 +49,9 @@ e.g. `WHERE person.company_id = company.id`
 First `psql postgres`, then:
 
 	CREATE DATABASE my_database;
+
+Optional:
+
 	GRANT ALL PRIVILEGES ON DATABASE my_database TO yourusername;
 	\connect my_database
 	\list my_database
@@ -377,6 +380,22 @@ Simpler concatenation
 	ARRAY_AGG(category.name) AS category_names
 	ARRAY_AGG(DISTINCT(category.name)) AS unique_category_names
 
+### Recursive query
+
+	WITH RECURSIVE category_tree AS (
+		-- Anchor member: starting point
+		SELECT id, name, parent_category_id
+		FROM category
+		WHERE id = 22 -- <- Change starting category ID here
+		UNION ALL
+		-- Recursive member: find parent categories recursively
+		SELECT c.id, c.name, c.parent_category_id
+		FROM category c
+		JOIN category_tree ct ON c.id = ct.parent_category_id
+	)
+	-- Select all parent categories, including the starting point
+	SELECT * FROM category_tree;
+
 ### Analytics/Statistics query
 
 	SELECT
@@ -646,9 +665,38 @@ Move to another schema:
 	ALTER TABLE public.my_table
 	SET SCHEMA company.departments;
 
+
+## Roles (users and groups), permissions, RLS
+
+### Users
+
+	SELECT current_user;
+
+### Permissions (privileges)
+
+See permissions:
+
+	SELECT table_name, grantee, privilege_type
+	FROM information_schema.role_table_grants
+	WHERE table_name = 'my_table';
+
+Grant permissions:
+
+	GRANT DELETE ON TABLE my_table TO anon;
+
+### Row-level security (RLS)
+
+	SELECT relname, relrowsecurity
+	FROM pg_class
+	WHERE relname = 'my_table';
+
+
 ## Export/dump data
 
-	pg_dump -U postgres -h localhost -p 5432 mydatabase > mydatabase_dump.sql
+	pg_dump mydatabase > mydatabase_dump.sql
+
+	pg_dump -U username -h localhost -p 5432 -t public.tablename mydatabase > tablename_dump.sql
+	pg_dump --no-owner --no-acl --data-only --inserts -d mydatabase -t public.tablename > tablename_dump.sql
 
 Restore:
 
@@ -657,6 +705,26 @@ Restore:
 
 # MySQL
 
+	mysql -p -e "CREATE DATABASE yourdatabase;"
+	mysql -u username -p -e "CREATE DATABASE yourdatabase;"
+
+## Import data
+
+	mysql -u username -p yourdatabase < mydatabase_dump.sql
+
+## MySQL SQL syntax
+
+### Create index
+
+	ALTER TABLE company_person
+	ADD CONSTRAINT unique_company_person UNIQUE (company_id, person_id);
+
+### Views
+
+	SHOW CREATE VIEW view_name;
+
+	CREATE OR REPLACE VIEW view_name AS
+		SELECT...
 
 # SQLite
 
