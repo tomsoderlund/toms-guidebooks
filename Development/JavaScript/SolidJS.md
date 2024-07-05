@@ -8,21 +8,34 @@
 
 ### "use server" and createAsync
 
+https://docs.solidjs.com/solid-start/building-your-application/data-loading#data-loading-always-on-the-server
+
 	import { For } from "solid-js";
 	import { createAsync, cache } from "@solidjs/router";
 
-	type User = { name: string; email: string };
+	type Post = {
+		id: number;
+		userId: number;
+		title: string;
+		body: string;
+	};
 
-	const getUsers = cache(async () => {
+	const getPosts = cache(async (): Promise<Post[]> => {
 		"use server";
-		return store.users.list();
-	}, "users");
+		return fetch("https://jsonplaceholder.typicode.com/posts").then((res) => res.json());
+	}, "posts");
 
 	export const route = {
-		load: () => getUsers(),
+		load: () => getPosts(),
 	};
 
 	export default function Page() {
-		const users = createAsync(() => getUsers());
-		return <For each={users()}>{(user) => <li>{user.name}</li>}</For>;
+		const posts = createAsync(() => getPosts());
+		return (
+			<>
+				<For each={posts()}>
+					{(post) => <li>{post.title}</li>}
+				</For>
+			</>
+		)
 	}
