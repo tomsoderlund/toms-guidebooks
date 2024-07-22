@@ -2,6 +2,16 @@
 
 	yarn create solid
 
+## Yarn problems
+
+	ERROR require() of ES Module ./node_modules/string-width/index.js from ./node_modules/wide-align/align.js not supported.
+	Instead change the require of index.js in ./node_modules/wide-align/align.js to a dynamic import() which is available in all CommonJS modules.
+
+https://github.com/nuxt/nuxt/issues/21231#issuecomment-2067519752
+
+	yarn set version stable
+	yarn install
+
 ## Server-side
 
 - `createResource`
@@ -29,7 +39,7 @@ https://docs.solidjs.com/solid-start/building-your-application/data-loading#data
 		load: () => getPosts(),
 	};
 
-	export default function Page() {
+	export default function ListPostsPage() {
 		const posts = createAsync(() => getPosts());
 		return (
 			<>
@@ -39,3 +49,13 @@ https://docs.solidjs.com/solid-start/building-your-application/data-loading#data
 			</>
 		)
 	}
+
+## SolidJS on Vercel
+
+Update `app.config.ts` and add `server: { preset: 'vercel' }`:
+
+	import { defineConfig } from "@solidjs/start/config";
+
+	export default defineConfig({
+		server: { preset: 'vercel' }
+	});
