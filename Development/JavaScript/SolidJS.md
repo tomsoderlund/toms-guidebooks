@@ -54,8 +54,16 @@ https://docs.solidjs.com/solid-start/building-your-application/data-loading#data
 
 Update `app.config.ts` and add `server: { preset: 'vercel' }`:
 
-	import { defineConfig } from "@solidjs/start/config";
+	import { defineConfig } from '@solidjs/start/config'
 
 	export default defineConfig({
-		server: { preset: 'vercel' }
-	});
+		server: {
+			preset: 'vercel',
+			prerender: {
+				routes: ['/', '/about', '/serverTest']
+				// crawlLinks: true
+			}
+			// static: true
+		}
+	})
+
