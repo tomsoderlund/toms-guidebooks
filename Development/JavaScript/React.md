@@ -989,6 +989,8 @@ https://visgl.github.io/react-map-gl/
 3. CSS for mapbox-gl: `import 'mapbox-gl/dist/mapbox-gl.css'`
 4. React code:
 
+Example code:
+
     import React, { useState } from 'react'
     import ReactMapGL, { Marker } from 'react-map-gl'
 
