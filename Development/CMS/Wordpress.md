@@ -1,16 +1,17 @@
 # Wordpress
 
-## WPAPI
+## WPAPI for Node.js
 
 How to use WPAPI with Wordpress.com (endpoint)?
 
-https://github.com/WP-API/node-wpapi
-if you need authentication
+https://www.npmjs.com/package/wpapi
+
+https://github.com/wp-api/node-wpapi
 
 https://torquemag.io/2019/02/using-express-to-build-a-node-js-server-to-proxy-the-wordpress-rest-api/
 
-    const wpapi = require('wpapi')
-    const site = await wpapi.discover(`https://${WORDPRESS_SITE_DOMAIN}`)
+    const WPAPI = require('wpapi')
+    const site = await WPAPI.discover(`https://${WORDPRESS_SITE_DOMAIN}`)
 
 ## Wordpress API v2
 

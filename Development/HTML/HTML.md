@@ -275,31 +275,58 @@ input[type="radio"] {
   <label for="banana">Banana</label>
 </div>
 
-
 ## HTML5 Semantic Tags
 
 https://www.w3schools.com/tags/
 
-<main>
-<nav>
-<section>
-<article> # independent, self-contained content
-<header>
-<footer>
-
-main, section, article, aside, header, footer, nav, table, figure, figcaption, time, mark
-
 http://caniuse.com/#feat=html5semantic
 
-<aside> // content aside from the content it is placed in.
+- `main`: Wrapping the main content of a blog post, enclosing the primary content of an e-commerce product page.
+- `section`: Dividing a resume into sections for work experience, education, and skills, structuring a company’s “About Us” page into sections for mission, vision, and team.
+- `article`: Displaying an individual news article within a news website, showing a single blog post on a blog website.
+- `aside`: Containing a sidebar with related links or advertisements on a blog, providing additional information or context within a research article.
+- `header`: Including the site title, logo, and main navigation links at the top of a webpage, displaying the title and publication date at the beginning of an article.
+- `footer`: Presenting contact information and social media links at the bottom of a webpage, showing the author’s name and publication date at the end of an article.
+- `nav`: Hosting the main navigation links for a website’s homepage, providing pagination links for a multi-page blog or gallery.
+- `figure`: Encapsulating an image with a caption explaining the image, including a chart or graph with an accompanying description.
+- `figcaption`: Providing a description for an image within a `figure`, captioning a chart or graph to explain its data.
+- `time`: Marking the date and time of an event in a schedule, indicating the publication date of a blog post or article.
+- `address`: contact information for a person or organization.
+- `mark`: Highlighting search terms within search results, emphasizing important text or keywords within an article.
+- `details` + `summary`: create a clickable section that can be expanded.
 
-<figure>
-<figcaption>
+	<details>
+	  <summary>What is the return policy?</summary>
+	  <p>Our return policy allows returns within 30 days of purchase with a receipt.</p>
+	</details>
 
+preamble/ingress/subheading/subtitle/subline: use h2 or p
 
-preamble/ingress/subheading/subtitle/subline: <summary>
+## HTML5 structured microdata
 
+Types: https://schema.org/docs/gs.html#schemaorg_types
 
+    <div itemscope itemtype="http://schema.org/Place">
+        <h1 itemprop="name">Central Park</h1>
+        <p itemprop="description">A large public park in New York City.</p>
+        <p>
+            Address:
+            <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                <span itemprop="streetAddress">59th to 110th Street</span>,
+                <span itemprop="addressLocality">New York</span>,
+                <span itemprop="addressRegion">NY</span>,
+                <span itemprop="postalCode">10022</span>,
+                <span itemprop="addressCountry">USA</span>
+            </span>
+        </p>
+        <p itemprop="telephone">+1-212-310-6600</p>
+        <p>
+            <span itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                Latitude: <span itemprop="latitude">40.785091</span>,
+                Longitude: <span itemprop="longitude">-73.968285</span>
+            </span>
+        </p>
+    </div>
 
 ## IFrame
 
@@ -308,7 +335,7 @@ preamble/ingress/subheading/subtitle/subline: <summary>
 <iframe src="about:blank" width="100%" height="100%" frameborder="0" style="height: 560px;"></iframe>
 
 
-## TEXT AND LINKS
+## Text and Links
 
 <h1>Heading 1</h1>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>

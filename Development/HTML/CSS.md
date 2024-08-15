@@ -409,6 +409,9 @@ https://meyerweb.com/eric/tools/css/reset/
 
 ### Grid
 
+- `auto`: size of the grid track is determined by the size of its content
+- `1fr`: “one fraction” of the available space
+
     .parent {
       display: grid;
       grid-template-columns: auto auto;
@@ -544,11 +547,15 @@ Code:
 
 #### font-weight
 
-- thin (100)
-- normal (400)
-- medium (500)
-- bold (700)
-- heavy (900)
+- 100: Thin
+- 200: Extra Light (Ultra Light)
+- 300: Light
+- 400: Normal (Regular)
+- 500: Medium
+- 600: Semi Bold (Demi Bold)
+- 700: Bold
+- 800: Extra Bold (Ultra Bold)
+- 900: Black (Heavy)
 
 ### Word wrap and whitespace
 

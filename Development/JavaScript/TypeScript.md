@@ -353,6 +353,65 @@ With `type`-definition:
       ({ id, name, stock: { day: dayStock } }: Item) => dayStock
     );
 
+### Error handling
+
+    try {
+    } catch (error: unknown) {
+      console.warn((error instanceof Error) ? error.message : 'Unknown error')
+    }
+
+### Checking
+
+    export function removeUndefinedProps<T>(obj: T): Partial<T> {
+      const result: Partial<T> = {}; // Create a new object to hold the result
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          // Check if the property exists in the original object
+          const value = obj[key];
+          if (value !== undefined) {
+            result[key] = value;
+          }
+        }
+      }
+      return result;
+    }
+
+    export function removeUndefinedOrNullProps<T>(obj: T): Partial<T> {
+      const result: Partial<T> = {}; // Create a new object to hold the result
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          // Check if the property exists in the original object
+          const value = obj[key];
+          if (value !== undefined && value !== null) {
+            result[key] = value;
+          }
+        }
+      }
+      return result;
+    }
+
+    export function removeUndefinedOrNullOrEmptyStringProps<T>(obj: T): Partial<T> {
+      const result: Partial<T> = {}; // Create a new object to hold the result
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          // Check if the property exists in the original object
+          const value = obj[key];
+          if (value !== undefined && value !== null && value !== '') {
+            result[key] = value;
+          }
+        }
+      }
+      return result;
+    }
+
+    export function isUndefinedOrNull<T>(obj: T | null | undefined): obj is null | undefined {
+      return obj === null || obj === undefined;
+    }
+
+    export function isUndefinedOrNullOrEmptyString<T>(obj: T | null | undefined | string): boolean {
+      return isUndefinedOrNull(obj) || obj === '';
+    }
+
 
 ## TypeScript in Node.js on Vercel
 

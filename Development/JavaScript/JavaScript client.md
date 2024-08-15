@@ -1041,7 +1041,6 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	}
 
 	const firstThreeSummary = (array) => array.length ? array.slice(0, 3).map(item => item.name).join(', ') : ''
-	const firstThreeSummaryWithIntro = (array) => array.length ? ', including ' + array.slice(0, 3).map(item => item.title).join(', ') : ''
 
 ## Collections/hashes/objects
 

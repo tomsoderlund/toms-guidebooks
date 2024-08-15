@@ -51,6 +51,8 @@ Example:
 
 https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-machine-and-free-up-hd-space-f3954843aeda
 
+Find "node_modules" and DELETE THEM:
+
 	find ~/Documents/Development -name "node_modules" -type d -prune | xargs du -chs
 
 For Python "env":
