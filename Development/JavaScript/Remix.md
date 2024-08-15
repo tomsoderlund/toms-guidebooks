@@ -44,7 +44,7 @@ Structure: `loader`, component, `action`
 		return json({ ok: true });
 	}
 
-	export default function ExamplePage(): React.ReactElement {
+	const ExamplePage: React.FC = () => {
 		const loaderData = useLoaderData<typeof loader>();
 		const actionData = useActionData<typeof action>();
 		return (
@@ -52,7 +52,8 @@ Structure: `loader`, component, `action`
 				Hello World
 			</div>
 		);
-	}
+	};
+	export default ExamplePage;
 
 	export const action = async ({ request }: ActionFunctionArgs) => {
 		if (request.method === 'PUT') {
@@ -112,15 +113,16 @@ Structure: `loader`, component, `action`
 
 	export default useQueryState;
 
+
 ## Syntax
 
 ### Get URL parameters
 
-/page/param:
+Path parameters: `/page/param`:
 
-	params.value
+	params.paramName
 
-?param=value:
+Query parameters: `?param=value`:
 
 	const url = new URL(request.url);
-	const supplier = url.searchParams.get('supplier');
+	const paramValue = url.searchParams.get('paramName');

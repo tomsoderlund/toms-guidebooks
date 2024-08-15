@@ -986,7 +986,7 @@ https://visgl.github.io/react-map-gl/
 
 1. `yarn add react-map-gl`
 2. You need a Mapbox API token: https://account.mapbox.com/
-3. CSS for your mapbox-gl version (`yarn list mapbox-gl`): <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+3. CSS for mapbox-gl: `import 'mapbox-gl/dist/mapbox-gl.css'`
 4. React code:
 
     import React, { useState } from 'react'
@@ -1007,15 +1007,14 @@ https://visgl.github.io/react-map-gl/
         <>
           <ReactMapGL
             {...viewport}
-            onViewportChange={nextViewport => setViewport(nextViewport)}
+            onMove={evt => setViewport(evt.viewState)}
             mapStyle='mapbox://styles/mapbox/streets-v9'
-            mapboxApiAccessToken={config.mapboxPublicToken}
+            mapboxAccessToken={config.mapboxPublicToken}
           >
             <Marker
               latitude={latitude}
               longitude={longitude}
-              offsetLeft={-10}
-              offsetTop={-10}
+              offset={[0, 0]}
             >
               <MapDot />
             </Marker>
