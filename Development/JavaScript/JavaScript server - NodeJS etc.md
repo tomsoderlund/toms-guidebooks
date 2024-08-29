@@ -457,7 +457,7 @@ http://javascriptplayground.com/blog/2012/08/writing-a-command-line-node-tool/
 		})
 	}
 
-### Read/write/delete files – async
+### Read/write/delete files – async
 
 	const fs = require('fs')
 
@@ -553,7 +553,9 @@ Older:
 
 ### Headers
 
-- `Cache-Control: public, max-age=120` (seconds)
+	res.setHeader('Cache-Control', 'public, max-age=31536000, immutable, stale-while-revalidate')
+
+(Time in _seconds_)
 
 ## PassportJS / Authentication
 

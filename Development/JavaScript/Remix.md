@@ -67,62 +67,64 @@ Structure: `loader`, component, `action`
 
 ### Hooks
 
-#### useQueryState
+URL and navigation:
 
-	import { useState, useEffect } from 'react';
-	import { useLocation, useNavigate } from '@remix-run/react';
+- `useParams`: Access route parameters from the URL.
+- `useSearchParams`: Read and manipulate query parameters in the URL.
+- `useRouteLoaderData`: Get data specific to a particular route from the loader function.
+- `useLocation`: Get the current location object with pathname, search, and hash.
+- `useHref`: Create a URL string for a given location.
+- `useNavigate`: Programmatically navigate to different routes.
+- `useNavigation`: Get the current navigation state (e.g., idle, submitting, or loading).
+- `useNavigationType`: Determine how the user navigated to the current page (push, pop, or replace).
+- `useResolvedPath`: Resolve a relative path against the current location.
 
-	/**
-		import useQueryState from '~/hooks/useQueryState';
-		const [chapter, setChapter] = useQueryState('chapter', '1');
-	*/
-	function useQueryState(key: string, defaultValue: string): [string, (value: string) => void] {
-		const location = useLocation();
-		const navigate = useNavigate();
-		const searchParams = new URLSearchParams(location.search);
+Outlet and navigation hierarchy:
 
-		// Get the initial state from the query string or use the default value
-		const initialState = searchParams.get(key) ?? defaultValue;
+- `useOutlet`: Render child routes inside parent routes.
+- `useOutletContext`: Access context passed from a parent route’s outlet.
+- `useMatches`: Access data from all matched routes in the current render.
 
-		// State to keep track of the query parameter
-		const [state, setState] = useState(initialState);
+Data loading:
 
-		// Update the query string and state when the state changes
-		const setQueryState = (value: string) => {
-			setState(value);
-			// Update the query parameter in the URL
-			searchParams.set(key, value);
-			navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
-		};
+- `useLoaderData`: Access the data returned by the loader function for the current route.
+- `useRevalidator` 🆕: Revalidate data and manage loading states manually.
+- `useRouteError` 🆕: Access errors related to the current route.
 
-		// Effect to sync the state with the URL when the component mounts
-		useEffect(() => {
-			const queryValue = searchParams.get(key);
-			if (queryValue === null) {
-				// If query param is missing, set it to the default value
-				searchParams.set(key, defaultValue);
-				navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
-			} else {
-				// If query param exists, update the state with the value from the URL
-				setState(queryValue);
-			}
-		}, [location.search]);
+Forms and data fetching:
 
-		return [state, setQueryState];
-	}
+- `useActionData`: Access the result of an action after form submission.
+- `useFormAction`: Get the action URL for a form submission.
+- `useSubmit`: Programmatically submit a form without user interaction.
+- `useFetcher`: Fetch data without causing a page reload, similar to useLoaderData but triggered manually.
+- `useFetchers`: Get an array of all active fetchers in the application.
 
-	export default useQueryState;
+Async:
+
+- `useAsyncValue` 🆕: Access the resolved value from an asynchronous operation.
+- `useAsyncError` 🆕: Retrieve error information from an asynchronous operation.
+
+Blockers and navigate away:
+
+- `useBeforeUnload`: Hook to perform actions before the user leaves the page.
+- `unstable_useViewTransitionState`: Access the state of view transitions for animations and effects during navigation.
+- `useBlocker`: Prevent navigation when certain conditions are met.
+- `unstable_usePrompt`: Display a confirmation dialog when navigating away from a page.
 
 
 ## Syntax
 
 ### Get URL parameters
 
-Path parameters: `/page/param`:
+#### Path parameters: `/page/param`:
 
 	params.paramName
 
-Query parameters: `?param=value`:
+Client-side:
+
+	const { paramName } = useParams();
+
+#### Query parameters: `?param=value`:
 
 	const url = new URL(request.url);
 	const paramValue = url.searchParams.get('paramName');

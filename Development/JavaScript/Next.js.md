@@ -680,12 +680,13 @@ Customize /pages/_error.js
 
 ### Markdown in React/Next.js
 
-https://github.com/remarkjs/react-markdown
+https://github.com/quantizor/markdown-to-jsx
+(or https://github.com/remarkjs/react-markdown)
 
-    import ReactMarkdown from 'react-markdown'
-    <ReactMarkdown>
+    import Markdown from 'markdown-to-jsx'
+    <Markdown>
       # Hello, *world*!
-    </ReactMarkdown>
+    </Markdown>
 
 Parse Markdown:
 

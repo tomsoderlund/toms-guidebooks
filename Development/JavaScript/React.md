@@ -1018,7 +1018,7 @@ Example code:
               longitude={longitude}
               offset={[0, 0]}
             >
-              <MapDot />
+              <MyCustomMarkerComponent />
             </Marker>
           </ReactMapGL>
         </>
