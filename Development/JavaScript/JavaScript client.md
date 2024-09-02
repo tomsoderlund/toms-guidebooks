@@ -548,6 +548,46 @@ Speed, Bounce and Gravity:
 		}
 	}
 
+Collisions
+
+	function areTwoRectanglesColliding (
+		obj1x: number,
+		obj1y: number,
+		obj1width: number,
+		obj1height: number,
+		obj2x: number,
+		obj2y: number,
+		obj2width: number,
+		obj2height: number
+	): boolean {
+		return (
+			obj1x < obj2x + obj2width &&
+			obj1x + obj1width > obj2x &&
+			obj1y < obj2y + obj2height &&
+			obj1y + obj1height > obj2y
+		)
+	}
+
+	function areCircleAndRectangleColliding (
+		circleCenterX: number,
+		circleCenterY: number,
+		circleRadius: number,
+		rectLeftX: number,
+		rectTopY: number,
+		rectWidth: number,
+		rectHeight: number
+	): boolean {
+		const distX = Math.abs(circleCenterX - rectLeftX - rectWidth / 2)
+		const distY = Math.abs(circleCenterY - rectTopY - rectHeight / 2)
+		if (distX > (rectWidth / 2 + circleRadius)) return false
+		if (distY > (rectHeight / 2 + circleRadius)) return false
+		if (distX <= (rectWidth / 2)) return true
+		if (distY <= (rectHeight / 2)) return true
+		const dx = distX - rectWidth / 2
+		const dy = distY - rectHeight / 2
+		return (dx * dx + dy * dy <= (circleRadius * circleRadius))
+	}
+
 Geographic distance (latitude/longitude to distance):
 
 	// Calculate geographic distance in meters – https://stackoverflow.com/a/21623206/449227

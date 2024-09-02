@@ -460,6 +460,22 @@ Multiple values:
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
 
+### Custom types: TYPE/ENUM, DOMAIN/CHECK
+
+TYPE/ENUM:
+
+	CREATE TYPE interval_type AS ENUM ('monthly', 'quarterly', 'biannual', 'annual');
+	CREATE TABLE my_table (
+		interval interval_type NOT NULL
+	);
+
+DOMAIN/CHECK:
+
+	CREATE DOMAIN valid_period_months AS integer CHECK (VALUE IN (1, 3, 6, 12));
+	CREATE TABLE my_table (
+		period valid_period_months
+	);
+
 ### Create table with flexible dates
 
 	CREATE TABLE flexi_date (

@@ -83,7 +83,7 @@ Tom’s:
 
 #### package.json
 
-	"upgrade-expo": "npx expo-doctor; yarn; yarn api",
+	"upgrade-expo": "yarn add expo@latest; npx expo install --fix; npx expo install --check; npx expo-doctor; yarn; yarn api",
 	"dev": "yarn start",
 	"start": "expo start",
 	"eject": "expo eject",
