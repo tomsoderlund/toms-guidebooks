@@ -140,6 +140,48 @@ package.json:
 
     "prepare": "rm -rf dist && mkdir dist && babel ./components -d dist --copy-files --presets=@babel/preset-react",
 
+### All NPM lifecycle scripts/commands
+
+NPM lifecycle scripts:
+
+- Pack/Publish/Install
+  - **prepare**: Runs before `npm pack`, `npm publish`, and `npm install` (for Git dependencies). Ideal for building the project.
+- Install
+  - **preinstall**: Runs before `npm install`.
+  - **install**: Runs after `npm install`.
+  - **postinstall**: Runs after the `install` script.
+- Uninstall
+  - **preuninstall**: Runs before `npm uninstall`.
+  - **uninstall**: Runs during `npm uninstall`.
+  - **postuninstall**: Runs after `npm uninstall`.
+- Version
+  - **preversion**: Runs before the `version` script.
+  - **version**: Runs when `npm version` is executed.
+  - **postversion**: Runs after `npm version`.
+- Publish
+  - **prepublish**: **Deprecated**. Replaced by `prepare`. Runs before a package is published.
+  - **prepublishOnly**: Runs only before `npm publish` but not before `npm install`.
+  - **postpublish**: Runs after `npm publish`.
+- Start
+  - **prestart**: Runs before the `start` script.
+  - **start**: Runs when `npm start` is executed.
+  - **poststart**: Runs after the `start` script.
+- Stop
+  - **prestop**: Runs before the `stop` script.
+  - **stop**: Runs when `npm stop` is executed.
+  - **poststop**: Runs after the `stop` script.
+- Restart
+  - **prerestart**: Runs before the `restart` script.
+  - **restart**: Runs when `npm restart` is executed. By default, it triggers `npm stop` followed by `npm start`.
+  - **postrestart**: Runs after the `restart` script.
+- Test
+  - **pretest**: Runs before the `test` script.
+  - **test**: Runs when `npm test` is executed.
+  - **posttest**: Runs after the `test` script.
+- Build
+  - **prebuild**: Runs before the `build` script.
+  - **build**: Used to compile or build your project.
+  - **postbuild**: Runs after the `build` script.
 
 ## Yarn
 

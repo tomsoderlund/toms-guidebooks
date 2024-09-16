@@ -208,6 +208,7 @@ Variable name: ` newElementId`
 Use `ts-standard` if you want TypeScript:
 
     yarn add ts-standard --dev
+		npm install --save-dev ts-standard
 
 Use `standardx` if you want eslint (.eslintrc) config:
 

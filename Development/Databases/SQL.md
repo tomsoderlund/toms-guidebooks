@@ -248,6 +248,10 @@ Tip: you can use `LOWER()` for lowercase formatting.
 		SELECT * FROM books WHERE returned_date > (CURRENT_DATE - INTERVAL '7 days');
 		SELECT * FROM users WHERE created_at < (CURRENT_DATE - INTERVAL '7 days');
 
+### Rounding numbers
+
+	SELECT ROUND(your_column::numeric, 2) AS rounded_value FROM your_table;
+
 ### Multiple values / array
 
 	SELECT * FROM company WHERE name IN ('a', 'steeple', 'the');

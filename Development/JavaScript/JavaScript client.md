@@ -1276,6 +1276,7 @@ Wait, Sleep etc
 	setTimeout(() => console.log('setTimeout'), 1000)
 
 	// async
+	await new Promise((resolve) => setTimeout(resolve, 3000)) // sleep 3 seconds
 	const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds))
 
 	// Repeat

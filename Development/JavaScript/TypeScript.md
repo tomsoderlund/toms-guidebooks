@@ -310,6 +310,13 @@ Elements:
 
 ## Patterns
 
+### Introspection
+
+- `typeof`: `type PersonType = typeof person`, or `newObject as typeof myObject`
+- `instanceof`: `target instanceof HTMLInputElement`
+- `indexof`
+- `keyof`
+
 ### Cast with 'as'
 
     const elementRef = useRef() as `React.MutableRefObject`<HTMLButtonElement>
@@ -357,7 +364,8 @@ With `type`-definition:
 
     try {
     } catch (error: unknown) {
-      console.warn((error instanceof Error) ? error.message : 'Unknown error')
+      const errorMessage = (error instanceof Error) ? error.message : 'Unknown error'
+      console.warn(errorMessage)
     }
 
 ### Checking
