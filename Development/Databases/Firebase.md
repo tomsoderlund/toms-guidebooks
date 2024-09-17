@@ -204,6 +204,17 @@ https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)
 
 ### File Storage
 
+New v10 modular API:
+
+    import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `${folderName}/${fileObject.name}`);
+    await uploadBytes(storageRef, fileObject);
+    const imageUrl = await getDownloadURL(storageRef);
+
+Older:
+
     folderRef = firebaseApp.storage().ref(`accounts/${accountId}`)
     await folderRef.listAll()
     folderRef.fullPath

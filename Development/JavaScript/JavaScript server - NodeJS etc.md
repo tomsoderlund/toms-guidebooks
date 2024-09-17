@@ -168,10 +168,20 @@ https://stackoverflow.com/questions/10183291/how-to-get-the-full-url-in-express
 
 #### CORS
 
-	const setAccessControlHeaders = (res, methods = 'POST') => {
-	  res.setHeader('Access-Control-Allow-Origin', '*')
-	  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+1) Set headers:
+
+	const setCORSHeaders = (res, methods = 'POST,OPTIONS') => {
 	  res.setHeader('Access-Control-Allow-Methods', methods)
+	  res.setHeader('Access-Control-Allow-Origin', '*')
+	  res.setHeader('Access-Control-Allow-Headers', 'Content-Type') // 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+	  res.setHeader('Access-Control-Allow-Credentials', 'true')
+	}
+
+2) Respond to `OPTIONS`:
+
+  if (req.method === 'OPTIONS') {
+		res.statusCode = 200
+		return res.json({})
 	}
 
 #### Express only
@@ -298,6 +308,9 @@ https://www.npmjs.org/package/ejs
 ## .env files - dotenv
 
 	yarn add dotenv
+
+	import dotenv from 'dotenv'
+	dotenv.config({ path: '.env.local' })
 
 	require('dotenv').config() // load .env file
 	require('dotenv').config({ path: '.env.local' })
@@ -617,7 +630,9 @@ Files end up in in /etc/letsencrypt/live/MYDOMAIN/
 sudo heroku certs:add /etc/letsencrypt/live/MYDOMAIN/fullchain.pem /etc/letsencrypt/live/MYDOMAIN/privkey.pem
 	Need Hobby or Professional dynos
 
-## Email - Mailgun
+## Email
+
+### Mailgun
 
 https://github.com/bojand/mailgun-js
 
@@ -630,7 +645,7 @@ https://github.com/bojand/mailgun-js
     testMode: false
 	})
 
-### Send email
+#### Send email
 
 	curl --user 'api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0' \ 
 	https://api.mailgun.net/v3/samples.mailgun.org/messages \
@@ -710,7 +725,7 @@ Node.js:
 	  }
 	}
 
-### Read email
+#### Read email
 
 	const mailgunQuery = { event: 'stored', limit: 300 }
   const body = await mailgun.events().get(mailgunQuery)
@@ -729,6 +744,62 @@ Node.js:
 
 	const deleteReceivedEmail = messageUrl => fetchEmail(messageUrl, 'DELETE') // mailgun.messages(messageId).delete()
 
+### SendGrid
+
+	/* Using Twilio SendGrid's v3 Node.js Library: https://github.com/sendgrid/sendgrid-nodejs
+
+		Usage:
+			import { sendEmailWithTemplate, EmailTemplate } from '~/services.server/email'
+			await sendEmailWithTemplate(EmailTemplate.GenericEmail, emailAddress, { firstName, subject, text });
+
+		Manual mode:
+			await sendEmail({ to, subject, text/html });
+	*/
+
+	import sendgridEmail, { MailDataRequired } from '@sendgrid/mail';
+
+	sendgridEmail.setApiKey(process.env.SENDGRID_API_KEY!);
+
+	const DEFAULT_EMAIL_SENDER = process.env.EMAIL_SENDER ?? 'platform@climateaction.agency';
+
+	type EmailMessageData = Omit<MailDataRequired, 'from'> & {
+		to: string;
+		subject: string;
+		text?: string;
+		html?: string;
+	};
+
+	export async function sendEmail(messageData: EmailMessageData) {
+		const newMessage = {
+			from: DEFAULT_EMAIL_SENDER,
+			...messageData,
+		};
+		const [response] = await sendgridEmail.send(newMessage as MailDataRequired);
+		return response;
+	}
+
+	/* ----- Templates: https://mc.sendgrid.com/dynamic-templates ----- */
+
+	// Inside the template editor, use {{variable}} for plain text, and triple {{{variable}}} for HTML markup
+	export enum EmailTemplate {
+		GenericEmail = 'd-de3300ebee2c45aea13abc690017e47d', // Variables: { firstName, subject, html }
+	}
+
+	type DynamicTemplateData = Record<string, string | number>;
+
+	export async function sendEmailWithTemplate(
+		templateId: EmailTemplate,
+		to: string,
+		templateVariables: DynamicTemplateData,
+	) {
+		const newMessage = {
+			to,
+			templateId: templateId,
+			dynamicTemplateData: templateVariables,
+		};
+		return await sendEmail(newMessage as EmailMessageData);
+	}
+
 ### URL tracking - utm_medium etc
 
 	const urlRegex = require('url-regex')
@@ -744,7 +815,7 @@ Node.js:
 	  return html.replace(urlRegex({ strict: false }), url => addUrlParameters(url, utmParameters))
 	}
 
-### Process death
+## Process death
 
 		const onProcessDeath = require('death')
 

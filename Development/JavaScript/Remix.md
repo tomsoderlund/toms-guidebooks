@@ -6,7 +6,7 @@ https://remix.run/
 
 ### Create Remix folder structure
 
-	# Client
+	# Client/shared
 	mkdir -p app/components/scenes
 	mkdir -p app/components/page
 	mkdir -p app/components/navigation
@@ -14,13 +14,16 @@ https://remix.run/
 	mkdir -p app/components/input
 	mkdir -p app/routes/api
 	mkdir -p app/hooks
-	mkdir -p app/theme
-	# Server:
 	mkdir -p app/utils
-	mkdir -p app/services
-	mkdir -p app/loaders
-	mkdir -p app/actions
-	mkdir -p app/config
+	mkdir -p app/theme
+	# Server-only
+	mkdir -p app/.server/loaders
+	mkdir -p app/.server/actions
+	mkdir -p app/.server/services
+	mkdir -p app/.server/utils
+	mkdir -p app/.server/config
+	# Client-only
+	#mkdir -p app/.client
 	# Public
 	mkdir -p public
 
