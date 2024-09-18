@@ -111,3 +111,34 @@ Only set in S3, not CloudFront
 	- Needs a Custom SSL Certificate
 	- Request or Import a Certificate with ACM
 - Route 53: "A" to Alias "d3htstcz5zldi1.cloudfront.net."
+
+
+## RDS Databases
+
+- Mindful of **region**, e.g. Sweden https://eu-north-1.console.aws.amazon.com/rds/home?region=eu-north-1
+- Create new database:
+	- Aurora (PostgreSQL Compatible)
+	- Production not Test
+	- DB cluster identifier = project-slug
+	- Credentials: Managed in AWS Secrets Manager
+	- Serverless v2: low capacity'
+	- Don't create an Aurora Replica
+	- Don’t connect to an EC2 compute resource
+	- Public access: Yes
+- After, set inbound rules (firewall): https://eu-north-1.console.aws.amazon.com/ec2/home?region=eu-north-1#SecurityGroups:
+- Get password from 
+
+Example:
+
+- Host: [project-slug].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com
+- Username: postgres
+- Password: (from AWS Secrets Manager)
+- Database: postgres
+
+### Migrate from ElephantSQL to AWS RDS
+
+	# Export from old database
+	pg_dump -h balarama.db.elephantsql.com -U [USERNAME] -W [USERNAME] > backup.sql
+
+	# Import to new database
+	psql -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres < backup.sql
