@@ -47,7 +47,7 @@
     - [SVG](./Development/HTML/SVG.md)
   - Hosting:
     - [AWS Lambda](./Development/Hosting/AWS%20Lambda.md)
-    - [Amazon AWS - S3 etc](./Development/Hosting/Amazon%20AWS%20-%20S3%20etc.md)
+    - [Amazon AWS](./Development/Hosting/Amazon%20AWS.md)
     - [Docker](./Development/Hosting/Docker.md)
     - [Google Cloud GCP](./Development/Hosting/Google%20Cloud%20GCP.md)
     - [Heroku](./Development/Hosting/Heroku.md)

@@ -123,11 +123,18 @@ Blockers and navigate away:
 
 	params.paramName
 
-Client-side:
+Client-side hook:
 
+	import { useParams } from '@remix-run/react';
 	const { paramName } = useParams();
 
 #### Query parameters: `?param=value`:
 
 	const url = new URL(request.url);
 	const paramValue = url.searchParams.get('paramName');
+
+Client-side hook:
+
+	import { useSearchParams } from '@remix-run/react';
+	const [searchParams] = useSearchParams();
+	const myvalueParam = searchParams.get('myvalue');

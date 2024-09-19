@@ -715,7 +715,7 @@ Grant permissions:
 
 	pg_dump mydatabase > mydatabase_dump.sql
 
-	pg_dump -U username -h localhost -p 5432 -t public.tablename mydatabase > tablename_dump.sql
+	PGPASSWORD="your_password" pg_dump -U username -h localhost -p 5432 -t public.tablename mydatabase > tablename_dump.sql
 	pg_dump --no-owner --no-acl --data-only --inserts -d mydatabase -t public.tablename > tablename_dump.sql
 
 Restore:

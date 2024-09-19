@@ -117,28 +117,30 @@ Only set in S3, not CloudFront
 
 - Mindful of **region**, e.g. Sweden https://eu-north-1.console.aws.amazon.com/rds/home?region=eu-north-1
 - Create new database:
-	- Aurora (PostgreSQL Compatible)
+	- Aurora PostgreSQL (AWS’ own Postgres-compatible)
 	- Production not Test
-	- DB cluster identifier = project-slug
+	- DB cluster identifier = `my-project-slug`
 	- Credentials: Managed in AWS Secrets Manager
-	- Serverless v2: low capacity'
-	- Don't create an Aurora Replica
+	- Serverless v2: low capacity (0.5 - 16?)
+	- Don’t create an Aurora Replica
 	- Don’t connect to an EC2 compute resource
 	- Public access: Yes
 - After, set inbound rules (firewall): https://eu-north-1.console.aws.amazon.com/ec2/home?region=eu-north-1#SecurityGroups:
-- Get password from 
+- Get password from AWS Secrets Manager: https://eu-north-1.console.aws.amazon.com/secretsmanager/listsecrets?region=eu-north-1
 
-Example:
+Example credentials:
 
-- Host: [project-slug].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com
-- Username: postgres
+- Host*: `[my-project-slug].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com`
+- Username: `postgres`
 - Password: (from AWS Secrets Manager)
-- Database: postgres
+- Database: `postgres`
+
+*Note: you also get a read-only host on `.cluster-ro-`
 
 ### Migrate from ElephantSQL to AWS RDS
 
 	# Export from old database
-	pg_dump -h balarama.db.elephantsql.com -U [USERNAME] -W [USERNAME] > backup.sql
+	PGPASSWORD='[PASSWORD]' pg_dump -h balarama.db.elephantsql.com -U [USERNAME] -W [USERNAME] > backup.sql
 
 	# Import to new database
-	psql -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres < backup.sql
+	PGPASSWORD='[PASSWORD]' psql -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres < backup.sql

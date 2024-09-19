@@ -160,6 +160,26 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 	// Use _ instead of . and $ instead of # to allow for easier JavaScript parsing
 	const getElementReference = $element => ($element[0].name) + ($element.attr('class') ? '_'+$element.attr('class').replace(/ /g, '_') : '') + ($element.attr('id') ? '$'+$element.attr('id') : '')
 
+Print an object tree:
+
+	function printObjectTree(obj: any, maxLevels: number = -1, skipKeys: string[] = [], level: number = 0): void {
+		const indent = '  '.repeat(level); // Indentation based on depth
+		if (maxLevels !== -1 && level >= maxLevels) {
+			return;
+		}
+		for (const key in obj) {
+			if (skipKeys.includes(key)) {
+				continue;
+			}
+			if (obj.hasOwnProperty(key)) {
+				console.log(`${indent} ∟ ${key}`);
+				// If the value is another object, recursively print its keys
+				if (typeof obj[key] === 'object' && obj[key] !== null) {
+					printObjectTree(obj[key], maxLevels, skipKeys, level + 1);
+				}
+			}
+		}
+	}
 
 ## Conditional (ternary) operator
 
