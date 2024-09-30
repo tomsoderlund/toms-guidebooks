@@ -162,9 +162,14 @@ e.g. https://github.com/umdjs/umd/blob/master/templates/returnExportsGlobal.js
 
 Print an object tree:
 
-	function printObjectTree(obj: any, maxLevels: number = -1, skipKeys: string[] = [], level: number = 0): void {
-		const indent = '  '.repeat(level); // Indentation based on depth
-		if (maxLevels !== -1 && level >= maxLevels) {
+	function printObjectTree(
+		obj: any,
+		maxLevels: number = -1,
+		skipKeys: string[] = [],
+		currentLevel: number = 0
+	): void {
+		const indentStr = currentLevel > 0 ? `${'  '.repeat(currentLevel)}∟ ` : '';
+		if (maxLevels !== -1 && currentLevel >= maxLevels) {
 			return;
 		}
 		for (const key in obj) {
@@ -172,13 +177,47 @@ Print an object tree:
 				continue;
 			}
 			if (obj.hasOwnProperty(key)) {
-				console.log(`${indent} ∟ ${key}`);
+				const textChildStr = typeof obj[key] === 'string' ? `: "${obj[key]}"` : '';
+				console.log(indentStr + key + textChildStr);
 				// If the value is another object, recursively print its keys
 				if (typeof obj[key] === 'object' && obj[key] !== null) {
-					printObjectTree(obj[key], maxLevels, skipKeys, level + 1);
+					printObjectTree(obj[key], maxLevels, skipKeys, currentLevel + 1);
 				}
 			}
 		}
+	}
+
+Build a tree:
+
+	interface TreeNode {
+		[key: string]: any;
+		children?: TreeNode[];
+	}
+
+	function buildObjectTreeFromArray(
+		arrayOfObjects: TreeNode[],
+		idField: string,
+		parentIdField: string,
+		parentId: number | string | null = null,
+	): TreeNode[] {
+		const tree: TreeNode[] = [];
+		// Filter the array to get all objects with the current parentId
+		const children = arrayOfObjects.filter((obj) => obj[parentIdField] === parentId);
+		// Loop through the filtered children
+		for (const child of children) {
+			// Recursively build the tree for each child
+			const childNode: TreeNode = {
+				...child,
+				children: buildObjectTreeFromArray(arrayOfObjects, idField, parentIdField, child[idField]),
+			};
+			// If no children are found, remove the empty children property
+			if (childNode.children?.length === 0) {
+				delete childNode.children;
+			}
+			// Add the built node to the tree
+			tree.push(childNode);
+		}
+		return tree;
 	}
 
 ## Conditional (ternary) operator
@@ -408,7 +447,7 @@ http://javascript.crockford.com/prototypal.html
 	const getRandomNumber = (min, max) => Math.round(min + Math.random() * (max - min))
 	const getRandomNumericString = (length = 5) => Math.round(Math.random() * Math.pow(10, length)).toString()
 	const getRandomString = (length = 5) => window.btoa(Math.random().toString()).substring(-length).replace(/[^a-zA-Z]/g, '').split('').reverse().join('')
-	const getRandomFromArray = (array) => array[getRandomNumber(0, array.length - 1)]
+	const getRandomFromArray = (array) => array[Math.round(Math.random() * (array.length - 1))]
 	// getRandomIndexFromWeightedArray([0.1, 0.3, 0.6]) --> returns index 0-2
 	const getRandomIndexFromWeightedArray = (weightedArray) => {
 	  const randomNr = Math.random()
@@ -1313,6 +1352,16 @@ Wait, Sleep etc
 
 	animationFrameId = requestAnimationFrame(doInNextFrame)
 
+## Images
+
+	async function checkIfImageLoads (imageSrc: string): Promise<boolean> {
+		return await new Promise((resolve) => {
+			const img = new Image()
+			img.onload = () => resolve(true)
+			img.onerror = () => resolve(false)
+			img.src = imageSrc
+		})
+	}
 
 ## Drawing
 
@@ -2269,8 +2318,16 @@ Related:
 	module.exports.wrapAsArray = objectOrArray => objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
 	// objectLength: return length on Array or Object
 	module.exports.objectLength = objectOrArray => objectOrArray.constructor === Array ? objectOrArray.length : 1
-	// applyToAll(func, obj1) or applyToAll(func, [obj1, obj2, ...])
-	module.exports.applyToAll = (func, objectOrArray) => objectOrArray.constructor === Array ? objectOrArray.map(func) : func(objectOrArray)
+
+	// applyToAll(obj1, func) or applyToAll([obj1, obj2, ...], func)
+	export function applyToAll<T1, T2>(objectOrArray: T1 | T1[], func: (item: T1) => T2): T2 | T2[] {
+		return Array.isArray(objectOrArray) ? objectOrArray.map(func) : func(objectOrArray);
+	}
+	// asArray(obj1) or asArray([obj1, obj2, ...])
+	export function asArray<T>(objectOrArray: T | T[]) {
+		return Array.isArray(objectOrArray) ? objectOrArray : [objectOrArray];
+	}
+
 	// applyToAllAsync(promiseFunction, obj1) or applyToAllAsync(promiseFunction, [obj1, obj2, ...])
 	module.exports.applyToAllAsync = async (promiseFunction, objectOrArray) => new Promise(async (resolve, reject) => {
 		const objects = objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]
@@ -2566,6 +2623,14 @@ http://usejsdoc.org
 	 */
 	function Book(title, authors) {
 	}
+
+Type:
+
+	/**
+	* @typedef {Object} User
+	* @property {string} name - The user's name.
+	* @property {string} email - The user's email.
+	*/
 
 Module:
 

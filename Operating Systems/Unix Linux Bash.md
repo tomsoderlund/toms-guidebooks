@@ -615,6 +615,7 @@ Say - MacOS:
 ## Web server
 
 	python -m SimpleHTTPServer
+	python3 -m http.server 9000
 
 
 ## Cron / scheduled tasks / daemons

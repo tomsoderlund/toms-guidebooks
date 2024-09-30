@@ -322,3 +322,18 @@ Config: `.prettierrc` and `.prettierignore`
       "jsxSingleQuote": true,
       "trailingComma": "none"
     }
+
+#### Standard.js config in Prettier
+
+	{
+		"semi": false,
+		"singleQuote": true,
+		"trailingComma": "none",
+		"bracketSpacing": true,
+		"arrowParens": "avoid",
+		"printWidth": 80,
+		"tabWidth": 2,
+		"useTabs": false,
+		"endOfLine": "lf",
+		"jsxSingleQuote": true
+	}

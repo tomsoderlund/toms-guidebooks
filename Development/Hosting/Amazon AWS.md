@@ -115,18 +115,17 @@ Only set in S3, not CloudFront
 
 ## RDS Databases
 
-- Mindful of **region**, e.g. Sweden https://eu-north-1.console.aws.amazon.com/rds/home?region=eu-north-1
+- Mindful of _region_, e.g. Sweden https://eu-north-1.console.aws.amazon.com/rds/home?region=eu-north-1
 - Create new database:
 	- Aurora PostgreSQL (AWS’ own Postgres-compatible)
 	- Production not Test
 	- DB cluster identifier = `my-project-slug`
-	- Credentials: Managed in AWS Secrets Manager
+	- Credentials: Self-managed
 	- Serverless v2: low capacity (0.5 - 16?)
 	- Don’t create an Aurora Replica
 	- Don’t connect to an EC2 compute resource
 	- Public access: Yes
-- After, set inbound rules (firewall): https://eu-north-1.console.aws.amazon.com/ec2/home?region=eu-north-1#SecurityGroups:
-- Get password from AWS Secrets Manager: https://eu-north-1.console.aws.amazon.com/secretsmanager/listsecrets?region=eu-north-1
+- After, set Inbound Rules (firewall): https://eu-north-1.console.aws.amazon.com/ec2/home?region=eu-north-1#SecurityGroups:
 
 Example credentials:
 

@@ -114,6 +114,19 @@ Blockers and navigate away:
 - `useBlocker`: Prevent navigation when certain conditions are met.
 - `unstable_usePrompt`: Display a confirmation dialog when navigating away from a page.
 
+### Form vs useFetcher
+
+1. **`<Form>`**:
+	- Traditional form submission with navigation to other route and/or full-page reload.
+	- Best for simple or multi-page forms.
+2. **`fetcher.Form`**:
+	- When a form element is suitable, but not navigation to other route or full-page reload.
+	- For AJAX-style form interactions, with a form element.
+	- No full-page reload; stays on the same page and updates specific components.
+3. **`fetcher.submit`**:
+	- When a form element is not suitable.
+	- For programmatic control over form submission.
+	- Best for scenarios like conditional submissions or button clicks outside of the form element.
 
 ## Syntax
 

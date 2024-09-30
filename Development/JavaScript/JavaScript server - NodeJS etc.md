@@ -52,13 +52,20 @@ http://nodejs.org/download/
 
 	req.method // 'GET'
 	req.url = '/mypage?query=value'
-	req.headers.host = 'localhost:3206'
-	req.headers.origin = 'http://localhost:3301'
-	req.headers.referer = 'http://localhost:3301/my-page'
 	req.query (url?key=value)
+	req.headers
+		host = 'www.myserver.com:8080'
+		'x-forwarded-host': 'www.myserver.com:8080',
+		'x-forwarded-proto': 'https',
+		'x-forwarded-port': '8080',
+		origin = 'http://localhost:3301'
+		referer = 'http://localhost:3301/my-page'
+		'user-agent'
 	req.body (JSON body)
 
 	const { host, origin, referer } = req.headers
+
+	const getServerHref = (req) => `${req.headers.host.includes('localhost') ? 'http' : 'https'}://${req.headers.host}/`
 
 Express:
 
