@@ -116,17 +116,29 @@ Blockers and navigate away:
 
 ### Form vs useFetcher
 
-1. **`<Form>`**:
+https://remix.run/docs/en/main/discussion/form-vs-fetcher
+
+(All: triggers server-side `action` + `loader` once)
+
+1. **HTML `<form>`**:
+	- Normally: avoid
 	- Traditional form submission with navigation to other route and/or full-page reload.
-	- Best for simple or multi-page forms.
-2. **`fetcher.Form`**:
-	- When a form element is suitable, but not navigation to other route or full-page reload.
-	- For AJAX-style form interactions, with a form element.
+	- Triggers action + loader, **renders on server** + client (2 times)
+2. **Remix `<Form>`**:
+	- The default form usage in Remix
+	- No full page reload, but `loader` runs
+	- Can use `redirect` in loader
+	- Renders client 6 times (no render on server)
+3. **Remix `useFetcher` with `fetcher.Form`**:
+	- When a `form` element is suitable, but not navigation to other route or full-page reload.
+	- Renders client 6 times, `useActionData` returns undefined, instead action data in fetcher.data
+	- For AJAX-style form interactions, with a `form` element.
 	- No full-page reload; stays on the same page and updates specific components.
-3. **`fetcher.submit`**:
-	- When a form element is not suitable.
+4. **Remix `useFetcher` with `fetcher.submit`**:
+	- When a `form` element is not suitable.
+	- Behaves similarly as `fetcher.Form` above
 	- For programmatic control over form submission.
-	- Best for scenarios like conditional submissions or button clicks outside of the form element.
+	- Best for scenarios like conditional submissions or button clicks outside of the `form` element.
 
 ## Syntax
 
