@@ -133,7 +133,7 @@ https://remix.run/docs/en/main/discussion/form-vs-fetcher
 	- Renders client 6 times (no render on server)
 3. **Remix `useFetcher` with `fetcher.Form`**:
 	- When a `form` element is suitable, but not navigation to other route or full-page reload.
-	- Renders client 6 times, `useActionData` returns undefined, instead action data in fetcher.data
+	- Renders client 6 times, `useActionData` returns `undefined`, instead action data is in `fetcher.data`
 	- For AJAX-style form interactions, with a `form` element.
 	- No full-page reload; stays on the same page and updates specific components.
 4. **Remix `useFetcher` with `fetcher.submit`**:
