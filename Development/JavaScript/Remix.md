@@ -116,6 +116,8 @@ Blockers and navigate away:
 
 ### Form vs useFetcher
 
+**TLDR; If URL changes after action then use `Form`, if not use `useFetcher`.**
+
 https://remix.run/docs/en/main/discussion/form-vs-fetcher
 
 (All: triggers server-side `action` + `loader` once)
