@@ -325,6 +325,16 @@ https://www.npmjs.org/package/ejs
 
 ## JWT - JSON Web Token
 
+1. **➡️ Client Sends Login Request:** Client sends login credentials (e.g., username and password) to the server.
+2. **⬅️ Server Authenticates User and returns JWT:** Server verifies the credentials. If valid, it generates a JWT. The server responds with a JWT, typically in a JSON response or in an HTTP-only cookie.
+3. **Client Stores JWT:** Client stores the token (e.g., in local storage, session storage, or a cookie).
+4. **➡️ Client Sends JWT with API Requests:** For subsequent requests, the client includes the JWT in the Authorization header (`Authorization: Bearer [token]`).
+5. **⬅️ Server Verifies JWT:** Server checks the token’s signature and validates its claims (e.g., expiration time).
+	- **Access Granted or Denied:** If the token is valid, the server processes the request and sends a response. If invalid or expired, the server denies access or requests re-authentication.
+	- **Client Handles Token Expiration:** If expired, the client may need to refresh the token (e.g., using a refresh token) or prompt the user to log in again.
+
+### Code
+
 Client (header):
 
 	const jwt = await getUserJWT()

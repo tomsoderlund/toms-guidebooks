@@ -1116,6 +1116,11 @@ code {
 
 ## Colors / colors / COLORS
 
+    .page {
+      --gray-rgb: 0, 0, 0;
+      --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+    }
+
 namedColors.json: https://gist.github.com/tomsoderlund/548d39611c45397f48434e706b8c9b92
 
 https://www.crockford.com/colors.html

@@ -782,6 +782,7 @@ https://github.com/react-native-maps/react-native-maps
 
 3D:
 
+- https://github.com/margelo/react-native-filament
 - https://github.com/pmndrs/react-three-fiber
 
 AR:
@@ -789,6 +790,43 @@ AR:
 - https://arvrjourney.com/augmented-reality-with-react-native-15219f36e3f2
 - https://github.com/expo/expo-three-ar
 - https://github.com/pmndrs/react-xr → https://github.com/pmndrs/react-xr/discussions/156
+
+#### react-three-fiber for React Native
+
+- Docs: https://r3f.docs.pmnd.rs/ + https://github.com/pmndrs/react-three-fiber
+- Objects from Three.js: https://threejs.org/docs/#api/en/geometries/BoxGeometry
+- Helpers in Drei: https://github.com/pmndrs/drei
+
+Install:
+
+	# Install Expo GL
+	npx expo install expo-gl
+	# Install Three.js and R3F
+	npm install three @react-three/fiber
+
+Note: 'z' is: higher values closer to camera, lower values further away
+
+	<pointLight position={[x, y, z]} intensity={1.5} />
+	<boxGeometry args={[width, length, depth]} />
+
+Rotation: `Math.PI` = 180°. Here we rotate 90°:
+
+	<mesh rotation={[0, 0, Math.PI * 0.5]} position={[0, 0, 0]}>
+		<planeGeometry args={[1.8, 3.2]} />
+		<meshStandardMaterial color='lightblue' />
+	</mesh>
+
+Types:
+
+	import { Vector3, Euler, Color } from 'three'
+
+`useFrame` for animations
+
+	useFrame(() => {
+		if (mesh.current !== null) {
+			mesh.current.rotation.x += 0.01
+		}
+	})
 
 ### Payments with RevenueCat
 
