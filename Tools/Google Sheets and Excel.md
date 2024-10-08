@@ -176,8 +176,8 @@ To get the last row of a submitted data (e.g. in columns A...Z) is a tiny bit ea
 ### Contact Lists
 
 Slug/slug:
-=SUBSTITUTE(LOWER($A2), " ", "-")
-=REGEXREPLACE(SUBSTITUTE(LOWER(Name), " ", "-"), "[^a-zA-Z0-9\\-]", "")
+=REGEXREPLACE(SUBSTITUTE(LOWER(B3), " ", "-"), "[^a-z0-9-]", "")
+
 Camelcase:
 =REGEXREPLACE(LOWER(LEFT($A3)) & MID(SUBSTITUTE(PROPER($A3)," ",""), 2, LEN($A3)), "[^A-Za-z0-9]+","")
 
@@ -295,6 +295,15 @@ TREND(known_data_y, [known_data_x], [new_data_x], [b])
 Exponential:
 GROWTH(known_data_y, [known_data_x], [new_data_x], [b])
 
+### SQL
+
+INSERT headers:
+
+	=JOIN(", ", H3:J3)
+
+INSERT row:
+
+	="(" & JOIN(", ", ARRAYFORMULA("'" & H4:J4 & "'")) & "), -- " & B5
 
 ## Google Sheets as database
 
