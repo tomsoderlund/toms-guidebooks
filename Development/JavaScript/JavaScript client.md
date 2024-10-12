@@ -1225,7 +1225,8 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	const formatTime = (dateObj = new Date()) => `${`0${dateObj.getHours()}`.slice(-2)}:${`0${dateObj.getMinutes()}`.slice(-2)}`
 	const formatDateTime = (dateObj = new Date()) => `${dateObj.getFullYear()}-${`0${dateObj.getMonth() + 1}`.slice(-2)}-${`0${dateObj.getDate()}`.slice(-2)} ${`0${dateObj.getHours()}`.slice(-2)}:${`0${dateObj.getMinutes()}`.slice(-2)}`
 
-	`[${new Date().getHours()}:${new Date().getMinutes()}]`
+	/** Timestamp e.g. '20241012-1308-4d5j' */
+	const formatTimestamp = (dateObj = new Date()) => `${dateObj.getFullYear()}${`0${dateObj.getMonth() + 1}`.slice(-2)}${`0${dateObj.getDate()}`.slice(-2)}-${`0${dateObj.getHours()}`.slice(-2)}${`0${dateObj.getMinutes()}`.slice(-2)}-${Math.random().toString(36).substring(2, 6)}`
 
 	const formatDate = function (dateObj) {
 		return (dateObj.getFullYear()

@@ -317,6 +317,7 @@ Lateral join:
 as part of `SELECT`:
 
 	(CASE WHEN user.id IS NOT NULL THEN user_profile.name ELSE null END) AS user_name
+
 	(CASE WHEN username IS NOT NULL THEN username ELSE CAST(article.user_id AS varchar) END) AS user
 	INITCAP(CASE WHEN product.name ILIKE brand.name || '%' THEN product.name ELSE CONCAT(brand.name, ' ', product.name) END) AS product_name
 
@@ -444,6 +445,24 @@ Multiple values:
 ## Delete
 
 	DELETE FROM domain WHERE name = 'formomiljo.se';
+
+## List tables
+
+	SELECT 
+		CONCAT(columns.table_schema, '.', columns.table_name) as schema_and_table,
+		columns.column_name,
+		columns.data_type as column_data_type
+		-- columns.character_maximum_length, 
+		-- columns.is_nullable, 
+		-- columns.column_default 
+	FROM information_schema.columns columns
+	JOIN information_schema.tables tables 
+		ON columns.table_name = tables.table_name 
+		AND columns.table_schema = tables.table_schema
+	WHERE tables.table_type = 'BASE TABLE' -- Exclude views
+		AND columns.table_schema IN ('public', 'basejump', 'auth')
+		-- AND columns.table_name ILIKE 'account%' -- NOTE: change here to see other tables
+	ORDER BY columns.table_schema DESC, columns.table_name ASC;
 
 ## Create a new table
 

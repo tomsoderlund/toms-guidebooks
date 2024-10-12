@@ -1068,7 +1068,6 @@ button[data-testid="jest-test-product-name"]
 :visited
 
 
-
 /* --------- Retina Images --------- */
 
 Either: IMG tag or element with background image.
@@ -1116,9 +1115,13 @@ code {
 
 ## Colors / colors / COLORS
 
-    .page {
-      --gray-rgb: 0, 0, 0;
-      --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+    :root {
+      --color-code-action: 0, 206, 209; /* Note: just RGB values, not a color */
+      --color-action-200: rgba(var(--color-code-action), 0.2);
+      --color-action-500: rgba(var(--color-code-action), 0.5);
+    }
+    .action-button {
+      background-color: var(--color-action-200);
     }
 
 namedColors.json: https://gist.github.com/tomsoderlund/548d39611c45397f48434e706b8c9b92
