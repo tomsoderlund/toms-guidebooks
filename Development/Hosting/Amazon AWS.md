@@ -139,7 +139,11 @@ Example credentials:
 ### Migrate from ElephantSQL to AWS RDS
 
 	# Export from old database
-	PGPASSWORD='[PASSWORD]' pg_dump -h balarama.db.elephantsql.com -U [USERNAME] -W [USERNAME] > backup.sql
+	PGPASSWORD='[PASSWORD]' pg_dump -h balarama.db.elephantsql.com -U [USERNAME] -W [USERNAME] > [PROJECTNAME].sql
 
 	# Import to new database
-	PGPASSWORD='[PASSWORD]' psql -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres < backup.sql
+	PGPASSWORD='[PASSWORD]' psql -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres < [PROJECTNAME].sql
+
+Export from AWS:
+
+	PGPASSWORD='[PASSWORD]' pg_dump -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres > [PROJECTNAME].sql

@@ -468,7 +468,7 @@ Custom `HTMLElementEvent`:
       }
     }
 
-``React.FormEvent`` (form submit):
+``event: React.FormEvent<HTMLInputElement>`` (form submit):
 
 - https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
 - https://stackoverflow.com/a/42066698

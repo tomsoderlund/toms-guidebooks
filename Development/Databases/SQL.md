@@ -270,12 +270,14 @@ Tip: you can use `LOWER()` for lowercase formatting.
 
 	SELECT COALESCE(phone_number, 'No Phone') AS phone_number FROM employees;
 
-### Joins in Select
+### Joins in SELECT
 
-* `INNER JOIN` (default/just `JOIN`): only show records common to both tables.
-* `OUTER JOIN`: all the content of the both tables are merged together either they are matched or not.
-* `LEFT JOIN` = `LEFT OUTER JOIN`: select records from the first (left-most) table with matching right table records.
-* `RIGHT JOIN` = `RIGHT OUTER JOIN`: select records from the second (right-most) table with matching left table records.
+| **JOIN Type**      | **Includes Matching Rows (from both tables)** | **Includes Unmatched Rows (Left Table)** | **Includes Unmatched Rows (Right Table)** |
+|--------------------|-----------------------------------------------|------------------------------------------|-------------------------------------------|
+| **INNER JOIN**     | ✅ Yes                                        | ❌ No                                     | ❌ No                                      |
+| **LEFT JOIN**      | ✅ Yes                                        | ✅ Yes                                    | ❌ No                                      |
+| **RIGHT JOIN**     | ✅ Yes                                        | ❌ No                                     | ✅ Yes                                     |
+| **FULL OUTER JOIN**| ✅ Yes                                        | ✅ Yes                                    | ✅ Yes                                     |
 
 Examples:
 
@@ -329,9 +331,10 @@ Update with `RANDOM()`:
 
 	SELECT * FROM (
 		SELECT DISTINCT ON (person.id)
-		person.*, title,
+			person.*,
+			title
 		FROM person
-		) subquery
+	) subquery
 	WHERE title='CEO';
 
 ### UNION to combine/concatenate multiple queries

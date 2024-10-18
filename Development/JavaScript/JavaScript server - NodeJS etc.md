@@ -63,6 +63,10 @@ http://nodejs.org/download/
 		'user-agent'
 	req.body (JSON body)
 
+	// Get *relative* URL
+	const url = new URL(request.url);
+	const relativePath = url.pathname;
+
 	const { host, origin, referer } = req.headers
 
 	const getServerHref = (req) => `${req.headers.host.includes('localhost') ? 'http' : 'https'}://${req.headers.host}/`
