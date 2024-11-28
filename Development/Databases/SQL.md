@@ -274,7 +274,7 @@ Tip: you can use `LOWER()` for lowercase formatting.
 
 | **JOIN Type**      | **Includes Matching Rows (from both tables)** | **Includes Unmatched Rows (Left Table)** | **Includes Unmatched Rows (Right Table)** |
 |--------------------|-----------------------------------------------|------------------------------------------|-------------------------------------------|
-| **INNER JOIN**     | ✅ Yes                                        | ❌ No                                     | ❌ No                                      |
+| **INNER JOIN** (or just **JOIN**)     | ✅ Yes                                        | ❌ No                                     | ❌ No                                      |
 | **LEFT JOIN**      | ✅ Yes                                        | ✅ Yes                                    | ❌ No                                      |
 | **RIGHT JOIN**     | ✅ Yes                                        | ❌ No                                     | ✅ Yes                                     |
 | **FULL OUTER JOIN**| ✅ Yes                                        | ✅ Yes                                    | ✅ Yes                                     |
@@ -450,6 +450,17 @@ Multiple values:
 	DELETE FROM domain WHERE name = 'formomiljo.se';
 
 ## List tables
+
+	SELECT 
+		CONCAT(tables.table_schema, '.', tables.table_name) as schema_and_table
+	FROM information_schema.tables tables 
+	WHERE
+		tables.table_type = 'BASE TABLE' -- Exclude views
+		AND tables.table_schema IN ('public', 'basejump', 'auth')
+		-- AND tables.table_name ILIKE 'account%' -- NOTE: change here to see other tables
+	ORDER BY tables.table_schema ASC, tables.table_name ASC;
+
+With columns:
 
 	SELECT 
 		CONCAT(columns.table_schema, '.', columns.table_name) as schema_and_table,
@@ -739,6 +750,10 @@ Grant permissions:
 
 	PGPASSWORD="your_password" pg_dump -U username -h localhost -p 5432 -t public.tablename mydatabase > tablename_dump.sql
 	pg_dump --no-owner --no-acl --data-only --inserts -d mydatabase -t public.tablename > tablename_dump.sql
+
+One table INSERT:
+
+	pg_dump -h localhost -p 54332 -U postgres -d postgres -t tablename -F p --column-inserts -f tablename_dump.sql
 
 Restore:
 

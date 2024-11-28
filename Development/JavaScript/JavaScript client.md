@@ -1032,6 +1032,15 @@ Slugs:
 	  return h
 	}
 
+	function generateShortHash(str) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			const char = str.charCodeAt(i);
+			hash = (hash << 5) - hash + char; // bitwise hash
+			hash = hash & hash; // convert to 32-bit integer
+		}
+		return Math.abs(hash).toString(36); // convert to base36 for a shorter string
+	}
 
 ## Arrays and Lists
 
@@ -1176,7 +1185,7 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 	  }
 	}
 
-### JSON
+## JSON
 
 	str = JSON.stringify(obj, null, 2) // value, replacerArrayOrFunction, spacer
 	str = JSON.stringify(obj)
@@ -1184,6 +1193,10 @@ http://www.w3schools.com/jsref/jsref_obj_array.asp
 
 	const parseObject = obj => (typeof obj === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
 	const stringifyObject = obj => typeof obj === 'object' ? JSON.stringify(obj) : obj.toString()
+
+### JSON Schema
+
+https://json-schema.org/
 
 ## Dates & Time
 

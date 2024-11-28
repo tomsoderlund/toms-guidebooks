@@ -129,7 +129,7 @@ Only set in S3, not CloudFront
 
 Example credentials:
 
-- Host*: `[my-project-slug].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com`
+- Host*: `[my-project-slug].cluster-[CLUSTER_ID].eu-north-1.rds.amazonaws.com`
 - Username: `postgres`
 - Password: (from AWS Secrets Manager)
 - Database: `postgres`
@@ -142,8 +142,8 @@ Example credentials:
 	PGPASSWORD='[PASSWORD]' pg_dump -h balarama.db.elephantsql.com -U [USERNAME] -W [USERNAME] > [PROJECTNAME].sql
 
 	# Import to new database
-	PGPASSWORD='[PASSWORD]' psql -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres < [PROJECTNAME].sql
+	PGPASSWORD='[PASSWORD]' psql -h [PROJECTNAME].cluster-[CLUSTER_ID].eu-north-1.rds.amazonaws.com -U postgres -W postgres < [PROJECTNAME].sql
 
 Export from AWS:
 
-	PGPASSWORD='[PASSWORD]' pg_dump -h [PROJECTNAME].cluster-cd6ogouy0vxz.eu-north-1.rds.amazonaws.com -U postgres -W postgres > [PROJECTNAME].sql
+	PGPASSWORD='[PASSWORD]' pg_dump -h [PROJECTNAME].cluster-[CLUSTER_ID].eu-north-1.rds.amazonaws.com -U postgres -W postgres > [PROJECTNAME].sql

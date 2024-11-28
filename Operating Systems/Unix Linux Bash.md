@@ -42,6 +42,10 @@ Example:
 
 	du -sh * | sort -h
 
+### List all files in a development project
+
+	find . -type f -not -path "./node_modules/*" -not -path "./.git/*" | sort
+
 ### Find and delete empty folders
 
 	find . -type d -empty -print
@@ -49,9 +53,12 @@ Example:
 
 ### Find node_modules
 
+**Tip:** check your latest projects from VS Code: `~/Library/Application Support/Code/User/globalStorage/storage.json`
+and remove the rest of `node_modules` that you don’t need.
+
 https://medium.com/@MarkPieszak/how-to-delete-all-node-modules-folders-on-your-machine-and-free-up-hd-space-f3954843aeda
 
-Find "node_modules" and DELETE THEM:
+Find "node_modules" just list them:
 
 	find ~/Documents/Development -name "node_modules" -type d -prune | xargs du -chs
 
@@ -302,6 +309,17 @@ http://www.alecjacobson.com/weblog/?p=649
 	export NEW_RELIC_HOME=lib/config
 	export PATH=$PATH:/path/to/my/stuff
 	echo $PATHSS domain
+
+### Bash config
+
+Edit, then apply changes:
+
+	nano ~/.bashrc
+	source ~/.bashrc
+
+### See what shell you use
+
+	echo $SHELL
 
 ### DNS (dns) and Domains
 

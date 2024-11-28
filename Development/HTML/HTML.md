@@ -420,16 +420,22 @@ autocomplete="email"
 - off
 - on
 - name
+  - given-name
+  - additional-name
+  - family-name
 - organization
-- organization-title
+  - organization-title
+- username
+- email
+- tel
+- url
+- photo
+
+More:
+
 - honorific-prefix
-- given-name
-- additional-name
-- family-name
 - honorific-suffix
 - nickname
-- email
-- username
 - new-password
 - current-password
 - one-time-code
@@ -458,15 +464,12 @@ autocomplete="email"
 - bday-month
 - bday-year
 - sex
-- tel
 - tel-country-code
 - tel-national
 - tel-area-code
 - tel-local
 - tel-extension
-- impp
-- url
-- photo
+- impp (= instant messaging protocol endpoint)
 
 ### enterkeyhint (mobile/phone action button)
 

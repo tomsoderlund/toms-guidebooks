@@ -2,6 +2,42 @@
 
 https://remix.run/
 
+## Start
+
+	npx create-remix@latest
+
+Default structure:
+
+	my-remix-app/
+		.eslintrc.cjs
+		.gitignore
+		README.md
+		package.json
+		postcss.config.js
+		tailwind.config.ts
+		tsconfig.json
+		vite.config.ts
+		app/
+			entry.client.tsx
+			entry.server.tsx
+			root.tsx
+			routes/_index.tsx
+			tailwind.css
+		public/
+			favicon.ico
+			logo-dark.png
+			logo-light.png
+
+## Routes
+
+| Symbol  | Purpose                     | Example                   |
+| ------- | --------------------------- | ------------------------- |
+| `.`     | Folder paths                | `concerts.new-york.tsx`   |
+| `_`     | Hidden routes               | `_index.tsx`              |
+| `$`     | Dynamic segment             | `$articleSlug.tsx`        |
+| `(...)` | Optional routes             | `($lang).$productId.tsx`  |
+| `[...]` | Catch-all routes            | `[...all].tsx`            |
+
 ## Best practices
 
 ### Create Remix folder structure
@@ -142,7 +178,15 @@ https://remix.run/docs/en/main/discussion/form-vs-fetcher
 	- For programmatic control over form submission.
 	- Best for scenarios like conditional submissions or button clicks outside of the `form` element.
 
-## Syntax
+### `handle` and `useMatches`
+
+https://remix.run/docs/en/main/route/handle
+
+	interface TabHandle {
+	  name: string;
+	}
+
+	const currentTabHandle = matches.find((m) => m.handle)?.handle as TabHandle;
 
 ### Get URL parameters
 
@@ -165,3 +209,25 @@ Client-side hook:
 	import { useSearchParams } from '@remix-run/react';
 	const [searchParams] = useSearchParams();
 	const myvalueParam = searchParams.get('myvalue');
+
+Setting `searchParams`:
+
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const handleChangeSection = (sectionId: string): void => {
+		const newSearchParams = new URLSearchParams(searchParams);
+		newSearchParams.set('section', sectionId);
+		setSearchParams(newSearchParams);
+	};
+
+## Tips
+
+### Merging with Lovable/GPT Engineer
+
+- Hand-merge package.json deps
+- Take tailwind.config.ts from GPTE
+- @ alias in viteconfig.ts + tsconfig.json
+- Optional: Search replace `'@/` to `'~/`
+- Move /src to /app
+- Change /src to /app in 3 files
+- Delete: index.html, App.tsx, App.css, main.tsx

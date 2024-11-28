@@ -188,8 +188,45 @@ local DNS resolver
 
 	sudo nano /etc/resolver/minikube-dev
 
-
-## Run
+Running:
 
 	minikube start
 	tilt up
+
+
+## Applications on Docker
+
+### Postgres SQL on Docker
+
+`~/postgres-docker/docker-compose.yml`:
+
+	version: '3'
+	services:
+		db:
+			image: postgres:15
+			environment:
+				POSTGRES_USER: postgres
+				POSTGRES_PASSWORD: [hidden]
+				POSTGRES_DB: admin_db  # Just to ensure Postgres starts
+			volumes:
+				- postgres-data:/var/lib/postgresql/data
+				- ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Define the real databases here
+			ports:
+				- "5432:5432"
+
+	volumes:
+		postgres-data:
+
+`~/postgres-docker/init.sql`:
+
+	-- CREATE USER "project_user" WITH ENCRYPTED PASSWORD '...'; GRANT ALL PRIVILEGES ON DATABASE "my-database" TO "project_user";
+	CREATE DATABASE "my-database"; GRANT ALL PRIVILEGES ON DATABASE "my-database" TO postgres;
+
+Commands:
+
+	docker-compose down
+	docker-compose up -d
+	docker ps -a
+	docker logs postgres-docker-db-1
+
+	psql -h myserver.com -p 5432 -U postgres -W my-database

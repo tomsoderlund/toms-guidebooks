@@ -1,5 +1,7 @@
 # Firebase
 
+New modular API
+
 New: Cloud Firestore
 Old: Realtime Database
 
