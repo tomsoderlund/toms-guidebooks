@@ -1,5 +1,36 @@
 # My Disk is Full!
 
+TreeSize for macOS
+
+- DaisyDisk
+    - Visualize your disk usage with an interactive sunburst diagram.
+    - Allows browsing folders in a tree view and quickly identifying large files/folders.
+    - Paid but offers a free trial.
+- Disk Drill
+    - File recovery tool with a disk analyzer feature.
+    - Shows folder sizes in a tree view.
+- GrandPerspective
+    - Lightweight and free tool to visualize disk usage.
+    - Treemap view rather than tree, but you can explore folders.
+- SpaceLens by MacPaw
+    - Part of the CleanMyMac suite.
+    - Displays folder sizes in a tree view.
+- TreeSize for macOS
+    - Similar to the popular Windows tool, TreeSize shows folders in a tree format with size info.
+
+Built-In Options
+- Finder (Sort by Size)
+    - Open Finder, navigate to your drive or folder.
+    - Right-click and select “Get Info” on folders to check sizes. (Cumbersome for many folders.)
+- Terminal Command
+    - Use du (disk usage) to get a tree view of folder sizes:
+
+du -sh * | sort -h
+
+- Add -c to summarize total disk usage.
+- Replace * with the folder path if you want to analyze a specific location.
+
+
 Storage settings on Mac
 
 Start JDiskReport

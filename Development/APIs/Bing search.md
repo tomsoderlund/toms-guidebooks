@@ -6,28 +6,24 @@ Set `BING_API_KEY` in env.
 
 ## Web Search
 
-    require('dotenv').config() // For BING_API_KEY
-    const https = require('https')
+Official code: https://learn.microsoft.com/en-us/bing/search-apis/bing-web-search/quickstarts/rest/nodejs
 
-    // Official code: https://learn.microsoft.com/en-us/bing/search-apis/bing-web-search/quickstarts/rest/nodejs
-    async function bingSearch (query, options = { endpoint: '/search' }) {
-      return new Promise((resolve, reject) => {
-        https.get(
-          {
-            hostname: 'api.bing.microsoft.com',
-            path: `/v7.0${options.endpoint}?q=` + encodeURIComponent(query),
-            headers: { 'Ocp-Apim-Subscription-Key': process.env.BING_API_KEY }
-          },
-          (res) => {
-            let body = ''
-            res.on('data', (part) => { body += part })
-            res.on('end', () => {
-              resolve(JSON.parse(body))
-            })
-            res.on('error', (err) => reject(err))
-          }
-        )
+    const searchBingAsync = async function (searchText) {
+      const url = new URL('https://api.bing.microsoft.com/v7.0/search')
+      url.searchParams.append('q', searchText) // Add query parameter
+      url.searchParams.append('count', 10) // Optional: Limit results to 10
+      url.searchParams.append('mkt', config.searchLocale) // Optional: set Market/Locale
+      const response = await fetch(url, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.BING_API_KEY
+        }
       })
+      if (!response.ok) {
+        throw new Error(`Bing error: ${response.statusText} (${response.status})`)
+      }
+      const data = await response.json()
+      const results = data?.webPages?.value || []
+      return results
     }
 
 ## Image Search

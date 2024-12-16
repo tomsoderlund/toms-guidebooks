@@ -778,6 +778,12 @@ https://github.com/react-native-maps/react-native-maps
 - [Heatmap](https://github.com/react-native-maps/react-native-maps/blob/master/docs/heatmap.md)
 - [Geojson](https://github.com/react-native-maps/react-native-maps/blob/master/docs/geojson.md)
 
+### Games
+
+- react-native-skia
+- react-native-reanimated: `npx expo install react-native-reanimated`
+- react-native-gesture-handler: `npx expo install react-native-gesture-handler`
+
 ### 3D, VR, AR
 
 3D:
