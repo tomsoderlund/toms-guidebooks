@@ -291,8 +291,15 @@ package.json scripts:
 
 in `global.d.ts`:
 
-	type SupabaseDefinitions = import('./supabase').definitions
-	type Company = SupabaseDefinitions['company']
+	import { Database, Tables } from "./supabase";
+
+	type Something = Tables<"something">;
+	type SomethingInsert = Database['public']['Tables']['something']['Insert'];
+	type SomethingUpdate = Database['public']['Tables']['something']['Update'];
+	type ViewSomething = Database['public']['Views']['view_something']['Row'];
+	type FunctionGetSomethingArguments = Database['public']['Functions']['get_something']['Args'];
+	type FunctionGetSomethingReturns = Database['public']['Functions']['get_something']['Returns'] | null;
+	type SomethingEnum = Database['public']['Enums']['something'];
 
 ## Supabase and React Native (Expo)
 

@@ -48,6 +48,7 @@
   - Hosting:
     - [AWS Lambda](./Development/Hosting/AWS%20Lambda.md)
     - [Amazon AWS](./Development/Hosting/Amazon%20AWS.md)
+    - [Coolify](./Development/Hosting/Coolify.md)
     - [Docker](./Development/Hosting/Docker.md)
     - [Google Cloud GCP](./Development/Hosting/Google%20Cloud%20GCP.md)
     - [Heroku](./Development/Hosting/Heroku.md)

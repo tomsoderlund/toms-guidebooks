@@ -230,3 +230,8 @@ Commands:
 	docker logs postgres-docker-db-1
 
 	psql -h myserver.com -p 5432 -U postgres -W my-database
+
+If you get “address in use” error:
+
+	sudo systemctl stop postgresql
+	docker-compose up -d

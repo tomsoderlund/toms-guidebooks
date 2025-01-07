@@ -311,7 +311,7 @@ https://git-scm.com/book/en/v2/Git-Tools-Submodules#_cloning_submodules
 
 Example:
 
-	**Related ticket:** https://trello.com/c/...
+	**Related issue:** https://trello.com/c/...
 
 	### What this PR includes
 

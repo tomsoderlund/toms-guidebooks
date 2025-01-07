@@ -669,6 +669,7 @@ Use `d *` to delete all.
 
 https://www.launchd.info/
 
+
 ## Security
 
 ### SSH
@@ -684,3 +685,9 @@ Connect:
 
 	ssh -i keyfile target_machine
 	ssh -i ~/.ssh/filnamn
+
+
+## Managing your VPS (e.g. Hetzner)
+
+	sudo apt update
+	apt list --upgradable

@@ -844,7 +844,7 @@ Slugs:
 	  // Abort if not a proper string value
 	  if (!str || typeof (str) !== 'string') { return str }
 	  // For both
-	  var newStr = str.trim()
+	  let newStr = str.trim()
 	    .toLowerCase()
 	    .replace(/ |_|\//g, '-') // space/underscore/slash to dash
 	  // Remove ÅÄÖ etc?

@@ -220,6 +220,45 @@ Setting `searchParams`:
 		setSearchParams(newSearchParams);
 	};
 
+### useNavigate for browser state
+
+	import { useNavigation } from "@remix-run/react";
+	const navigation = useNavigation();
+
+	const formDisabled = navigation.state !== "idle";
+
+	{navigation.state === 'submitting' && <ProgressSpinner />}
+	
+For POST: idle → submitting → loading → idle
+
+### ButtonLink component
+
+	import React from "react";
+	import { Link } from "@remix-run/react";
+
+	import { cn } from "~/lib/utils";
+	import { buttonVariants } from "./button";
+
+	interface ButtonLinkProps {
+		to: string;
+		children: React.ReactNode;
+		variant?: "default" | "secondary" | "outline";
+		className?: string;
+	}
+
+	export const ButtonLink: React.FC<ButtonLinkProps> = ({
+		to,
+		children,
+		variant = "default",
+		className,
+	}) => {
+		return (
+			<Link to={to} className={cn(buttonVariants({ variant }), className)}>
+				{children}
+			</Link>
+		);
+	};
+
 ## Tips
 
 ### Merging with Lovable/GPT Engineer
