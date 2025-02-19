@@ -104,6 +104,18 @@ Structure: `loader`, component, `action`
 		}
 	};
 
+### Server-side logic: `loader` and `action`
+
+`loader`:
+
+- Catches `GET` requests.
+- In nested routes, all `loader`’s are running.
+- `useLoaderData` will only return data from the last `loader`.
+
+`action`:
+
+- Catches `POST`/`PUT`/`PATCH`/`DELETE` requests.
+
 ### Hooks
 
 URL and navigation:

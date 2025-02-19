@@ -148,6 +148,9 @@ Format date as text:
 // List lookup
 =vlookup(C284,Suppliers!A:D,4,false)
 
+// lookup but not from column 1
+=INDEX(G:G; MATCH("searchvalue in column H"; H:H; 0))
+
 // Find in list: X if found, otherwise blank
 =IF(NOT(ISNA(VLOOKUP("keyword",Domains!A:A,1,false))),"X","")
 // Find in list: true if found

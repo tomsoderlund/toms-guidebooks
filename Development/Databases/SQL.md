@@ -501,9 +501,14 @@ With columns:
 
 TYPE/ENUM:
 
-	CREATE TYPE interval_type AS ENUM ('monthly', 'quarterly', 'biannual', 'annual');
-	CREATE TABLE my_table (
-		interval interval_type NOT NULL
+	CREATE TYPE project_status AS ENUM (
+		'not-started',
+		'in-progress',
+		'in-review',
+		'completed'
+	);
+	CREATE TABLE project (
+		status project_status NOT NULL
 	);
 
 DOMAIN/CHECK:
@@ -706,6 +711,51 @@ Example: `app.id_generator`:
 			result := result | (seq_id);
 		END;
 	$$;
+
+### Triggers
+
+	-- Create new
+	CREATE OR REPLACE FUNCTION add_account_category_user_trigger()
+		RETURNS TRIGGER AS $$
+	BEGIN
+		-- Insert the corresponding row into account_category_user
+		INSERT INTO public.account_category_user (account_id, category_id, user_id, account_role)
+		SELECT
+			NEW.account_id,
+			NEW.category_id,
+			a.primary_owner_user_id,
+			'owner'::public.account_role
+			FROM
+				basejump.accounts a
+		WHERE
+			a.id = NEW.account_id
+		ON CONFLICT (account_id, category_id, user_id) DO NOTHING;
+		RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;
+
+	CREATE TRIGGER trigger_add_account_category_user
+		AFTER INSERT ON public.account_category
+		FOR EACH ROW
+			EXECUTE FUNCTION add_account_category_user_trigger();
+
+	-- Cleanup trigger: delete account_category_user rows when account_category is deleted
+
+	CREATE OR REPLACE FUNCTION delete_account_category_user_trigger()
+		RETURNS TRIGGER AS $$
+	BEGIN
+		-- Delete the corresponding rows from account_category_user
+		DELETE FROM public.account_category_user
+		WHERE account_id = OLD.account_id
+			AND category_id = OLD.category_id;
+		RETURN OLD;
+	END;
+	$$ LANGUAGE plpgsql;
+
+	CREATE TRIGGER trigger_delete_account_category_user
+		AFTER DELETE ON public.account_category
+		FOR EACH ROW
+			EXECUTE FUNCTION delete_account_category_user_trigger();
 
 ## Schemas (namespaces)
 

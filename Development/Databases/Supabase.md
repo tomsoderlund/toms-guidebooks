@@ -301,6 +301,17 @@ in `global.d.ts`:
 	type FunctionGetSomethingReturns = Database['public']['Functions']['get_something']['Returns'] | null;
 	type SomethingEnum = Database['public']['Enums']['something'];
 
+## Database Webhooks
+
+- Info: https://supabase.com/docs/guides/database/webhooks
+- Dashboard: https://supabase.com/dashboard/project/_/integrations/webhooks/webhooks
+
+**Note:** Don’t forget to add Auth Header
+
+Trigger on file upload:
+
+- INSERT on storage.objects
+
 ## Supabase and React Native (Expo)
 
 https://supabase.com/docs/guides/with-expo

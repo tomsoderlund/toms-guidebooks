@@ -857,7 +857,9 @@ Slugs:
 	  // For both
 	  newStr = newStr.replace(/---/g, '-') // fix for the ' - ' case
 	    .replace(/--/g, '-') // fix for the '- ' case
-	    .replace(/--/g, '-') // fix for the '- ' case
+			.replace(/--/g, '-') // fix for the '- ' case
+			.replace(/^-/, '') // Remove initial dash
+			.replace(/-$/, '') // Remove ending dash
 	  return newStr
 	}
 
