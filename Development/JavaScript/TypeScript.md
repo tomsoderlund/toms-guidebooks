@@ -162,6 +162,11 @@ Omit:
     }
     let n: LetterNumber = LetterNumber.B
 
+    enum EmailTemplate {
+      GenericEmail = 'd-de3300ebee',
+      UserInvitation = 'd-3a10e324'
+    }
+
 ### tuple
 
     let order: [string, number] = ['apple', 2]

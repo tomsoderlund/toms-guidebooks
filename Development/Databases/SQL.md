@@ -624,13 +624,13 @@ In `psql`: \df+ my_function
 
 List all functions:
 
-	SELECT 
+	SELECT
 		routines.routine_name AS name,
-		ARRAY_AGG(parameters.parameter_name) AS parameter_names,
-		ARRAY_AGG(parameters.data_type) AS parameter_types,
+		ARRAY_AGG(parameters.parameter_name ORDER BY parameters.ordinal_position) AS parameter_names,
+		ARRAY_AGG(parameters.data_type ORDER BY parameters.ordinal_position) AS parameter_types,
 		routines.data_type AS return_type
 	FROM information_schema.routines
-	LEFT JOIN information_schema.parameters ON (routines.specific_name = parameters.specific_name)
+	LEFT JOIN information_schema.parameters ON routines.specific_name = parameters.specific_name
 	WHERE routine_type = 'FUNCTION' AND routine_schema = 'public'
 		-- AND routines.routine_name ILIKE '%order%'
 		AND parameters.parameter_mode = 'IN'
@@ -650,10 +650,10 @@ Example: return SETOF
 		SELECT * FROM planets;
 	$$;
 
-Example with custom `RETURNS table` definition:
+Example with custom `RETURNS TABLE` definition:
 
 	CREATE OR REPLACE FUNCTION public.get_order(_orderid integer)
-	RETURNS table (
+	RETURNS TABLE (
 		orderid integer,
 		transportername text,
 		orderednumberofitems decimal

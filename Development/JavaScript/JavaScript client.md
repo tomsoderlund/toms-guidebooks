@@ -2363,6 +2363,10 @@ Related:
 	module.exports.applyToAllOldAsync = (functionWithCb, callback, objectOrArray) => async.mapSeries((objectOrArray.constructor === Array ? objectOrArray : [objectOrArray]), functionWithCb, callback)
 
 	// includesSome (NOT pickAny/includesAny/hasAny/hasSome)
+	function includesSome<T>(array1: T[], array2: T[]): boolean {
+		const set1 = new Set(array1);
+		return array2.some((item) => set1.has(item));
+	}
 	// includesSome(url, ['localhost', 'staging'])
 	// incl = includesSome(array1, array2).length > 0
   const includesSome = (array1, array2) => array2.filter(childObj => array1.includes(childObj))

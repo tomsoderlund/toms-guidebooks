@@ -570,15 +570,17 @@ Older:
 		return data
 	}
 
-	const printCSV = (array, separator = '\t') => {
-	  const fieldNames = array.reduce((result, row) => unique([...result, ...Object.keys(row)]), [])
-	  const headerRow = fieldNames.join(separator)
-	  console.log(headerRow)
-	  array.forEach(row => {
-	    const dataRow = fieldNames.map(fieldName => row[fieldName]).join(separator)
-	    console.log(dataRow)
-	  })
-	}
+	const csvToString = (array: Record<string, string>[], separator = '\t') => {
+		let str = '';
+		const fieldNames = Object.keys(array[0]);
+		const headerRow = fieldNames.join(separator);
+		str += headerRow + '\n';
+		array.forEach((row) => {
+			const dataRow = fieldNames.map((fieldName) => row[fieldName]).join(separator);
+			str += dataRow + '\n';
+		});
+		return str;
+	};
 
 ## CDN - AWS CloudFront
 
