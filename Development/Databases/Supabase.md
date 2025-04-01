@@ -225,6 +225,9 @@ https://geoexamples.com/svelte/2021/07/18/svelte-supabase-maps.html/
 
 #### Spatial queries
 
+	-- Get latitude/longitude (comma-separated)
+	CASE WHEN coordinates IS NOT NULL THEN CONCAT(gis.ST_X(gis.ST_Transform(coordinates, 4326)), ',', gis.ST_Y(gis.ST_Transform(coordinates, 4326))) ELSE NULL END AS coordinates,
+
 	SELECT name,
 	ST_X(ST_Transform(coordinates, 4326)) as latitude,
 	ST_Y(ST_Transform(coordinates, 4326)) as longitude

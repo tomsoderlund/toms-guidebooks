@@ -320,7 +320,7 @@ Elements:
 - `typeof`: `type PersonType = typeof person`, or `newObject as typeof myObject`
 - `instanceof`: `target instanceof HTMLInputElement`
 - `indexof`
-- `keyof`
+- `keyof`: `type VehicleKey = keyof typeof CONFIG.vehicles;`
 
 ### Cast with 'as'
 

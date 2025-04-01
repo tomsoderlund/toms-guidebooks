@@ -101,7 +101,7 @@ Create user
 	- `text`
 - Numbers:
 	- `smallint`: 2-byte signed integer that has a range from -32,768 to 32,767.
-	- `int`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
+	- `int`, `integer`: a 4-byte integer that has a range from -2,147,483,648 to -2,147,483,647.
 	- `real` or float8: double-precision (8-byte) floating-point number.
 	- `float(n)`: floating-point number whose precision, at least, n, up to a maximum of 8 bytes.
 	- `numeric` or `numeric(p,s)`: real number with p digits with s number after the decimal point. The `numeric(p,s)` is the exact number.
@@ -115,7 +115,7 @@ Create user
 - Binary & JSON:
 	- `bytea`: blob binary
 	- `json`, jsonb
-
+- Arrays: `text[]`, `integer[]`: e.g. `SET string_array='{Word 1, Word 2}'`
 
 ## Export data
 
@@ -128,83 +128,83 @@ https://www.npmjs.com/package/pg
 
 **NOTE:** if you have connection timeout issues, try upgrading `pg`:
 
-		yarn remove pg; yarn add pg
+	yarn remove pg; yarn add pg
 
 Simple client:
 
-		const { Client } = require('pg')
+	const { Client } = require('pg')
 
-		const postgresOptions = {
-			connectionString: config.databaseUrl,
-			// max: 10, // default 10
-			// connectionTimeoutMillis: 1000, // default 0 = no timeout
-			// idleTimeoutMillis: 1000, // default 10000 ms
-			// ssl: { rejectUnauthorized: false },
-		}
+	const postgresOptions = {
+		connectionString: config.databaseUrl,
+		// max: 10, // default 10
+		// connectionTimeoutMillis: 1000, // default 0 = no timeout
+		// idleTimeoutMillis: 1000, // default 10000 ms
+		// ssl: { rejectUnauthorized: false },
+	}
 
-		// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
-		const runDatabaseFunction = async function (functionToRun) {
-			// Connect db
-			const client = new Client(postgresOptions)
-			await client.connect()
-			// Run function
+	// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
+	const runDatabaseFunction = async function (functionToRun) {
+		// Connect db
+		const client = new Client(postgresOptions)
+		await client.connect()
+		// Run function
 	    const { rows } = await client.query(sqlString)
-			// OR: const results = await functionToRun(client)
-			// Release db
-			await client.end()
-			return results
-		}
+		// OR: const results = await functionToRun(client)
+		// Release db
+		await client.end()
+		return results
+	}
 
 With connection pooling:
 
-		const { Pool } = require('pg')
+	const { Pool } = require('pg')
 
-		const pool = new Pool(postgresOptions)
+	const pool = new Pool(postgresOptions)
 
-		// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
-		module.exports.runDatabaseFunction = async function (functionToRun) {
-			// Connect db
-			const client = await pool.connect()
-			// Run function
+	// const results = await runDatabaseFunction(async (client) => client.query(sqlString))
+	module.exports.runDatabaseFunction = async function (functionToRun) {
+		// Connect db
+		const client = await pool.connect()
+		// Run function
 	    const { rows } = await client.query(sqlString)
-			// OR: const results = await functionToRun(client)
-			// Release db
-			await client.end() // used?
-			await client.release()
-			return results
-		}
+		// OR: const results = await functionToRun(client)
+		// Release db
+		await client.end() // used?
+		await client.release()
+		return results
+	}
 
 https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
 
 Select:
 
-		const getCompany = async function (pool, req, res, next) {
-			const sqlString = `SELECT * FROM company WHERE id = $1;`
-			const { rows } = await pool.query(sqlString, [req.params.id])
-			res.json(rows[0])
-		}
+	const getCompany = async function (pool, req, res, next) {
+		const sqlString = `SELECT * FROM company WHERE id = $1;`
+		const { rows } = await pool.query(sqlString, [req.params.id])
+		res.json(rows[0])
+	}
 
 Insert:
 
-		// sqlCreate('person', { person values... })
-		const sqlCreate = (tableName, object) => {
-			const fieldNames = Object.keys(object).join(', ')
-			const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
-			const text = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
-			const values = Object.values(object)
-			return { text, values }
-		}
+	// sqlCreate('person', { person values... })
+	const sqlCreate = (tableName, object) => {
+		const fieldNames = Object.keys(object).join(', ')
+		const fieldCounters = Object.keys(object).map((fieldName, index) => `$${index + 1}`).join(', ')
+		const text = `INSERT INTO ${tableName}(${fieldNames}) VALUES(${fieldCounters})`
+		const values = Object.values(object)
+		return { text, values }
+	}
 
 Update:
 
-		// sqlUpdate('person', { id: person.id }, { person values... })
-		const sqlUpdate = (tableName, query, newValues) => {
-			const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
-			const queryFieldName = Object.keys(query)[0]
-			const text = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
-			const values = [Object.values(query)[0], ...Object.values(newValues)]
-			return { text, values }
-		}
+	// sqlUpdate('person', { id: person.id }, { person values... })
+	const sqlUpdate = (tableName, query, newValues) => {
+		const fieldDefinitions = Object.keys(newValues).map((fieldName, index) => `${fieldName} = ($${index + 2})`).join(', ')
+		const queryFieldName = Object.keys(query)[0]
+		const text = `UPDATE ${tableName} SET ${fieldDefinitions} WHERE ${queryFieldName}=($1)`
+		const values = [Object.values(query)[0], ...Object.values(newValues)]
+		return { text, values }
+	}
 
 
 # SQL syntax
@@ -235,18 +235,22 @@ Update:
 
 ### Wildcard search
 
-		SELECT * FROM table WHERE columnName ILIKE 'A%';
-		SELECT * FROM company WHERE name ILIKE '%weld%';
-		SELECT * FROM company WHERE website NOT ILIKE 'http%'
+	SELECT * FROM table WHERE columnName ILIKE 'A%';
+	SELECT * FROM company WHERE name ILIKE '%weld%';
+	SELECT * FROM company WHERE website NOT ILIKE 'http%'
 
 Tip: you can use `LOWER()` for lowercase formatting.
 
 ### Date search
 
-		SELECT * FROM person WHERE contact_status_date < '2019-02-09';
-		SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
-		SELECT * FROM books WHERE returned_date > (CURRENT_DATE - INTERVAL '7 days');
-		SELECT * FROM users WHERE created_at < (CURRENT_DATE - INTERVAL '7 days');
+	SELECT * FROM person WHERE contact_status_date < '2019-02-09';
+	SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+	SELECT * FROM books WHERE returned_date > (CURRENT_DATE - INTERVAL '7 days');
+	SELECT * FROM users WHERE created_at < (CURRENT_DATE - INTERVAL '7 days');
+
+Last month:
+
+	WHERE o.delivery_date >= date_trunc('month', CURRENT_DATE - INTERVAL '1 month') AND o.delivery_date < date_trunc('month', CURRENT_DATE)
 
 ### Rounding numbers
 
@@ -300,20 +304,23 @@ Lateral join:
 	SELECT company.id, company.name, person.id, person.name
 	FROM company
 	LEFT JOIN LATERAL (
-		SELECT id, name
-		FROM person
-		WHERE company_id=company.id
-		LIMIT 1
+	SELECT id, name
+	FROM person
+	WHERE company_id=company.id
+	LIMIT 1
 	) person ON TRUE;
 
 ### COUNT(), AVG() and SUM()
 
+	-- Lowest/Highest
+	CONCAT(LEAST(from_city, to_city), ' ↔ ', GREATEST(from_city, to_city)) AS journey,
+
 ### CASE (conditional, like IF)
 
 	CASE
-			WHEN condition1 THEN result1
-			WHEN conditionN THEN resultN
-			ELSE result
+		WHEN condition1 THEN result1
+		WHEN conditionN THEN resultN
+		ELSE result
 	END;
 
 as part of `SELECT`:
@@ -330,10 +337,10 @@ Update with `RANDOM()`:
 ### Nested SELECT with ()
 
 	SELECT * FROM (
-		SELECT DISTINCT ON (person.id)
-			person.*,
-			title
-		FROM person
+	SELECT DISTINCT ON (person.id)
+		person.*,
+		title
+	FROM person
 	) subquery
 	WHERE title='CEO';
 
@@ -342,19 +349,19 @@ Update with `RANDOM()`:
 Note: column types must match in the same order.
 
 	SELECT * FROM (
-		(
-			SELECT font.id, name, slug, category_id
-			FROM similar_font
-			LEFT JOIN font ON (similar_font.font2_id = font.id)
-			WHERE font1_id = 1643
-		)
-		UNION
-		(
-			SELECT font.id, name, slug, category_id
-			FROM similar_font
-			LEFT JOIN font ON (similar_font.font1_id = font.id)
-			WHERE font2_id = 1643
-		)		
+	(
+		SELECT font.id, name, slug, category_id
+		FROM similar_font
+		LEFT JOIN font ON (similar_font.font2_id = font.id)
+		WHERE font1_id = 1643
+	)
+	UNION
+	(
+		SELECT font.id, name, slug, category_id
+		FROM similar_font
+		LEFT JOIN font ON (similar_font.font1_id = font.id)
+		WHERE font2_id = 1643
+	)		
 	) AS combined_query
 	ORDER BY name;
 
@@ -391,15 +398,15 @@ Simpler concatenation
 ### Recursive query
 
 	WITH RECURSIVE category_tree AS (
-		-- Anchor member: starting point
-		SELECT id, name, parent_category_id
-		FROM category
-		WHERE id = 22 -- <- Change starting category ID here
-		UNION ALL
-		-- Recursive member: find parent categories recursively
-		SELECT c.id, c.name, c.parent_category_id
-		FROM category c
-		JOIN category_tree ct ON c.id = ct.parent_category_id
+	-- Anchor member: starting point
+	SELECT id, name, parent_category_id
+	FROM category
+	WHERE id = 22 -- <- Change starting category ID here
+	UNION ALL
+	-- Recursive member: find parent categories recursively
+	SELECT c.id, c.name, c.parent_category_id
+	FROM category c
+	JOIN category_tree ct ON c.id = ct.parent_category_id
 	)
 	-- Select all parent categories, including the starting point
 	SELECT * FROM category_tree;
@@ -407,18 +414,18 @@ Simpler concatenation
 ### Analytics/Statistics query
 
 	SELECT
-		TO_CHAR(created_date, 'IW') AS period_name,
-		COUNT(*) AS total_orders
+	TO_CHAR(created_date, 'IW') AS period_name,
+	COUNT(*) AS total_orders
 	FROM
-		"order"
+	"order"
 	WHERE
-		(selected_owner_id IS NULL OR selected_owner_id = "order".owner_id)
-		AND created_date >= start_date
-		AND created_date <= end_date
+	(selected_owner_id IS NULL OR selected_owner_id = "order".owner_id)
+	AND created_date >= start_date
+	AND created_date <= end_date
 	GROUP BY
-		period_name
+	period_name
 	ORDER BY
-		period_name;
+	period_name;
 
 ## Create - Insert
 
@@ -441,8 +448,8 @@ Multiple values:
 
 	UPDATE domain
 	SET
-		content_last_update = '2019-01-01 12:00',
-		content_previous_update = null
+	content_last_update = '2019-01-01 12:00',
+	content_previous_update = null
 	WHERE id = 1;
 
 ## Delete
@@ -452,47 +459,47 @@ Multiple values:
 ## List tables
 
 	SELECT 
-		CONCAT(tables.table_schema, '.', tables.table_name) as schema_and_table
+	CONCAT(tables.table_schema, '.', tables.table_name) as schema_and_table
 	FROM information_schema.tables tables 
 	WHERE
-		tables.table_type = 'BASE TABLE' -- Exclude views
-		AND tables.table_schema IN ('public', 'basejump', 'auth')
-		-- AND tables.table_name ILIKE 'account%' -- NOTE: change here to see other tables
+	tables.table_type = 'BASE TABLE' -- Exclude views
+	AND tables.table_schema IN ('public', 'basejump', 'auth')
+	-- AND tables.table_name ILIKE 'account%' -- NOTE: change here to see other tables
 	ORDER BY tables.table_schema ASC, tables.table_name ASC;
 
 With columns:
 
 	SELECT 
-		CONCAT(columns.table_schema, '.', columns.table_name) as schema_and_table,
-		columns.column_name,
-		columns.data_type as column_data_type
-		-- columns.character_maximum_length, 
-		-- columns.is_nullable, 
-		-- columns.column_default 
+	CONCAT(columns.table_schema, '.', columns.table_name) as schema_and_table,
+	columns.column_name,
+	columns.data_type as column_data_type
+	-- columns.character_maximum_length, 
+	-- columns.is_nullable, 
+	-- columns.column_default 
 	FROM information_schema.columns columns
 	JOIN information_schema.tables tables 
-		ON columns.table_name = tables.table_name 
-		AND columns.table_schema = tables.table_schema
+	ON columns.table_name = tables.table_name 
+	AND columns.table_schema = tables.table_schema
 	WHERE tables.table_type = 'BASE TABLE' -- Exclude views
-		AND columns.table_schema IN ('public', 'basejump', 'auth')
-		-- AND columns.table_name ILIKE 'account%' -- NOTE: change here to see other tables
+	AND columns.table_schema IN ('public', 'basejump', 'auth')
+	-- AND columns.table_name ILIKE 'account%' -- NOTE: change here to see other tables
 	ORDER BY columns.table_schema DESC, columns.table_name ASC;
 
 ## Create a new table
 
 	CREATE TABLE person (
-		id serial,
-		name varchar(128),
-		date_created timestamptz DEFAULT now(),
-		PRIMARY KEY (id),
-		UNIQUE (name)
+	id serial,
+	name varchar(128),
+	date_created timestamptz DEFAULT now(),
+	PRIMARY KEY (id),
+	UNIQUE (name)
 	);
 
 ### Create a many-to-many relationship table
 
 	CREATE TABLE company_person (
-		company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
-		person_id integer REFERENCES "person"(id) ON DELETE CASCADE
+	company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
+	person_id integer REFERENCES "person"(id) ON DELETE CASCADE
 	);
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
@@ -502,30 +509,30 @@ With columns:
 TYPE/ENUM:
 
 	CREATE TYPE project_status AS ENUM (
-		'not-started',
-		'in-progress',
-		'in-review',
-		'completed'
+	'not-started',
+	'in-progress',
+	'in-review',
+	'completed'
 	);
 	CREATE TABLE project (
-		status project_status NOT NULL
+	status project_status NOT NULL
 	);
 
 DOMAIN/CHECK:
 
 	CREATE DOMAIN valid_period_months AS integer CHECK (VALUE IN (1, 3, 6, 12));
 	CREATE TABLE my_table (
-		period valid_period_months
+	period valid_period_months
 	);
 
 ### Create table with flexible dates
 
 	CREATE TABLE flexi_date (
-		id SERIAL PRIMARY KEY,
-		year SMALLINT NOT NULL CHECK (year >= 1970 AND year <= 2300),
-		month SMALLINT CHECK (month >= 1 AND month <= 12),
-		day SMALLINT CHECK (day >= 1 AND day <= 31),
-		quarter SMALLINT CHECK (quarter >= 1 AND quarter <= 4)
+	id SERIAL PRIMARY KEY,
+	year SMALLINT NOT NULL CHECK (year >= 1970 AND year <= 2300),
+	month SMALLINT CHECK (month >= 1 AND month <= 12),
+	day SMALLINT CHECK (day >= 1 AND day <= 31),
+	quarter SMALLINT CHECK (quarter >= 1 AND quarter <= 4)
 	);
 
 ## Modify table: add columns, remove columns
@@ -547,15 +554,15 @@ Remove:
 If delete Company, then delete Person too:
 
 	CREATE TABLE company(
-		id SERIAL PRIMARY KEY,
-		name VARCHAR(255) NOT NULL
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL
 	);
 
 	CREATE TABLE person(
-		id SERIAL PRIMARY KEY,
-		name VARCHAR(255) NOT NULL
-		company_id INT NOT NULL,
-		CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL
+	company_id INT NOT NULL,
+	CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
 	);
 
 Modify existing table:
@@ -573,11 +580,11 @@ Modify existing table:
 ## Views and Materialized Views
 
 	CREATE [MATERIALIZED] VIEW my_view AS (
-		your query here
+	your query here
 	)
 
 	CREATE OR REPLACE VIEW my_view AS (
-		your query here
+	your query here
 	)
 
 Refresh materialized view (view with stored results):
@@ -591,12 +598,12 @@ Delete view:
 ## Transactions
 
 	BEGIN TRANSACTION;
-		CREATE TEMPORARY TABLE t1_backup(a,b);
-		INSERT INTO t1_backup SELECT a,b FROM t1;
-		DROP TABLE t1;
-		CREATE TABLE t1(a,b);
-		INSERT INTO t1 SELECT a,b FROM t1_backup;
-		DROP TABLE t1_backup;
+	CREATE TEMPORARY TABLE t1_backup(a,b);
+	INSERT INTO t1_backup SELECT a,b FROM t1;
+	DROP TABLE t1;
+	CREATE TABLE t1(a,b);
+	INSERT INTO t1 SELECT a,b FROM t1_backup;
+	DROP TABLE t1_backup;
 	COMMIT;
 
 ## Functions (RPC)
@@ -609,7 +616,7 @@ In SQL:
 	RETURNS TEXT
 	LANGUAGE plpgsql -- or 'sql'
 	AS $$
-		SELECT 'Hello World!', name;
+	SELECT 'Hello World!', name;
 	$$;
 
 Executing the function from SQL:
@@ -625,15 +632,15 @@ In `psql`: \df+ my_function
 List all functions:
 
 	SELECT
-		routines.routine_name AS name,
-		ARRAY_AGG(parameters.parameter_name ORDER BY parameters.ordinal_position) AS parameter_names,
-		ARRAY_AGG(parameters.data_type ORDER BY parameters.ordinal_position) AS parameter_types,
-		routines.data_type AS return_type
+	routines.routine_name AS name,
+	ARRAY_AGG(parameters.parameter_name ORDER BY parameters.ordinal_position) AS parameter_names,
+	ARRAY_AGG(parameters.data_type ORDER BY parameters.ordinal_position) AS parameter_types,
+	routines.data_type AS return_type
 	FROM information_schema.routines
 	LEFT JOIN information_schema.parameters ON routines.specific_name = parameters.specific_name
 	WHERE routine_type = 'FUNCTION' AND routine_schema = 'public'
-		-- AND routines.routine_name ILIKE '%order%'
-		AND parameters.parameter_mode = 'IN'
+	-- AND routines.routine_name ILIKE '%order%'
+	AND parameters.parameter_mode = 'IN'
 	GROUP BY routines.routine_name, routines.data_type
 	ORDER BY routines.routine_name;
 
@@ -647,27 +654,27 @@ Example: return SETOF
 	RETURNS SETOF planets
 	LANGUAGE plpgsql
 	AS $$
-		SELECT * FROM planets;
+	SELECT * FROM planets;
 	$$;
 
 Example with custom `RETURNS TABLE` definition:
 
 	CREATE OR REPLACE FUNCTION public.get_order(_orderid integer)
 	RETURNS TABLE (
-		orderid integer,
-		transportername text,
-		orderednumberofitems decimal
+	orderid integer,
+	transportername text,
+	orderednumberofitems decimal
 	)
 	LANGUAGE plpgsql
 	AS $$
 	BEGIN
-		RETURN query
-		SELECT
-			orderid,
-			transportername,
-			orderednumberofitems
-		FROM orders
-		WHERE orderid = _orderid;
+	RETURN query
+	SELECT
+		orderid,
+		transportername,
+		orderednumberofitems
+	FROM orders
+	WHERE orderid = _orderid;
 	END;
 	$$;
 
@@ -678,16 +685,16 @@ Example: `add_geometry`:
 	RETURNS SETOF geometries
 	LANGUAGE plpgsql
 	AS $
-		DECLARE
-			return_record geometries%rowtype;
-		BEGIN
-			INSERT INTO geometries(location_name, geom)
-			VALUES (location_name, ST_SETSRID(ST_MAKEPOINT(lon, lat), 4326))
-			RETURNING *
-			INTO return_record;
+	DECLARE
+		return_record geometries%rowtype;
+	BEGIN
+		INSERT INTO geometries(location_name, geom)
+		VALUES (location_name, ST_SETSRID(ST_MAKEPOINT(lon, lat), 4326))
+		RETURNING *
+		INTO return_record;
 
-			RETURN NEXT return_record;
-		END
+		RETURN NEXT return_record;
+	END
 	$;
 
 Example: `app.id_generator`:
@@ -696,66 +703,78 @@ Example: `app.id_generator`:
 	RETURNS bigint
 	LANGUAGE plpgsql
 	AS $$
-		DECLARE
-			our_epoch bigint := 1111111111111;
-			seq_id bigint;
-			now_millis bigint;
-			-- the id of this DB shard, must be set for each
-			-- schema shard you have - you could pass this as a parameter too
-			shard_id int := 1;
-		BEGIN
-			SELECT nextval('app.global_id_sequence') % 1024 INTO seq_id;
-			SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
-			result := (now_millis - our_epoch) << 23;
-			result := result | (shard_id << 10);
-			result := result | (seq_id);
-		END;
+	DECLARE
+		our_epoch bigint := 1111111111111;
+		seq_id bigint;
+		now_millis bigint;
+		-- the id of this DB shard, must be set for each
+		-- schema shard you have - you could pass this as a parameter too
+		shard_id int := 1;
+	BEGIN
+		SELECT nextval('app.global_id_sequence') % 1024 INTO seq_id;
+		SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+		result := (now_millis - our_epoch) << 23;
+		result := result | (shard_id << 10);
+		result := result | (seq_id);
+	END;
 	$$;
+
+### Errors
+
+	RAISE NOTICE 'Inserting for zipcode_id % and district_node_id %', NEW.from_zipcode_id, NEW.to_district_node_id;
+
+Levels (in order of severity):
+- RAISE DEBUG – very detailed, usually suppressed unless debugging
+- RAISE NOTICE – info messages
+- RAISE WARNING – something might be wrong
+- RAISE EXCEPTION – throws an actual error
+
+Only RAISE EXCEPTION interrupts the function, the others just print messages to the client or logs.
 
 ### Triggers
 
 	-- Create new
-	CREATE OR REPLACE FUNCTION add_account_category_user_trigger()
-		RETURNS TRIGGER AS $$
+	CREATE OR REPLACE FUNCTION add_account_category_user()
+	RETURNS TRIGGER AS $$
 	BEGIN
-		-- Insert the corresponding row into account_category_user
-		INSERT INTO public.account_category_user (account_id, category_id, user_id, account_role)
-		SELECT
-			NEW.account_id,
-			NEW.category_id,
-			a.primary_owner_user_id,
-			'owner'::public.account_role
-			FROM
-				basejump.accounts a
-		WHERE
-			a.id = NEW.account_id
-		ON CONFLICT (account_id, category_id, user_id) DO NOTHING;
-		RETURN NEW;
+	-- Insert the corresponding row into account_category_user
+	INSERT INTO public.account_category_user (account_id, category_id, user_id, account_role)
+	SELECT
+		NEW.account_id,
+		NEW.category_id,
+		a.primary_owner_user_id,
+		'owner'::public.account_role
+		FROM
+			basejump.accounts a
+	WHERE
+		a.id = NEW.account_id
+	ON CONFLICT (account_id, category_id, user_id) DO NOTHING;
+	RETURN NEW;
 	END;
 	$$ LANGUAGE plpgsql;
 
 	CREATE TRIGGER trigger_add_account_category_user
-		AFTER INSERT ON public.account_category
-		FOR EACH ROW
-			EXECUTE FUNCTION add_account_category_user_trigger();
+	AFTER INSERT ON public.account_category
+	FOR EACH ROW
+		EXECUTE FUNCTION add_account_category_user();
 
 	-- Cleanup trigger: delete account_category_user rows when account_category is deleted
 
 	CREATE OR REPLACE FUNCTION delete_account_category_user_trigger()
-		RETURNS TRIGGER AS $$
+	RETURNS TRIGGER AS $$
 	BEGIN
-		-- Delete the corresponding rows from account_category_user
-		DELETE FROM public.account_category_user
-		WHERE account_id = OLD.account_id
-			AND category_id = OLD.category_id;
-		RETURN OLD;
+	-- Delete the corresponding rows from account_category_user
+	DELETE FROM public.account_category_user
+	WHERE account_id = OLD.account_id
+		AND category_id = OLD.category_id;
+	RETURN OLD;
 	END;
 	$$ LANGUAGE plpgsql;
 
 	CREATE TRIGGER trigger_delete_account_category_user
-		AFTER DELETE ON public.account_category
-		FOR EACH ROW
-			EXECUTE FUNCTION delete_account_category_user_trigger();
+	AFTER DELETE ON public.account_category
+	FOR EACH ROW
+		EXECUTE FUNCTION delete_account_category_user_trigger();
 
 ## Schemas (namespaces)
 
@@ -831,7 +850,7 @@ Restore:
 	SHOW CREATE VIEW view_name;
 
 	CREATE OR REPLACE VIEW view_name AS
-		SELECT...
+	SELECT...
 
 # SQLite
 

@@ -845,3 +845,22 @@ Node.js:
 		onProcessDeath(function (signal, err) {
 		  // clean up code here
 		})
+
+## Common problems
+
+### ERR_OSSL_EVP_UNSUPPORTED: openssl-legacy-provider
+
+	Error: error:0308010C:digital envelope routines::unsupported {
+		opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+		library: 'digital envelope routines',
+		reason: 'unsupported',
+		code: 'ERR_OSSL_EVP_UNSUPPORTED'
+	}
+
+Solution:
+
+	export NODE_OPTIONS=--openssl-legacy-provider
+
+package.json:
+
+	"build": "NODE_OPTIONS=--openssl-legacy-provider next build",
