@@ -10,21 +10,25 @@ Follow the manual steps if the script fails.
 
 1. New project
 2. Select GitHub repo
-3. Set environment variables
-4. Set domain settings
-5. Deploy
+3. Select Branch and Build Pack
+4. Set environment variables
+5. Set domain settings
+6. Deploy
 
 ## Connecting a domain
 
-In your name server, set `www`	point to `A` and your IP address.
+In your DNS server:
 
-Coolify:
+- Create an `A` record for `www` and point to your IP address.
+
+In Coolify:
 
 1. Servers → server → Proxy tab (see below)
-  - Then restart proxy
+  - Then Save + Restart proxy
+  - HTTPS/Let’s Encrypt will automatically create new certificate for your new domain
 2. Project → project → application
-  - Domains field
-  - Then restart application
+  - Domains field, comma separated
+  - Then Save + Restart application
 
 Proxy config (see the “Domain: mydomain.com” section):
 

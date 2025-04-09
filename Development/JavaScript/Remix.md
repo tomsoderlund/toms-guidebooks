@@ -232,6 +232,8 @@ Setting `searchParams`:
 		setSearchParams(newSearchParams);
 	};
 
+	newSearchParams.delete('section');
+
 ### useNavigate for browser state
 
 	import { useNavigation } from "@remix-run/react";

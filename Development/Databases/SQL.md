@@ -116,6 +116,7 @@ Create user
 	- `bytea`: blob binary
 	- `json`, jsonb
 - Arrays: `text[]`, `integer[]`: e.g. `SET string_array='{Word 1, Word 2}'`
+- Enums: `CREATE TYPE project_status AS ENUM ('not-started');`
 
 ## Export data
 
@@ -488,18 +489,18 @@ With columns:
 ## Create a new table
 
 	CREATE TABLE person (
-	id serial,
-	name varchar(128),
-	date_created timestamptz DEFAULT now(),
-	PRIMARY KEY (id),
-	UNIQUE (name)
+		id serial,
+		name varchar(128),
+		date_created timestamptz DEFAULT now(),
+		PRIMARY KEY (id),
+		UNIQUE (name)
 	);
 
 ### Create a many-to-many relationship table
 
 	CREATE TABLE company_person (
-	company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
-	person_id integer REFERENCES "person"(id) ON DELETE CASCADE
+		company_id integer REFERENCES "company"(id) ON DELETE CASCADE,
+		person_id integer REFERENCES "person"(id) ON DELETE CASCADE
 	);
 
 	CREATE UNIQUE INDEX company_person_unique_idx ON company_person(company_id, person_id);
@@ -509,14 +510,16 @@ With columns:
 TYPE/ENUM:
 
 	CREATE TYPE project_status AS ENUM (
-	'not-started',
-	'in-progress',
-	'in-review',
-	'completed'
+		'not-started',
+		'in-progress',
+		'in-review',
+		'completed'
 	);
 	CREATE TABLE project (
-	status project_status NOT NULL
+		status project_status NOT NULL
 	);
+	ALTER TABLE project
+		ADD COLUMN status project_status NOT NULL DEFAULT 'not-started';
 
 DOMAIN/CHECK:
 
@@ -538,7 +541,7 @@ DOMAIN/CHECK:
 ## Modify table: add columns, remove columns
 
 	ALTER TABLE person
-	ADD COLUMN company_id integer NOT NULL REFERENCES company(id) ON DELETE CASCADE;
+		ADD COLUMN company_id integer NOT NULL REFERENCES company(id) ON DELETE CASCADE;
 
 Remove:
 
@@ -719,9 +722,19 @@ Example: `app.id_generator`:
 	END;
 	$$;
 
-### Errors
+### Create temporary table
+
+	CREATE TEMPORARY TABLE temp_order AS
+		SELECT * FROM public."order"
+		WHERE delivery_date = '2025-01-01';
+
+### Errors and logging
 
 	RAISE NOTICE 'Inserting for zipcode_id % and district_node_id %', NEW.from_zipcode_id, NEW.to_district_node_id;
+
+In seed file:
+
+	DO $$ BEGIN RAISE NOTICE '** Notice 01'; END $$;
 
 Levels (in order of severity):
 - RAISE DEBUG – very detailed, usually suppressed unless debugging
@@ -775,6 +788,16 @@ Only RAISE EXCEPTION interrupts the function, the others just print messages to 
 	AFTER DELETE ON public.account_category
 	FOR EACH ROW
 		EXECUTE FUNCTION delete_account_category_user_trigger();
+
+### `DO $$` blocks (one-off functions)
+
+	DO $$
+	DECLARE
+		r RECORD;
+		v_customer_id UUID;
+	BEGIN
+		-- add code here
+	END $$;
 
 ## Schemas (namespaces)
 

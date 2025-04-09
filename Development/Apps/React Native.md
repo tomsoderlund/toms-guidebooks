@@ -6,7 +6,7 @@ With Expo (https://expo.io) the steps are easy:
 
 (First: update `expo-cli`, see “Upgrade Expo” below)
 
-1. Create a new app (`npx create-expo-app --template`)
+1. Create a new app (`npx create-expo-app@latest --template`)
 2. Run it on device or simulator (`expo start`)
 3. Publish it to Expo.io (`expo publish`)
 4. Build it as native iOS/Android app with EAS
@@ -21,6 +21,8 @@ With Expo (https://expo.io) the steps are easy:
 
 
 ## Getting started
+
+	npx create-expo-app@latest --template
 
 ### Expo client
 
@@ -285,6 +287,37 @@ https://reactnativeelements.com/docs/button/
 - Button: https://github.com/APSL/react-native-button
 
 ### Routing/Navigation
+
+#### Expo Router
+
+##### File based routing
+
+- `+not-found.tsx`: Custom 404 screen
+- `+layout.tsx`: Layout component (Tabs, Stack, etc.)
+- `+error.tsx`: Error boundary for that route
+- `index.tsx`: The main page
+	- `+page.tsx`: The main page (alternative to `index.tsx`)
+- `+html.tsx`: Custom HTML shell for web platform
+
+##### Code
+
+	import { router, useNavigation, useLocalSearchParams } from 'expo-router'
+
+	const { journeyId } = useLocalSearchParams()
+
+	router.push({
+		pathname: '/journeyedit',
+		params: { journeyId: journey.id }
+	})
+
+	const navigation = useNavigation()
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			title: 'My screen',
+		})
+	}, [navigation])
+
+#### React Navigation
 
 https://reactnavigation.org/docs/en/getting-started.html
 
