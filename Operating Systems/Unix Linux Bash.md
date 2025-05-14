@@ -42,9 +42,10 @@ Example:
 
 	du -sh * | sort -h
 
-### List all files in a development project
+### List all folders/files in a development project
 
-	find . -type f -not -path "./node_modules/*" -not -path "./.git/*" | sort
+	find . -type d -not -path "*/node_modules/*" -not -path "*/.git/*" | sort
+	find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" | sort
 
 ### Find and delete empty folders
 

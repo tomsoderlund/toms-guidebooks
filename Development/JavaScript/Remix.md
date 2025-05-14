@@ -249,14 +249,14 @@ For POST: idle → submitting → loading → idle
 
 	import React from "react";
 	import { Link } from "@remix-run/react";
+	import { VariantProps } from "class-variance-authority";
 
 	import { cn } from "~/lib/utils";
 	import { buttonVariants } from "./button";
 
-	interface ButtonLinkProps {
+	interface ButtonLinkProps extends VariantProps<typeof buttonVariants> {
 		to: string;
 		children: React.ReactNode;
-		variant?: "default" | "secondary" | "outline";
 		className?: string;
 	}
 
@@ -265,9 +265,13 @@ For POST: idle → submitting → loading → idle
 		children,
 		variant = "default",
 		className,
+		...rest
 	}) => {
 		return (
-			<Link to={to} className={cn(buttonVariants({ variant }), className)}>
+			<Link
+				to={to}
+				className={cn(buttonVariants({ variant, ...rest }), className)}
+			>
 				{children}
 			</Link>
 		);

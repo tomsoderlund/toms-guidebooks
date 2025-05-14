@@ -246,6 +246,7 @@ Tip: you can use `LOWER()` for lowercase formatting.
 
 	SELECT * FROM person WHERE contact_status_date < '2019-02-09';
 	SELECT * FROM updates WHERE date_update BETWEEN '2019-01-05' AND '2019-01-10';
+	                      WHERE date_update::date BETWEEN DATE '2025-04-21' AND DATE '2025-04-27';
 	SELECT * FROM books WHERE returned_date > (CURRENT_DATE - INTERVAL '7 days');
 	SELECT * FROM users WHERE created_at < (CURRENT_DATE - INTERVAL '7 days');
 
@@ -635,16 +636,18 @@ In `psql`: \df+ my_function
 List all functions:
 
 	SELECT
-	routines.routine_name AS name,
-	ARRAY_AGG(parameters.parameter_name ORDER BY parameters.ordinal_position) AS parameter_names,
-	ARRAY_AGG(parameters.data_type ORDER BY parameters.ordinal_position) AS parameter_types,
-	routines.data_type AS return_type
+		routine_schema AS schema,
+		routines.routine_name AS name,
+		ARRAY_AGG(parameters.parameter_name ORDER BY parameters.ordinal_position) AS parameter_names,
+		ARRAY_AGG(parameters.data_type ORDER BY parameters.ordinal_position) AS parameter_types,
+		routines.data_type AS return_type
 	FROM information_schema.routines
 	LEFT JOIN information_schema.parameters ON routines.specific_name = parameters.specific_name
-	WHERE routine_type = 'FUNCTION' AND routine_schema = 'public'
-	-- AND routines.routine_name ILIKE '%order%'
-	AND parameters.parameter_mode = 'IN'
-	GROUP BY routines.routine_name, routines.data_type
+	WHERE routine_type = 'FUNCTION'
+		AND parameters.parameter_mode = 'IN'
+		AND routine_schema = 'public'
+		-- AND routines.routine_name ILIKE '%order%'
+	GROUP BY routine_schema, routines.routine_name, routines.data_type
 	ORDER BY routines.routine_name;
 
 Delete a function:

@@ -104,7 +104,14 @@ Check if string in cell:
 
 Check if any of multiple strings in cell:
 =REGEXMATCH(A1;"Dog|Cat")
-=ArrayFormula(IF(COUNT(SEARCH({"Cat","Dog"},A1)),"1","0"))
+
+Conditionals in array: if Cat then 1; if Dog then 0
+=SWITCH(A2,
+  "Cat", 1,
+  "Dog", 0,
+  "unknown"
+)
+=ARRAYFORMULA(IF(COUNT(SEARCH({"Cat","Dog"},A1)),"1","0"))
 
 Random string
 =CHOOSE(RANDBETWEEN(1, 2), "choice1", "choice2")

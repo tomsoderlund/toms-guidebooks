@@ -278,6 +278,12 @@ https://reactnativeelements.com/docs/button/
 
 `__DEV__` variable: true/false
 
+## Environment variables
+
+https://docs.expo.dev/guides/environment-variables/
+
+- `EXPO_PUBLIC_` prefix
+- Commands `eas env:list`, `eas env:create`, `eas env:update`, `eas env:delete`
 
 ## Modules
 
@@ -301,7 +307,10 @@ https://reactnativeelements.com/docs/button/
 
 ##### Code
 
-	import { router, useNavigation, useLocalSearchParams } from 'expo-router'
+	import { useRouter, router, useNavigation, useLocalSearchParams } from 'expo-router'
+
+	const router = useRouter()
+	router.navigate('/about')
 
 	const { journeyId } = useLocalSearchParams()
 

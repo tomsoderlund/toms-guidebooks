@@ -8,6 +8,10 @@ https://www.typescriptlang.org/docs/handbook/
 
 ## Run & Compile
 
+    npx tsx myfile.ts
+
+Alt:
+
     npx ts-node myfile.ts
     ts-node
 
