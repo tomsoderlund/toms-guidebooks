@@ -2,7 +2,31 @@
 
 https://remix.run/
 
+Remix is now: **React Router v7 (Framework Mode)** (https://reactrouter.com/start/modes)
+
 ## Start
+
+	npx create-react-router@latest [APPNAME]
+
+Then:
+
+Set up ESLint (using `eslint.config.js`) and Prettier
+
+Vercel: `npm i @vercel/react-router`
+
+`react-router.config.ts`
+
+	import { vercelPreset } from '@vercel/react-router/vite';
+	presets: [vercelPreset()],
+
+Shadcn/UI:
+
+	npx shadcn@latest init
+
+Supabase: see `@supabase/ssr` below
+
+
+Old Remix:
 
 	npx create-remix@latest
 
@@ -30,6 +54,21 @@ Default structure:
 
 ## Routes
 
+### Filename-based routing using `flatRoutes`
+
+https://reactrouter.com/how-to/file-route-conventions
+
+`npm install @react-router/fs-routes`
+
+Edit `routes.ts`:
+
+	import { type RouteConfig } from "@react-router/dev/routes";
+	import { flatRoutes } from "@react-router/fs-routes";
+	
+	export default flatRoutes() satisfies RouteConfig;
+
+### Route naming
+
 | Symbol  | Purpose                     | Example                   |
 | ------- | --------------------------- | ------------------------- |
 | `.`     | Folder paths                | `concerts.new-york.tsx`   |
@@ -39,6 +78,60 @@ Default structure:
 | `[...]` | Catch-all routes            | `[...all].tsx`            |
 
 ## Best practices
+
+- Use filename-based routing using `flatRoutes`.
+- Structure a route file like: 1) `loader`, 2) component, 3) `action`.
+- Place data handling in `loader`/`action` (server-side).
+- Use `Form` (not `form`) and `useFetcher`. If URL changes after action then use `Form`, if not use `useFetcher`.
+- Benefit from nested routing, e.g. have navigation/header/footer in higher-level routes.
+- Use `ErrorBoundary` on a top-level to display server errors to the user in a friendly way.
+- Avoid `useState`. UI state should rather be in URL and use `useParams`/`useSearchParams`. Data state should be in database.
+- Use `useNavigation` to show if UI is ready or not.
+- Use `Suspense`/`Await` components on complex pages for progressive loading.
+- Create a `ButtonLink` component that has the same props as a normal button, plus a `to` prop.
+- Install `@vercel/react-router` and use `vercelPreset()` if the app is hosted on Vercel.
+
+import { vercelPreset } from '@vercel/react-router/vite';
+
+### Supabase and Remix (`@supabase/ssr`)
+
+	npm install @supabase/ssr
+
+`loader` function in routes:
+
+	import { createSupabaseServerClient } from "~/services/supabase.server";
+	const { supabaseClient } = await createSupabaseServerClient(request);
+
+`services/supabase.server.ts`:
+
+	import { createServerClient, parse, serialize } from '@supabase/ssr';
+	import { Database } from './types/supabase';
+	
+	export const createSupabaseServerClient = (request: Request, useServiceRoleKey?: boolean) => {
+	  const cookies = parse(request.headers.get('Cookie') ?? '');
+	  const headers = new Headers();
+	
+	  const supabaseClient = createServerClient<Database>(
+	    process.env.SUPABASE_URL!,
+	    useServiceRoleKey ? process.env.SUPABASE_SERVICE_ROLE_KEY! : process.env.SUPABASE_ANON_KEY!,
+	    {
+	      cookies: {
+	        get(key) {
+	          return cookies[key];
+	        },
+	        set(key, value, options) {
+	          headers.append('Set-Cookie', serialize(key, value, options));
+	        },
+	        remove(key, options) {
+	          headers.append('Set-Cookie', serialize(key, '', options));
+	        },
+	      },
+	    },
+	  );
+	
+	  return { supabaseClient, headers };
+	};
+
 
 ### Create Remix folder structure
 
@@ -76,33 +169,46 @@ Default structure:
 Structure: `loader`, component, `action`
 
 	import React from 'react';
-	import { ActionFunctionArgs, LoaderFunctionArgs, json } from '@remix-run/node';
-	import { useLoaderData, useActionData } from '@remix-run/react';
+	import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
+	import { useLoaderData, useActionData, useNavigation, Form } from '@remix-run/react';
 
 	export async function loader({ request, params }: LoaderFunctionArgs) {
-		return json({ ok: true });
+		return { ok: true };
 	}
 
 	const ExamplePage: React.FC = () => {
+		const navigation = useNavigation();
 		const loaderData = useLoaderData<typeof loader>();
 		const actionData = useActionData<typeof action>();
+		console.log('Component:', { loaderData, actionData });
+
 		return (
-			<div>
-				Hello World
-			</div>
+			<Form method='post'>
+				<label>
+					Enter your name:
+					<input type='text' name='name' disabled={navigation.state !== 'idle'} />
+				</label>
+				<button type='submit' disabled={navigation.state !== 'idle'}>
+					Submit
+				</button>
+
+				{actionData?.message && <p style={{ marginTop: '1rem' }}>{actionData?.message}</p>}
+			</Form>
 		);
 	};
-	export default ExamplePage;
 
 	export const action = async ({ request }: ActionFunctionArgs) => {
-		if (request.method === 'PUT') {
+		if (request.method === 'POST') {
 			const formData = await request.formData();
 			const formDataFields = Object.fromEntries(formData);
 			// E.g. formDataFields.myProp
 			console.log('formDataFields:', formDataFields);
-			return json({ success: true });
+			return { success: true, message: `Your name is ${formDataFields.name}` };
 		}
+		return null;
 	};
+
+	export default ExamplePage;
 
 ### Server-side logic: `loader` and `action`
 
@@ -234,18 +340,20 @@ Setting `searchParams`:
 
 	newSearchParams.delete('section');
 
-### useNavigate for browser state
+### useNavigation for browser state
 
-	import { useNavigation } from "@remix-run/react";
+	import { useNavigation } from '@remix-run/react';
 	const navigation = useNavigation();
 
-	const formDisabled = navigation.state !== "idle";
+	const formDisabled = navigation.state !== 'idle'; // idle/submitting/loading
 
 	{navigation.state === 'submitting' && <ProgressSpinner />}
 	
 For POST: idle → submitting → loading → idle
 
 ### ButtonLink component
+
+Create a `ButtonLink` component that has the same props as a normal button, plus a `to` prop:
 
 	import React from "react";
 	import { Link } from "@remix-run/react";
@@ -277,7 +385,39 @@ For POST: idle → submitting → loading → idle
 		);
 	};
 
+### `Suspense`/`Await` components for progressive loading
+
+	import { Suspense } from 'react';
+	import { Await } from '@remix-run/react';
+
+	<Suspense fallback={<div>Loading...</div>}>
+		<Await resolve={myData}>
+			{(myDataResolved) => (
+				...
+			)}
+		</Await>
+	</Suspense>
+
 ## Tips
+
+### Localization (i18n)
+
+Example: Default and /sv should be Swedish. /en should be English
+
+Store text strings as JSON:
+
+	app/locales/en.json
+	app/locales/sv.json
+
+Prefix pages with `($locale).`, e.g:
+
+	app/routes/($locale).about.tsx
+
+Get locale with `useParams`
+
+Add flag icons to page header for easy switching
+
+### `json()` → `data()`
 
 ### Merging with Lovable/GPT Engineer
 

@@ -982,7 +982,7 @@ https://github.com/trustlinc/trustlinc-app/commit/a798ca1bd6dfb17bd728d9dc84e9b3
 
 ### React Maps with react-map-gl
 
-https://visgl.github.io/react-map-gl/
+https://visgl.github.io/react-map-gl/docs/get-started
 
 1. `yarn add react-map-gl`
 2. You need a Mapbox API token: https://account.mapbox.com/

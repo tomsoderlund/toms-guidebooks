@@ -8,7 +8,7 @@
 
 ### 2. Using Agent Mode Effectively
 - Highlight code before pressing `Cmd+I` to include it in context.
-- After opening Agent Mode, `Cmd+N` is useful for starting a new chat.
+- After opening Agent Mode, `Cmd+N` is useful for starting a new chat (resetting the context).
 - Use `/` when starting to type to include code files in context.
 - Use `@` to add files or docs, and `@web` to force a web search.
 - `Cmd+Shift+V` = paste as code/text, not as file reference
@@ -22,6 +22,27 @@
 - **Screenshots & Sketches**: Uploading these can speed up the process.
 - **Frontend Help**: AI is "good enough" for tweaking but not outstanding.
 - **Frequent Updates**: Cursor releases new versions almost daily, so keep it updated. A subtle update notification appears in the lower-left corner.
+
+
+## Rules (`.cursor/rules`)
+
+Can be in root folder, or in subfolders for local scope.
+
+    mkdir -p .cursor/rules
+    touch .cursor/rules/my-rule-file.mdc
+
+### Example MDC rule file:
+
+    ---
+    description: RPC Service boilerplate
+    globs: 
+    alwaysApply: false
+    ---
+
+    - Use our internal RPC pattern when defining services
+    - Always use snake_case for service names.
+
+    @example-file-to-include.ts
 
 
 ## VS Code with Copilot

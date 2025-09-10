@@ -487,6 +487,10 @@ With columns:
 	-- AND columns.table_name ILIKE 'account%' -- NOTE: change here to see other tables
 	ORDER BY columns.table_schema DESC, columns.table_name ASC;
 
+Dump all tables:
+
+	export POSTGRES_DB_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"; pg_dump "$POSTGRES_DB_URL" --schema-only --no-owner --no-privileges --schema=public > schema.sql
+
 ## Create a new table
 
 	CREATE TABLE person (
@@ -574,6 +578,23 @@ Modify existing table:
 	ALTER TABLE "domain_update" ADD FOREIGN KEY ("domain_update_domain_id_fkey") REFERENCES "domain"("id") ON DELETE CASCADE;
 	ALTER TABLE person ADD CONSTRAINT fk_person_company_id FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE;
 
+#### Find FOREIGN KEYs
+
+	-- Find tables that reference FOREIGN KEY accounts.id
+	SELECT
+		n.nspname AS referencing_schema,
+		conrelid::regclass AS referencing_table,
+		a.attname AS referencing_column
+	FROM pg_constraint c
+	JOIN pg_class t ON c.conrelid = t.oid
+	JOIN pg_namespace n ON t.relnamespace = n.oid
+	JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(c.conkey)
+	JOIN pg_class tf ON c.confrelid = tf.oid
+	JOIN pg_attribute af ON af.attrelid = tf.oid AND af.attnum = ANY(c.confkey)
+	WHERE c.contype = 'f'  -- foreign key
+		AND tf.relname = 'accounts' -- table name
+		AND af.attname = 'id' -- table field
+	ORDER BY referencing_schema, referencing_table, referencing_column;
 
 ## Indexes
 
@@ -747,6 +768,14 @@ Levels (in order of severity):
 
 Only RAISE EXCEPTION interrupts the function, the others just print messages to the client or logs.
 
+### Exceptions
+
+		BEGIN
+			-- do something
+		EXCEPTION WHEN OTHERS THEN
+			RAISE NOTICE 'Update failed: %', SQLERRM;
+		END;
+
 ### Triggers
 
 	-- Create new
@@ -796,10 +825,18 @@ Only RAISE EXCEPTION interrupts the function, the others just print messages to 
 
 	DO $$
 	DECLARE
+		v_count INTEGER;
 		r RECORD;
-		v_customer_id UUID;
 	BEGIN
-		-- add code here
+		-- add code here:
+		SELECT COUNT(DISTINCT id) INTO v_count FROM company;
+		RAISE NOTICE 'Count: % rows', v_count;
+
+		BEGIN
+			-- do something
+		EXCEPTION WHEN OTHERS THEN
+			RAISE NOTICE 'Update failed: %', SQLERRM;
+		END;
 	END $$;
 
 ## Schemas (namespaces)
@@ -813,6 +850,29 @@ Move to another schema:
 	ALTER TABLE public.my_table
 	SET SCHEMA company.departments;
 
+## Timeouts
+
+Set timeout for just the current block or function:
+
+    SET LOCAL statement_timeout = '2min';  -- or '5000ms', '30s', etc.
+
+Set timeout for just the current session:
+
+    SET statement_timeout = '2min';
+
+Set timeout globally (affects all sessions):
+
+In `postgresql.conf`:
+
+    statement_timeout = '2min'
+
+Then reload PostgreSQL:
+
+    SELECT pg_reload_conf();
+
+Set for a user or role:
+
+    ALTER ROLE myuser SET statement_timeout = '2min';
 
 ## Roles (users and groups), permissions, RLS
 
@@ -877,6 +937,7 @@ Restore:
 
 	CREATE OR REPLACE VIEW view_name AS
 	SELECT...
+
 
 # SQLite
 

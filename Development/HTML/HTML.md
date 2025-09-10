@@ -634,6 +634,13 @@ Note: the `200` group does not return JSON
 	<html lang="en">
 	<html lang="en-us">
 
+## Canonical URLs
+
+    <link rel="canonical" href={currentUrl} />
+    <link rel="alternate" hrefLang="x-default" href={englishUrl} />
+    <link rel="alternate" hrefLang="en" href={englishUrl} />
+    <link rel="alternate" hrefLang="sv" href={swedishUrl} />
+
 ## data:
 
     data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7

@@ -44,6 +44,8 @@ Example:
 
 ### List all folders/files in a development project
 
+	find . -type d -maxdepth 4 -not -path "*/node_modules/*" -not -path "*/.git*" -not -path "*/build*" | sort > folders.txt
+
 	find . -type d -not -path "*/node_modules/*" -not -path "*/.git/*" | sort
 	find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" | sort
 
@@ -66,10 +68,6 @@ Find "node_modules" just list them:
 For Python "env":
 
 	find ~/Documents/Development -name "env" -type d -prune | xargs du -chs
-
-Huggingface models:
-
-	find ~/.cache/huggingface/hub -type d | xargs du -chs | grep -v "0B" | grep -v "K	"
 
 ## File lists
 

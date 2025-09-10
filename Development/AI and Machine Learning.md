@@ -35,3 +35,18 @@ Set up Python, Gradio, etc:
 		gcloud app browse
 		pip freeze > requirements.txt
 	
+## Hugging Face
+
+Find Hugging Face models:
+
+	find ~/.cache/huggingface/hub -type d | xargs du -chs | grep -v "0B" | grep -v "K	"
+
+Git clone:
+
+	GIT_LFS_SKIP_SMUDGE=1 git clone git@hf.co:spaces/blendastudios/gradio-lipsync-wav2lip
+
+Push to git:
+
+	ssh-add -l
+	ssh-add ~/.ssh/id_rsa
+	git push

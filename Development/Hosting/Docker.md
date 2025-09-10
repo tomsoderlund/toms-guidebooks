@@ -32,8 +32,8 @@
 
 ### Useful Docker commands from Causality
 
-Pull down images and start services:
-- `docker compose up`
+Pull down images and start services (`-d` is for daemon/background):
+- `docker compose up -d`
 
 Install laravel dependencies:
 - `docker compose run --rm composer install`

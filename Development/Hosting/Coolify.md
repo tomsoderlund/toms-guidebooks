@@ -111,3 +111,12 @@ Proxy config (see the “Domain: mydomain.com” section):
           - traefik.http.routers.mydomain.tls.certresolver=letsencrypt
           - traefik.http.services.mydomain.loadbalancer.server.port=80
           # Domain 2: mydomain2.com (copy from mydomain.com)
+
+## Supabase on Coolify
+
+Connect domain:
+
+1. DNS (Vercel) connect A entry to IP
+2. Set Kong URL to e.g. https://supabase-squad.tomorroworld.com:8000
+3. Set API_EXTERNAL_URL to just https://supabase-squad.tomorroworld.com
+4. Restart Supabase

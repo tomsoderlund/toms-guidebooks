@@ -343,3 +343,27 @@ Example:
       B-->D;
       C-->D;
 ```
+### Get commits
+
+	SINCE=$(date -v -7d +%Y-%m-%dT%H:%M:%SZ)
+	gh api "repos/ORGNAME/REPONAME/commits?since=$SINCE" \
+		--paginate \
+		-q '.[].commit.message'
+
+### Versioning with pre-commit
+
+	mkdir -p .git/hooks
+	touch .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
+
+`pre-commit`:
+
+	#!/bin/sh
+
+	# Bump patch version without git tag
+	npm version patch --no-git-tag-version
+
+	# Stage updated package.json + lockfile
+	git add package.json package-lock.json
+
+	echo "✅ Version bumped + staged."

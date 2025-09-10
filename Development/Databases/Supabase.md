@@ -5,12 +5,57 @@
 - Create new project on https://app.supabase.com/
 - Get SQL URL: db.PROJECT.supabase.co, postgres, [password]
 
+## Supabase local development with migrations
 
-## Set up local development
+See: [Local Supabase development with schema migrations](https://supabase.com/docs/guides/local-development/overview)
 
-	cd ./supabase
+Create a `supabase/config.toml` file
 
 	npx supabase start
+
+- Supabase web dashboard: http://localhost:54323/project/default/editor
+- Email login monitor: http://localhost:54324/monitor
+
+Use this to get API keys and URLs:
+
+    npx supabase status
+
+### Creating migrations for database changes
+
+(preferred) Create empty, time-stamped migration file with:
+
+    npx supabase migration new [migration-name]
+
+(less surgical) Auto-create migration file based on database changes:
+
+    npx supabase db diff -s public -f [migration-name]
+
+#### After migration
+
+1. Test migrations and seeding (`npx supabase db reset`)
+2. Update TypeScript types from Supabase/Postgres tables (`npm run gentypes`)
+
+#### Debugging migrations
+
+- See migration status local/remote: `npx supabase migration list`
+- `npx supabase db push` to push migrations to live server.
+- Running a migration locally: `npx supabase migration up`
+
+#### Debugging crashed Supabase database
+
+Stop Supabase:
+
+    npx supabase stop
+    docker ps -aq
+    docker rm -f $(docker ps -aq --filter "name=supabase\_")
+
+Clear volumes:
+
+    docker system prune -af --volumes
+
+Start
+
+    npx supabase db start
 
 Take note of `API URL` and `anon key`. You can also use this to get API keys and URLs:
 
@@ -39,6 +84,10 @@ Edit your local database, then run:
 	npx supabase db diff -f [migration-name]
 	# Then normally run: npx supabase db push
 
+New migration file:
+
+	npx supabase migration new [name]
+
 Running a migration locally:
 
 	npx supabase migration up
@@ -46,6 +95,10 @@ Running a migration locally:
 Reset database and apply current migrations:
 
 	npx supabase db reset
+
+Dump all tables:
+
+	npx supabase db dump --db-url "postgres://postgres:postgres@localhost:54322/postgres" --schema public --file schema.sql
 
 ## Add to project
 
@@ -253,7 +306,7 @@ https://postgis.net/docs/manual-dev/using_postgis_query.html
 #### Latitude/longitude
 
 - Lat: 59.318 → 59.319 = ~250 m
-- Lon: 18.06 → 18.07 = ~700 m, 18.065 → 066 = ~55 m
+- Lon: 18.06 → 18.07 = ~700 m, 18.065 → 18.066 = ~55 m
 
 
 ## Auth
