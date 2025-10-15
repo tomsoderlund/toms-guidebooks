@@ -2,13 +2,13 @@
 
 React Native is an easy way to build native iOS/Android (also Windows, macOS, web) using JavaScript and React.
 
-With Expo (https://expo.io) the steps are easy:
+With Expo (https://expo.dev) the steps are easy:
 
 (First: update `expo-cli`, see “Upgrade Expo” below)
 
 1. Create a new app (`npx create-expo-app@latest --template`)
 2. Run it on device or simulator (`expo start`)
-3. Publish it to Expo.io (`expo publish`)
+3. Publish it to Expo.dev (`npx eas update --branch main --message "first publish"`)
 4. Build it as native iOS/Android app with EAS
 5. Add extra packages (location) with `expo install` NOT npm/yarn.
 
@@ -26,7 +26,7 @@ With Expo (https://expo.io) the steps are easy:
 
 ### Expo client
 
-Install https://expo.io client on your device.
+Install https://expo.dev client on your device.
 
 ### Upgrade Expo
 
@@ -117,9 +117,22 @@ NOTE: use `expo install` primarily (rather than yarn/npm), e.g:
 
 	https://docs.expo.dev/ui-programming/react-native-toast/
 
+### Profiles vs Branches
+
+Profiles (--profile) → come from eas.json.
+- Control how the build/update is created: env vars, secrets, build type (debug vs release), distribution.
+- Think: “Which config preset should I use?”
+- Example: development, preview, production.
+
+Branches (--branch) → live on Expo’s servers.
+- Act like Git branches, but for your JS/asset updates.
+- Hold a timeline of updates that you publish with eas update.
+- Think: “Where should this JS update go so that clients know to fetch it?”
+- Example: main, staging, feature-xyz.
+
 ### New React Native project with Next.js
 
-https://docs.expo.io/guides/using-nextjs/
+https://docs.expo.dev/guides/using-nextjs/
 https://github.com/expo/expo-cli/tree/master/packages/next-adapter
 
 	npx create-next-app -e with-expo PROJECTNAME
@@ -474,7 +487,7 @@ Example 3: Inline
 
 ### Fonts
 
-https://docs.expo.io/versions/latest/sdk/font/
+https://docs.expo.dev/versions/latest/sdk/font/
 
 	import * as Font from 'expo-font'
 
@@ -521,6 +534,12 @@ expo.Audio
 
 Test tool: https://expo.dev/notifications
 
+- `Notifications.getPermissionsAsync` → Checks the current notification permission status (e.g. "granted", "denied", "undetermined").
+- `Notifications.requestPermissionsAsync` → Asks the user for permission to send notifications (shows the system prompt if not asked before).
+- `Notifications.getExpoPushTokenAsync` → Returns a unique Expo push token for that device/app, which your backend uses to send push notifications.
+- `Notifications.scheduleNotificationAsync` → Schedules a local notification (created and shown by the app itself, no server needed).
+- `Notifications.setNotificationHandler` → Defines how your app should handle notifications when received, e.g. show alert, play sound, or update badge.
+- `Notifications.setNotificationChannelAsync` → (Android only) Creates or configures a notification channel (controls sound, vibration, importance).
 
 ## Deploying to app stores
 

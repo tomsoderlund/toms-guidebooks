@@ -9,7 +9,7 @@
 
 See: [Local Supabase development with schema migrations](https://supabase.com/docs/guides/local-development/overview)
 
-Create a `supabase/config.toml` file
+Create a `supabase/config.toml` file, change `project_id` and ports.
 
 	npx supabase start
 
@@ -22,24 +22,13 @@ Use this to get API keys and URLs:
 
 ### Creating migrations for database changes
 
-(preferred) Create empty, time-stamped migration file with:
-
-    npx supabase migration new [migration-name]
-
-(less surgical) Auto-create migration file based on database changes:
-
-    npx supabase db diff -s public -f [migration-name]
-
-#### After migration
-
-1. Test migrations and seeding (`npx supabase db reset`)
-2. Update TypeScript types from Supabase/Postgres tables (`npm run gentypes`)
-
-#### Debugging migrations
-
-- See migration status local/remote: `npx supabase migration list`
-- `npx supabase db push` to push migrations to live server.
+- (preferred) Create empty, time-stamped migration file with: `npx supabase migration new [migration-name]`
+- (less surgical) Auto-create migration file based on database changes: `npx supabase db diff -s public -f [migration-name]`
+- Reset local database, test migrations and seeding (`npx supabase db reset`)
+- See migration status local vs remote: `npx supabase migration list`
+- Push migrations to live server: `npx supabase db push`
 - Running a migration locally: `npx supabase migration up`
+- Update TypeScript types from Supabase/Postgres tables (`npm run gentypes`)
 
 #### Debugging crashed Supabase database
 

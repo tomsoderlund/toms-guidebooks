@@ -64,7 +64,7 @@
     - [Preact](./Development/JavaScript/Preact.md)
     - [React-Three-Fiber](./Development/JavaScript/React-Three-Fiber.md)
     - [React](./Development/JavaScript/React.md)
-    - [Remix](./Development/JavaScript/Remix.md)
+    - [Remix - React Router](./Development/JavaScript/Remix%20-%20React%20Router.md)
     - [SolidJS](./Development/JavaScript/SolidJS.md)
     - [Svelte](./Development/JavaScript/Svelte.md)
     - [TypeScript](./Development/JavaScript/TypeScript.md)

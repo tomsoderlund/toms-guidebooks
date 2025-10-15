@@ -894,10 +894,29 @@ Grant permissions:
 
 ### Row-level security (RLS)
 
+	set role authenticated;
+	select * from my_table;
+
+Is RLS enabled?
+
 	SELECT relname, relrowsecurity
 	FROM pg_class
 	WHERE relname = 'my_table';
 
+List RLS policies:
+
+	SELECT policyname, cmd, qual, with_check
+	FROM pg_policies
+	WHERE schemaname = 'public' AND tablename = 'my_table';
+
+Create:
+
+	CREATE POLICY "Users can view teams they created" ON public.teams
+	  	FOR SELECT USING (auth.uid() = created_by);
+
+Delete:
+
+	DROP POLICY IF EXISTS "Users can view teams they created" ON public.team_members;
 
 ## Export/dump data
 

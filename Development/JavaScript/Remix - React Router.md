@@ -1,4 +1,4 @@
-# Remix
+# Remix - now React Router v7
 
 https://remix.run/
 
@@ -11,6 +11,8 @@ Remix is now: **React Router v7 (Framework Mode)** (https://reactrouter.com/star
 Then:
 
 Set up ESLint (using `eslint.config.js`) and Prettier
+
+flatRoutes: `npm install @react-router/fs-routes`
 
 Vercel: `npm i @vercel/react-router`
 
@@ -72,6 +74,7 @@ Edit `routes.ts`:
 | Symbol  | Purpose                     | Example                   |
 | ------- | --------------------------- | ------------------------- |
 | `.`     | Folder paths                | `concerts.new-york.tsx`   |
+| `_.`    | Block nested routes         | `page_.subPage.tsx`       |
 | `_`     | Hidden routes               | `_index.tsx`              |
 | `$`     | Dynamic segment             | `$articleSlug.tsx`        |
 | `(...)` | Optional routes             | `($lang).$productId.tsx`  |
@@ -104,32 +107,46 @@ import { vercelPreset } from '@vercel/react-router/vite';
 
 `services/supabase.server.ts`:
 
-	import { createServerClient, parse, serialize } from '@supabase/ssr';
-	import { Database } from './types/supabase';
-	
-	export const createSupabaseServerClient = (request: Request, useServiceRoleKey?: boolean) => {
-	  const cookies = parse(request.headers.get('Cookie') ?? '');
-	  const headers = new Headers();
-	
-	  const supabaseClient = createServerClient<Database>(
-	    process.env.SUPABASE_URL!,
-	    useServiceRoleKey ? process.env.SUPABASE_SERVICE_ROLE_KEY! : process.env.SUPABASE_ANON_KEY!,
-	    {
-	      cookies: {
-	        get(key) {
-	          return cookies[key];
-	        },
-	        set(key, value, options) {
-	          headers.append('Set-Cookie', serialize(key, value, options));
-	        },
-	        remove(key, options) {
-	          headers.append('Set-Cookie', serialize(key, '', options));
-	        },
-	      },
-	    },
-	  );
-	
-	  return { supabaseClient, headers };
+	import {
+		createServerClient,
+		parseCookieHeader,
+		serializeCookieHeader,
+	} from '@supabase/ssr';
+	import type { Database } from '~/types/supabase';
+
+	export const createSupabaseServerClient = (
+		request: Request,
+		useServiceRoleKey?: boolean
+	) => {
+		const cookies = parseCookieHeader(request.headers.get('Cookie') ?? '');
+		const headers = new Headers();
+
+		const supabaseClient = createServerClient<Database>(
+			process.env.SUPABASE_URL!,
+			useServiceRoleKey
+				? process.env.SUPABASE_SERVICE_ROLE_KEY!
+				: process.env.SUPABASE_ANON_KEY!,
+			{
+				cookies: {
+					getAll() {
+						return cookies.filter(cookie => cookie.value !== undefined) as {
+							name: string;
+							value: string;
+						}[];
+					},
+					setAll(cookiesToSet) {
+						cookiesToSet.forEach(({ name, value, options }) => {
+							headers.append(
+								'Set-Cookie',
+								serializeCookieHeader(name, value, options)
+							);
+						});
+					},
+				},
+			}
+		);
+
+		return { supabaseClient, headers };
 	};
 
 
@@ -270,29 +287,31 @@ Blockers and navigate away:
 
 ### Form vs useFetcher
 
-**TLDR; If URL changes after action then use `Form`, if not use `useFetcher`.**
+**TLDR; If URL changes after action, or a form UI makes sense, then use `Form` — if not use `useFetcher`.**
 
 https://remix.run/docs/en/main/discussion/form-vs-fetcher
 
 (All: triggers server-side `action` + `loader` once)
 
 1. **HTML `<form>`**:
-	- Normally: avoid
+	- Normally: avoid.
 	- Traditional form submission with navigation to other route and/or full-page reload.
-	- Triggers action + loader, **renders on server** + client (2 times)
+	- Triggers action + loader, **renders on server** + client (2 times).
 2. **Remix `<Form>`**:
-	- The default form usage in Remix
-	- No full page reload, but `loader` runs
-	- Can use `redirect` in loader
-	- Renders client 6 times (no render on server)
+	- The default form usage in Remix.
+	- No full page reload, but `loader` runs.
+	- Can use `redirect` in loader.
+	- Renders client 6 times (no render on server).
 3. **Remix `useFetcher` with `fetcher.Form`**:
 	- When a `form` element is suitable, but not navigation to other route or full-page reload.
-	- Renders client 6 times, `useActionData` returns `undefined`, instead action data is in `fetcher.data`
+	- `loader` runs.
+	- Renders client 6 times, `useActionData` returns `undefined`, instead action data is in `fetcher.data`.
 	- For AJAX-style form interactions, with a `form` element.
 	- No full-page reload; stays on the same page and updates specific components.
 4. **Remix `useFetcher` with `fetcher.submit`**:
 	- When a `form` element is not suitable.
-	- Behaves similarly as `fetcher.Form` above
+	- Behaves similarly as `fetcher.Form` above.
+	- `loader` runs.
 	- For programmatic control over form submission.
 	- Best for scenarios like conditional submissions or button clicks outside of the `form` element.
 

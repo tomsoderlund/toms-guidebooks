@@ -2,6 +2,21 @@
 
 TreeSize for macOS
 
+Find JavaScript "node_modules" (just list them):
+	find ~/Documents/Development -name "node_modules" -type d -prune | xargs du -chs
+For Python "env":
+	find ~/Documents/Development -name "env" -type d -prune | xargs du -chs
+iOS / Xcode
+	find ~/Library/Developer/Xcode/DerivedData -maxdepth 1 -type d -prune | xargs du -chs
+	find ~/Library/Developer/Xcode/Archives -maxdepth 1 -type d -prune | xargs du -chs
+	find ~/Documents/Development -type d -name "build" ! -path "*/node_modules/*" -prune | xargs du -chs
+Android / Gradle
+	find ~/Documents/Development -name ".gradle" -type d -prune | xargs du -chs
+	du -chs ~/.gradle/caches
+	du -chs ~/Library/Caches/AndroidStudio*
+
+Tools:
+
 - DaisyDisk
     - Visualize your disk usage with an interactive sunburst diagram.
     - Allows browsing folders in a tree view and quickly identifying large files/folders.

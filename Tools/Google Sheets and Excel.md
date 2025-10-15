@@ -213,6 +213,7 @@ Get LastName:
 =RIGHT(A2, LEN(A2) - FIND(" ", A2))
 
 =HYPERLINK("https://www.google.com/search?q=" & $A2, "(search)")
+=HYPERLINK("https://www.linkedin.com/pub/dir/" & JOIN("/"; SPLIT($A8; " ")); "(search)")
 
 ÅÄÖ characters
 =SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE('Prospectify CSV'!AA2,"ä","a"),"å","a"),"ö","o"),"é","e")
